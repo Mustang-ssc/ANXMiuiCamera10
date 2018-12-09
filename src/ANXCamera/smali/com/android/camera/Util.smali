@@ -9987,6 +9987,7 @@
 .method public static isFullScreenNavBarHidden(Landroid/content/Context;)Z
     .locals 1
 
+<<<<<<< HEAD
     .line 1892
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
@@ -9995,10 +9996,12 @@
     const-string v0, "force_fsg_nav_bar"
 
     invoke-static {p0, v0}, Landroid/provider/MiuiSettings$Global;->getBoolean(Landroid/content/ContentResolver;Ljava/lang/String;)Z
+=======
+    .line 1888
+	const/4 v0, 0x1
+>>>>>>> de839c2... Added miui.os.build
 
-    move-result p0
-
-    return p0
+    return v0
 .end method
 
 .method public static isGlobalVersion()Z
