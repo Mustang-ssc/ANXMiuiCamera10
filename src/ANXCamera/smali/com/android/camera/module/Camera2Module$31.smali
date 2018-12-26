@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;)V
     .locals 0
 
-    .line 5231
+    .line 5462
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$31;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,21 +38,21 @@
 .method public run()V
     .locals 4
 
-    .line 5234
+    .line 5465
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$31;->this$0:Lcom/android/camera/module/Camera2Module;
 
     iget-object v0, v0, Lcom/android/camera/module/Camera2Module;->mActivity:Lcom/android/camera/Camera;
 
     if-eqz v0, :cond_0
 
-    .line 5235
+    .line 5466
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$31;->this$0:Lcom/android/camera/module/Camera2Module;
 
     iget-object v0, v0, Lcom/android/camera/module/Camera2Module;->mActivity:Lcom/android/camera/Camera;
 
     invoke-virtual {v0}, Lcom/android/camera/Camera;->restoreWindowBrightness()V
 
-    .line 5238
+    .line 5469
     :cond_0
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
@@ -66,8 +66,8 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$FullScreenProtocol;
 
-    .line 5239
-    invoke-static {}, Lcom/android/camera/module/Camera2Module;->access$1500()Ljava/lang/String;
+    .line 5470
+    invoke-static {}, Lcom/android/camera/module/Camera2Module;->access$1300()Ljava/lang/String;
 
     move-result-object v1
 
@@ -87,7 +87,7 @@
 
     iget-object v3, p0, Lcom/android/camera/module/Camera2Module$31;->this$0:Lcom/android/camera/module/Camera2Module;
 
-    invoke-static {v3}, Lcom/android/camera/module/Camera2Module;->access$2100(Lcom/android/camera/module/Camera2Module;)Lcom/android/camera/module/Camera2Module$MainHandler;
+    invoke-static {v3}, Lcom/android/camera/module/Camera2Module;->access$3300(Lcom/android/camera/module/Camera2Module;)Lcom/android/camera/module/Camera2Module$MainHandler;
 
     move-result-object v3
 
@@ -99,13 +99,13 @@
 
     invoke-static {v1, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 5240
+    .line 5471
     if-eqz v0, :cond_1
 
-    .line 5241
+    .line 5472
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$FullScreenProtocol;->hideScreenLight()V
 
-    .line 5243
+    .line 5474
     :cond_1
     return-void
 .end method

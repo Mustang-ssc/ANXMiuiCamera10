@@ -17,13 +17,17 @@
 # instance fields
 .field private mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-.field private mCurrentCaptureResult:Landroid/hardware/camera2/CaptureResult;
-
 .field private mLastResultAFState:I
 
 .field private mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
+.field private mPreviewCaptureResult:Landroid/hardware/camera2/CaptureResult;
+
+.field private final mPreviewCaptureResultLock:Ljava/lang/Object;
+
 .field private mState:I
+
+.field private final mStateLock:Ljava/lang/Object;
 
 .field private mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
@@ -31,32 +35,46 @@
 
 
 # direct methods
-.method public constructor <init>(Lcom/android/camera2/MiCamera2;)V
+.method constructor <init>(Lcom/android/camera2/MiCamera2;)V
     .locals 0
 
-    .line 3320
+    .line 2681
     iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-direct {p0}, Landroid/hardware/camera2/CameraCaptureSession$CaptureCallback;-><init>()V
 
-    .line 3312
+    .line 2671
     const/4 p1, -0x1
 
     iput p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mLastResultAFState:I
 
-    .line 3313
+    .line 2672
     const/4 p1, 0x0
 
     iput p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
 
-    .line 3321
+    .line 2678
+    new-instance p1, Ljava/lang/Object;
+
+    invoke-direct {p1}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mPreviewCaptureResultLock:Ljava/lang/Object;
+
+    .line 2679
+    new-instance p1, Ljava/lang/Object;
+
+    invoke-direct {p1}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mStateLock:Ljava/lang/Object;
+
+    .line 2681
     return-void
 .end method
 
 .method private isAutoFocusing(Ljava/lang/Integer;)Ljava/lang/Boolean;
     .locals 1
 
-    .line 3588
+    .line 2948
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
 
     move-result p1
@@ -69,12 +87,12 @@
 
     if-eq p1, v0, :cond_0
 
-    .line 3594
+    .line 2954
     sget-object p1, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
 
     return-object p1
 
-    .line 3591
+    .line 2951
     :cond_0
     sget-object p1, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
 
@@ -84,7 +102,7 @@
 .method private isFocusLocked(Ljava/lang/Integer;)Ljava/lang/Boolean;
     .locals 1
 
-    .line 3574
+    .line 2934
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
 
     move-result p1
@@ -95,18 +113,18 @@
 
     packed-switch p1, :pswitch_data_0
 
-    .line 3584
+    .line 2944
     const/4 p1, 0x0
 
     return-object p1
 
-    .line 3581
+    .line 2941
     :pswitch_0
     sget-object p1, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
 
     return-object p1
 
-    .line 3577
+    .line 2937
     :cond_0
     :pswitch_1
     sget-object p1, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
@@ -122,81 +140,42 @@
 .end method
 
 .method private process(Landroid/hardware/camera2/CaptureResult;)V
-    .locals 8
+    .locals 9
     .param p1    # Landroid/hardware/camera2/CaptureResult;
         .annotation build Landroid/support/annotation/NonNull;
         .end annotation
     .end param
 
-    .line 3383
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mCallbackLock:Ljava/lang/Object;
+    .line 2746
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mPreviewCaptureResultLock:Ljava/lang/Object;
 
     monitor-enter v0
 
-    .line 3384
+    .line 2747
     :try_start_0
-    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    invoke-static {v1}, Lcom/android/camera2/MiCamera2;->access$1100(Lcom/android/camera2/MiCamera2;)Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;
-
-    move-result-object v1
-
-    const/4 v2, 0x2
+    instance-of v1, p1, Landroid/hardware/camera2/TotalCaptureResult;
 
     if-eqz v1, :cond_0
 
-    .line 3385
-    sget-object v1, Lcom/android/camera/constant/MiCaptureResult;->VIDEO_RECORD_STATE:Landroid/hardware/camera2/CaptureResult$Key;
+    .line 2748
+    iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mPreviewCaptureResult:Landroid/hardware/camera2/CaptureResult;
 
-    invoke-virtual {p1, v1}, Landroid/hardware/camera2/CaptureResult;->get(Landroid/hardware/camera2/CaptureResult$Key;)Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Ljava/lang/Integer;
-
-    .line 3386
-    if-eqz v1, :cond_0
-
-    invoke-virtual {v1}, Ljava/lang/Integer;->intValue()I
-
-    move-result v1
-
-    if-ne v2, v1, :cond_0
-
-    .line 3387
-    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    invoke-static {v1}, Lcom/android/camera2/MiCamera2;->access$1100(Lcom/android/camera2/MiCamera2;)Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;
-
-    move-result-object v1
-
-    invoke-interface {v1}, Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;->onVideoRecordStopped()V
-
-    .line 3388
-    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    const/4 v3, 0x0
-
-    invoke-static {v1, v3}, Lcom/android/camera2/MiCamera2;->access$1102(Lcom/android/camera2/MiCamera2;Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;)Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;
-
-    .line 3391
+    .line 2750
     :cond_0
     monitor-exit v0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 3393
+    .line 2751
+    invoke-direct {p0, p1}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->processVideoRecordStatus(Landroid/hardware/camera2/CaptureResult;)V
+
+    .line 2752
     invoke-direct {p0, p1}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->processAfResult(Landroid/hardware/camera2/CaptureResult;)V
 
-    .line 3394
-    iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mCurrentCaptureResult:Landroid/hardware/camera2/CaptureResult;
-
-    .line 3395
+    .line 2753
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1200(Lcom/android/camera2/MiCamera2;)Z
+    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1000(Lcom/android/camera2/MiCamera2;)Z
 
     move-result v0
 
@@ -210,28 +189,37 @@
 
     if-eqz v0, :cond_1
 
-    .line 3396
+    .line 2754
     invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
     move-result-object v0
 
-    const-string v3, "process: CaptureResultParser fast zoom..."
+    const-string v2, "process: CaptureResultParser fast zoom..."
 
-    invoke-static {v0, v3}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3397
+    .line 2755
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-virtual {v0, v1}, Lcom/android/camera2/MiCamera2;->setOpticalZoomToTele(Z)V
 
-    .line 3398
+    .line 2756
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-virtual {v0}, Lcom/android/camera2/MiCamera2;->resumePreview()V
 
-    .line 3401
+    .line 2758
     :cond_1
-    iget v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+
+    invoke-virtual {v0}, Lcom/android/camera2/MiCamera2;->getMetadataCallback()Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;
+
+    move-result-object v0
+
+    .line 2759
+    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getState()I
+
+    move-result v2
 
     const/4 v3, 0x1
 
@@ -243,12 +231,14 @@
 
     const/4 v7, 0x3
 
-    packed-switch v0, :pswitch_data_0
+    const/4 v8, 0x2
+
+    packed-switch v2, :pswitch_data_0
 
     :pswitch_0
     goto/16 :goto_2
 
-    .line 3477
+    .line 2835
     :pswitch_1
     sget-object v0, Landroid/hardware/camera2/CaptureResult;->FLASH_STATE:Landroid/hardware/camera2/CaptureResult$Key;
 
@@ -258,7 +248,7 @@
 
     check-cast p1, Ljava/lang/Integer;
 
-    .line 3478
+    .line 2836
     if-eqz p1, :cond_c
 
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
@@ -267,14 +257,14 @@
 
     if-ne v7, p1, :cond_c
 
-    .line 3479
+    .line 2837
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1600(Lcom/android/camera2/MiCamera2;)V
+    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1400(Lcom/android/camera2/MiCamera2;)V
 
     goto/16 :goto_2
 
-    .line 3485
+    .line 2843
     :pswitch_2
     sget-object v0, Landroid/hardware/camera2/CaptureResult;->FLASH_STATE:Landroid/hardware/camera2/CaptureResult$Key;
 
@@ -284,27 +274,27 @@
 
     check-cast p1, Ljava/lang/Integer;
 
-    .line 3486
+    .line 2844
     if-eqz p1, :cond_2
 
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
 
     move-result p1
 
-    if-ne p1, v2, :cond_c
+    if-ne p1, v8, :cond_c
 
-    .line 3487
+    .line 2845
     :cond_2
     invoke-virtual {p0, v6}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->setState(I)V
 
-    .line 3488
+    .line 2846
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1700(Lcom/android/camera2/MiCamera2;)V
+    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1500(Lcom/android/camera2/MiCamera2;)V
 
     goto/16 :goto_2
 
-    .line 3461
+    .line 2819
     :pswitch_3
     sget-object v0, Landroid/hardware/camera2/CaptureResult;->CONTROL_AE_STATE:Landroid/hardware/camera2/CaptureResult$Key;
 
@@ -314,37 +304,37 @@
 
     check-cast v0, Ljava/lang/Integer;
 
-    .line 3462
+    .line 2820
     if-eqz v0, :cond_4
 
-    .line 3463
+    .line 2821
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
-    move-result v6
+    move-result v2
 
-    if-eq v6, v5, :cond_4
+    if-eq v2, v5, :cond_4
 
-    .line 3464
+    .line 2822
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
-    move-result v5
+    move-result v2
 
-    if-eq v5, v4, :cond_4
+    if-eq v2, v4, :cond_4
 
-    .line 3465
+    .line 2823
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
     move-result v0
 
-    if-ne v0, v2, :cond_3
+    if-ne v0, v8, :cond_3
 
     goto :goto_0
 
-    .line 3470
+    .line 2828
     :cond_3
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1500(Lcom/android/camera2/MiCamera2;)I
+    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1300(Lcom/android/camera2/MiCamera2;)I
 
     move-result v0
 
@@ -358,19 +348,19 @@
 
     if-ne v0, p1, :cond_c
 
-    .line 3471
+    .line 2829
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {p1, v1}, Lcom/android/camera2/MiCamera2;->access$1502(Lcom/android/camera2/MiCamera2;I)I
+    invoke-static {p1, v1}, Lcom/android/camera2/MiCamera2;->access$1302(Lcom/android/camera2/MiCamera2;I)I
 
     goto/16 :goto_2
 
-    .line 3466
+    .line 2824
     :cond_4
     :goto_0
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1500(Lcom/android/camera2/MiCamera2;)I
+    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1300(Lcom/android/camera2/MiCamera2;)I
 
     move-result v0
 
@@ -386,14 +376,14 @@
 
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    .line 3467
-    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1500(Lcom/android/camera2/MiCamera2;)I
+    .line 2825
+    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1300(Lcom/android/camera2/MiCamera2;)I
 
     move-result p1
 
     if-nez p1, :cond_c
 
-    .line 3468
+    .line 2826
     :cond_5
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
@@ -401,7 +391,7 @@
 
     goto/16 :goto_2
 
-    .line 3452
+    .line 2810
     :pswitch_4
     sget-object v0, Landroid/hardware/camera2/CaptureResult;->CONTROL_AE_STATE:Landroid/hardware/camera2/CaptureResult$Key;
 
@@ -411,7 +401,7 @@
 
     check-cast p1, Ljava/lang/Integer;
 
-    .line 3453
+    .line 2811
     if-eqz p1, :cond_6
 
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
@@ -420,7 +410,7 @@
 
     if-ne p1, v7, :cond_c
 
-    .line 3454
+    .line 2812
     :cond_6
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
@@ -428,7 +418,7 @@
 
     goto/16 :goto_2
 
-    .line 3417
+    .line 2775
     :pswitch_5
     sget-object v0, Landroid/hardware/camera2/CaptureResult;->CONTROL_AF_STATE:Landroid/hardware/camera2/CaptureResult$Key;
 
@@ -438,35 +428,35 @@
 
     check-cast v0, Ljava/lang/Integer;
 
-    .line 3418
+    .line 2776
     if-nez v0, :cond_7
 
-    .line 3419
+    .line 2777
     goto/16 :goto_2
 
-    .line 3421
+    .line 2779
     :cond_7
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
-    move-result v7
+    move-result v2
 
-    if-eq v4, v7, :cond_9
+    if-eq v4, v2, :cond_9
 
-    .line 3422
+    .line 2780
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
-    move-result v4
+    move-result v2
 
-    if-eq v5, v4, :cond_9
+    if-eq v5, v2, :cond_9
 
-    .line 3423
+    .line 2781
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
-    move-result v4
+    move-result v2
 
-    if-eq v2, v4, :cond_9
+    if-eq v8, v2, :cond_9
 
-    .line 3424
+    .line 2782
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
     move-result v2
@@ -475,8 +465,8 @@
 
     iget-object v2, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    .line 3425
-    invoke-static {v2}, Lcom/android/camera2/MiCamera2;->access$1300(Lcom/android/camera2/MiCamera2;)I
+    .line 2783
+    invoke-static {v2}, Lcom/android/camera2/MiCamera2;->access$1100(Lcom/android/camera2/MiCamera2;)I
 
     move-result v2
 
@@ -490,7 +480,7 @@
 
     if-ne v2, v4, :cond_8
 
-    .line 3426
+    .line 2784
     invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
 
     move-result v0
@@ -499,11 +489,11 @@
 
     goto :goto_1
 
-    .line 3445
+    .line 2803
     :cond_8
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1300(Lcom/android/camera2/MiCamera2;)I
+    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1100(Lcom/android/camera2/MiCamera2;)I
 
     move-result v0
 
@@ -517,19 +507,19 @@
 
     if-ne v0, p1, :cond_c
 
-    .line 3446
+    .line 2804
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {p1, v1}, Lcom/android/camera2/MiCamera2;->access$1302(Lcom/android/camera2/MiCamera2;I)I
+    invoke-static {p1, v1}, Lcom/android/camera2/MiCamera2;->access$1102(Lcom/android/camera2/MiCamera2;I)I
 
     goto :goto_2
 
-    .line 3427
+    .line 2785
     :cond_9
     :goto_1
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1300(Lcom/android/camera2/MiCamera2;)I
+    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1100(Lcom/android/camera2/MiCamera2;)I
 
     move-result v0
 
@@ -545,33 +535,33 @@
 
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    .line 3428
-    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1300(Lcom/android/camera2/MiCamera2;)I
+    .line 2786
+    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1100(Lcom/android/camera2/MiCamera2;)I
 
     move-result p1
 
     if-nez p1, :cond_c
 
-    .line 3434
+    .line 2792
     :cond_a
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1400(Lcom/android/camera2/MiCamera2;)Landroid/os/Handler;
+    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1200(Lcom/android/camera2/MiCamera2;)Landroid/os/Handler;
 
     move-result-object p1
 
     if-eqz p1, :cond_b
 
-    .line 3435
+    .line 2793
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1400(Lcom/android/camera2/MiCamera2;)Landroid/os/Handler;
+    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1200(Lcom/android/camera2/MiCamera2;)Landroid/os/Handler;
 
     move-result-object p1
 
     invoke-virtual {p1, v3}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 3441
+    .line 2799
     :cond_b
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
@@ -579,52 +569,36 @@
 
     goto :goto_2
 
-    .line 3410
+    .line 2768
     :pswitch_6
-    instance-of v0, p1, Landroid/hardware/camera2/TotalCaptureResult;
+    instance-of v1, p1, Landroid/hardware/camera2/TotalCaptureResult;
+
+    if-eqz v1, :cond_c
 
     if-eqz v0, :cond_c
 
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mMetadataCallback:Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;
-
-    if-eqz v0, :cond_c
-
-    .line 3411
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mMetadataCallback:Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;
-
-    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;->onCameraMetaData(Landroid/hardware/camera2/CaptureResult;)V
+    .line 2769
+    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;->onPreviewMetaDataUpdate(Landroid/hardware/camera2/CaptureResult;)V
 
     goto :goto_2
 
-    .line 3403
+    .line 2761
     :pswitch_7
-    instance-of v0, p1, Landroid/hardware/camera2/TotalCaptureResult;
+    instance-of v1, p1, Landroid/hardware/camera2/TotalCaptureResult;
+
+    if-eqz v1, :cond_c
 
     if-eqz v0, :cond_c
 
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+    .line 2762
+    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;->onPreviewMetaDataUpdate(Landroid/hardware/camera2/CaptureResult;)V
 
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mMetadataCallback:Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;
-
-    if-eqz v0, :cond_c
-
-    .line 3404
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mMetadataCallback:Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;
-
-    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$CameraMetaDataCallback;->onCameraMetaData(Landroid/hardware/camera2/CaptureResult;)V
-
-    .line 3493
+    .line 2851
     :cond_c
     :goto_2
     return-void
 
-    .line 3391
+    .line 2750
     :catchall_0
     move-exception p1
 
@@ -638,13 +612,12 @@
     nop
 
     :pswitch_data_0
-    .packed-switch 0x0
+    .packed-switch 0x1
         :pswitch_7
         :pswitch_6
         :pswitch_5
         :pswitch_4
         :pswitch_3
-        :pswitch_0
         :pswitch_0
         :pswitch_2
         :pswitch_1
@@ -652,9 +625,9 @@
 .end method
 
 .method private processAfResult(Landroid/hardware/camera2/CaptureResult;)V
-    .locals 9
+    .locals 8
 
-    .line 3496
+    .line 2866
     sget-object v0, Landroid/hardware/camera2/CaptureResult;->CONTROL_AF_STATE:Landroid/hardware/camera2/CaptureResult$Key;
 
     invoke-virtual {p1, v0}, Landroid/hardware/camera2/CaptureResult;->get(Landroid/hardware/camera2/CaptureResult$Key;)Ljava/lang/Object;
@@ -663,55 +636,44 @@
 
     check-cast p1, Ljava/lang/Integer;
 
-    .line 3497
+    .line 2867
     if-nez p1, :cond_0
 
-    .line 3498
+    .line 2868
     return-void
 
-    .line 3502
+    .line 2871
     :cond_0
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mCallbackLock:Ljava/lang/Object;
+    invoke-virtual {v0}, Lcom/android/camera2/MiCamera2;->getFocusCallback()Lcom/android/camera2/Camera2Proxy$FocusCallback;
 
-    monitor-enter v0
+    move-result-object v0
 
-    .line 3503
-    :try_start_0
-    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+    .line 2872
+    if-nez v0, :cond_1
 
-    iget-object v1, v1, Lcom/android/camera2/MiCamera2;->mFocusCallback:Lcom/android/camera2/Camera2Proxy$FocusCallback;
-
-    .line 3504
-    monitor-exit v0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 3506
-    if-nez v1, :cond_1
-
-    .line 3507
+    .line 2873
     return-void
 
-    .line 3510
+    .line 2876
     :cond_1
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
 
-    move-result v0
+    move-result v1
 
     iget v2, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mLastResultAFState:I
 
-    if-ne v0, v2, :cond_2
+    if-ne v1, v2, :cond_2
 
-    .line 3511
+    .line 2877
     return-void
 
-    .line 3514
+    .line 2880
     :cond_2
     invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
-    move-result-object v0
+    move-result-object v1
 
     sget-object v2, Ljava/util/Locale;->ENGLISH:Ljava/util/Locale;
 
@@ -721,174 +683,239 @@
 
     new-array v5, v4, [Ljava/lang/Object;
 
-    iget v6, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mLastResultAFState:I
+    const/4 v6, 0x0
 
-    .line 3515
+    iget v7, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mLastResultAFState:I
+
+    .line 2881
+    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v7
+
+    aput-object v7, v5, v6
+
+    invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
+
+    move-result v6
+
     invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v6
 
-    const/4 v7, 0x0
+    const/4 v7, 0x1
 
     aput-object v6, v5, v7
 
-    const/4 v6, 0x1
-
-    invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
-
-    move-result v8
-
-    invoke-static {v8}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v8
-
-    aput-object v8, v5, v6
-
-    .line 3514
+    .line 2880
     invoke-static {v2, v3, v5}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v2
 
-    invoke-static {v0, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3517
+    .line 2883
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
 
-    move-result v0
+    move-result v1
 
-    iput v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mLastResultAFState:I
+    iput v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mLastResultAFState:I
 
-    .line 3518
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+    .line 2884
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
     const/4 v2, 0x0
 
-    if-nez v0, :cond_5
+    if-nez v1, :cond_5
 
-    .line 3519
+    .line 2885
     invoke-direct {p0, p1}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->isAutoFocusing(Ljava/lang/Integer;)Ljava/lang/Boolean;
 
-    move-result-object v0
+    move-result-object v1
 
-    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+    invoke-virtual {v1}, Ljava/lang/Boolean;->booleanValue()Z
 
-    move-result v0
+    move-result v1
 
-    if-eqz v0, :cond_3
+    if-eqz v1, :cond_3
 
-    .line 3520
+    .line 2886
     invoke-static {v4}, Lcom/android/camera/module/loader/camera2/FocusTask;->create(I)Lcom/android/camera/module/loader/camera2/FocusTask;
 
     move-result-object p1
 
     iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    .line 3521
+    .line 2887
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    invoke-interface {v1, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
+    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
 
     goto :goto_0
 
-    .line 3523
+    .line 2889
     :cond_3
     invoke-direct {p0, p1}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->isFocusLocked(Ljava/lang/Integer;)Ljava/lang/Boolean;
 
     move-result-object p1
 
-    .line 3524
+    .line 2890
     if-eqz p1, :cond_4
 
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    if-eqz v0, :cond_4
+    if-eqz v1, :cond_4
 
-    .line 3525
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+    .line 2891
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
     invoke-virtual {p1}, Ljava/lang/Boolean;->booleanValue()Z
 
     move-result p1
 
-    invoke-virtual {v0, p1}, Lcom/android/camera/module/loader/camera2/FocusTask;->setResult(Z)V
+    invoke-virtual {v1, p1}, Lcom/android/camera/module/loader/camera2/FocusTask;->setResult(Z)V
 
-    .line 3526
+    .line 2892
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    invoke-interface {v1, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
+    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
 
-    .line 3527
+    .line 2893
     iput-object v2, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    .line 3529
+    .line 2895
     :cond_4
     goto :goto_0
 
-    .line 3533
+    .line 2899
     :cond_5
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    if-eqz v0, :cond_6
+    if-eqz v1, :cond_6
 
-    .line 3534
+    .line 2900
     iput-object v2, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mAutoFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    .line 3535
+    .line 2901
     return-void
 
-    .line 3537
+    .line 2903
     :cond_6
     invoke-direct {p0, p1}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->isFocusLocked(Ljava/lang/Integer;)Ljava/lang/Boolean;
 
     move-result-object p1
 
-    .line 3538
+    .line 2904
     if-eqz p1, :cond_7
 
-    .line 3539
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+    .line 2905
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
     invoke-virtual {p1}, Ljava/lang/Boolean;->booleanValue()Z
 
     move-result p1
 
-    invoke-virtual {v0, p1}, Lcom/android/camera/module/loader/camera2/FocusTask;->setResult(Z)V
+    invoke-virtual {v1, p1}, Lcom/android/camera/module/loader/camera2/FocusTask;->setResult(Z)V
 
-    .line 3540
+    .line 2906
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    invoke-interface {v1, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
+    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
 
-    .line 3541
+    .line 2907
     iput-object v2, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    .line 3542
+    .line 2908
     invoke-virtual {p0, v7}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->setState(I)V
 
-    .line 3545
+    .line 2911
     :cond_7
     :goto_0
     return-void
+.end method
 
-    .line 3504
+.method private processVideoRecordStatus(Landroid/hardware/camera2/CaptureResult;)V
+    .locals 2
+
+    .line 2854
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+
+    invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$1600(Lcom/android/camera2/MiCamera2;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    monitor-enter v0
+
+    .line 2855
+    :try_start_0
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+
+    invoke-static {v1}, Lcom/android/camera2/MiCamera2;->access$1700(Lcom/android/camera2/MiCamera2;)Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_0
+
+    .line 2856
+    sget-object v1, Lcom/android/camera/constant/MiCaptureResult;->VIDEO_RECORD_STATE:Landroid/hardware/camera2/CaptureResult$Key;
+
+    invoke-virtual {p1, v1}, Landroid/hardware/camera2/CaptureResult;->get(Landroid/hardware/camera2/CaptureResult$Key;)Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Ljava/lang/Integer;
+
+    .line 2857
+    if-eqz p1, :cond_0
+
+    const/4 v1, 0x2
+
+    invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
+
+    move-result p1
+
+    if-ne v1, p1, :cond_0
+
+    .line 2858
+    iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+
+    invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$1700(Lcom/android/camera2/MiCamera2;)Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;
+
+    move-result-object p1
+
+    invoke-interface {p1}, Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;->onVideoRecordStopped()V
+
+    .line 2859
+    iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+
+    const/4 v1, 0x0
+
+    invoke-static {p1, v1}, Lcom/android/camera2/MiCamera2;->access$1702(Lcom/android/camera2/MiCamera2;Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;)Lcom/android/camera2/Camera2Proxy$VideoRecordStateCallback;
+
+    .line 2862
+    :cond_0
+    monitor-exit v0
+
+    .line 2863
+    return-void
+
+    .line 2862
     :catchall_0
     move-exception p1
 
-    :try_start_1
     monitor-exit v0
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw p1
 .end method
 
 
 # virtual methods
-.method public getCurrentAEState()Ljava/lang/Integer;
+.method getCurrentAEState()Ljava/lang/Integer;
     .locals 2
 
-    .line 3335
-    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getCurrentCaptureResult()Landroid/hardware/camera2/CaptureResult;
+    .line 2698
+    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getPreviewCaptureResult()Landroid/hardware/camera2/CaptureResult;
 
     move-result-object v0
 
@@ -898,9 +925,9 @@
 
     goto :goto_0
 
-    .line 3336
+    .line 2699
     :cond_0
-    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getCurrentCaptureResult()Landroid/hardware/camera2/CaptureResult;
+    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getPreviewCaptureResult()Landroid/hardware/camera2/CaptureResult;
 
     move-result-object v0
 
@@ -912,76 +939,127 @@
 
     check-cast v0, Ljava/lang/Integer;
 
-    .line 3335
+    .line 2698
     :goto_0
     return-object v0
 .end method
 
-.method public getCurrentCaptureResult()Landroid/hardware/camera2/CaptureResult;
-    .locals 1
+.method getCurrentColorTemperature()I
+    .locals 2
 
-    .line 3353
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mCurrentCaptureResult:Landroid/hardware/camera2/CaptureResult;
-
-    return-object v0
-.end method
-
-.method public getCurrentColorTemperature()I
-    .locals 3
-
-    .line 3340
-    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getCurrentCaptureResult()Landroid/hardware/camera2/CaptureResult;
+    .line 2703
+    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getPreviewCaptureResult()Landroid/hardware/camera2/CaptureResult;
 
     move-result-object v0
 
+    .line 2704
     const/4 v1, 0x0
 
     if-nez v0, :cond_0
 
-    .line 3341
-    invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
-
-    move-result-object v0
-
-    const-string v2, "getCurrentColorTemperature: CaptureResult is null !!!"
-
-    invoke-static {v0, v2}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 3342
+    .line 2705
     return v1
 
-    .line 3344
+    .line 2707
     :cond_0
-    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getCurrentCaptureResult()Landroid/hardware/camera2/CaptureResult;
-
-    move-result-object v0
-
     invoke-static {v0}, Lcom/android/camera2/CaptureResultParser;->getAWBFrameControl(Landroid/hardware/camera2/CaptureResult;)Lcom/android/camera2/AWBFrameControl;
 
     move-result-object v0
 
-    .line 3345
+    .line 2708
     if-eqz v0, :cond_1
 
-    .line 3346
     invoke-virtual {v0}, Lcom/android/camera2/AWBFrameControl;->getColorTemperature()I
 
-    move-result v0
+    move-result v1
 
-    return v0
+    nop
 
-    .line 3348
     :cond_1
     return v1
 .end method
 
+.method getPreviewCaptureResult()Landroid/hardware/camera2/CaptureResult;
+    .locals 4
+
+    .line 2712
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mPreviewCaptureResultLock:Ljava/lang/Object;
+
+    monitor-enter v0
+
+    .line 2713
+    :try_start_0
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mPreviewCaptureResult:Landroid/hardware/camera2/CaptureResult;
+
+    if-nez v1, :cond_0
+
+    .line 2714
+    invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
+
+    move-result-object v1
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "returned a null PreviewCaptureResult, mState is "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    iget v3, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Lcom/android/camera/log/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 2716
+    :cond_0
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mPreviewCaptureResult:Landroid/hardware/camera2/CaptureResult;
+
+    monitor-exit v0
+
+    return-object v1
+
+    .line 2717
+    :catchall_0
+    move-exception v1
+
+    monitor-exit v0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v1
+.end method
+
 .method public getState()I
-    .locals 1
+    .locals 2
 
-    .line 3331
-    iget v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
+    .line 2692
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mStateLock:Ljava/lang/Object;
 
-    return v0
+    monitor-enter v0
+
+    .line 2693
+    :try_start_0
+    iget v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
+
+    monitor-exit v0
+
+    return v1
+
+    .line 2694
+    :catchall_0
+    move-exception v1
+
+    monitor-exit v0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v1
 .end method
 
 .method public onCaptureCompleted(Landroid/hardware/camera2/CameraCaptureSession;Landroid/hardware/camera2/CaptureRequest;Landroid/hardware/camera2/TotalCaptureResult;)V
@@ -999,7 +1077,7 @@
         .end annotation
     .end param
 
-    .line 3373
+    .line 2735
     invoke-virtual {p3}, Landroid/hardware/camera2/TotalCaptureResult;->getFrameNumber()J
 
     move-result-wide p1
@@ -1010,11 +1088,7 @@
 
     if-nez p1, :cond_0
 
-    iget p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
-
-    if-nez p1, :cond_0
-
-    .line 3374
+    .line 2736
     invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
     move-result-object p1
@@ -1043,16 +1117,24 @@
 
     invoke-static {p1, p2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3378
+    .line 2739
     :cond_0
-    iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+    invoke-virtual {p0}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->getState()I
 
-    invoke-static {p1, p3}, Lcom/android/camera2/MiCamera2;->access$1002(Lcom/android/camera2/MiCamera2;Landroid/hardware/camera2/TotalCaptureResult;)Landroid/hardware/camera2/TotalCaptureResult;
+    move-result p1
 
-    .line 3379
+    if-nez p1, :cond_1
+
+    .line 2740
+    const/4 p1, 0x1
+
+    invoke-virtual {p0, p1}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->setState(I)V
+
+    .line 2742
+    :cond_1
     invoke-direct {p0, p3}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->process(Landroid/hardware/camera2/CaptureResult;)V
 
-    .line 3380
+    .line 2743
     return-void
 .end method
 
@@ -1071,168 +1153,143 @@
         .end annotation
     .end param
 
-    .line 3366
+    .line 2728
     invoke-direct {p0, p3}, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->process(Landroid/hardware/camera2/CaptureResult;)V
 
-    .line 3367
+    .line 2729
     return-void
 .end method
 
-.method public setFocusTask(Lcom/android/camera/module/loader/camera2/FocusTask;)V
+.method setFocusTask(Lcom/android/camera/module/loader/camera2/FocusTask;)V
     .locals 0
 
-    .line 3359
+    .line 2721
     iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mManuallyFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    .line 3360
+    .line 2722
     return-void
 .end method
 
-.method public setState(I)V
-    .locals 3
+.method setState(I)V
+    .locals 4
 
-    .line 3324
-    invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
-
-    move-result-object v0
-
-    new-instance v1, Ljava/lang/StringBuilder;
-
-    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v2, "setState: "
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 3325
-    iput p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
-
-    .line 3326
-    return-void
-.end method
-
-.method public showAutoFocusFinish(Z)V
-    .locals 2
-
-    .line 3559
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
-
-    if-nez v0, :cond_0
-
-    .line 3560
-    return-void
-
-    .line 3563
-    :cond_0
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mCallbackLock:Ljava/lang/Object;
+    .line 2684
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mStateLock:Ljava/lang/Object;
 
     monitor-enter v0
 
-    .line 3564
+    .line 2685
     :try_start_0
-    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+    invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
-    iget-object v1, v1, Lcom/android/camera2/MiCamera2;->mFocusCallback:Lcom/android/camera2/Camera2Proxy$FocusCallback;
+    move-result-object v1
 
-    .line 3565
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "setState: "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 2686
+    iput p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mState:I
+
+    .line 2687
     monitor-exit v0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 3566
-    if-eqz v1, :cond_1
-
-    .line 3567
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
-
-    invoke-virtual {v0, p1}, Lcom/android/camera/module/loader/camera2/FocusTask;->setResult(Z)V
-
-    .line 3568
-    iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
-
-    invoke-interface {v1, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
-
-    .line 3569
-    const/4 p1, 0x0
-
-    iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
-
-    .line 3571
-    :cond_1
+    .line 2688
     return-void
 
-    .line 3565
+    .line 2687
     :catchall_0
     move-exception p1
 
-    :try_start_1
     monitor-exit v0
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw p1
 .end method
 
-.method public showAutoFocusStart()V
+.method showAutoFocusFinish(Z)V
     .locals 2
 
-    .line 3549
+    .line 2922
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+
+    if-nez v0, :cond_0
+
+    .line 2923
+    return-void
+
+    .line 2925
+    :cond_0
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
-    iget-object v0, v0, Lcom/android/camera2/MiCamera2;->mCallbackLock:Ljava/lang/Object;
-
-    monitor-enter v0
-
-    .line 3550
-    :try_start_0
-    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
-
-    iget-object v1, v1, Lcom/android/camera2/MiCamera2;->mFocusCallback:Lcom/android/camera2/Camera2Proxy$FocusCallback;
-
-    .line 3551
-    monitor-exit v0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 3552
-    if-eqz v1, :cond_0
-
-    .line 3553
-    const/4 v0, 0x3
-
-    invoke-static {v0}, Lcom/android/camera/module/loader/camera2/FocusTask;->create(I)Lcom/android/camera/module/loader/camera2/FocusTask;
+    invoke-virtual {v0}, Lcom/android/camera2/MiCamera2;->getFocusCallback()Lcom/android/camera2/Camera2Proxy$FocusCallback;
 
     move-result-object v0
 
-    iput-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+    .line 2926
+    if-eqz v0, :cond_1
 
-    .line 3554
-    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+    .line 2927
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
 
-    invoke-interface {v1, v0}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
+    invoke-virtual {v1, p1}, Lcom/android/camera/module/loader/camera2/FocusTask;->setResult(Z)V
 
-    .line 3556
+    .line 2928
+    iget-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+
+    invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
+
+    .line 2929
+    const/4 p1, 0x0
+
+    iput-object p1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+
+    .line 2931
+    :cond_1
+    return-void
+.end method
+
+.method showAutoFocusStart()V
+    .locals 2
+
+    .line 2914
+    iget-object v0, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->this$0:Lcom/android/camera2/MiCamera2;
+
+    invoke-virtual {v0}, Lcom/android/camera2/MiCamera2;->getFocusCallback()Lcom/android/camera2/Camera2Proxy$FocusCallback;
+
+    move-result-object v0
+
+    .line 2915
+    if-eqz v0, :cond_0
+
+    .line 2916
+    const/4 v1, 0x3
+
+    invoke-static {v1}, Lcom/android/camera/module/loader/camera2/FocusTask;->create(I)Lcom/android/camera/module/loader/camera2/FocusTask;
+
+    move-result-object v1
+
+    iput-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+
+    .line 2917
+    iget-object v1, p0, Lcom/android/camera2/MiCamera2$PictureCaptureCallback;->mTorchFocusTask:Lcom/android/camera/module/loader/camera2/FocusTask;
+
+    invoke-interface {v0, v1}, Lcom/android/camera2/Camera2Proxy$FocusCallback;->onFocusStateChanged(Lcom/android/camera/module/loader/camera2/FocusTask;)V
+
+    .line 2919
     :cond_0
     return-void
-
-    .line 3551
-    :catchall_0
-    move-exception v1
-
-    :try_start_1
-    monitor-exit v0
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    throw v1
 .end method

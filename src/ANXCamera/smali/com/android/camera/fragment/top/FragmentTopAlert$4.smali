@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/top/FragmentTopAlert;)V
     .locals 0
 
-    .line 449
+    .line 476
     iput-object p1, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$4;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public run()V
     .locals 2
 
-    .line 452
+    .line 479
     iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$4;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-virtual {v0}, Lcom/android/camera/fragment/top/FragmentTopAlert;->isAdded()Z
@@ -47,7 +47,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 453
+    .line 480
     iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$4;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-static {v0}, Lcom/android/camera/fragment/top/FragmentTopAlert;->access$400(Lcom/android/camera/fragment/top/FragmentTopAlert;)Landroid/widget/TextView;
@@ -58,7 +58,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->sendAccessibilityEvent(I)V
 
-    .line 455
+    .line 482
     :cond_0
     return-void
 .end method

@@ -142,15 +142,15 @@
 .method private inRegion(II)Z
     .locals 1
 
-    .line 376
+    .line 380
     new-instance v0, Landroid/graphics/Rect;
 
     invoke-direct {v0}, Landroid/graphics/Rect;-><init>()V
 
-    .line 377
+    .line 381
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/CameraSnapView;->getGlobalVisibleRect(Landroid/graphics/Rect;)Z
 
-    .line 378
+    .line 382
     invoke-virtual {v0, p1, p2}, Landroid/graphics/Rect;->contains(II)Z
 
     move-result p1
@@ -168,22 +168,22 @@
 .method private recycleBitmap()V
     .locals 1
 
-    .line 426
+    .line 430
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mExtraBitmap:Landroid/graphics/Bitmap;
 
     if-eqz v0, :cond_0
 
-    .line 427
+    .line 431
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mExtraBitmap:Landroid/graphics/Bitmap;
 
     invoke-virtual {v0}, Landroid/graphics/Bitmap;->recycle()V
 
-    .line 428
+    .line 432
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mExtraBitmap:Landroid/graphics/Bitmap;
 
-    .line 430
+    .line 434
     :cond_0
     return-void
 .end method
@@ -350,82 +350,95 @@
     return-void
 .end method
 
+.method public hasSegments()Z
+    .locals 1
+
+    .line 257
+    iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
+
+    invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->hasSegments()Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public hideRoundPaintItem()V
     .locals 1
 
-    .line 394
+    .line 398
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->hideRoundPaintItem()V
 
-    .line 395
+    .line 399
     return-void
 .end method
 
 .method public invalidateDrawable(Landroid/graphics/drawable/Drawable;)V
     .locals 0
 
-    .line 262
+    .line 266
     invoke-virtual {p0}, Lcom/android/camera/ui/CameraSnapView;->invalidate()V
 
-    .line 263
+    .line 267
     return-void
 .end method
 
 .method protected onDetachedFromWindow()V
     .locals 2
 
-    .line 416
+    .line 420
     invoke-super {p0}, Landroid/view/View;->onDetachedFromWindow()V
 
-    .line 417
+    .line 421
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     if-eqz v0, :cond_0
 
-    .line 418
+    .line 422
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->cancelAnimation()V
 
-    .line 419
+    .line 423
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->setCallback(Landroid/graphics/drawable/Drawable$Callback;)V
 
-    .line 422
+    .line 426
     :cond_0
     invoke-direct {p0}, Lcom/android/camera/ui/CameraSnapView;->recycleBitmap()V
 
-    .line 423
+    .line 427
     return-void
 .end method
 
 .method protected onDraw(Landroid/graphics/Canvas;)V
     .locals 3
 
-    .line 403
+    .line 407
     invoke-super {p0, p1}, Landroid/view/View;->onDraw(Landroid/graphics/Canvas;)V
 
-    .line 405
+    .line 409
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     if-eqz v0, :cond_0
 
-    .line 406
+    .line 410
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0, p1}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->draw(Landroid/graphics/Canvas;)V
 
-    .line 409
+    .line 413
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mExtraBitmap:Landroid/graphics/Bitmap;
 
     if-eqz v0, :cond_1
 
-    .line 410
+    .line 414
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mExtraBitmap:Landroid/graphics/Bitmap;
 
     iget-object v1, p0, Lcom/android/camera/ui/CameraSnapView;->mExtraBitmapMatrix:Landroid/graphics/Matrix;
@@ -434,7 +447,7 @@
 
     invoke-virtual {p1, v0, v1, v2}, Landroid/graphics/Canvas;->drawBitmap(Landroid/graphics/Bitmap;Landroid/graphics/Matrix;Landroid/graphics/Paint;)V
 
-    .line 412
+    .line 416
     :cond_1
     return-void
 .end method
@@ -505,14 +518,14 @@
 .method public onTouchEvent(Landroid/view/MotionEvent;)Z
     .locals 10
 
-    .line 271
+    .line 275
     invoke-virtual {p0}, Lcom/android/camera/ui/CameraSnapView;->isEnabled()Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 272
+    .line 276
     sget-object v0, Lcom/android/camera/ui/CameraSnapView;->TAG:Ljava/lang/String;
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -535,14 +548,14 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 273
+    .line 277
     invoke-super {p0, p1}, Landroid/view/View;->onTouchEvent(Landroid/view/MotionEvent;)Z
 
     move-result p1
 
     return p1
 
-    .line 276
+    .line 280
     :cond_0
     invoke-virtual {p1}, Landroid/view/MotionEvent;->getAction()I
 
@@ -566,36 +579,36 @@
 
     goto/16 :goto_5
 
-    .line 321
+    .line 325
     :pswitch_0
     return v1
 
-    .line 325
+    .line 329
     :pswitch_1
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mHandler:Landroid/os/Handler;
 
     invoke-virtual {v0, v2}, Landroid/os/Handler;->removeCallbacksAndMessages(Ljava/lang/Object;)V
 
-    .line 327
+    .line 331
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
 
     iput-wide v0, p0, Lcom/android/camera/ui/CameraSnapView;->mPressUpTime:J
 
-    .line 328
+    .line 332
     iget-wide v0, p0, Lcom/android/camera/ui/CameraSnapView;->mPressUpTime:J
 
     iget-wide v8, p0, Lcom/android/camera/ui/CameraSnapView;->mPressDownTime:J
 
     sub-long/2addr v0, v8
 
-    .line 330
+    .line 334
     cmp-long v0, v0, v6
 
     if-gez v0, :cond_4
 
-    .line 331
+    .line 335
     invoke-virtual {p1}, Landroid/view/MotionEvent;->getRawX()F
 
     move-result v0
@@ -614,20 +627,20 @@
 
     if-eqz v0, :cond_4
 
-    .line 332
+    .line 336
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mHandler:Landroid/os/Handler;
 
     invoke-virtual {v0, v5}, Landroid/os/Handler;->sendEmptyMessage(I)Z
 
     goto :goto_2
 
-    .line 280
+    .line 284
     :pswitch_2
     iget p1, p0, Lcom/android/camera/ui/CameraSnapView;->mCurrentMode:I
 
     packed-switch p1, :pswitch_data_1
 
-    .line 297
+    .line 301
     :pswitch_3
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->mSnapListener:Lcom/android/camera/ui/CameraSnapView$SnapListener;
 
@@ -637,22 +650,22 @@
 
     if-nez p1, :cond_2
 
-    .line 298
+    .line 302
     iget-boolean p1, p0, Lcom/android/camera/ui/CameraSnapView;->mMissTaken:Z
 
     if-nez p1, :cond_1
 
-    .line 299
+    .line 303
     iput-boolean v5, p0, Lcom/android/camera/ui/CameraSnapView;->mMissTaken:Z
 
-    .line 300
+    .line 304
     iget-wide v5, p0, Lcom/android/camera/ui/CameraSnapView;->mPressUpTime:J
 
     cmp-long p1, v5, v3
 
     if-lez p1, :cond_1
 
-    .line 301
+    .line 305
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->mSnapListener:Lcom/android/camera/ui/CameraSnapView$SnapListener;
 
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
@@ -667,45 +680,45 @@
 
     goto :goto_0
 
-    .line 290
+    .line 294
     :pswitch_4
     goto :goto_1
 
-    .line 304
+    .line 308
     :cond_1
     :goto_0
     return v1
 
-    .line 306
+    .line 310
     :cond_2
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {p1}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->startScaleDownAnimation()V
 
-    .line 310
+    .line 314
     :goto_1
     iput-boolean v1, p0, Lcom/android/camera/ui/CameraSnapView;->mMissTaken:Z
 
-    .line 311
+    .line 315
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->mSnapListener:Lcom/android/camera/ui/CameraSnapView$SnapListener;
 
     invoke-interface {p1}, Lcom/android/camera/ui/CameraSnapView$SnapListener;->onSnapPrepare()V
 
-    .line 312
+    .line 316
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
 
     iput-wide v0, p0, Lcom/android/camera/ui/CameraSnapView;->mPressDownTime:J
 
-    .line 313
+    .line 317
     iget-wide v0, p0, Lcom/android/camera/ui/CameraSnapView;->mPressUpTime:J
 
     cmp-long p1, v0, v3
 
     if-lez p1, :cond_3
 
-    .line 314
+    .line 318
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->mSnapListener:Lcom/android/camera/ui/CameraSnapView$SnapListener;
 
     iget-wide v0, p0, Lcom/android/camera/ui/CameraSnapView;->mPressDownTime:J
@@ -716,7 +729,7 @@
 
     invoke-interface {p1, v0, v1}, Lcom/android/camera/ui/CameraSnapView$SnapListener;->onTrackSnapTaken(J)V
 
-    .line 316
+    .line 320
     :cond_3
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->mHandler:Landroid/os/Handler;
 
@@ -724,10 +737,10 @@
 
     invoke-virtual {p1, v0, v6, v7}, Landroid/os/Handler;->sendEmptyMessageDelayed(IJ)Z
 
-    .line 318
+    .line 322
     goto :goto_5
 
-    .line 337
+    .line 341
     :cond_4
     :goto_2
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
@@ -736,19 +749,19 @@
 
     iput-wide v0, p0, Lcom/android/camera/ui/CameraSnapView;->mPressUpTime:J
 
-    .line 338
+    .line 342
     iget-wide v0, p0, Lcom/android/camera/ui/CameraSnapView;->mPressUpTime:J
 
     iget-wide v8, p0, Lcom/android/camera/ui/CameraSnapView;->mPressDownTime:J
 
     sub-long/2addr v0, v8
 
-    .line 339
+    .line 343
     cmp-long v6, v0, v6
 
     if-lez v6, :cond_6
 
-    .line 340
+    .line 344
     invoke-virtual {p1}, Landroid/view/MotionEvent;->getRawX()F
 
     move-result v6
@@ -767,7 +780,7 @@
 
     if-eqz p1, :cond_5
 
-    .line 341
+    .line 345
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->mHandler:Landroid/os/Handler;
 
     const/4 v6, 0x4
@@ -776,7 +789,7 @@
 
     goto :goto_3
 
-    .line 343
+    .line 347
     :cond_5
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->mHandler:Landroid/os/Handler;
 
@@ -784,7 +797,7 @@
 
     invoke-virtual {p1, v6}, Landroid/os/Handler;->sendEmptyMessage(I)Z
 
-    .line 347
+    .line 351
     :cond_6
     :goto_3
     const-wide/16 v6, 0x78
@@ -798,13 +811,13 @@
     :cond_7
     sub-long v3, v6, v0
 
-    .line 349
+    .line 353
     :goto_4
     iget p1, p0, Lcom/android/camera/ui/CameraSnapView;->mCurrentMode:I
 
     packed-switch p1, :pswitch_data_2
 
-    .line 366
+    .line 370
     :pswitch_5
     iget-object p1, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
@@ -812,11 +825,11 @@
 
     goto :goto_5
 
-    .line 359
+    .line 363
     :pswitch_6
     nop
 
-    .line 372
+    .line 376
     :goto_5
     return v5
 
@@ -880,34 +893,34 @@
 .method public performClick()Z
     .locals 2
 
-    .line 434
+    .line 438
     invoke-static {}, Lcom/android/camera/Util;->isAccessible()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 435
+    .line 439
     invoke-super {p0}, Landroid/view/View;->performClick()Z
 
-    .line 436
+    .line 440
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeCallbacksAndMessages(Ljava/lang/Object;)V
 
-    .line 437
+    .line 441
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x1
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->sendEmptyMessage(I)Z
 
-    .line 438
+    .line 442
     return v1
 
-    .line 440
+    .line 444
     :cond_0
     invoke-super {p0}, Landroid/view/View;->performClick()Z
 
@@ -931,12 +944,12 @@
 .method public removeLastSegment()V
     .locals 1
 
-    .line 257
+    .line 261
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->removeLastSegment()V
 
-    .line 258
+    .line 262
     return-void
 .end method
 
@@ -1036,53 +1049,53 @@
 .method public showRoundPaintItem()V
     .locals 1
 
-    .line 398
+    .line 402
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->showRoundPaintItem()V
 
-    .line 399
+    .line 403
     return-void
 .end method
 
 .method public startRing()V
     .locals 2
 
-    .line 382
+    .line 386
     invoke-virtual {p0}, Lcom/android/camera/ui/CameraSnapView;->getResources()Landroid/content/res/Resources;
 
     move-result-object v0
 
-    const v1, 0x7f02019f
+    const v1, 0x7f0201a9
 
     invoke-static {v0, v1}, Landroid/graphics/BitmapFactory;->decodeResource(Landroid/content/res/Resources;I)Landroid/graphics/Bitmap;
 
     move-result-object v0
 
-    .line 384
+    .line 388
     invoke-direct {p0, v0}, Lcom/android/camera/ui/CameraSnapView;->setImageBitmap(Landroid/graphics/Bitmap;)V
 
-    .line 385
+    .line 389
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->startRingAnimation()V
 
-    .line 386
+    .line 390
     return-void
 .end method
 
 .method public stopRing()V
     .locals 1
 
-    .line 389
+    .line 393
     invoke-direct {p0}, Lcom/android/camera/ui/CameraSnapView;->recycleBitmap()V
 
-    .line 390
+    .line 394
     iget-object v0, p0, Lcom/android/camera/ui/CameraSnapView;->cameraSnapAnimateDrawable:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->stopRingAnimation()V
 
-    .line 391
+    .line 395
     return-void
 .end method
 

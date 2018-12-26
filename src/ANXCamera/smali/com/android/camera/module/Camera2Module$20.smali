@@ -27,7 +27,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;Z)V
     .locals 0
 
-    .line 3884
+    .line 4141
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$20;->this$0:Lcom/android/camera/module/Camera2Module;
 
     iput-boolean p2, p0, Lcom/android/camera/module/Camera2Module$20;->val$evAdjustable:Z
@@ -42,7 +42,7 @@
 .method public run()V
     .locals 2
 
-    .line 3887
+    .line 4144
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$20;->this$0:Lcom/android/camera/module/Camera2Module;
 
     iget-object v0, v0, Lcom/android/camera/module/Camera2Module;->mMainProtocol:Lcom/android/camera/protocol/ModeProtocol$MainContentProtocol;
@@ -51,6 +51,6 @@
 
     invoke-interface {v0, v1}, Lcom/android/camera/protocol/ModeProtocol$MainContentProtocol;->setEvAdjustable(Z)V
 
-    .line 3888
+    .line 4145
     return-void
 .end method

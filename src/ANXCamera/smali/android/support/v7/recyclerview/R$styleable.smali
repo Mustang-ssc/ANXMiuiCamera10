@@ -102,7 +102,7 @@
 .method static constructor <clinit>()V
     .locals 4
 
-    .line 2867
+    .line 2868
     const/4 v0, 0x1
 
     new-array v1, v0, [I
@@ -115,7 +115,7 @@
 
     sput-object v1, Landroid/support/v7/recyclerview/R$styleable;->CameraPreference:[I
 
-    .line 2896
+    .line 2897
     const/4 v1, 0x2
 
     new-array v1, v1, [I
@@ -124,7 +124,7 @@
 
     sput-object v1, Landroid/support/v7/recyclerview/R$styleable;->IconIndicator:[I
 
-    .line 2935
+    .line 2936
     const/4 v1, 0x4
 
     new-array v1, v1, [I
@@ -133,7 +133,7 @@
 
     sput-object v1, Landroid/support/v7/recyclerview/R$styleable;->IconListPreference:[I
 
-    .line 2998
+    .line 2999
     const/4 v1, 0x5
 
     new-array v3, v1, [I
@@ -142,7 +142,7 @@
 
     sput-object v3, Landroid/support/v7/recyclerview/R$styleable;->ListPreference:[I
 
-    .line 3071
+    .line 3072
     new-array v0, v0, [I
 
     const v3, 0x7f01000f
@@ -151,14 +151,14 @@
 
     sput-object v0, Landroid/support/v7/recyclerview/R$styleable;->PreviewListPreference:[I
 
-    .line 3102
+    .line 3103
     new-array v0, v1, [I
 
     fill-array-data v0, :array_3
 
     sput-object v0, Landroid/support/v7/recyclerview/R$styleable;->RecyclerView:[I
 
-    .line 3218
+    .line 3219
     const/16 v0, 0x10
 
     new-array v0, v0, [I
@@ -227,7 +227,7 @@
 .method public constructor <init>()V
     .locals 0
 
-    .line 2856
+    .line 2857
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

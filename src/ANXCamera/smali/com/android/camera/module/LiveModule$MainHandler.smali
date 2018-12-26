@@ -22,13 +22,13 @@
 .method public constructor <init>(Lcom/android/camera/module/LiveModule;Landroid/os/Looper;)V
     .locals 0
 
-    .line 115
+    .line 117
     iput-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
-    .line 116
+    .line 118
     invoke-direct {p0, p2}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
 
-    .line 117
+    .line 119
     return-void
 .end method
 
@@ -37,7 +37,7 @@
 .method public handleMessage(Landroid/os/Message;)V
     .locals 5
 
-    .line 122
+    .line 124
     iget p1, p1, Landroid/os/Message;->what:I
 
     const/4 v0, 0x4
@@ -58,7 +58,7 @@
 
     goto :goto_0
 
-    .line 142
+    .line 144
     :cond_0
     iget-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
@@ -70,30 +70,30 @@
 
     if-nez p1, :cond_4
 
-    .line 143
+    .line 145
     iget-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
     const/4 v0, 0x1
 
     iput-boolean v0, p1, Lcom/android/camera/module/LiveModule;->mOpenCameraFail:Z
 
-    .line 144
+    .line 146
     iget-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
     invoke-virtual {p1}, Lcom/android/camera/module/LiveModule;->onCameraException()V
 
     goto :goto_0
 
-    .line 138
+    .line 140
     :cond_1
     iget-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
     invoke-static {p1}, Lcom/android/camera/module/LiveModule;->access$200(Lcom/android/camera/module/LiveModule;)V
 
-    .line 139
+    .line 141
     goto :goto_0
 
-    .line 149
+    .line 151
     :cond_2
     iget-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
@@ -105,13 +105,13 @@
 
     goto :goto_0
 
-    .line 129
+    .line 131
     :cond_3
     iget-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
     invoke-virtual {p1}, Lcom/android/camera/module/LiveModule;->checkActivityOrientation()V
 
-    .line 132
+    .line 134
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
     move-result-wide v1
@@ -130,7 +130,7 @@
 
     if-gez p1, :cond_4
 
-    .line 133
+    .line 135
     iget-object p1, p0, Lcom/android/camera/module/LiveModule$MainHandler;->this$0:Lcom/android/camera/module/LiveModule;
 
     invoke-static {p1}, Lcom/android/camera/module/LiveModule;->access$100(Lcom/android/camera/module/LiveModule;)Lcom/android/camera/module/LiveModule$MainHandler;
@@ -141,7 +141,7 @@
 
     invoke-virtual {p1, v0, v1, v2}, Lcom/android/camera/module/LiveModule$MainHandler;->sendEmptyMessageDelayed(IJ)Z
 
-    .line 152
+    .line 154
     :cond_4
     :goto_0
     return-void

@@ -43,9 +43,9 @@
 
     const-string v2, "0"
 
-    const v3, 0x7f0200d0
+    const v3, 0x7f0200db
 
-    const v4, 0x7f0b016f
+    const v4, 0x7f0b0176
 
     invoke-direct {v1, v3, v3, v4, v2}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
@@ -56,9 +56,9 @@
 
     const-string v2, "3"
 
-    const v4, 0x7f0200d1
+    const v4, 0x7f0200dc
 
-    const v5, 0x7f0b0170
+    const v5, 0x7f0b0177
 
     invoke-direct {v1, v3, v4, v5, v2}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
@@ -69,9 +69,9 @@
 
     const-string v2, "5"
 
-    const v4, 0x7f0200d2
+    const v4, 0x7f0200dd
 
-    const v5, 0x7f0b0171
+    const v5, 0x7f0b0178
 
     invoke-direct {v1, v3, v4, v5, v2}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
@@ -96,7 +96,7 @@
     .locals 1
 
     .line 26
-    const v0, 0x7f0b016f
+    const v0, 0x7f0b0176
 
     return v0
 .end method

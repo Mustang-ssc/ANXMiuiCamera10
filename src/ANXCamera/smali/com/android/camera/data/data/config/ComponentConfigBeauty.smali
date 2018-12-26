@@ -32,7 +32,7 @@
     sput-object v0, Lcom/android/camera/data/data/config/ComponentConfigBeauty;->TAG:Ljava/lang/String;
 
     .line 23
-    invoke-static {}, Lcom/mi/config/b;->hp()Z
+    invoke-static {}, Lcom/mi/config/b;->hr()Z
 
     move-result v0
 
@@ -117,9 +117,9 @@
 
     aget-object v1, v1, v2
 
-    const v2, 0x7f0b0174
+    const v2, 0x7f0b017b
 
-    const v3, 0x7f0200bf
+    const v3, 0x7f0200ca
 
     invoke-direct {v0, v3, v3, v2, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
@@ -136,7 +136,7 @@
 
     aget-object v1, v1, v4
 
-    const v4, 0x7f0200be
+    const v4, 0x7f0200c9
 
     invoke-direct {v0, v3, v4, v2, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
@@ -153,9 +153,9 @@
 
     aget-object v1, v1, v2
 
-    const v2, 0x7f0200bd
+    const v2, 0x7f0200c8
 
-    const v4, 0x7f0b0175
+    const v4, 0x7f0b017c
 
     invoke-direct {v0, v3, v2, v4, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 

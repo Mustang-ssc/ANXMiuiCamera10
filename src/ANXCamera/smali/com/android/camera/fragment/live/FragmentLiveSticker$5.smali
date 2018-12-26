@@ -34,7 +34,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/live/FragmentLiveSticker;)V
     .locals 0
 
-    .line 267
+    .line 337
     iput-object p1, p0, Lcom/android/camera/fragment/live/FragmentLiveSticker$5;->this$0:Lcom/android/camera/fragment/live/FragmentLiveSticker;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -47,7 +47,7 @@
 .method public bridge synthetic createDownloadRequest(Lcom/android/camera/network/resource/LiveResource;)Lcom/android/camera/network/download/Request;
     .locals 0
 
-    .line 267
+    .line 337
     check-cast p1, Lcom/android/camera/sticker/LiveStickerInfo;
 
     invoke-virtual {p0, p1}, Lcom/android/camera/fragment/live/FragmentLiveSticker$5;->createDownloadRequest(Lcom/android/camera/sticker/LiveStickerInfo;)Lcom/android/camera/network/download/Request;
@@ -60,7 +60,7 @@
 .method public createDownloadRequest(Lcom/android/camera/sticker/LiveStickerInfo;)Lcom/android/camera/network/download/Request;
     .locals 4
 
-    .line 275
+    .line 345
     new-instance v0, Ljava/io/File;
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -85,7 +85,7 @@
 
     invoke-direct {v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 276
+    .line 346
     new-instance v1, Lcom/android/camera/network/download/Request;
 
     iget-object v2, p1, Lcom/android/camera/sticker/LiveStickerInfo;->id:Ljava/lang/String;
@@ -98,7 +98,7 @@
 
     invoke-direct {v1, v2, v3, v0}, Lcom/android/camera/network/download/Request;-><init>(Ljava/lang/String;Landroid/net/Uri;Ljava/io/File;)V
 
-    .line 277
+    .line 347
     new-instance v0, Lcom/android/camera/network/download/Verifier$Md5;
 
     iget-object p1, p1, Lcom/android/camera/sticker/LiveStickerInfo;->hash:Ljava/lang/String;
@@ -107,14 +107,14 @@
 
     invoke-virtual {v1, v0}, Lcom/android/camera/network/download/Request;->setVerifier(Lcom/android/camera/network/download/Verifier;)V
 
-    .line 278
+    .line 348
     return-object v1
 .end method
 
 .method public bridge synthetic isDownloaded(Lcom/android/camera/network/resource/LiveResource;)Z
     .locals 0
 
-    .line 267
+    .line 337
     check-cast p1, Lcom/android/camera/sticker/LiveStickerInfo;
 
     invoke-virtual {p0, p1}, Lcom/android/camera/fragment/live/FragmentLiveSticker$5;->isDownloaded(Lcom/android/camera/sticker/LiveStickerInfo;)Z
@@ -127,7 +127,7 @@
 .method public isDownloaded(Lcom/android/camera/sticker/LiveStickerInfo;)Z
     .locals 3
 
-    .line 270
+    .line 340
     new-instance v0, Ljava/io/File;
 
     new-instance v1, Ljava/lang/StringBuilder;

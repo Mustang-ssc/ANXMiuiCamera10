@@ -1993,7 +1993,7 @@
 
     iget-object v0, p0, Lcom/bumptech/glide/h;->context:Landroid/content/Context;
 
-    invoke-static {v0}, Lcom/bumptech/glide/e/a;->n(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
+    invoke-static {v0}, Lcom/bumptech/glide/e/a;->m(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
 
     move-result-object v0
 

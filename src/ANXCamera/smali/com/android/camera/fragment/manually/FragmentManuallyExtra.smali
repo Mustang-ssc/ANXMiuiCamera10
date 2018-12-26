@@ -109,19 +109,19 @@
 
     move-result v0
 
-    const v1, 0x7f0b0064
+    const v1, 0x7f0b0066
 
     if-eq v0, v1, :cond_2
 
-    const v1, 0x7f0b00a6
+    const v1, 0x7f0b00ac
 
     if-eq v0, v1, :cond_1
 
-    const v1, 0x7f0b012e
+    const v1, 0x7f0b0135
 
     if-eq v0, v1, :cond_1
 
-    const v1, 0x7f0b015e
+    const v1, 0x7f0b0165
 
     if-eq v0, v1, :cond_0
 
@@ -500,7 +500,7 @@
     .locals 1
 
     .line 229
-    const v0, 0x7f040023
+    const v0, 0x7f040024
 
     return v0
 .end method
@@ -509,7 +509,7 @@
     .locals 1
 
     .line 64
-    const v0, 0x7f0d0070
+    const v0, 0x7f0d007a
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -520,7 +520,7 @@
     iput-object v0, p0, Lcom/android/camera/fragment/manually/FragmentManuallyExtra;->mExtraList:Landroid/support/v7/widget/RecyclerView;
 
     .line 65
-    const v0, 0x7f0d0071
+    const v0, 0x7f0d007b
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -531,7 +531,7 @@
     iput-object v0, p0, Lcom/android/camera/fragment/manually/FragmentManuallyExtra;->mExtraListHorizontal:Lcom/android/camera/ui/HorizontalListView;
 
     .line 66
-    const v0, 0x7f0d0072
+    const v0, 0x7f0d007c
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

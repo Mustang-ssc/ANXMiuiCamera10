@@ -124,6 +124,10 @@
     <dimen name="mode_select_text_size">13.75sp</dimen>
     <dimen name="mode_select_layout_height">50.599976dip</dimen>
     <dimen name="mode_select_layout_edge">44.0dip</dimen>
+    <dimen name="mode_select_padding_right">1.4499817dip</dimen>
+    <dimen name="mode_select_red_dot_width">3.6399841dip</dimen>
+    <dimen name="mode_select_dot_margin_top">20.0dip</dimen>
+    <dimen name="mode_select_margin_right">8.22998dip</dimen>
     <dimen name="preference_value_padding_top">6.5999756dip</dimen>
     <dimen name="preference_value_padding_bottom">6.5999756dip</dimen>
     <dimen name="preference_value_max_width">148.5dip</dimen>
@@ -211,8 +215,10 @@
     <dimen name="bokeh_line_width">0.73dip</dimen>
     <dimen name="bokeh_line_line_gap">12.0dip</dimen>
     <dimen name="bokeh_line_default_circle_radius">1.8199768dip</dimen>
-    <dimen name="bokeh_line_default_circle_gap">7.639984dip</dimen>
+    <dimen name="bokeh_line_default_circle_gap">12.0dip</dimen>
     <dimen name="music_back_margin_left">25.089996dip</dimen>
+    <dimen name="music_back_margin_top">26.539978dip</dimen>
+    <dimen name="music_title_margin_top">38.179993dip</dimen>
     <dimen name="music_thumbnail_width">72.72998dip</dimen>
     <dimen name="music_thumbnail_height">72.72998dip</dimen>
     <dimen name="music_item_margin_top">32.72998dip</dimen>
@@ -230,6 +236,7 @@
     <dimen name="music_back_width">9.819977dip</dimen>
     <dimen name="music_back_height">17.819977dip</dimen>
     <dimen name="music_select_text_size">17.449982sp</dimen>
+    <dimen name="music_select_title_size">16.0sp</dimen>
     <dimen name="music_author_text_size">13.089996sp</dimen>
     <dimen name="music_hint_width">160.0dip</dimen>
     <dimen name="music_hint_height">29.089996dip</dimen>
@@ -247,7 +254,7 @@
     <dimen name="live_sticker_image_size">37.089996dip</dimen>
     <dimen name="live_sticker_selected_corner_radius">7.269989dip</dimen>
     <dimen name="live_sticker_selected_stroke_width">1.4499817dip</dimen>
-    <dimen name="live_sticker_selected_size">53.819977dip</dimen>
+    <dimen name="live_sticker_selected_size">56.72998dip</dimen>
     <dimen name="live_sticker_download_size">14.549988dip</dimen>
     <dimen name="negative_half_live_sticker_download_size">-7.269989dip</dimen>
     <dimen name="popup_tip_live_speed_padding">14.179993dip</dimen>
@@ -256,6 +263,18 @@
     <dimen name="live_speed_list_margin">31.269989dip</dimen>
     <dimen name="live_speed_item_width">43.639984dip</dimen>
     <dimen name="live_speed_item_textSize">13.089996sp</dimen>
+    <dimen name="live_filter_item_size">52.0dip</dimen>
+    <dimen name="live_filter_item_mask_size">50.899994dip</dimen>
+    <dimen name="live_filter_item_corners_size">7.269989dip</dimen>
+    <dimen name="live_filter_item_sel_stroke_width">1.4499817dip</dimen>
+    <dimen name="live_filter_item_sel_size">53.809998dip</dimen>
+    <dimen name="live_beauty_list_item_width">90.17999dip</dimen>
+    <dimen name="live_beauty_list_heard_width">103.26999dip</dimen>
+    <dimen name="bottom_popu_left_image_intro_marginleft">19.629974dip</dimen>
+    <dimen name="bottom_popu_speed_image_margin_bottom">81.09dip</dimen>
+    <dimen name="bottom_popu_speed_image_width">37.0dip</dimen>
+    <dimen name="bottom_popu_speed_image_height">37.0dip</dimen>
+    <dimen name="bottom_popu_speed_title_top">5.8099976dip</dimen>
     <dimen name="front_camera_hint_animation_padding">4.3599854dip</dimen>
     <dimen name="front_camera_hint_animation_margin">225.44998dip</dimen>
     <dimen name="front_camera_hint_text_rotate_margin">338.1797dip</dimen>
@@ -263,6 +282,4 @@
     <dimen name="front_camera_hint_text_rotate_textSize">19.639984sp</dimen>
     <dimen name="front_camera_hint_text_place_textSize">13.819977sp</dimen>
     <dimen name="beauty_item_reset_width">84.0dip</dimen>
-    <dimen name="music_back_top_left">25.819977dip</dimen>
-    <dimen name="music_select_item_size">16.0sp</dimen>
 </resources>

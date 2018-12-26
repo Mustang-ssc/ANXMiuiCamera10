@@ -3,12 +3,12 @@
 .source "FragmentBottomAction.java"
 
 # interfaces
-.implements Landroid/animation/ValueAnimator$AnimatorUpdateListener;
+.implements Landroid/animation/Animator$AnimatorListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/camera/fragment/bottom/FragmentBottomAction;->setProgressBarGone()V
+    value = Lcom/android/camera/fragment/bottom/FragmentBottomAction;->setProgressBarVisible(I)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/bottom/FragmentBottomAction;)V
     .locals 0
 
-    .line 856
+    .line 842
     iput-object p1, p0, Lcom/android/camera/fragment/bottom/FragmentBottomAction$7;->this$0:Lcom/android/camera/fragment/bottom/FragmentBottomAction;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -35,29 +35,41 @@
 
 
 # virtual methods
-.method public onAnimationUpdate(Landroid/animation/ValueAnimator;)V
+.method public onAnimationCancel(Landroid/animation/Animator;)V
+    .locals 0
+
+    .line 856
+    return-void
+.end method
+
+.method public onAnimationEnd(Landroid/animation/Animator;)V
     .locals 1
 
-    .line 859
-    invoke-virtual {p1}, Landroid/animation/ValueAnimator;->getAnimatedValue()Ljava/lang/Object;
+    .line 850
+    iget-object p1, p0, Lcom/android/camera/fragment/bottom/FragmentBottomAction$7;->this$0:Lcom/android/camera/fragment/bottom/FragmentBottomAction;
+
+    invoke-static {p1}, Lcom/android/camera/fragment/bottom/FragmentBottomAction;->access$200(Lcom/android/camera/fragment/bottom/FragmentBottomAction;)Landroid/widget/ProgressBar;
 
     move-result-object p1
 
-    check-cast p1, Ljava/lang/Float;
+    const/16 v0, 0x8
 
-    .line 860
-    iget-object v0, p0, Lcom/android/camera/fragment/bottom/FragmentBottomAction$7;->this$0:Lcom/android/camera/fragment/bottom/FragmentBottomAction;
+    invoke-virtual {p1, v0}, Landroid/widget/ProgressBar;->setVisibility(I)V
 
-    invoke-static {v0}, Lcom/android/camera/fragment/bottom/FragmentBottomAction;->access$300(Lcom/android/camera/fragment/bottom/FragmentBottomAction;)Landroid/widget/ProgressBar;
+    .line 851
+    return-void
+.end method
 
-    move-result-object v0
-
-    invoke-virtual {p1}, Ljava/lang/Float;->floatValue()F
-
-    move-result p1
-
-    invoke-virtual {v0, p1}, Landroid/widget/ProgressBar;->setAlpha(F)V
+.method public onAnimationRepeat(Landroid/animation/Animator;)V
+    .locals 0
 
     .line 861
+    return-void
+.end method
+
+.method public onAnimationStart(Landroid/animation/Animator;)V
+    .locals 0
+
+    .line 846
     return-void
 .end method

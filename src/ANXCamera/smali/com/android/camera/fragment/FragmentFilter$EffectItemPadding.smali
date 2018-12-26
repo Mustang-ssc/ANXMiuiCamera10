@@ -28,12 +28,12 @@
 .method public constructor <init>(Lcom/android/camera/fragment/FragmentFilter;)V
     .locals 2
 
-    .line 338
+    .line 325
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemPadding;->this$0:Lcom/android/camera/fragment/FragmentFilter;
 
     invoke-direct {p0}, Landroid/support/v7/widget/RecyclerView$ItemDecoration;-><init>()V
 
-    .line 339
+    .line 326
     invoke-virtual {p1}, Lcom/android/camera/fragment/FragmentFilter;->getContext()Landroid/content/Context;
 
     move-result-object v0
@@ -50,7 +50,7 @@
 
     iput v0, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemPadding;->mHorizontalPadding:I
 
-    .line 341
+    .line 328
     invoke-virtual {p1}, Lcom/android/camera/fragment/FragmentFilter;->getContext()Landroid/content/Context;
 
     move-result-object v0
@@ -67,7 +67,7 @@
 
     iput v0, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemPadding;->mVerticalPadding:I
 
-    .line 343
+    .line 330
     invoke-virtual {p1}, Lcom/android/camera/fragment/FragmentFilter;->getContext()Landroid/content/Context;
 
     move-result-object p1
@@ -84,7 +84,7 @@
 
     iput p1, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemPadding;->mEffectListLeft:I
 
-    .line 345
+    .line 332
     return-void
 .end method
 
@@ -93,12 +93,12 @@
 .method public getItemOffsets(Landroid/graphics/Rect;Landroid/view/View;Landroid/support/v7/widget/RecyclerView;Landroid/support/v7/widget/RecyclerView$State;)V
     .locals 1
 
-    .line 350
+    .line 337
     invoke-virtual {p3, p2}, Landroid/support/v7/widget/RecyclerView;->getChildPosition(Landroid/view/View;)I
 
     move-result p2
 
-    .line 352
+    .line 339
     if-nez p2, :cond_0
 
     iget p2, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemPadding;->mEffectListLeft:I
@@ -117,6 +117,6 @@
 
     invoke-virtual {p1, p2, p3, p4, v0}, Landroid/graphics/Rect;->set(IIII)V
 
-    .line 354
+    .line 341
     return-void
 .end method

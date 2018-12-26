@@ -26,22 +26,22 @@
 .method public constructor <init>(Lcom/android/camera/fragment/FragmentFilter;Landroid/content/Context;Lcom/android/camera/data/data/config/ComponentConfigFilter;)V
     .locals 0
 
-    .line 480
+    .line 467
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->this$0:Lcom/android/camera/fragment/FragmentFilter;
 
     invoke-direct {p0}, Landroid/support/v7/widget/RecyclerView$Adapter;-><init>()V
 
-    .line 481
+    .line 468
     iput-object p3, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->mFilters:Lcom/android/camera/data/data/config/ComponentConfigFilter;
 
-    .line 482
+    .line 469
     invoke-static {p2}, Landroid/view/LayoutInflater;->from(Landroid/content/Context;)Landroid/view/LayoutInflater;
 
     move-result-object p1
 
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->mLayoutInflater:Landroid/view/LayoutInflater;
 
-    .line 483
+    .line 470
     return-void
 .end method
 
@@ -50,7 +50,7 @@
 .method public getItemCount()I
     .locals 1
 
-    .line 505
+    .line 492
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->mFilters:Lcom/android/camera/data/data/config/ComponentConfigFilter;
 
     invoke-virtual {v0}, Lcom/android/camera/data/data/config/ComponentConfigFilter;->getItems()Ljava/util/List;
@@ -67,7 +67,7 @@
 .method public onBindViewHolder(Landroid/support/v7/widget/RecyclerView$ViewHolder;I)V
     .locals 3
 
-    .line 497
+    .line 484
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->mFilters:Lcom/android/camera/data/data/config/ComponentConfigFilter;
 
     invoke-virtual {v0}, Lcom/android/camera/data/data/config/ComponentConfigFilter;->getItems()Ljava/util/List;
@@ -80,10 +80,10 @@
 
     check-cast v0, Lcom/android/camera/data/data/ComponentDataItem;
 
-    .line 498
+    .line 485
     check-cast p1, Lcom/android/camera/fragment/FragmentFilter$EffectItemHolder;
 
-    .line 499
+    .line 486
     iget-object v1, p1, Lcom/android/camera/fragment/FragmentFilter$EffectItemHolder;->itemView:Landroid/view/View;
 
     invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
@@ -92,17 +92,17 @@
 
     invoke-virtual {v1, v2}, Landroid/view/View;->setTag(Ljava/lang/Object;)V
 
-    .line 500
+    .line 487
     invoke-virtual {p1, p2, v0}, Lcom/android/camera/fragment/FragmentFilter$EffectItemHolder;->bindEffectIndex(ILcom/android/camera/data/data/ComponentDataItem;)V
 
-    .line 501
+    .line 488
     return-void
 .end method
 
 .method public onCreateViewHolder(Landroid/view/ViewGroup;I)Landroid/support/v7/widget/RecyclerView$ViewHolder;
     .locals 2
 
-    .line 487
+    .line 474
     iget-object p2, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->mLayoutInflater:Landroid/view/LayoutInflater;
 
     const v0, 0x7f040004
@@ -113,31 +113,31 @@
 
     move-result-object p1
 
-    .line 488
+    .line 475
     new-instance p2, Lcom/android/camera/fragment/FragmentFilter$EffectStillItemHolder;
 
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->this$0:Lcom/android/camera/fragment/FragmentFilter;
 
     invoke-direct {p2, v0, p1}, Lcom/android/camera/fragment/FragmentFilter$EffectStillItemHolder;-><init>(Lcom/android/camera/fragment/FragmentFilter;Landroid/view/View;)V
 
-    .line 490
+    .line 477
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->this$0:Lcom/android/camera/fragment/FragmentFilter;
 
     invoke-virtual {p1, v0}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 492
+    .line 479
     return-object p2
 .end method
 
 .method public updateData(Lcom/android/camera/data/data/config/ComponentConfigFilter;)V
     .locals 0
 
-    .line 509
+    .line 496
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->mFilters:Lcom/android/camera/data/data/config/ComponentConfigFilter;
 
-    .line 510
+    .line 497
     invoke-virtual {p0}, Lcom/android/camera/fragment/FragmentFilter$EffectItemAdapter;->notifyDataSetChanged()V
 
-    .line 511
+    .line 498
     return-void
 .end method

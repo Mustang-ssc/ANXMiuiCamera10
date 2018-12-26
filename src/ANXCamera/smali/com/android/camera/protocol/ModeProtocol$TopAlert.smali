@@ -61,9 +61,6 @@
     .end param
 .end method
 
-.method public abstract alertTopMusicHint(ILjava/lang/String;)V
-.end method
-
 .method public abstract alertUpdateValue(I)V
 .end method
 
@@ -98,6 +95,9 @@
 .end method
 
 .method public abstract setAiSceneImageLevel(I)V
+.end method
+
+.method public abstract setConfigItemVisible(IIZ)V
 .end method
 
 .method public abstract setRecordingTimeState(I)V

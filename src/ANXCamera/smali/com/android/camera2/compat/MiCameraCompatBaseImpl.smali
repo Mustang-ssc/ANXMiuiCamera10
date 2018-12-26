@@ -1303,7 +1303,7 @@
     throw p1
 .end method
 
-.method public applyASDScene(Landroid/hardware/camera2/CaptureRequest$Builder;Ljava/lang/String;)V
+.method public applyASDScene(Landroid/hardware/camera2/CaptureRequest$Builder;I)V
     .locals 0
 
     .line 300
@@ -1340,7 +1340,7 @@
     invoke-virtual {p1, v0, v1}, Landroid/hardware/camera2/CaptureRequest$Builder;->set(Landroid/hardware/camera2/CaptureRequest$Key;Ljava/lang/Object;)V
 
     .line 375
-    invoke-static {}, Lcom/mi/config/b;->hA()Z
+    invoke-static {}, Lcom/mi/config/b;->hC()Z
 
     move-result v0
 

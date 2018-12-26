@@ -198,7 +198,7 @@
     invoke-super {p0}, Lcom/android/camera/ui/V6RelativeLayout;->onFinishInflate()V
 
     .line 43
-    const v0, 0x7f0d00ce
+    const v0, 0x7f0d00dc
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewFrame;->findViewById(I)Landroid/view/View;
 

@@ -137,6 +137,10 @@
     <dimen name="mode_select_text_size">12.5sp</dimen>
     <dimen name="mode_select_layout_height">46.0dip</dimen>
     <dimen name="mode_select_layout_edge">40.0dip</dimen>
+    <dimen name="mode_select_padding_right">1.3299866dip</dimen>
+    <dimen name="mode_select_red_dot_width">3.3299866dip</dimen>
+    <dimen name="mode_select_dot_margin_top">18.329987dip</dimen>
+    <dimen name="mode_select_margin_right">7.539978dip</dimen>
     <dimen name="preference_value_padding_top">6.0dip</dimen>
     <dimen name="preference_value_padding_bottom">6.0dip</dimen>
     <dimen name="preference_value_max_width">135.0dip</dimen>
@@ -169,7 +173,7 @@
     <dimen name="screen_on_proximity_sensor_hint_height">582.0dip</dimen>
     <dimen name="focus_big_radius">34.659973dip</dimen>
     <dimen name="focus_center_base_radius">6.0dip</dimen>
-    <item type="dimen" name="dualcamera_watermark_size_ratio">65.71429</item>
+    <item type="dimen" name="dualcamera_watermark_size_ratio">57.5</item>
     <item type="dimen" name="dualcamera_watermark_padding_x_ratio">46.42857</item>
     <item type="dimen" name="dualcamera_watermark_padding_y_ratio">46.42857</item>
     <dimen name="ai_scene_hint_margin_top">15.329987dip</dimen>
@@ -212,7 +216,7 @@
     <dimen name="beauty_fragment_height">63.339996dip</dimen>
     <dimen name="beauty_seek_bar_point_radius">3.3329773dip</dimen>
     <dimen name="beauty_divider_stroke">0.66700006dip</dimen>
-    <dimen name="beauty_divider_height">21.339996dip</dimen>
+    <dimen name="beauty_divider_height">23.179993dip</dimen>
     <dimen name="beauty_menu_select_text_padding">22.0dip</dimen>
     <dimen name="beauty_menu_select_text_margin">9.5dip</dimen>
     <dimen name="beauty_header_width">71.0dip</dimen>
@@ -237,9 +241,10 @@
     <dimen name="bokeh_line_width">0.6700001dip</dimen>
     <dimen name="bokeh_line_line_gap">11.0dip</dimen>
     <dimen name="bokeh_line_default_circle_radius">1.6699829dip</dimen>
-    <dimen name="bokeh_line_default_circle_gap">7.0dip</dimen>
+    <dimen name="bokeh_line_default_circle_gap">11.0dip</dimen>
     <dimen name="music_back_margin_left">23.0dip</dimen>
-    <dimen name="music_back_margin_top">26.669983dip</dimen>
+    <dimen name="music_back_margin_top">24.329987dip</dimen>
+    <dimen name="music_title_margin_top">35.0dip</dimen>
     <dimen name="music_thumbnail_width">66.66998dip</dimen>
     <dimen name="music_thumbnail_height">66.66998dip</dimen>
     <dimen name="music_item_margin_top">30.0dip</dimen>
@@ -268,6 +273,7 @@
     <dimen name="music_hint_text_left_margin">10.0dip</dimen>
     <dimen name="music_hint_text_size">11.669983sp</dimen>
     <dimen name="music_hint_text_width">106.66998dip</dimen>
+    <dimen name="music_play_width">14.669983dip</dimen>
     <dimen name="live_sticker_list_height">70.0dip</dimen>
     <dimen name="live_sticker_list_margin_left">5.3299866dip</dimen>
     <dimen name="live_sticker_list_margin_right">5.3299866dip</dimen>
@@ -275,7 +281,7 @@
     <dimen name="live_sticker_image_size">34.0dip</dimen>
     <dimen name="live_sticker_selected_corner_radius">6.669983dip</dimen>
     <dimen name="live_sticker_selected_stroke_width">1.3299866dip</dimen>
-    <dimen name="live_sticker_selected_size">49.329987dip</dimen>
+    <dimen name="live_sticker_selected_size">52.0dip</dimen>
     <dimen name="live_sticker_download_size">13.329987dip</dimen>
     <dimen name="negative_half_live_sticker_download_size">-6.669983dip</dimen>
     <dimen name="popup_tip_live_speed_padding">13.0dip</dimen>
@@ -284,8 +290,24 @@
     <dimen name="live_speed_list_margin">28.669983dip</dimen>
     <dimen name="live_speed_item_width">40.0dip</dimen>
     <dimen name="live_speed_item_textSize">12.0sp</dimen>
+    <dimen name="live_time_margin">7.0dip</dimen>
     <dimen name="video_preview_icon_width">55.0dip</dimen>
     <dimen name="video_preview_icon_height">55.0dip</dimen>
+    <item type="dimen" name="custom_watermark_height_scale">1.23</item>
+    <item type="dimen" name="custom_watermark_pandingY_scale">0.87</item>
+    <item type="dimen" name="custom_watermark_text_size_ratio">1.0</item>
+    <dimen name="live_filter_item_size">48.0dip</dimen>
+    <dimen name="live_filter_item_mask_size">46.659973dip</dimen>
+    <dimen name="live_filter_item_corners_size">6.659973dip</dimen>
+    <dimen name="live_filter_item_sel_stroke_width">1.3299866dip</dimen>
+    <dimen name="live_filter_item_sel_size">49.329987dip</dimen>
+    <dimen name="live_beauty_list_item_width">83.0dip</dimen>
+    <dimen name="live_beauty_list_heard_width">94.66998dip</dimen>
+    <dimen name="bottom_popu_left_image_intro_marginleft">18.0dip</dimen>
+    <dimen name="bottom_popu_speed_image_margin_bottom">74.32999dip</dimen>
+    <dimen name="bottom_popu_speed_image_width">34.0dip</dimen>
+    <dimen name="bottom_popu_speed_image_height">34.0dip</dimen>
+    <dimen name="bottom_popu_speed_title_top">5.3299866dip</dimen>
     <dimen name="front_camera_hint_animation_padding">4.0dip</dimen>
     <dimen name="front_camera_hint_animation_margin">206.66998dip</dimen>
     <dimen name="front_camera_hint_text_rotate_margin">310.0dip</dimen>

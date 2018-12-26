@@ -424,7 +424,7 @@
     .locals 2
 
     .line 115
-    const-string v0, "s_z_m"
+    const-string v0, "c_0x0c"
 
     const/4 v1, 0x0
 
@@ -432,14 +432,27 @@
 
     move-result v0
 
-    return v0
+    if-eqz v0, :cond_0
+
+    invoke-virtual {p0}, Lcom/mi/config/a;->eR()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const/4 v1, 0x1
+
+    nop
+
+    :cond_0
+    return v1
 .end method
 
 .method public eU()Z
     .locals 2
 
     .line 119
-    const-string v0, "a_e_d"
+    const-string v0, "s_z_m"
 
     const/4 v1, 0x0
 
@@ -454,7 +467,7 @@
     .locals 2
 
     .line 123
-    const-string v0, "s_m_f"
+    const-string v0, "a_e_d"
 
     const/4 v1, 0x0
 
@@ -468,8 +481,8 @@
 .method public eW()Z
     .locals 2
 
-    .line 128
-    const-string v0, "i_l_m_d"
+    .line 127
+    const-string v0, "s_m_f"
 
     const/4 v1, 0x0
 
@@ -484,7 +497,7 @@
     .locals 2
 
     .line 132
-    const-string v0, "s_p_l_b"
+    const-string v0, "i_l_m_d"
 
     const/4 v1, 0x0
 
@@ -499,7 +512,7 @@
     .locals 2
 
     .line 136
-    const-string v0, "s_p_l_f"
+    const-string v0, "s_p_l_b"
 
     const/4 v1, 0x0
 
@@ -514,7 +527,7 @@
     .locals 2
 
     .line 140
-    const-string v0, "s_f_a"
+    const-string v0, "s_p_l_f"
 
     const/4 v1, 0x0
 
@@ -525,462 +538,10 @@
     return v0
 .end method
 
-.method public fA()F
-    .locals 3
-
-    .line 272
-    const-string v0, "c_0x02_p_c_r_v"
-
-    const-wide v1, 0x3fec0d1b80000000L    # 0.8766000270843506
-
-    invoke-virtual {p0, v0, v1, v2}, Lcom/mi/config/a;->getDoubleFromValues(Ljava/lang/String;D)D
-
-    move-result-wide v0
-
-    double-to-float v0, v0
-
-    return v0
-.end method
-
-.method public fB()Z
+.method public fA()Z
     .locals 2
 
-    .line 276
-    const-string v0, "c_0x03"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fC()Z
-    .locals 2
-
-    .line 280
-    const-string v0, "s_c_w_m"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fD()Z
-    .locals 2
-
-    .line 296
-    const-string v0, "c_0x08"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fE()Z
-    .locals 2
-
-    .line 300
-    const-string v0, "c_0x09"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fa()Z
-    .locals 2
-
-    .line 144
-    const-string v0, "s_p_a"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fb()Z
-    .locals 2
-
-    .line 148
-    const-string v0, "s_v_b"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fc()Z
-    .locals 2
-
-    .line 152
-    const-string v0, "s_o_a_w"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fd()Z
-    .locals 2
-
-    .line 156
-    const-string v0, "s_f_s"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fe()Z
-    .locals 2
-
-    .line 168
-    const-string v0, "s_m_c_t_f"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public ff()Z
-    .locals 2
-
-    .line 172
-    const-string v0, "s_a_3"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fg()Z
-    .locals 3
-
-    .line 177
-    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
-
-    const/4 v1, 0x0
-
-    const/16 v2, 0x1c
-
-    if-ne v0, v2, :cond_0
-
-    const-string v0, "s_s_n"
-
-    .line 178
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    const/4 v1, 0x1
-
-    nop
-
-    .line 177
-    :cond_0
-    return v1
-.end method
-
-.method public fh()Z
-    .locals 2
-
-    .line 188
-    const-string v0, "s_m_l"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fi()Z
-    .locals 2
-
-    .line 197
-    const-string v0, "s_s_v"
-
-    const/4 v1, 0x1
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fj()Z
-    .locals 2
-
-    .line 201
-    const-string v0, "s_s_s"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fk()Z
-    .locals 2
-
-    .line 205
-    const-string v0, "s_f_s_c"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fl()Z
-    .locals 2
-
-    .line 209
-    const-string v0, "s_b_m"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fm()Z
-    .locals 2
-
-    .line 213
-    const-string v0, "s_a_u"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fn()Z
-    .locals 2
-
-    .line 217
-    const-string v0, "s_f_z_i"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fo()Z
-    .locals 2
-
-    .line 221
-    const-string v0, "s_v_f_m"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fp()Z
-    .locals 2
-
-    .line 225
-    const-string v0, "s_f_9"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fq()Z
-    .locals 2
-
-    .line 229
-    const-string v0, "s_e_l"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fr()Ljava/lang/String;
-    .locals 2
-
-    .line 233
-    const-string v0, "h_d_v"
-
-    const-string v1, ""
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v0
-
-    return-object v0
-.end method
-
-.method public fs()I
-    .locals 2
-
-    .line 237
-    const-string v0, "a_l_l_l"
-
-    const/16 v1, 0x15e
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getInt(Ljava/lang/String;I)I
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public ft()I
-    .locals 2
-
-    .line 241
-    const-string v0, "a_l_h_l"
-
-    const/16 v1, 0x12c
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getInt(Ljava/lang/String;I)I
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fu()Z
-    .locals 2
-
-    .line 245
-    const-string v0, "s_u_w"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fv()Z
-    .locals 2
-
-    .line 249
-    const-string v0, "s_c_w_b"
-
-    const/4 v1, 0x1
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fw()Z
-    .locals 2
-
-    .line 253
-    const-string v0, "s_b_b"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fx()Z
-    .locals 2
-
-    .line 257
-    const-string v0, "c_0x04_i_l_h_d"
-
-    const/4 v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    return v0
-.end method
-
-.method public fy()Z
-    .locals 2
-
-    .line 261
+    .line 269
     invoke-static {}, Lcom/android/camera/Util;->isGlobalVersion()Z
 
     move-result v0
@@ -997,7 +558,7 @@
 
     goto :goto_0
 
-    .line 264
+    .line 272
     :cond_0
     const-string v0, "c_0x00_s_l_s"
 
@@ -1007,16 +568,16 @@
 
     return v0
 
-    .line 262
+    .line 270
     :cond_1
     :goto_0
     return v1
 .end method
 
-.method public fz()I
+.method public fB()I
     .locals 2
 
-    .line 268
+    .line 276
     const-string v0, "c_0x01_p_g_a_v"
 
     const/16 v1, 0x118
@@ -1028,10 +589,507 @@
     return v0
 .end method
 
+.method public fC()F
+    .locals 3
+
+    .line 280
+    const-string v0, "c_0x02_p_c_r_v"
+
+    const-wide v1, 0x3fec0d1b80000000L    # 0.8766000270843506
+
+    invoke-virtual {p0, v0, v1, v2}, Lcom/mi/config/a;->getDoubleFromValues(Ljava/lang/String;D)D
+
+    move-result-wide v0
+
+    double-to-float v0, v0
+
+    return v0
+.end method
+
+.method public fD()Z
+    .locals 2
+
+    .line 284
+    const-string v0, "c_0x03"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fE()Z
+    .locals 2
+
+    .line 288
+    const-string v0, "s_c_w_m"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fF()Z
+    .locals 2
+
+    .line 304
+    const-string v0, "c_0x08"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fG()Z
+    .locals 2
+
+    .line 308
+    const-string v0, "c_0x09"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fH()Z
+    .locals 2
+
+    .line 312
+    const-string v0, "c_0x0a"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fa()Z
+    .locals 2
+
+    .line 144
+    const-string v0, "s_f_a"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fb()Z
+    .locals 2
+
+    .line 148
+    const-string v0, "s_p_a"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fc()Z
+    .locals 2
+
+    .line 152
+    const-string v0, "s_v_b"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fd()Z
+    .locals 2
+
+    .line 156
+    const-string v0, "s_o_a_w"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fe()Z
+    .locals 2
+
+    .line 160
+    const-string v0, "s_f_s"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public ff()Z
+    .locals 2
+
+    .line 172
+    const-string v0, "s_m_c_t_f"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fg()Z
+    .locals 2
+
+    .line 176
+    const-string v0, "s_a_3"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fh()Z
+    .locals 3
+
+    .line 181
+    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    const/4 v1, 0x0
+
+    const/16 v2, 0x1c
+
+    if-ne v0, v2, :cond_0
+
+    const-string v0, "s_s_n"
+
+    .line 182
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const/4 v1, 0x1
+
+    nop
+
+    .line 181
+    :cond_0
+    return v1
+.end method
+
+.method public fi()Z
+    .locals 2
+
+    .line 192
+    const-string v0, "s_m_l"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fj()Z
+    .locals 2
+
+    .line 201
+    const-string v0, "s_s_v"
+
+    const/4 v1, 0x1
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fk()Z
+    .locals 2
+
+    .line 205
+    const-string v0, "s_s_s"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fl()Z
+    .locals 2
+
+    .line 209
+    const-string v0, "s_f_s_c"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fm()Z
+    .locals 2
+
+    .line 213
+    const-string v0, "s_b_m"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fn()I
+    .locals 2
+
+    .line 217
+    const-string v0, "c_0x0b"
+
+    const/16 v1, 0xb4
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getInt(Ljava/lang/String;I)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fo()Z
+    .locals 2
+
+    .line 221
+    const-string v0, "s_a_u"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fp()Z
+    .locals 2
+
+    .line 225
+    const-string v0, "s_f_z_i"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fq()Z
+    .locals 2
+
+    .line 229
+    const-string v0, "s_v_f_m"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fr()Z
+    .locals 2
+
+    .line 233
+    const-string v0, "s_f_9"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fs()Z
+    .locals 2
+
+    .line 237
+    const-string v0, "s_e_l"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public ft()Ljava/lang/String;
+    .locals 2
+
+    .line 241
+    const-string v0, "h_d_v"
+
+    const-string v1, ""
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public fu()I
+    .locals 2
+
+    .line 245
+    const-string v0, "a_l_l_l"
+
+    const/16 v1, 0x15e
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getInt(Ljava/lang/String;I)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fv()I
+    .locals 2
+
+    .line 249
+    const-string v0, "a_l_h_l"
+
+    const/16 v1, 0x12c
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getInt(Ljava/lang/String;I)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fw()Z
+    .locals 2
+
+    .line 253
+    const-string v0, "s_u_w"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fx()Z
+    .locals 2
+
+    .line 257
+    const-string v0, "s_c_w_b"
+
+    const/4 v1, 0x1
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fy()Z
+    .locals 2
+
+    .line 261
+    const-string v0, "s_b_b"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public fz()Z
+    .locals 2
+
+    .line 265
+    const-string v0, "c_0x04_i_l_h_d"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v0, v1}, Lcom/mi/config/a;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method protected isMutable()Z
     .locals 1
 
-    .line 306
+    .line 318
     const/4 v0, 0x0
 
     return v0
@@ -1040,7 +1098,7 @@
 .method public isSupport4KUHDEIS()Z
     .locals 2
 
-    .line 292
+    .line 300
     const-string v0, "c_0x07"
 
     const/4 v1, 0x0
@@ -1055,7 +1113,7 @@
 .method public isSupportNormalWideLDC()Z
     .locals 2
 
-    .line 284
+    .line 292
     const-string v0, "c_0x05"
 
     const/4 v1, 0x0
@@ -1070,7 +1128,7 @@
 .method public isSupportUltraWideLDC()Z
     .locals 2
 
-    .line 288
+    .line 296
     const-string v0, "c_0x06"
 
     const/4 v1, 0x0

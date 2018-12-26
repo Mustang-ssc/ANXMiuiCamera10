@@ -127,7 +127,7 @@
     .locals 1
 
     .line 56
-    const v0, 0x7f040028
+    const v0, 0x7f040029
 
     return v0
 .end method
@@ -157,7 +157,7 @@
     iput v1, v0, Landroid/view/ViewGroup$MarginLayoutParams;->bottomMargin:I
 
     .line 46
-    const v0, 0x7f0d007d
+    const v0, 0x7f0d008a
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -166,7 +166,7 @@
     iput-object v0, p0, Lcom/android/camera/fragment/beauty/FragmentPopupBeauty;->mIconSticker:Landroid/view/View;
 
     .line 47
-    const v0, 0x7f0d007e
+    const v0, 0x7f0d008b
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -346,7 +346,7 @@
     nop
 
     :pswitch_data_0
-    .packed-switch 0x7f0d007d
+    .packed-switch 0x7f0d008a
         :pswitch_1
         :pswitch_0
     .end packed-switch

@@ -1,11 +1,14 @@
 .class Lcom/android/camera/fragment/FragmentFullScreen$3;
-.super Landroid/os/Handler;
+.super Ljava/lang/Object;
 .source "FragmentFullScreen.java"
+
+# interfaces
+.implements Landroid/content/DialogInterface$OnClickListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/camera/fragment/FragmentFullScreen;->initLiveListener()V
+    value = Lcom/android/camera/fragment/FragmentFullScreen;->showExitConfirm()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -22,22 +25,26 @@
 .method constructor <init>(Lcom/android/camera/fragment/FragmentFullScreen;)V
     .locals 0
 
-    .line 323
+    .line 309
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$3;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
-    invoke-direct {p0}, Landroid/os/Handler;-><init>()V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public handleMessage(Landroid/os/Message;)V
+.method public onClick(Landroid/content/DialogInterface;I)V
     .locals 0
 
-    .line 326
-    invoke-super {p0, p1}, Landroid/os/Handler;->handleMessage(Landroid/os/Message;)V
+    .line 312
+    iget-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$3;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
-    .line 327
+    const/4 p2, 0x0
+
+    invoke-virtual {p1, p2}, Lcom/android/camera/fragment/FragmentFullScreen;->quitLiveRecordPreview(Z)V
+
+    .line 313
     return-void
 .end method

@@ -22,7 +22,7 @@
 .method constructor <init>(Lcom/android/camera2/MiCamera2;Landroid/os/Looper;)V
     .locals 0
 
-    .line 155
+    .line 160
     iput-object p1, p0, Lcom/android/camera2/MiCamera2$1;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-direct {p0, p2}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
@@ -35,7 +35,7 @@
 .method public handleMessage(Landroid/os/Message;)V
     .locals 1
 
-    .line 159
+    .line 164
     iget p1, p1, Landroid/os/Message;->what:I
 
     const/4 v0, 0x1
@@ -44,7 +44,7 @@
 
     goto :goto_0
 
-    .line 161
+    .line 166
     :cond_0
     invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
@@ -54,12 +54,12 @@
 
     invoke-static {p1, v0}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 162
+    .line 167
     iget-object p1, p0, Lcom/android/camera2/MiCamera2$1;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-static {p1}, Lcom/android/camera2/MiCamera2;->access$100(Lcom/android/camera2/MiCamera2;)V
 
-    .line 165
+    .line 170
     :goto_0
     return-void
 .end method

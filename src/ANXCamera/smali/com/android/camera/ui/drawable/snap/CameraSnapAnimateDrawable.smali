@@ -67,10 +67,10 @@
 .method static constructor <clinit>()V
     .locals 4
 
-    .line 689
+    .line 696
     nop
 
-    .line 690
+    .line 697
     const-wide/high16 v0, 0x4059000000000000L    # 100.0
 
     const-wide/high16 v2, 0x402e000000000000L    # 15.0
@@ -81,10 +81,10 @@
 
     sput-object v0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCameraDownConfig:Lcom/facebook/rebound/SpringConfig;
 
-    .line 694
+    .line 701
     nop
 
-    .line 695
+    .line 702
     const-wide/high16 v0, 0x403e000000000000L    # 30.0
 
     const-wide/high16 v2, 0x405e000000000000L    # 120.0
@@ -95,10 +95,10 @@
 
     sput-object v2, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCameraUpConfig:Lcom/facebook/rebound/SpringConfig;
 
-    .line 696
+    .line 703
     nop
 
-    .line 697
+    .line 704
     const-wide v2, 0x4066800000000000L    # 180.0
 
     invoke-static {v2, v3, v0, v1}, Lcom/facebook/rebound/SpringConfig;->fromOrigamiTensionAndFriction(DD)Lcom/facebook/rebound/SpringConfig;
@@ -107,10 +107,10 @@
 
     sput-object v0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordScaleConfig:Lcom/facebook/rebound/SpringConfig;
 
-    .line 698
+    .line 705
     nop
 
-    .line 699
+    .line 706
     const-wide/high16 v0, 0x4024000000000000L    # 10.0
 
     invoke-static {v2, v3, v0, v1}, Lcom/facebook/rebound/SpringConfig;->fromOrigamiTensionAndFriction(DD)Lcom/facebook/rebound/SpringConfig;
@@ -119,7 +119,7 @@
 
     sput-object v0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCameraUpSplashConfig:Lcom/facebook/rebound/SpringConfig;
 
-    .line 698
+    .line 705
     return-void
 .end method
 
@@ -129,7 +129,7 @@
     .line 53
     invoke-direct {p0}, Landroid/graphics/drawable/Drawable;-><init>()V
 
-    .line 759
+    .line 766
     new-instance v0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$16;
 
     invoke-direct {v0, p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$16;-><init>(Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;)V
@@ -252,15 +252,15 @@
 .method private initReboundSystem()V
     .locals 3
 
-    .line 704
+    .line 711
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSpringSystem:Lcom/facebook/rebound/SpringSystem;
 
     if-eqz v0, :cond_0
 
-    .line 705
+    .line 712
     return-void
 
-    .line 708
+    .line 715
     :cond_0
     invoke-static {}, Lcom/facebook/rebound/SpringSystem;->create()Lcom/facebook/rebound/SpringSystem;
 
@@ -268,7 +268,7 @@
 
     iput-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSpringSystem:Lcom/facebook/rebound/SpringSystem;
 
-    .line 710
+    .line 717
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSpringSystem:Lcom/facebook/rebound/SpringSystem;
 
     invoke-virtual {v0}, Lcom/facebook/rebound/SpringSystem;->createSpring()Lcom/facebook/rebound/Spring;
@@ -277,14 +277,14 @@
 
     iput-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mUpSpring:Lcom/facebook/rebound/Spring;
 
-    .line 711
+    .line 718
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mUpSpring:Lcom/facebook/rebound/Spring;
 
     sget-object v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCameraUpConfig:Lcom/facebook/rebound/SpringConfig;
 
     invoke-virtual {v0, v1}, Lcom/facebook/rebound/Spring;->setSpringConfig(Lcom/facebook/rebound/SpringConfig;)Lcom/facebook/rebound/Spring;
 
-    .line 712
+    .line 719
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mUpSpring:Lcom/facebook/rebound/Spring;
 
     new-instance v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$14;
@@ -293,7 +293,7 @@
 
     invoke-virtual {v0, v1}, Lcom/facebook/rebound/Spring;->addListener(Lcom/facebook/rebound/SpringListener;)Lcom/facebook/rebound/Spring;
 
-    .line 733
+    .line 740
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSpringSystem:Lcom/facebook/rebound/SpringSystem;
 
     invoke-virtual {v0}, Lcom/facebook/rebound/SpringSystem;->createSpring()Lcom/facebook/rebound/Spring;
@@ -302,21 +302,21 @@
 
     iput-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordSpring:Lcom/facebook/rebound/Spring;
 
-    .line 734
+    .line 741
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordSpring:Lcom/facebook/rebound/Spring;
 
     sget-object v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordScaleConfig:Lcom/facebook/rebound/SpringConfig;
 
     invoke-virtual {v0, v1}, Lcom/facebook/rebound/Spring;->setSpringConfig(Lcom/facebook/rebound/SpringConfig;)Lcom/facebook/rebound/Spring;
 
-    .line 735
+    .line 742
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordSpring:Lcom/facebook/rebound/Spring;
 
     const-wide/high16 v1, 0x3ff0000000000000L    # 1.0
 
     invoke-virtual {v0, v1, v2}, Lcom/facebook/rebound/Spring;->setCurrentValue(D)Lcom/facebook/rebound/Spring;
 
-    .line 736
+    .line 743
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordSpring:Lcom/facebook/rebound/Spring;
 
     new-instance v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$15;
@@ -325,7 +325,7 @@
 
     invoke-virtual {v0, v1}, Lcom/facebook/rebound/Spring;->addListener(Lcom/facebook/rebound/SpringListener;)Lcom/facebook/rebound/Spring;
 
-    .line 745
+    .line 752
     return-void
 .end method
 
@@ -356,14 +356,14 @@
     iput v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mLiveSpeed:F
 
     .line 356
-    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$LiveConfigChanges;->getTotalRecordintTime()J
+    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$LiveConfigChanges;->getTotalRecordingTime()J
 
     move-result-wide v1
 
     iput-wide v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mLiveTotalTime:J
 
     .line 357
-    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$LiveConfigChanges;->getStartRecordintTime()J
+    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$LiveConfigChanges;->getStartRecordingTime()J
 
     move-result-wide v0
 
@@ -379,7 +379,7 @@
 .method public addSegmentNow()V
     .locals 3
 
-    .line 439
+    .line 442
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
     iget-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
@@ -390,46 +390,46 @@
 
     invoke-virtual {v0, v1, v2}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->addSegmentNow(J)V
 
-    .line 440
+    .line 443
     invoke-virtual {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->invalidateSelf()V
 
-    .line 441
+    .line 444
     return-void
 .end method
 
 .method public cancelAnimation()V
     .locals 2
 
-    .line 860
+    .line 867
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     const/4 v1, 0x0
 
     if-eqz v0, :cond_0
 
-    .line 861
+    .line 868
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->cancel()V
 
-    .line 862
+    .line 869
     iput-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
-    .line 864
+    .line 871
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRingAnimator:Landroid/animation/ValueAnimator;
 
     if-eqz v0, :cond_1
 
-    .line 865
+    .line 872
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRingAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->cancel()V
 
-    .line 866
+    .line 873
     iput-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRingAnimator:Landroid/animation/ValueAnimator;
 
-    .line 869
+    .line 876
     :cond_1
     return-void
 .end method
@@ -437,43 +437,43 @@
 .method public cancelRebound()V
     .locals 3
 
-    .line 847
+    .line 854
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
     if-eqz v0, :cond_0
 
-    .line 848
+    .line 855
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->cancel()V
 
-    .line 850
+    .line 857
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
     const/4 v1, 0x0
 
     iput-boolean v1, v0, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->isInBeautyMode:Z
 
-    .line 851
+    .line 858
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->resetRecordingState()V
 
-    .line 853
+    .line 860
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mUpSpring:Lcom/facebook/rebound/Spring;
 
     const-wide/16 v1, 0x0
 
     invoke-virtual {v0, v1, v2}, Lcom/facebook/rebound/Spring;->setEndValue(D)Lcom/facebook/rebound/Spring;
 
-    .line 854
+    .line 861
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordSpring:Lcom/facebook/rebound/Spring;
 
     const-wide/high16 v1, 0x3ff0000000000000L    # 1.0
 
     invoke-virtual {v0, v1, v2}, Lcom/facebook/rebound/Spring;->setEndValue(D)Lcom/facebook/rebound/Spring;
 
-    .line 856
+    .line 863
     :cond_0
     return-void
 .end method
@@ -481,18 +481,18 @@
 .method public directFinishRecord()V
     .locals 6
 
-    .line 604
+    .line 611
     invoke-virtual {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->cancelAnimation()V
 
-    .line 605
+    .line 612
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     if-nez v0, :cond_0
 
-    .line 606
+    .line 613
     return-void
 
-    .line 609
+    .line 616
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
@@ -500,7 +500,7 @@
 
     iput-boolean v1, v0, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->isRecording:Z
 
-    .line 611
+    .line 618
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     iget-object v2, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
@@ -515,32 +515,32 @@
 
     const/high16 v5, 0x3f800000    # 1.0f
 
-    .line 614
+    .line 621
     invoke-static {v5}, Lcom/android/camera/Util;->dpToPixel(F)I
 
     move-result v5
 
     int-to-float v5, v5
 
-    .line 611
+    .line 618
     invoke-virtual {v0, v2, v3, v4, v5}, Lcom/android/camera/ui/drawable/CameraPaintBase;->setCurrentValues(FIIF)V
 
-    .line 615
+    .line 622
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     iput-boolean v1, v0, Lcom/android/camera/ui/drawable/CameraPaintBase;->isRecording:Z
 
-    .line 616
+    .line 623
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/CameraPaintBase;->resetRecordingState()V
 
-    .line 617
+    .line 624
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
-    .line 618
+    .line 625
     return-void
 .end method
 
@@ -605,44 +605,44 @@
 .method public finishRecord(Lcom/android/camera/fragment/bottom/BottomAnimationConfig;)V
     .locals 2
 
-    .line 552
+    .line 559
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     if-nez v0, :cond_0
 
-    .line 553
+    .line 560
     invoke-virtual {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->invalidateSelf()V
 
-    .line 554
+    .line 561
     return-void
 
-    .line 556
+    .line 563
     :cond_0
     iget-boolean v0, p1, Lcom/android/camera/fragment/bottom/BottomAnimationConfig;->mNeedFinishRecord:Z
 
     if-eqz v0, :cond_1
 
-    .line 557
+    .line 564
     invoke-virtual {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->cancelAnimation()V
 
-    .line 558
+    .line 565
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     invoke-virtual {p1}, Lcom/android/camera/ui/drawable/CameraPaintBase;->resetRecordingState()V
 
-    .line 559
+    .line 566
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     const/16 v0, 0xff
 
     invoke-virtual {p1, v0}, Lcom/android/camera/ui/drawable/CameraPaintBase;->setTargetAlpha(I)Lcom/android/camera/ui/drawable/CameraPaintBase;
 
-    .line 561
+    .line 568
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
     invoke-virtual {p1, v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetAlpha(I)Lcom/android/camera/ui/drawable/CameraPaintBase;
 
-    .line 562
+    .line 569
     const/4 p1, 0x2
 
     new-array p1, p1, [F
@@ -655,21 +655,21 @@
 
     iput-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
-    .line 563
+    .line 570
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     const-wide/16 v0, 0xc8
 
     invoke-virtual {p1, v0, v1}, Landroid/animation/ValueAnimator;->setStartDelay(J)V
 
-    .line 564
+    .line 571
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     const-wide/16 v0, 0x104
 
     invoke-virtual {p1, v0, v1}, Landroid/animation/ValueAnimator;->setDuration(J)Landroid/animation/ValueAnimator;
 
-    .line 565
+    .line 572
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$12;
@@ -678,12 +678,12 @@
 
     invoke-virtual {p1, v0}, Landroid/animation/ValueAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
-    .line 575
+    .line 582
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->removeAllListeners()V
 
-    .line 576
+    .line 583
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$13;
@@ -692,18 +692,18 @@
 
     invoke-virtual {p1, v0}, Landroid/animation/ValueAnimator;->addListener(Landroid/animation/Animator$AnimatorListener;)V
 
-    .line 597
+    .line 604
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->start()V
 
     goto :goto_0
 
-    .line 599
+    .line 606
     :cond_1
     invoke-virtual {p0, p1}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->stopRecord(Lcom/android/camera/fragment/bottom/BottomAnimationConfig;)V
 
-    .line 601
+    .line 608
     :goto_0
     return-void
 
@@ -725,17 +725,30 @@
     return v0
 .end method
 
+.method public hasSegments()Z
+    .locals 1
+
+    .line 447
+    iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
+
+    invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->hasSegments()Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public hideRoundPaintItem()V
     .locals 2
 
-    .line 872
+    .line 879
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
     const/16 v1, 0x8
 
     invoke-virtual {v0, v1}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setVisible(I)V
 
-    .line 873
+    .line 880
     return-void
 .end method
 
@@ -772,7 +785,7 @@
 .method public initTargetValues(IZ)V
     .locals 11
 
-    .line 624
+    .line 631
     const v0, 0x3f3020c5    # 0.688f
 
     const v1, -0x1abd1
@@ -797,7 +810,7 @@
 
     packed-switch p1, :pswitch_data_0
 
-    .line 626
+    .line 633
     :pswitch_0
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
@@ -811,28 +824,66 @@
 
     invoke-virtual {p1, v6, v10, p2, v1}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->setTargetValues(FIIF)V
 
-    .line 627
+    .line 634
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
     sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
 
     invoke-virtual {p1, v0, v10, p2, v4}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetValues(FIIF)V
 
-    .line 628
+    .line 635
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
 
     invoke-virtual {p1, v3, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setTargetValues(FIIF)V
 
-    .line 629
+    .line 636
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mMotionPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;
 
     invoke-virtual {p1, v3, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;->setTargetValues(FIIF)V
 
-    .line 630
+    .line 637
     goto/16 :goto_0
 
-    .line 660
+    .line 667
     :pswitch_1
+    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
+
+    invoke-static {v5}, Lcom/android/camera/Util;->dpToPixel(F)I
+
+    move-result p2
+
+    int-to-float p2, p2
+
+    invoke-virtual {p1, v6, v10, v9, p2}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->setTargetValues(FIIF)V
+
+    .line 668
+    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
+
+    sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
+
+    invoke-virtual {p1, v2, v10, p2, v4}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetValues(FIIF)V
+
+    .line 669
+    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
+
+    sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OUTSTANDING:I
+
+    invoke-virtual {p1, v7, v10, p2, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setTargetValues(FIIF)V
+
+    .line 671
+    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
+
+    invoke-virtual {p1, v9}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setNeedSpacing(Z)V
+
+    .line 672
+    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mMotionPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;
+
+    invoke-virtual {p1, v7, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;->setTargetValues(FIIF)V
+
+    goto :goto_0
+
+    .line 660
+    :pswitch_2
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
     invoke-static {v5}, Lcom/android/camera/Util;->dpToPixel(F)I
@@ -848,62 +899,24 @@
 
     sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
 
-    invoke-virtual {p1, v2, v10, p2, v4}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetValues(FIIF)V
+    invoke-virtual {p1, v2, v1, p2, v4}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetValues(FIIF)V
 
     .line 662
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
 
-    sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OUTSTANDING:I
-
-    invoke-virtual {p1, v7, v10, p2, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setTargetValues(FIIF)V
-
-    .line 664
-    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
-
-    invoke-virtual {p1, v9}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setNeedSpacing(Z)V
-
-    .line 665
-    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mMotionPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;
-
-    invoke-virtual {p1, v7, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;->setTargetValues(FIIF)V
-
-    goto :goto_0
-
-    .line 653
-    :pswitch_2
-    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
-
-    invoke-static {v5}, Lcom/android/camera/Util;->dpToPixel(F)I
-
-    move-result p2
-
-    int-to-float p2, p2
-
-    invoke-virtual {p1, v6, v10, v9, p2}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->setTargetValues(FIIF)V
-
-    .line 654
-    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
-
-    sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
-
-    invoke-virtual {p1, v2, v1, p2, v4}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetValues(FIIF)V
-
-    .line 655
-    iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
-
     invoke-virtual {p1, v7, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setTargetValues(FIIF)V
 
-    .line 656
+    .line 663
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mMotionPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;
 
     sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OUTSTANDING:I
 
     invoke-virtual {p1, v7, v10, p2, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;->setTargetValues(FIIF)V
 
-    .line 658
+    .line 665
     goto :goto_0
 
-    .line 644
+    .line 651
     :pswitch_3
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
@@ -915,34 +928,34 @@
 
     invoke-virtual {p1, v6, v10, v9, v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->setTargetValues(FIIF)V
 
-    .line 645
+    .line 652
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
     sget v0, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
 
     invoke-virtual {p1, v2, v1, v0, v4}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetValues(FIIF)V
 
-    .line 646
+    .line 653
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
 
     sget v0, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OUTSTANDING:I
 
     invoke-virtual {p1, v7, v10, v0, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setTargetValues(FIIF)V
 
-    .line 648
+    .line 655
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
 
     invoke-virtual {p1, p2}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setNeedSpacing(Z)V
 
-    .line 649
+    .line 656
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mMotionPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;
 
     invoke-virtual {p1, v7, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;->setTargetValues(FIIF)V
 
-    .line 650
+    .line 657
     goto :goto_0
 
-    .line 635
+    .line 642
     :pswitch_4
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
@@ -956,27 +969,27 @@
 
     invoke-virtual {p1, v6, v10, p2, v2}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->setTargetValues(FIIF)V
 
-    .line 636
+    .line 643
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
     sget p2, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
 
     invoke-virtual {p1, v0, v1, p2, v4}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetValues(FIIF)V
 
-    .line 637
+    .line 644
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mSecondPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;
 
     invoke-virtual {p1, v3, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintSecond;->setTargetValues(FIIF)V
 
-    .line 638
+    .line 645
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mMotionPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;
 
     invoke-virtual {p1, v3, v10, v9, v8}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintMotion;->setTargetValues(FIIF)V
 
-    .line 639
+    .line 646
     nop
 
-    .line 668
+    .line 675
     :goto_0
     return-void
 
@@ -1002,7 +1015,7 @@
 .method public isRunning()Z
     .locals 1
 
-    .line 684
+    .line 691
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mModeChangeAnimator:Landroid/animation/ValueAnimator;
 
     if-eqz v0, :cond_0
@@ -1022,7 +1035,7 @@
 
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
-    .line 685
+    .line 692
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->isRunning()Z
 
     move-result v0
@@ -1037,7 +1050,7 @@
     :cond_2
     const/4 v0, 0x0
 
-    .line 684
+    .line 691
     :goto_0
     return v0
 .end method
@@ -1055,7 +1068,7 @@
 .method public pauseRecording()V
     .locals 1
 
-    .line 426
+    .line 429
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     if-eqz v0, :cond_0
@@ -1068,12 +1081,12 @@
 
     if-eqz v0, :cond_0
 
-    .line 427
+    .line 430
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->pause()V
 
-    .line 429
+    .line 432
     :cond_0
     return-void
 .end method
@@ -1310,33 +1323,33 @@
 .method public removeLastSegment()V
     .locals 1
 
-    .line 444
+    .line 451
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->getSegmentRatios()Ljava/util/List;
 
     move-result-object v0
 
-    .line 445
+    .line 452
     invoke-interface {v0}, Ljava/util/List;->isEmpty()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 446
+    .line 453
     return-void
 
-    .line 449
+    .line 456
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mCirclePaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintCircle;->removeLastSegmentAndGetLastTime()J
 
-    .line 451
+    .line 458
     invoke-virtual {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->invalidateSelf()V
 
-    .line 453
+    .line 460
     return-void
 .end method
 
@@ -1370,10 +1383,10 @@
 .method public resumeRecording()V
     .locals 1
 
-    .line 432
+    .line 435
     invoke-direct {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->updateLiveAnimationConfig()V
 
-    .line 433
+    .line 436
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     if-eqz v0, :cond_0
@@ -1386,12 +1399,12 @@
 
     if-eqz v0, :cond_0
 
-    .line 434
+    .line 437
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->resume()V
 
-    .line 436
+    .line 439
     :cond_0
     return-void
 .end method
@@ -1465,21 +1478,21 @@
 .method public showRoundPaintItem()V
     .locals 2
 
-    .line 876
+    .line 883
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setVisible(I)V
 
-    .line 877
+    .line 884
     return-void
 .end method
 
 .method public start()V
     .locals 0
 
-    .line 675
+    .line 682
     return-void
 .end method
 
@@ -1538,10 +1551,10 @@
 .method public startRebound()V
     .locals 3
 
-    .line 789
+    .line 796
     invoke-direct {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->initReboundSystem()V
 
-    .line 791
+    .line 798
     const/4 v0, 0x2
 
     new-array v0, v0, [F
@@ -1554,21 +1567,21 @@
 
     iput-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
-    .line 792
+    .line 799
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
     const-wide/16 v1, 0x12c
 
     invoke-virtual {v0, v1, v2}, Landroid/animation/ValueAnimator;->setStartDelay(J)V
 
-    .line 793
+    .line 800
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
     const-wide/16 v1, 0x2134
 
     invoke-virtual {v0, v1, v2}, Landroid/animation/ValueAnimator;->setDuration(J)Landroid/animation/ValueAnimator;
 
-    .line 794
+    .line 801
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$17;
@@ -1577,7 +1590,7 @@
 
     invoke-virtual {v0, v1}, Landroid/animation/ValueAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
-    .line 816
+    .line 823
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$18;
@@ -1586,12 +1599,12 @@
 
     invoke-virtual {v0, v1}, Landroid/animation/ValueAnimator;->addListener(Landroid/animation/Animator$AnimatorListener;)V
 
-    .line 843
+    .line 850
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mReboundAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->start()V
 
-    .line 844
+    .line 851
     return-void
 
     nop
@@ -1651,12 +1664,12 @@
 
     invoke-virtual {v0, v1}, Landroid/animation/ValueAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
-    .line 389
+    .line 392
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->removeAllListeners()V
 
-    .line 391
+    .line 394
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$8;
@@ -1665,32 +1678,32 @@
 
     invoke-virtual {v0, v1}, Landroid/animation/ValueAnimator;->addListener(Landroid/animation/Animator$AnimatorListener;)V
 
-    .line 417
+    .line 420
     iget-boolean p1, p1, Lcom/android/camera/fragment/bottom/BottomAnimationConfig;->mShouldRepeat:Z
 
     if-eqz p1, :cond_1
 
-    .line 418
+    .line 421
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     const/4 v0, 0x1
 
     invoke-virtual {p1, v0}, Landroid/animation/ValueAnimator;->setRepeatMode(I)V
 
-    .line 419
+    .line 422
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     const/4 v0, -0x1
 
     invoke-virtual {p1, v0}, Landroid/animation/ValueAnimator;->setRepeatCount(I)V
 
-    .line 422
+    .line 425
     :cond_1
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->start()V
 
-    .line 423
+    .line 426
     return-void
 
     nop
@@ -1927,22 +1940,22 @@
 .method public stop()V
     .locals 0
 
-    .line 680
+    .line 687
     return-void
 .end method
 
 .method public stopRecord(Lcom/android/camera/fragment/bottom/BottomAnimationConfig;)V
     .locals 5
 
-    .line 456
+    .line 463
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     if-nez v0, :cond_0
 
-    .line 457
+    .line 464
     return-void
 
-    .line 460
+    .line 467
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
@@ -1950,10 +1963,10 @@
 
     iput-boolean v1, v0, Lcom/android/camera/ui/drawable/CameraPaintBase;->isRecording:Z
 
-    .line 462
+    .line 469
     invoke-virtual {p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->cancelAnimation()V
 
-    .line 464
+    .line 471
     iget v0, p1, Lcom/android/camera/fragment/bottom/BottomAnimationConfig;->mCurrentMode:I
 
     const/high16 v1, 0x3f800000    # 1.0f
@@ -1962,7 +1975,7 @@
 
     packed-switch v0, :pswitch_data_1
 
-    .line 486
+    .line 493
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
     iget-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
@@ -1983,20 +1996,20 @@
 
     goto :goto_0
 
-    .line 468
+    .line 475
     :pswitch_0
     iget-boolean v0, p1, Lcom/android/camera/fragment/bottom/BottomAnimationConfig;->mIsPostProcessing:Z
 
     if-eqz v0, :cond_1
 
-    .line 469
+    .line 476
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRoundPaintItem:Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;
 
     const/4 v2, 0x0
 
     invoke-virtual {v0, v2}, Lcom/android/camera/ui/drawable/snap/CameraSnapPaintRound;->setTargetAlpha(I)Lcom/android/camera/ui/drawable/CameraPaintBase;
 
-    .line 471
+    .line 478
     :cond_1
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
@@ -2010,20 +2023,20 @@
 
     sget v4, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
 
-    .line 474
+    .line 481
     invoke-static {v1}, Lcom/android/camera/Util;->dpToPixel(F)I
 
     move-result v1
 
     int-to-float v1, v1
 
-    .line 471
+    .line 478
     invoke-virtual {v0, v2, v3, v4, v1}, Lcom/android/camera/ui/drawable/CameraPaintBase;->setTargetValues(FIIF)V
 
-    .line 475
+    .line 482
     goto :goto_0
 
-    .line 479
+    .line 486
     :pswitch_1
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mRecordingPaint:Lcom/android/camera/ui/drawable/CameraPaintBase;
 
@@ -2037,20 +2050,20 @@
 
     sget v4, Lcom/android/camera/ui/drawable/CameraPaintBase;->ALPHA_OPAQUE:I
 
-    .line 482
+    .line 489
     invoke-static {v1}, Lcom/android/camera/Util;->dpToPixel(F)I
 
     move-result v1
 
     int-to-float v1, v1
 
-    .line 479
+    .line 486
     invoke-virtual {v0, v2, v3, v4, v1}, Lcom/android/camera/ui/drawable/CameraPaintBase;->setTargetValues(FIIF)V
 
-    .line 483
+    .line 490
     nop
 
-    .line 493
+    .line 500
     :goto_0
     const/4 v0, 0x2
 
@@ -2064,14 +2077,14 @@
 
     iput-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
-    .line 494
+    .line 501
     iget-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     const-wide/16 v2, 0x12c
 
     invoke-virtual {v1, v2, v3}, Landroid/animation/ValueAnimator;->setDuration(J)Landroid/animation/ValueAnimator;
 
-    .line 495
+    .line 502
     iget-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v2, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$9;
@@ -2080,12 +2093,12 @@
 
     invoke-virtual {v1, v2}, Landroid/animation/ValueAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
-    .line 508
+    .line 515
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->removeAllListeners()V
 
-    .line 509
+    .line 516
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v1, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$10;
@@ -2094,12 +2107,12 @@
 
     invoke-virtual {p1, v1}, Landroid/animation/ValueAnimator;->addListener(Landroid/animation/Animator$AnimatorListener;)V
 
-    .line 534
+    .line 541
     iget-object p1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->mTimeAnimator:Landroid/animation/ValueAnimator;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->start()V
 
-    .line 536
+    .line 543
     new-array p1, v0, [F
 
     fill-array-data p1, :array_1
@@ -2108,22 +2121,22 @@
 
     move-result-object p1
 
-    .line 537
+    .line 544
     const-wide/16 v0, 0x190
 
     invoke-virtual {p1, v0, v1}, Landroid/animation/ValueAnimator;->setDuration(J)Landroid/animation/ValueAnimator;
 
-    .line 538
+    .line 545
     new-instance v0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$11;
 
     invoke-direct {v0, p0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$11;-><init>(Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;)V
 
     invoke-virtual {p1, v0}, Landroid/animation/ValueAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
-    .line 548
+    .line 555
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->start()V
 
-    .line 549
+    .line 556
     return-void
 
     :pswitch_data_0

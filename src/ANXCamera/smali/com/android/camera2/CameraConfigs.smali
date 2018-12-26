@@ -18,6 +18,8 @@
 
 .field private mAFRegions:[Landroid/hardware/camera2/params/MeteringRectangle;
 
+.field private mASDScene:I
+
 .field private mAWBLocked:Z
 
 .field private mAiSceneDetectEnabled:Z
@@ -81,6 +83,8 @@
 .field private mHDREnabled:Z
 
 .field private mHHTEnabled:Z
+
+.field private mIsQcfaEnabled:Z
 
 .field private mIso:I
 
@@ -185,7 +189,7 @@
 .method static constructor <clinit>()V
     .locals 1
 
-    .line 27
+    .line 29
     const-class v0, Lcom/android/camera2/CameraConfigs;
 
     invoke-virtual {v0}, Ljava/lang/Class;->getSimpleName()Ljava/lang/String;
@@ -200,64 +204,67 @@
 .method public constructor <init>()V
     .locals 4
 
-    .line 25
+    .line 27
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 43
+    .line 45
     const/16 v0, 0x23
 
     iput v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewFormat:I
 
-    .line 44
+    .line 46
     const/16 v0, 0x100
 
     iput v0, p0, Lcom/android/camera2/CameraConfigs;->mPhotoFormat:I
 
-    .line 45
+    .line 47
     const/4 v0, 0x1
 
     iput v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewMaxImages:I
 
-    .line 46
+    .line 48
     const/4 v1, 0x2
 
     iput v1, p0, Lcom/android/camera2/CameraConfigs;->mPhotoMaxImages:I
 
-    .line 49
+    .line 51
     const/high16 v1, 0x3f800000    # 1.0f
 
     iput v1, p0, Lcom/android/camera2/CameraConfigs;->mZoomRatio:F
 
-    .line 84
+    .line 86
     const/4 v1, 0x0
 
     iput v1, p0, Lcom/android/camera2/CameraConfigs;->mShotType:I
 
-    .line 87
+    .line 89
     const/4 v2, 0x0
 
     iput-object v2, p0, Lcom/android/camera2/CameraConfigs;->mShotPath:Ljava/lang/String;
 
-    .line 98
+    .line 100
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v3, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
-    .line 99
+    .line 101
     iput-boolean v1, p0, Lcom/android/camera2/CameraConfigs;->mDualCamWaterMarkEnabled:Z
 
-    .line 100
+    .line 102
     iput-boolean v1, p0, Lcom/android/camera2/CameraConfigs;->mTimeWaterMarkEnabled:Z
 
-    .line 101
+    .line 103
     iput-boolean v1, p0, Lcom/android/camera2/CameraConfigs;->mFaceWaterMarkEnabled:Z
 
-    .line 102
+    .line 104
     iput-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mNeedPausePreview:Z
 
-    .line 109
+    .line 106
+    iput-boolean v1, p0, Lcom/android/camera2/CameraConfigs;->mIsQcfaEnabled:Z
+
+    .line 112
     const-string v0, "-1"
 
     invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
@@ -266,10 +273,10 @@
 
     iput v0, p0, Lcom/android/camera2/CameraConfigs;->mEyeLightType:I
 
-    .line 110
+    .line 113
     iput-object v2, p0, Lcom/android/camera2/CameraConfigs;->mTimeWatermarkValue:Ljava/lang/String;
 
-    .line 111
+    .line 114
     iput-object v2, p0, Lcom/android/camera2/CameraConfigs;->mFaceWaterMarkFormat:Ljava/lang/String;
 
     return-void
@@ -280,7 +287,7 @@
 .method public getAERegions()[Landroid/hardware/camera2/params/MeteringRectangle;
     .locals 1
 
-    .line 355
+    .line 359
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mAERegions:[Landroid/hardware/camera2/params/MeteringRectangle;
 
     return-object v0
@@ -289,16 +296,25 @@
 .method public getAFRegions()[Landroid/hardware/camera2/params/MeteringRectangle;
     .locals 1
 
-    .line 458
+    .line 462
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mAFRegions:[Landroid/hardware/camera2/params/MeteringRectangle;
 
     return-object v0
 .end method
 
+.method public getASDScene()I
+    .locals 1
+
+    .line 992
+    iget v0, p0, Lcom/android/camera2/CameraConfigs;->mASDScene:I
+
+    return v0
+.end method
+
 .method public getAWBMode()I
     .locals 1
 
-    .line 472
+    .line 476
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAwbMode:I
 
     return v0
@@ -307,7 +323,7 @@
 .method public getAiSceneDetectPeriod()I
     .locals 1
 
-    .line 824
+    .line 828
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAiSceneDetectPeriod:I
 
     return v0
@@ -316,7 +332,7 @@
 .method public getAntiBanding()I
     .locals 1
 
-    .line 319
+    .line 323
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAntiBanding:I
 
     return v0
@@ -325,7 +341,7 @@
 .method public getAwbCustomValue()I
     .locals 1
 
-    .line 484
+    .line 488
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAwbCustomValue:I
 
     return v0
@@ -334,7 +350,7 @@
 .method public getBeautyValues()Lcom/android/camera/fragment/beauty/BeautyValues;
     .locals 1
 
-    .line 131
+    .line 135
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mBeautyValues:Lcom/android/camera/fragment/beauty/BeautyValues;
 
     return-object v0
@@ -343,7 +359,7 @@
 .method public getColorEffect()I
     .locals 1
 
-    .line 735
+    .line 739
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mColorEffect:I
 
     return v0
@@ -352,7 +368,7 @@
 .method public getContrastLevel()I
     .locals 1
 
-    .line 771
+    .line 775
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mContrastLevel:I
 
     return v0
@@ -361,7 +377,7 @@
 .method public getDeviceOrientation()I
     .locals 1
 
-    .line 291
+    .line 295
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mDeviceOrientation:I
 
     return v0
@@ -370,7 +386,7 @@
 .method public getExposureCompensationIndex()I
     .locals 1
 
-    .line 331
+    .line 335
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mExposureCompensationIndex:I
 
     return v0
@@ -379,7 +395,7 @@
 .method public getExposureMeteringMode()I
     .locals 1
 
-    .line 808
+    .line 812
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mExposureMeteringMode:I
 
     return v0
@@ -388,7 +404,7 @@
 .method public getExposureTime()J
     .locals 2
 
-    .line 379
+    .line 383
     iget-wide v0, p0, Lcom/android/camera2/CameraConfigs;->mExposureTime:J
 
     return-wide v0
@@ -397,7 +413,7 @@
 .method public getEyeLightType()I
     .locals 1
 
-    .line 143
+    .line 147
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mEyeLightType:I
 
     return v0
@@ -406,7 +422,7 @@
 .method public getFNumber()Ljava/lang/String;
     .locals 1
 
-    .line 968
+    .line 980
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mFNumber:Ljava/lang/String;
 
     return-object v0
@@ -415,7 +431,7 @@
 .method public getFaceWaterMarkFormat()Ljava/lang/String;
     .locals 1
 
-    .line 940
+    .line 944
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceWaterMarkFormat:Ljava/lang/String;
 
     return-object v0
@@ -424,7 +440,7 @@
 .method public getFlashMode()I
     .locals 1
 
-    .line 394
+    .line 398
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mFlashMode:I
 
     return v0
@@ -433,7 +449,7 @@
 .method public getFocusDistance()F
     .locals 1
 
-    .line 446
+    .line 450
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mFocusDistance:F
 
     return v0
@@ -442,7 +458,7 @@
 .method public getFocusMode()I
     .locals 1
 
-    .line 433
+    .line 437
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mFocusMode:I
 
     return v0
@@ -451,7 +467,7 @@
 .method public getGpsLocation()Landroid/location/Location;
     .locals 1
 
-    .line 853
+    .line 857
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mGpsLocation:Landroid/location/Location;
 
     return-object v0
@@ -460,7 +476,7 @@
 .method public getISO()I
     .locals 1
 
-    .line 367
+    .line 371
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mIso:I
 
     return v0
@@ -469,7 +485,7 @@
 .method public getJpegQuality()I
     .locals 1
 
-    .line 267
+    .line 271
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mJpegQuality:I
 
     return v0
@@ -478,7 +494,7 @@
 .method public getJpegRotation()I
     .locals 1
 
-    .line 279
+    .line 283
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mJpegRotation:I
 
     return v0
@@ -487,7 +503,7 @@
 .method public getNormalWideLDCEnabled()Z
     .locals 1
 
-    .line 747
+    .line 751
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mNormalWideLDCEnabled:Z
 
     return v0
@@ -496,7 +512,7 @@
 .method public getPhotoFormat()I
     .locals 1
 
-    .line 227
+    .line 231
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPhotoFormat:I
 
     return v0
@@ -505,7 +521,7 @@
 .method public getPhotoMaxImages()I
     .locals 1
 
-    .line 235
+    .line 239
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPhotoMaxImages:I
 
     return v0
@@ -514,7 +530,7 @@
 .method public getPhotoSize()Lcom/android/camera/CameraSize;
     .locals 1
 
-    .line 203
+    .line 207
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mPhotoSize:Lcom/android/camera/CameraSize;
 
     return-object v0
@@ -523,7 +539,7 @@
 .method public getPortraitLightingPattern()I
     .locals 1
 
-    .line 694
+    .line 698
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPortraitLightingPattern:I
 
     return v0
@@ -532,7 +548,7 @@
 .method public getPreviewFormat()I
     .locals 1
 
-    .line 181
+    .line 185
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewFormat:I
 
     return v0
@@ -549,7 +565,7 @@
         }
     .end annotation
 
-    .line 157
+    .line 161
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewFpsRange:Landroid/util/Range;
 
     return-object v0
@@ -558,7 +574,7 @@
 .method public getPreviewMaxImages()I
     .locals 1
 
-    .line 189
+    .line 193
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewMaxImages:I
 
     return v0
@@ -567,7 +583,7 @@
 .method public getPreviewSize()Lcom/android/camera/CameraSize;
     .locals 1
 
-    .line 169
+    .line 173
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewSize:Lcom/android/camera/CameraSize;
 
     return-object v0
@@ -576,7 +592,7 @@
 .method public getSaturationLevel()I
     .locals 1
 
-    .line 783
+    .line 787
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mSaturationLevel:I
 
     return v0
@@ -585,7 +601,7 @@
 .method public getSceneMode()I
     .locals 1
 
-    .line 510
+    .line 514
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mSceneMode:I
 
     return v0
@@ -594,7 +610,7 @@
 .method public getSharpnessLevel()I
     .locals 1
 
-    .line 795
+    .line 799
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mSharpnessLevel:I
 
     return v0
@@ -603,7 +619,7 @@
 .method public getShotPath()Ljava/lang/String;
     .locals 1
 
-    .line 605
+    .line 609
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mShotPath:Ljava/lang/String;
 
     return-object v0
@@ -612,7 +628,7 @@
 .method public getShotType()I
     .locals 1
 
-    .line 593
+    .line 597
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mShotType:I
 
     return v0
@@ -621,7 +637,7 @@
 .method public getSubPhotoSize()Lcom/android/camera/CameraSize;
     .locals 1
 
-    .line 215
+    .line 219
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mSubPhotoSize:Lcom/android/camera/CameraSize;
 
     return-object v0
@@ -630,7 +646,7 @@
 .method public getThumbnailSize()Lcom/android/camera/CameraSize;
     .locals 1
 
-    .line 711
+    .line 715
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mThumbnailSize:Lcom/android/camera/CameraSize;
 
     return-object v0
@@ -639,7 +655,7 @@
 .method public getTimeWaterMarkValue()Ljava/lang/String;
     .locals 1
 
-    .line 932
+    .line 936
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mTimeWatermarkValue:Ljava/lang/String;
 
     return-object v0
@@ -648,7 +664,7 @@
 .method public getUltraWideLDCEnabled()Z
     .locals 1
 
-    .line 759
+    .line 763
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mUltraWideLDCEnabled:Z
 
     return v0
@@ -665,7 +681,7 @@
         }
     .end annotation
 
-    .line 123
+    .line 127
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mVideoFpsRange:Landroid/util/Range;
 
     return-object v0
@@ -674,7 +690,7 @@
 .method public getVideoSize()Lcom/android/camera/CameraSize;
     .locals 1
 
-    .line 857
+    .line 861
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mVideoSize:Lcom/android/camera/CameraSize;
 
     return-object v0
@@ -683,7 +699,7 @@
 .method public getVideoSnapshotSize()Lcom/android/camera/CameraSize;
     .locals 1
 
-    .line 865
+    .line 869
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mVideoSnapshotSize:Lcom/android/camera/CameraSize;
 
     return-object v0
@@ -700,7 +716,7 @@
         }
     .end annotation
 
-    .line 873
+    .line 877
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
     return-object v0
@@ -709,7 +725,7 @@
 .method public getZoomRatio()F
     .locals 1
 
-    .line 305
+    .line 309
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mZoomRatio:F
 
     return v0
@@ -718,7 +734,7 @@
 .method public isAELocked()Z
     .locals 1
 
-    .line 343
+    .line 347
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mAELocked:Z
 
     return v0
@@ -727,7 +743,7 @@
 .method public isAWBLocked()Z
     .locals 1
 
-    .line 496
+    .line 500
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mAWBLocked:Z
 
     return v0
@@ -736,7 +752,7 @@
 .method public isAiSceneDetectEnabled()Z
     .locals 1
 
-    .line 812
+    .line 816
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mAiSceneDetectEnabled:Z
 
     return v0
@@ -745,7 +761,7 @@
 .method public isBokehEnabled()Z
     .locals 1
 
-    .line 669
+    .line 673
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mBokehEnabled:Z
 
     return v0
@@ -754,7 +770,7 @@
 .method public isCameraAi30Enabled()Z
     .locals 1
 
-    .line 836
+    .line 840
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mCameraAi30Enabled:Z
 
     return v0
@@ -763,7 +779,7 @@
 .method public isEISEnabled()Z
     .locals 1
 
-    .line 524
+    .line 528
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mEISEnabled:Z
 
     return v0
@@ -772,7 +788,7 @@
 .method public isFaceAgeAnalyzeEnabled()Z
     .locals 1
 
-    .line 645
+    .line 649
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceAgeAnalyzeEnabled:Z
 
     return v0
@@ -781,7 +797,7 @@
 .method public isFaceDetectionEnabled()Z
     .locals 1
 
-    .line 723
+    .line 727
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceDetectionEnabled:Z
 
     return v0
@@ -790,7 +806,7 @@
 .method public isFaceScoreEnabled()Z
     .locals 1
 
-    .line 657
+    .line 661
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceScoreEnabled:Z
 
     return v0
@@ -799,7 +815,7 @@
 .method public isFrontMirror()Z
     .locals 1
 
-    .line 960
+    .line 964
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFrontMirror:Z
 
     return v0
@@ -808,7 +824,7 @@
 .method public isHDRCheckerEnabled()Z
     .locals 1
 
-    .line 575
+    .line 579
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mHDRCheckerEnabled:Z
 
     return v0
@@ -817,7 +833,7 @@
 .method public isHDREnabled()Z
     .locals 1
 
-    .line 562
+    .line 566
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mHDREnabled:Z
 
     return v0
@@ -826,7 +842,7 @@
 .method public isHHTEnabled()Z
     .locals 1
 
-    .line 549
+    .line 553
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mHHTEnabled:Z
 
     return v0
@@ -835,7 +851,7 @@
 .method public isLensDirtyDetectEnabled()Z
     .locals 1
 
-    .line 681
+    .line 685
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mLensDirtyDetectEnabled:Z
 
     return v0
@@ -844,7 +860,7 @@
 .method public isMfnrEnabled()Z
     .locals 1
 
-    .line 621
+    .line 625
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mMfnrEnabled:Z
 
     return v0
@@ -853,7 +869,7 @@
 .method public isNeedFlash()Z
     .locals 1
 
-    .line 418
+    .line 422
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mNeedFlash:Z
 
     return v0
@@ -862,7 +878,7 @@
 .method public isNeedPausePreview()Z
     .locals 1
 
-    .line 952
+    .line 956
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mNeedPausePreview:Z
 
     return v0
@@ -871,7 +887,7 @@
 .method public isOISEnabled()Z
     .locals 1
 
-    .line 251
+    .line 255
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mOISEnabled:Z
 
     return v0
@@ -880,8 +896,17 @@
 .method public isOptimizedFlash()Z
     .locals 1
 
-    .line 406
+    .line 410
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mOptimizedFlash:Z
+
+    return v0
+.end method
+
+.method public isQcfaEnable()Z
+    .locals 1
+
+    .line 972
+    iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mIsQcfaEnabled:Z
 
     return v0
 .end method
@@ -889,7 +914,7 @@
 .method public isRecordingHintEnabled()Z
     .locals 1
 
-    .line 536
+    .line 540
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mRecordingHintEnabled:Z
 
     return v0
@@ -898,7 +923,7 @@
 .method public isSuperResolutionEnabled()Z
     .locals 1
 
-    .line 588
+    .line 592
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mSuperResolutionEnabled:Z
 
     return v0
@@ -907,7 +932,7 @@
 .method public isSwMfnrEnabled()Z
     .locals 1
 
-    .line 633
+    .line 637
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mSwMfnrEnabled:Z
 
     return v0
@@ -916,7 +941,7 @@
 .method public isZslEnabled()Z
     .locals 1
 
-    .line 243
+    .line 247
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mZslEnabled:Z
 
     return v0
@@ -925,20 +950,20 @@
 .method public setAELock(Z)Z
     .locals 1
 
-    .line 335
+    .line 339
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mAELocked:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 336
+    .line 340
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mAELocked:Z
 
-    .line 337
+    .line 341
     const/4 p1, 0x1
 
     return p1
 
-    .line 339
+    .line 343
     :cond_0
     const/4 p1, 0x0
 
@@ -948,7 +973,7 @@
 .method public setAERegions([Landroid/hardware/camera2/params/MeteringRectangle;)Z
     .locals 1
 
-    .line 347
+    .line 351
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mAERegions:[Landroid/hardware/camera2/params/MeteringRectangle;
 
     invoke-static {v0, p1}, Ljava/util/Arrays;->equals([Ljava/lang/Object;[Ljava/lang/Object;)Z
@@ -957,15 +982,15 @@
 
     if-nez v0, :cond_0
 
-    .line 348
+    .line 352
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mAERegions:[Landroid/hardware/camera2/params/MeteringRectangle;
 
-    .line 349
+    .line 353
     const/4 p1, 0x1
 
     return p1
 
-    .line 351
+    .line 355
     :cond_0
     const/4 p1, 0x0
 
@@ -975,7 +1000,7 @@
 .method public setAFRegions([Landroid/hardware/camera2/params/MeteringRectangle;)Z
     .locals 1
 
-    .line 450
+    .line 454
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mAFRegions:[Landroid/hardware/camera2/params/MeteringRectangle;
 
     invoke-static {v0, p1}, Ljava/util/Arrays;->equals([Ljava/lang/Object;[Ljava/lang/Object;)Z
@@ -984,15 +1009,38 @@
 
     if-nez v0, :cond_0
 
-    .line 451
+    .line 455
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mAFRegions:[Landroid/hardware/camera2/params/MeteringRectangle;
 
-    .line 452
+    .line 456
     const/4 p1, 0x1
 
     return p1
 
-    .line 454
+    .line 458
+    :cond_0
+    const/4 p1, 0x0
+
+    return p1
+.end method
+
+.method public setASDScene(I)Z
+    .locals 1
+
+    .line 984
+    iget v0, p0, Lcom/android/camera2/CameraConfigs;->mASDScene:I
+
+    if-eq v0, p1, :cond_0
+
+    .line 985
+    iput p1, p0, Lcom/android/camera2/CameraConfigs;->mASDScene:I
+
+    .line 986
+    const/4 p1, 0x1
+
+    return p1
+
+    .line 988
     :cond_0
     const/4 p1, 0x0
 
@@ -1002,20 +1050,20 @@
 .method public setAWBLock(Z)Z
     .locals 1
 
-    .line 488
+    .line 492
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mAWBLocked:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 489
+    .line 493
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mAWBLocked:Z
 
-    .line 490
+    .line 494
     const/4 p1, 0x1
 
     return p1
 
-    .line 492
+    .line 496
     :cond_0
     const/4 p1, 0x0
 
@@ -1025,20 +1073,20 @@
 .method public setAWBMode(I)Z
     .locals 1
 
-    .line 464
+    .line 468
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAwbMode:I
 
     if-eq v0, p1, :cond_0
 
-    .line 465
+    .line 469
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mAwbMode:I
 
-    .line 466
+    .line 470
     const/4 p1, 0x1
 
     return p1
 
-    .line 468
+    .line 472
     :cond_0
     const/4 p1, 0x0
 
@@ -1048,20 +1096,20 @@
 .method public setAiSceneDetectEnable(Z)Z
     .locals 1
 
-    .line 816
+    .line 820
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mAiSceneDetectEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 817
+    .line 821
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mAiSceneDetectEnabled:Z
 
-    .line 818
+    .line 822
     const/4 p1, 0x1
 
     return p1
 
-    .line 820
+    .line 824
     :cond_0
     const/4 p1, 0x0
 
@@ -1071,20 +1119,20 @@
 .method public setAiSceneDetectPeriod(I)Z
     .locals 1
 
-    .line 828
+    .line 832
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAiSceneDetectPeriod:I
 
     if-eq v0, p1, :cond_0
 
-    .line 829
+    .line 833
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mAiSceneDetectPeriod:I
 
-    .line 830
+    .line 834
     const/4 p1, 0x1
 
     return p1
 
-    .line 832
+    .line 836
     :cond_0
     const/4 p1, 0x0
 
@@ -1094,20 +1142,20 @@
 .method public setAntiBanding(I)Z
     .locals 1
 
-    .line 311
+    .line 315
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAntiBanding:I
 
     if-eq v0, p1, :cond_0
 
-    .line 312
+    .line 316
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mAntiBanding:I
 
-    .line 313
+    .line 317
     const/4 p1, 0x1
 
     return p1
 
-    .line 315
+    .line 319
     :cond_0
     const/4 p1, 0x0
 
@@ -1117,30 +1165,30 @@
 .method public setBeautyValues(Lcom/android/camera/fragment/beauty/BeautyValues;)V
     .locals 0
 
-    .line 127
+    .line 131
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mBeautyValues:Lcom/android/camera/fragment/beauty/BeautyValues;
 
-    .line 128
+    .line 132
     return-void
 .end method
 
 .method public setBokehEnabled(Z)Z
     .locals 1
 
-    .line 637
+    .line 641
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mBokehEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 638
+    .line 642
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mBokehEnabled:Z
 
-    .line 639
+    .line 643
     const/4 p1, 0x1
 
     return p1
 
-    .line 641
+    .line 645
     :cond_0
     const/4 p1, 0x0
 
@@ -1150,20 +1198,20 @@
 .method public setCameraAi30Enable(Z)Z
     .locals 1
 
-    .line 840
+    .line 844
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mCameraAi30Enabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 841
+    .line 845
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mCameraAi30Enabled:Z
 
-    .line 842
+    .line 846
     const/4 p1, 0x1
 
     return p1
 
-    .line 844
+    .line 848
     :cond_0
     const/4 p1, 0x0
 
@@ -1173,20 +1221,20 @@
 .method public setColorEffect(I)Z
     .locals 1
 
-    .line 727
+    .line 731
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mColorEffect:I
 
     if-eq v0, p1, :cond_0
 
-    .line 728
+    .line 732
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mColorEffect:I
 
-    .line 729
+    .line 733
     const/4 p1, 0x1
 
     return p1
 
-    .line 731
+    .line 735
     :cond_0
     const/4 p1, 0x0
 
@@ -1196,20 +1244,20 @@
 .method public setContrastLevel(I)Z
     .locals 1
 
-    .line 763
+    .line 767
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mContrastLevel:I
 
     if-eq v0, p1, :cond_0
 
-    .line 764
+    .line 768
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mContrastLevel:I
 
-    .line 765
+    .line 769
     const/4 p1, 0x1
 
     return p1
 
-    .line 767
+    .line 771
     :cond_0
     const/4 p1, 0x0
 
@@ -1219,20 +1267,20 @@
 .method public setCustomAWB(I)Z
     .locals 1
 
-    .line 476
+    .line 480
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mAwbCustomValue:I
 
     if-eq v0, p1, :cond_0
 
-    .line 477
+    .line 481
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mAwbCustomValue:I
 
-    .line 478
+    .line 482
     const/4 p1, 0x1
 
     return p1
 
-    .line 480
+    .line 484
     :cond_0
     const/4 p1, 0x0
 
@@ -1242,20 +1290,20 @@
 .method public setDeviceOrientation(I)Z
     .locals 1
 
-    .line 283
+    .line 287
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mDeviceOrientation:I
 
     if-eq v0, p1, :cond_0
 
-    .line 284
+    .line 288
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mDeviceOrientation:I
 
-    .line 285
+    .line 289
     const/4 p1, 0x1
 
     return p1
 
-    .line 287
+    .line 291
     :cond_0
     const/4 p1, 0x0
 
@@ -1265,7 +1313,7 @@
 .method public setDualCamWaterMarkEnable(Z)Z
     .locals 2
 
-    .line 877
+    .line 881
     const-string v0, "device"
 
     iget-object v1, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
@@ -1274,13 +1322,13 @@
 
     move-result v0
 
-    .line 878
+    .line 882
     if-eqz p1, :cond_0
 
-    .line 879
+    .line 883
     if-nez v0, :cond_1
 
-    .line 880
+    .line 884
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
     const-string v1, "device"
@@ -1289,33 +1337,33 @@
 
     goto :goto_0
 
-    .line 882
+    .line 886
     :cond_0
     if-eqz v0, :cond_1
 
-    .line 883
+    .line 887
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
     const-string v1, "device"
 
     invoke-interface {v0, v1}, Ljava/util/List;->remove(Ljava/lang/Object;)Z
 
-    .line 886
+    .line 890
     :cond_1
     :goto_0
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mDualCamWaterMarkEnabled:Z
 
     if-eq v0, p1, :cond_2
 
-    .line 887
+    .line 891
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mDualCamWaterMarkEnabled:Z
 
-    .line 888
+    .line 892
     const/4 p1, 0x1
 
     return p1
 
-    .line 890
+    .line 894
     :cond_2
     const/4 p1, 0x0
 
@@ -1325,20 +1373,20 @@
 .method public setEnableEIS(Z)Z
     .locals 1
 
-    .line 516
+    .line 520
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mEISEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 517
+    .line 521
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mEISEnabled:Z
 
-    .line 518
+    .line 522
     const/4 p1, 0x1
 
     return p1
 
-    .line 520
+    .line 524
     :cond_0
     const/4 p1, 0x0
 
@@ -1348,40 +1396,40 @@
 .method public setEnableOIS(Z)V
     .locals 0
 
-    .line 247
+    .line 251
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mOISEnabled:Z
 
-    .line 248
+    .line 252
     return-void
 .end method
 
 .method public setEnableZsl(Z)V
     .locals 0
 
-    .line 239
+    .line 243
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mZslEnabled:Z
 
-    .line 240
+    .line 244
     return-void
 .end method
 
 .method public setExposureCompensationIndex(I)Z
     .locals 1
 
-    .line 323
+    .line 327
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mExposureCompensationIndex:I
 
     if-eq v0, p1, :cond_0
 
-    .line 324
+    .line 328
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mExposureCompensationIndex:I
 
-    .line 325
+    .line 329
     const/4 p1, 0x1
 
     return p1
 
-    .line 327
+    .line 331
     :cond_0
     const/4 p1, 0x0
 
@@ -1391,20 +1439,20 @@
 .method public setExposureMeteringMode(I)Z
     .locals 1
 
-    .line 799
+    .line 803
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mExposureMeteringMode:I
 
     if-eq v0, p1, :cond_0
 
-    .line 800
+    .line 804
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mExposureMeteringMode:I
 
-    .line 801
+    .line 805
     const/4 p1, 0x1
 
     return p1
 
-    .line 803
+    .line 807
     :cond_0
     const/4 p1, 0x0
 
@@ -1414,22 +1462,22 @@
 .method public setExposureTime(J)Z
     .locals 2
 
-    .line 371
+    .line 375
     iget-wide v0, p0, Lcom/android/camera2/CameraConfigs;->mExposureTime:J
 
     cmp-long v0, v0, p1
 
     if-eqz v0, :cond_0
 
-    .line 372
+    .line 376
     iput-wide p1, p0, Lcom/android/camera2/CameraConfigs;->mExposureTime:J
 
-    .line 373
+    .line 377
     const/4 p1, 0x1
 
     return p1
 
-    .line 375
+    .line 379
     :cond_0
     const/4 p1, 0x0
 
@@ -1439,20 +1487,20 @@
 .method public setEyeLight(I)Z
     .locals 1
 
-    .line 135
+    .line 139
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mEyeLightType:I
 
     if-eq v0, p1, :cond_0
 
-    .line 136
+    .line 140
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mEyeLightType:I
 
-    .line 137
+    .line 141
     const/4 p1, 0x1
 
     return p1
 
-    .line 139
+    .line 143
     :cond_0
     const/4 p1, 0x0
 
@@ -1462,30 +1510,30 @@
 .method public setFNumber(Ljava/lang/String;)V
     .locals 0
 
-    .line 964
+    .line 976
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mFNumber:Ljava/lang/String;
 
-    .line 965
+    .line 977
     return-void
 .end method
 
 .method public setFaceAgeAnalyzeEnabled(Z)Z
     .locals 1
 
-    .line 649
+    .line 653
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceAgeAnalyzeEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 650
+    .line 654
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mFaceAgeAnalyzeEnabled:Z
 
-    .line 651
+    .line 655
     const/4 p1, 0x1
 
     return p1
 
-    .line 653
+    .line 657
     :cond_0
     const/4 p1, 0x0
 
@@ -1495,20 +1543,20 @@
 .method public setFaceDetectionEnabled(Z)Z
     .locals 1
 
-    .line 715
+    .line 719
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceDetectionEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 716
+    .line 720
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mFaceDetectionEnabled:Z
 
-    .line 717
+    .line 721
     const/4 p1, 0x1
 
     return p1
 
-    .line 719
+    .line 723
     :cond_0
     const/4 p1, 0x0
 
@@ -1518,20 +1566,20 @@
 .method public setFaceScoreEnabled(Z)Z
     .locals 1
 
-    .line 661
+    .line 665
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceScoreEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 662
+    .line 666
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mFaceScoreEnabled:Z
 
-    .line 663
+    .line 667
     const/4 p1, 0x1
 
     return p1
 
-    .line 665
+    .line 669
     :cond_0
     const/4 p1, 0x0
 
@@ -1541,7 +1589,7 @@
 .method public setFaceWaterMarkEnable(Z)Z
     .locals 2
 
-    .line 911
+    .line 915
     const-string v0, "beautify"
 
     iget-object v1, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
@@ -1550,13 +1598,13 @@
 
     move-result v0
 
-    .line 912
+    .line 916
     if-eqz p1, :cond_0
 
-    .line 913
+    .line 917
     if-nez v0, :cond_1
 
-    .line 914
+    .line 918
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
     const-string v1, "beautify"
@@ -1565,33 +1613,33 @@
 
     goto :goto_0
 
-    .line 916
+    .line 920
     :cond_0
     if-eqz v0, :cond_1
 
-    .line 917
+    .line 921
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
     const-string v1, "beautify"
 
     invoke-interface {v0, v1}, Ljava/util/List;->remove(Ljava/lang/Object;)Z
 
-    .line 920
+    .line 924
     :cond_1
     :goto_0
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mFaceWaterMarkEnabled:Z
 
     if-eq v0, p1, :cond_2
 
-    .line 921
+    .line 925
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mFaceWaterMarkEnabled:Z
 
-    .line 922
+    .line 926
     const/4 p1, 0x1
 
     return p1
 
-    .line 924
+    .line 928
     :cond_2
     const/4 p1, 0x0
 
@@ -1601,30 +1649,30 @@
 .method public setFaceWaterMarkFormat(Ljava/lang/String;)V
     .locals 0
 
-    .line 936
+    .line 940
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mFaceWaterMarkFormat:Ljava/lang/String;
 
-    .line 937
+    .line 941
     return-void
 .end method
 
 .method public setFlashMode(I)Z
     .locals 1
 
-    .line 385
+    .line 389
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mFlashMode:I
 
     if-eq v0, p1, :cond_0
 
-    .line 386
+    .line 390
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mFlashMode:I
 
-    .line 387
+    .line 391
     const/4 p1, 0x1
 
     return p1
 
-    .line 389
+    .line 393
     :cond_0
     const/4 p1, 0x0
 
@@ -1634,22 +1682,22 @@
 .method public setFocusDistance(F)Z
     .locals 1
 
-    .line 437
+    .line 441
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mFocusDistance:F
 
     cmpl-float v0, v0, p1
 
     if-eqz v0, :cond_0
 
-    .line 438
+    .line 442
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mFocusDistance:F
 
-    .line 439
+    .line 443
     const/4 p1, 0x1
 
     return p1
 
-    .line 442
+    .line 446
     :cond_0
     const/4 p1, 0x0
 
@@ -1659,20 +1707,20 @@
 .method public setFocusMode(I)Z
     .locals 1
 
-    .line 424
+    .line 428
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mFocusMode:I
 
     if-eq v0, p1, :cond_0
 
-    .line 425
+    .line 429
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mFocusMode:I
 
-    .line 426
+    .line 430
     const/4 p1, 0x1
 
     return p1
 
-    .line 428
+    .line 432
     :cond_0
     const/4 p1, 0x0
 
@@ -1682,40 +1730,40 @@
 .method public setFrontMirror(Z)V
     .locals 0
 
-    .line 956
+    .line 960
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mFrontMirror:Z
 
-    .line 957
+    .line 961
     return-void
 .end method
 
 .method public setGpsLocation(Landroid/location/Location;)V
     .locals 0
 
-    .line 849
+    .line 853
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mGpsLocation:Landroid/location/Location;
 
-    .line 850
+    .line 854
     return-void
 .end method
 
 .method public setHDRCheckerEnabled(Z)Z
     .locals 1
 
-    .line 566
+    .line 570
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mHDRCheckerEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 567
+    .line 571
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mHDRCheckerEnabled:Z
 
-    .line 568
+    .line 572
     const/4 p1, 0x1
 
     return p1
 
-    .line 571
+    .line 575
     :cond_0
     const/4 p1, 0x0
 
@@ -1725,20 +1773,20 @@
 .method public setHDREnabled(Z)Z
     .locals 1
 
-    .line 553
+    .line 557
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mHDREnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 554
+    .line 558
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mHDREnabled:Z
 
-    .line 555
+    .line 559
     const/4 p1, 0x1
 
     return p1
 
-    .line 558
+    .line 562
     :cond_0
     const/4 p1, 0x0
 
@@ -1748,20 +1796,20 @@
 .method public setHHTEnabled(Z)Z
     .locals 1
 
-    .line 540
+    .line 544
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mHHTEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 541
+    .line 545
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mHHTEnabled:Z
 
-    .line 542
+    .line 546
     const/4 p1, 0x1
 
     return p1
 
-    .line 545
+    .line 549
     :cond_0
     const/4 p1, 0x0
 
@@ -1771,20 +1819,20 @@
 .method public setISO(I)Z
     .locals 1
 
-    .line 359
+    .line 363
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mIso:I
 
     if-eq v0, p1, :cond_0
 
-    .line 360
+    .line 364
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mIso:I
 
-    .line 361
+    .line 365
     const/4 p1, 0x1
 
     return p1
 
-    .line 363
+    .line 367
     :cond_0
     const/4 p1, 0x0
 
@@ -1794,7 +1842,7 @@
 .method public setJpegQuality(I)Z
     .locals 4
 
-    .line 255
+    .line 259
     const/4 v0, 0x0
 
     const/4 v1, 0x1
@@ -1807,23 +1855,23 @@
 
     goto :goto_0
 
-    .line 259
+    .line 263
     :cond_0
     iget v2, p0, Lcom/android/camera2/CameraConfigs;->mJpegQuality:I
 
     if-eq v2, p1, :cond_1
 
-    .line 260
+    .line 264
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mJpegQuality:I
 
-    .line 261
+    .line 265
     return v1
 
-    .line 263
+    .line 267
     :cond_1
     return v0
 
-    .line 256
+    .line 260
     :cond_2
     :goto_0
     sget-object v1, Lcom/android/camera2/CameraConfigs;->TAG:Ljava/lang/String;
@@ -1844,27 +1892,27 @@
 
     invoke-static {v1, p1}, Lcom/android/camera/log/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 257
+    .line 261
     return v0
 .end method
 
 .method public setJpegRotation(I)Z
     .locals 1
 
-    .line 271
+    .line 275
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mJpegRotation:I
 
     if-eq v0, p1, :cond_0
 
-    .line 272
+    .line 276
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mJpegRotation:I
 
-    .line 273
+    .line 277
     const/4 p1, 0x1
 
     return p1
 
-    .line 275
+    .line 279
     :cond_0
     const/4 p1, 0x0
 
@@ -1874,20 +1922,20 @@
 .method public setLensDirtyDetectEnabled(Z)Z
     .locals 1
 
-    .line 673
+    .line 677
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mLensDirtyDetectEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 674
+    .line 678
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mLensDirtyDetectEnabled:Z
 
-    .line 675
+    .line 679
     const/4 p1, 0x1
 
     return p1
 
-    .line 677
+    .line 681
     :cond_0
     const/4 p1, 0x0
 
@@ -1897,20 +1945,20 @@
 .method public setMfnrEnabled(Z)Z
     .locals 1
 
-    .line 613
+    .line 617
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mMfnrEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 614
+    .line 618
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mMfnrEnabled:Z
 
-    .line 615
+    .line 619
     const/4 p1, 0x1
 
     return p1
 
-    .line 617
+    .line 621
     :cond_0
     const/4 p1, 0x0
 
@@ -1920,20 +1968,20 @@
 .method public setNeedFlash(Z)Z
     .locals 1
 
-    .line 410
+    .line 414
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mNeedFlash:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 411
+    .line 415
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mNeedFlash:Z
 
-    .line 412
+    .line 416
     const/4 p1, 0x1
 
     return p1
 
-    .line 414
+    .line 418
     :cond_0
     const/4 p1, 0x0
 
@@ -1943,20 +1991,20 @@
 .method public setNormalWideLDCEnabled(Z)Z
     .locals 1
 
-    .line 739
+    .line 743
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mNormalWideLDCEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 740
+    .line 744
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mNormalWideLDCEnabled:Z
 
-    .line 741
+    .line 745
     const/4 p1, 0x1
 
     return p1
 
-    .line 743
+    .line 747
     :cond_0
     const/4 p1, 0x0
 
@@ -1966,20 +2014,20 @@
 .method public setOptimizedFlash(Z)Z
     .locals 1
 
-    .line 398
+    .line 402
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mOptimizedFlash:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 399
+    .line 403
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mOptimizedFlash:Z
 
-    .line 400
+    .line 404
     const/4 p1, 0x1
 
     return p1
 
-    .line 402
+    .line 406
     :cond_0
     const/4 p1, 0x0
 
@@ -1989,20 +2037,20 @@
 .method public setPausePreview(Z)Z
     .locals 1
 
-    .line 944
+    .line 948
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mNeedPausePreview:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 945
+    .line 949
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mNeedPausePreview:Z
 
-    .line 946
+    .line 950
     const/4 p1, 0x1
 
     return p1
 
-    .line 948
+    .line 952
     :cond_0
     const/4 p1, 0x0
 
@@ -2012,20 +2060,20 @@
 .method public setPhotoFormat(I)Z
     .locals 1
 
-    .line 219
+    .line 223
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPhotoFormat:I
 
     if-eq v0, p1, :cond_0
 
-    .line 220
+    .line 224
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mPhotoFormat:I
 
-    .line 221
+    .line 225
     const/4 p1, 0x1
 
     return p1
 
-    .line 223
+    .line 227
     :cond_0
     const/4 p1, 0x0
 
@@ -2035,17 +2083,17 @@
 .method public setPhotoMaxImages(I)V
     .locals 0
 
-    .line 231
+    .line 235
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mPhotoMaxImages:I
 
-    .line 232
+    .line 236
     return-void
 .end method
 
 .method public setPhotoSize(Lcom/android/camera/CameraSize;)Z
     .locals 1
 
-    .line 195
+    .line 199
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mPhotoSize:Lcom/android/camera/CameraSize;
 
     invoke-static {v0, p1}, Ljava/util/Objects;->equals(Ljava/lang/Object;Ljava/lang/Object;)Z
@@ -2054,15 +2102,15 @@
 
     if-nez v0, :cond_0
 
-    .line 196
+    .line 200
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mPhotoSize:Lcom/android/camera/CameraSize;
 
-    .line 197
+    .line 201
     const/4 p1, 0x1
 
     return p1
 
-    .line 199
+    .line 203
     :cond_0
     const/4 p1, 0x0
 
@@ -2072,20 +2120,20 @@
 .method public setPortraitLightingPattern(I)Z
     .locals 1
 
-    .line 686
+    .line 690
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPortraitLightingPattern:I
 
     if-eq v0, p1, :cond_0
 
-    .line 687
+    .line 691
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mPortraitLightingPattern:I
 
-    .line 688
+    .line 692
     const/4 p1, 0x1
 
     return p1
 
-    .line 690
+    .line 694
     :cond_0
     const/4 p1, 0x0
 
@@ -2095,20 +2143,20 @@
 .method public setPreviewFormat(I)Z
     .locals 1
 
-    .line 173
+    .line 177
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewFormat:I
 
     if-eq v0, p1, :cond_0
 
-    .line 174
+    .line 178
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mPreviewFormat:I
 
-    .line 175
+    .line 179
     const/4 p1, 0x1
 
     return p1
 
-    .line 177
+    .line 181
     :cond_0
     const/4 p1, 0x0
 
@@ -2126,7 +2174,7 @@
         }
     .end annotation
 
-    .line 149
+    .line 153
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewFpsRange:Landroid/util/Range;
 
     invoke-static {v0, p1}, Ljava/util/Objects;->equals(Ljava/lang/Object;Ljava/lang/Object;)Z
@@ -2135,15 +2183,15 @@
 
     if-nez v0, :cond_0
 
-    .line 150
+    .line 154
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mPreviewFpsRange:Landroid/util/Range;
 
-    .line 151
+    .line 155
     const/4 p1, 0x1
 
     return p1
 
-    .line 153
+    .line 157
     :cond_0
     const/4 p1, 0x0
 
@@ -2153,17 +2201,17 @@
 .method public setPreviewMaxImages(I)V
     .locals 0
 
-    .line 185
+    .line 189
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mPreviewMaxImages:I
 
-    .line 186
+    .line 190
     return-void
 .end method
 
 .method public setPreviewSize(Lcom/android/camera/CameraSize;)Z
     .locals 1
 
-    .line 161
+    .line 165
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mPreviewSize:Lcom/android/camera/CameraSize;
 
     invoke-static {v0, p1}, Ljava/util/Objects;->equals(Ljava/lang/Object;Ljava/lang/Object;)Z
@@ -2172,38 +2220,48 @@
 
     if-nez v0, :cond_0
 
-    .line 162
+    .line 166
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mPreviewSize:Lcom/android/camera/CameraSize;
 
-    .line 163
+    .line 167
     const/4 p1, 0x1
 
     return p1
 
-    .line 165
+    .line 169
     :cond_0
     const/4 p1, 0x0
 
     return p1
 .end method
 
+.method public setQcfaEnable(Z)V
+    .locals 0
+
+    .line 968
+    iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mIsQcfaEnabled:Z
+
+    .line 969
+    return-void
+.end method
+
 .method public setRecordingHintEnabled(Z)Z
     .locals 1
 
-    .line 528
+    .line 532
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mRecordingHintEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 529
+    .line 533
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mRecordingHintEnabled:Z
 
-    .line 530
+    .line 534
     const/4 p1, 0x1
 
     return p1
 
-    .line 532
+    .line 536
     :cond_0
     const/4 p1, 0x0
 
@@ -2213,20 +2271,20 @@
 .method public setSaturationLevel(I)Z
     .locals 1
 
-    .line 775
+    .line 779
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mSaturationLevel:I
 
     if-eq v0, p1, :cond_0
 
-    .line 776
+    .line 780
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mSaturationLevel:I
 
-    .line 777
+    .line 781
     const/4 p1, 0x1
 
     return p1
 
-    .line 779
+    .line 783
     :cond_0
     const/4 p1, 0x0
 
@@ -2236,20 +2294,20 @@
 .method public setSceneMode(I)Z
     .locals 1
 
-    .line 502
+    .line 506
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mSceneMode:I
 
     if-eq v0, p1, :cond_0
 
-    .line 503
+    .line 507
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mSceneMode:I
 
-    .line 504
+    .line 508
     const/4 p1, 0x1
 
     return p1
 
-    .line 506
+    .line 510
     :cond_0
     const/4 p1, 0x0
 
@@ -2259,20 +2317,20 @@
 .method public setSharpnessLevel(I)Z
     .locals 1
 
-    .line 787
+    .line 791
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mSharpnessLevel:I
 
     if-eq v0, p1, :cond_0
 
-    .line 788
+    .line 792
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mSharpnessLevel:I
 
-    .line 789
+    .line 793
     const/4 p1, 0x1
 
     return p1
 
-    .line 791
+    .line 795
     :cond_0
     const/4 p1, 0x0
 
@@ -2282,30 +2340,30 @@
 .method public setShotPath(Ljava/lang/String;)V
     .locals 0
 
-    .line 609
+    .line 613
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mShotPath:Ljava/lang/String;
 
-    .line 610
+    .line 614
     return-void
 .end method
 
 .method public setShotType(I)Z
     .locals 1
 
-    .line 597
+    .line 601
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mShotType:I
 
     if-eq v0, p1, :cond_0
 
-    .line 598
+    .line 602
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mShotType:I
 
-    .line 599
+    .line 603
     const/4 p1, 0x1
 
     return p1
 
-    .line 601
+    .line 605
     :cond_0
     const/4 p1, 0x0
 
@@ -2315,7 +2373,7 @@
 .method public setSubPhotoSize(Lcom/android/camera/CameraSize;)Z
     .locals 1
 
-    .line 207
+    .line 211
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mSubPhotoSize:Lcom/android/camera/CameraSize;
 
     invoke-static {v0, p1}, Ljava/util/Objects;->equals(Ljava/lang/Object;Ljava/lang/Object;)Z
@@ -2324,15 +2382,15 @@
 
     if-nez v0, :cond_0
 
-    .line 208
+    .line 212
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mSubPhotoSize:Lcom/android/camera/CameraSize;
 
-    .line 209
+    .line 213
     const/4 p1, 0x1
 
     return p1
 
-    .line 211
+    .line 215
     :cond_0
     const/4 p1, 0x0
 
@@ -2342,20 +2400,20 @@
 .method public setSuperResolutionEnabled(Z)Z
     .locals 1
 
-    .line 579
+    .line 583
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mSuperResolutionEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 580
+    .line 584
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mSuperResolutionEnabled:Z
 
-    .line 581
+    .line 585
     const/4 p1, 0x1
 
     return p1
 
-    .line 584
+    .line 588
     :cond_0
     const/4 p1, 0x0
 
@@ -2365,20 +2423,20 @@
 .method public setSwMfnrEnabled(Z)Z
     .locals 1
 
-    .line 625
+    .line 629
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mSwMfnrEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 626
+    .line 630
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mSwMfnrEnabled:Z
 
-    .line 627
+    .line 631
     const/4 p1, 0x1
 
     return p1
 
-    .line 629
+    .line 633
     :cond_0
     const/4 p1, 0x0
 
@@ -2388,7 +2446,7 @@
 .method public setThumbnailSize(Lcom/android/camera/CameraSize;)Z
     .locals 1
 
-    .line 698
+    .line 702
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mThumbnailSize:Lcom/android/camera/CameraSize;
 
     invoke-static {v0, p1}, Ljava/util/Objects;->equals(Ljava/lang/Object;Ljava/lang/Object;)Z
@@ -2397,15 +2455,15 @@
 
     if-nez v0, :cond_0
 
-    .line 699
+    .line 703
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mThumbnailSize:Lcom/android/camera/CameraSize;
 
-    .line 700
+    .line 704
     const/4 p1, 0x1
 
     return p1
 
-    .line 702
+    .line 706
     :cond_0
     const/4 p1, 0x0
 
@@ -2415,7 +2473,7 @@
 .method public setTimeWaterMarkEnable(Z)Z
     .locals 2
 
-    .line 894
+    .line 898
     const-string v0, "watermark"
 
     iget-object v1, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
@@ -2424,13 +2482,13 @@
 
     move-result v0
 
-    .line 895
+    .line 899
     if-eqz p1, :cond_0
 
-    .line 896
+    .line 900
     if-nez v0, :cond_1
 
-    .line 897
+    .line 901
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
     const-string v1, "watermark"
@@ -2439,33 +2497,33 @@
 
     goto :goto_0
 
-    .line 899
+    .line 903
     :cond_0
     if-eqz v0, :cond_1
 
-    .line 900
+    .line 904
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mWaterMarkAppliedList:Ljava/util/List;
 
     const-string v1, "watermark"
 
     invoke-interface {v0, v1}, Ljava/util/List;->remove(Ljava/lang/Object;)Z
 
-    .line 903
+    .line 907
     :cond_1
     :goto_0
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mTimeWaterMarkEnabled:Z
 
     if-eq v0, p1, :cond_2
 
-    .line 904
+    .line 908
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mTimeWaterMarkEnabled:Z
 
-    .line 905
+    .line 909
     const/4 p1, 0x1
 
     return p1
 
-    .line 907
+    .line 911
     :cond_2
     const/4 p1, 0x0
 
@@ -2475,30 +2533,30 @@
 .method public setTimeWaterMarkValue(Ljava/lang/String;)V
     .locals 0
 
-    .line 928
+    .line 932
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mTimeWatermarkValue:Ljava/lang/String;
 
-    .line 929
+    .line 933
     return-void
 .end method
 
 .method public setUltraWideLDCEnabled(Z)Z
     .locals 1
 
-    .line 751
+    .line 755
     iget-boolean v0, p0, Lcom/android/camera2/CameraConfigs;->mUltraWideLDCEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 752
+    .line 756
     iput-boolean p1, p0, Lcom/android/camera2/CameraConfigs;->mUltraWideLDCEnabled:Z
 
-    .line 753
+    .line 757
     const/4 p1, 0x1
 
     return p1
 
-    .line 755
+    .line 759
     :cond_0
     const/4 p1, 0x0
 
@@ -2516,7 +2574,7 @@
         }
     .end annotation
 
-    .line 115
+    .line 119
     iget-object v0, p0, Lcom/android/camera2/CameraConfigs;->mVideoFpsRange:Landroid/util/Range;
 
     invoke-static {v0, p1}, Ljava/util/Objects;->equals(Ljava/lang/Object;Ljava/lang/Object;)Z
@@ -2525,15 +2583,15 @@
 
     if-nez v0, :cond_0
 
-    .line 116
+    .line 120
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mVideoFpsRange:Landroid/util/Range;
 
-    .line 117
+    .line 121
     const/4 p1, 0x1
 
     return p1
 
-    .line 119
+    .line 123
     :cond_0
     const/4 p1, 0x0
 
@@ -2543,27 +2601,27 @@
 .method public setVideoSize(Lcom/android/camera/CameraSize;)V
     .locals 0
 
-    .line 861
+    .line 865
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mVideoSize:Lcom/android/camera/CameraSize;
 
-    .line 862
+    .line 866
     return-void
 .end method
 
 .method public setVideoSnapshotSize(Lcom/android/camera/CameraSize;)V
     .locals 0
 
-    .line 869
+    .line 873
     iput-object p1, p0, Lcom/android/camera2/CameraConfigs;->mVideoSnapshotSize:Lcom/android/camera/CameraSize;
 
-    .line 870
+    .line 874
     return-void
 .end method
 
 .method public setZoomRatio(F)Z
     .locals 4
 
-    .line 297
+    .line 301
     iget v0, p0, Lcom/android/camera2/CameraConfigs;->mZoomRatio:F
 
     sub-float/2addr v0, p1
@@ -2580,15 +2638,15 @@
 
     if-lez v0, :cond_0
 
-    .line 298
+    .line 302
     iput p1, p0, Lcom/android/camera2/CameraConfigs;->mZoomRatio:F
 
-    .line 299
+    .line 303
     const/4 p1, 0x1
 
     return p1
 
-    .line 301
+    .line 305
     :cond_0
     const/4 p1, 0x0
 

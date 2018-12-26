@@ -50,7 +50,7 @@
 
 # virtual methods
 .method public apply(Lcom/android/camera/module/loader/NullHolder;Lcom/android/camera/module/loader/camera2/Camera2Result;)Lcom/android/camera/module/loader/NullHolder;
-    .locals 1
+    .locals 4
     .param p1    # Lcom/android/camera/module/loader/NullHolder;
         .annotation build Lio/reactivex/annotations/NonNull;
         .end annotation
@@ -85,11 +85,32 @@
     move-result v0
 
     .line 188
+    invoke-static {}, Lcom/android/camera/Camera;->access$400()Ljava/lang/String;
+
+    move-result-object v1
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "mCameraOpenResult apply : result = "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 189
     packed-switch v0, :pswitch_data_0
 
     goto :goto_0
 
-    .line 194
+    .line 195
     :pswitch_0
     invoke-virtual {p1}, Lcom/android/camera/module/loader/NullHolder;->isPresent()Z
 
@@ -97,17 +118,17 @@
 
     if-eqz v0, :cond_0
 
-    .line 195
+    .line 196
     invoke-virtual {p1}, Lcom/android/camera/module/loader/NullHolder;->get()Ljava/lang/Object;
 
     move-result-object v0
 
     check-cast v0, Lcom/android/camera/module/BaseModule;
 
-    .line 196
+    .line 197
     invoke-virtual {v0}, Lcom/android/camera/module/BaseModule;->setDeparted()V
 
-    .line 199
+    .line 200
     :cond_0
     iget-object v0, p0, Lcom/android/camera/Camera$3;->this$0:Lcom/android/camera/Camera;
 
@@ -119,11 +140,11 @@
 
     goto :goto_0
 
-    .line 191
+    .line 192
     :pswitch_1
     nop
 
-    .line 202
+    .line 203
     :goto_0
     return-object p1
 

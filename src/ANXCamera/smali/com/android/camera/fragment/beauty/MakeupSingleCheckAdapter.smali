@@ -308,7 +308,7 @@
     move-result-object p2
 
     .line 58
-    const v0, 0x7f040037
+    const v0, 0x7f04003a
 
     const/4 v1, 0x0
 

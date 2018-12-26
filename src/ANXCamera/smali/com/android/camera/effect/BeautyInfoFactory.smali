@@ -7,7 +7,7 @@
 .method public constructor <init>()V
     .locals 0
 
-    .line 14
+    .line 15
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -16,7 +16,7 @@
 .method public static getFilterDegree(Lcom/miui/filtersdk/filter/helper/FilterType;)I
     .locals 2
 
-    .line 189
+    .line 136
     sget-object v0, Lcom/android/camera/effect/BeautyInfoFactory$1;->$SwitchMap$com$miui$filtersdk$filter$helper$FilterType:[I
 
     invoke-virtual {p0}, Lcom/miui/filtersdk/filter/helper/FilterType;->ordinal()I
@@ -33,35 +33,35 @@
 
     packed-switch p0, :pswitch_data_0
 
-    .line 204
+    .line 151
     const/16 p0, 0x64
 
     return p0
 
-    .line 200
+    .line 147
     :pswitch_0
     const/16 p0, 0x50
 
     return p0
 
-    .line 193
+    .line 140
     :pswitch_1
     return v1
 
-    .line 191
+    .line 138
     :pswitch_2
     const/16 p0, 0x3c
 
     return p0
 
-    .line 202
+    .line 149
     :cond_0
     return v1
 
     nop
 
     :pswitch_data_0
-    .packed-switch 0x18
+    .packed-switch 0xd
         :pswitch_2
         :pswitch_1
         :pswitch_0
@@ -74,75 +74,12 @@
 .end method
 
 .method public static getIndiaFilterDegree(Lcom/miui/filtersdk/filter/helper/FilterType;)I
-    .locals 3
+    .locals 0
 
-    .line 209
-    sget-object v0, Lcom/android/camera/effect/BeautyInfoFactory$1;->$SwitchMap$com$miui$filtersdk$filter$helper$FilterType:[I
-
-    invoke-virtual {p0}, Lcom/miui/filtersdk/filter/helper/FilterType;->ordinal()I
-
-    move-result p0
-
-    aget p0, v0, p0
-
-    const/16 v0, 0xd
-
-    const/16 v1, 0x50
-
-    if-eq p0, v0, :cond_1
-
-    const/16 v0, 0x10
-
-    if-eq p0, v0, :cond_1
-
-    const/16 v0, 0x12
-
-    const/16 v2, 0x46
-
-    if-eq p0, v0, :cond_0
-
-    packed-switch p0, :pswitch_data_0
-
-    .line 227
+    .line 156
     const/16 p0, 0x64
 
     return p0
-
-    .line 220
-    :pswitch_0
-    return v1
-
-    .line 213
-    :pswitch_1
-    return v2
-
-    .line 211
-    :pswitch_2
-    const/16 p0, 0x3c
-
-    return p0
-
-    .line 225
-    :cond_0
-    return v2
-
-    .line 223
-    :cond_1
-    return v1
-
-    nop
-
-    :pswitch_data_0
-    .packed-switch 0x18
-        :pswitch_2
-        :pswitch_1
-        :pswitch_0
-        :pswitch_0
-        :pswitch_0
-        :pswitch_0
-        :pswitch_0
-        :pswitch_0
-    .end packed-switch
 .end method
 
 .method public static initBeautyFilterInfo()Ljava/util/ArrayList;
@@ -156,44 +93,44 @@
         }
     .end annotation
 
-    .line 16
+    .line 17
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    .line 17
+    .line 18
     nop
 
-    .line 19
+    .line 20
     new-instance v1, Lcom/android/camera/effect/FilterInfo;
 
     sget v2, Lcom/android/camera/effect/FilterInfo;->FILTER_ID_NONE:I
 
     const/4 v3, 0x0
 
-    const v4, 0x7f0b0068
+    const v4, 0x7f0b006a
 
-    const v5, 0x7f020180
+    const v5, 0x7f020196
 
     invoke-direct {v1, v2, v4, v5, v3}, Lcom/android/camera/effect/FilterInfo;-><init>(IIII)V
 
-    .line 23
+    .line 24
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 24
+    .line 25
     sget-object v1, Lcom/miui/filtersdk/filter/helper/FilterFactory$FilterScene;->BEAUTY:Lcom/miui/filtersdk/filter/helper/FilterFactory$FilterScene;
 
     invoke-static {v1}, Lcom/miui/filtersdk/filter/helper/FilterFactory;->getFiltersByScene(Lcom/miui/filtersdk/filter/helper/FilterFactory$FilterScene;)[Lcom/miui/filtersdk/filter/helper/FilterType;
 
     move-result-object v1
 
-    .line 25
-    nop
-
     .line 26
     nop
 
     .line 27
+    nop
+
+    .line 28
     array-length v2, v1
 
     move v4, v3
@@ -209,7 +146,7 @@
 
     aget-object v8, v1, v4
 
-    .line 28
+    .line 29
     sget-object v9, Lcom/android/camera/effect/BeautyInfoFactory$1;->$SwitchMap$com$miui$filtersdk$filter$helper$FilterType:[I
 
     invoke-virtual {v8}, Lcom/miui/filtersdk/filter/helper/FilterType;->ordinal()I
@@ -220,7 +157,7 @@
 
     packed-switch v9, :pswitch_data_0
 
-    .line 92
+    .line 119
     move v12, v5
 
     move v13, v6
@@ -229,163 +166,163 @@
 
     goto/16 :goto_2
 
-    .line 85
+    .line 111
     :pswitch_0
-    const/16 v5, 0x78
+    const/16 v5, 0x96
 
-    .line 86
-    const v6, 0x7f0b0084
-
-    .line 87
-    const v7, 0x7f020178
-
-    .line 88
-    goto :goto_1
-
-    .line 80
-    :pswitch_1
-    const/16 v5, 0x6e
-
-    .line 81
-    const v6, 0x7f0b0087
-
-    .line 82
-    const v7, 0x7f02017e
-
-    .line 83
-    goto :goto_1
-
-    .line 75
-    :pswitch_2
-    const/16 v5, 0x64
-
-    .line 76
+    .line 112
     const v6, 0x7f0b0086
 
+    .line 113
+    const v7, 0x7f02018e
+
+    .line 114
+    goto :goto_1
+
+    .line 105
+    :pswitch_1
+    const/16 v5, 0x8c
+
+    .line 106
+    const v6, 0x7f0b008c
+
+    .line 107
+    const v7, 0x7f020190
+
+    .line 108
+    goto :goto_1
+
+    .line 99
+    :pswitch_2
+    const/16 v5, 0x82
+
+    .line 100
+    const v6, 0x7f0b008b
+
+    .line 101
+    const v7, 0x7f02018f
+
+    .line 102
+    goto :goto_1
+
+    .line 93
+    :pswitch_3
+    const/16 v5, 0x78
+
+    .line 94
+    const v6, 0x7f0b008a
+
+    .line 95
+    const v7, 0x7f020191
+
+    .line 96
+    goto :goto_1
+
+    .line 81
+    :pswitch_4
+    const/16 v5, 0x6e
+
+    .line 82
+    const v6, 0x7f0b0089
+
+    .line 83
+    const v7, 0x7f020194
+
+    .line 84
+    goto :goto_1
+
+    .line 76
+    :pswitch_5
+    const/16 v5, 0x64
+
     .line 77
-    const v7, 0x7f020182
+    const v6, 0x7f0b0088
 
     .line 78
+    const v7, 0x7f020198
+
+    .line 79
     goto :goto_1
-
-    .line 70
-    :pswitch_3
-    const/16 v5, 0x5a
-
-    .line 71
-    const v6, 0x7f0b0083
-
-    .line 72
-    const v7, 0x7f020179
-
-    .line 73
-    goto :goto_1
-
-    .line 65
-    :pswitch_4
-    const/16 v5, 0x50
 
     .line 66
-    const v6, 0x7f0b0082
+    :pswitch_6
+    const/16 v5, 0x50
 
     .line 67
-    const v7, 0x7f02017c
+    const v6, 0x7f0b0084
 
     .line 68
+    const v7, 0x7f020192
+
+    .line 69
     goto :goto_1
 
-    .line 60
-    :pswitch_5
-    const/16 v5, 0x46
-
-    .line 61
-    const v6, 0x7f0b0081
-
-    .line 62
-    const v7, 0x7f020183
-
-    .line 63
-    goto :goto_1
-
-    .line 55
-    :pswitch_6
-    const/16 v5, 0x3c
-
-    .line 56
-    const v6, 0x7f0b0080
-
-    .line 57
-    const v7, 0x7f02017d
-
-    .line 58
-    goto :goto_1
-
-    .line 50
+    .line 51
     :pswitch_7
     const/16 v5, 0x32
 
-    .line 51
-    const v6, 0x7f0b007d
-
     .line 52
-    const v7, 0x7f02017a
+    const v6, 0x7f0b007f
 
     .line 53
+    const v7, 0x7f02018c
+
+    .line 54
     goto :goto_1
 
-    .line 45
+    .line 46
     :pswitch_8
     const/16 v5, 0x28
 
-    .line 46
-    const v6, 0x7f0b0085
-
     .line 47
-    const v7, 0x7f020184
+    const v6, 0x7f0b0087
 
     .line 48
+    const v7, 0x7f02019a
+
+    .line 49
     goto :goto_1
 
-    .line 40
+    .line 41
     :pswitch_9
     const/16 v5, 0x1e
 
-    .line 41
-    const v6, 0x7f0b007e
-
     .line 42
-    const v7, 0x7f020181
+    const v6, 0x7f0b0080
 
     .line 43
+    const v7, 0x7f020197
+
+    .line 44
     goto :goto_1
 
-    .line 35
+    .line 36
     :pswitch_a
     const/16 v5, 0x14
 
-    .line 36
-    const v6, 0x7f0b007f
-
     .line 37
-    const v7, 0x7f02017b
+    const v6, 0x7f0b0081
 
     .line 38
+    const v7, 0x7f02018d
+
+    .line 39
     goto :goto_1
 
-    .line 30
+    .line 31
     :pswitch_b
     const/16 v5, 0xa
 
-    .line 31
-    const v6, 0x7f0b007c
-
     .line 32
-    const v7, 0x7f02017f
+    const v6, 0x7f0b007e
 
     .line 33
+    const v7, 0x7f020195
+
+    .line 34
     nop
 
-    .line 92
+    .line 119
     :goto_1
     move v12, v6
 
@@ -396,12 +333,12 @@
 
     if-eqz v13, :cond_0
 
-    .line 93
+    .line 120
     new-instance v6, Lcom/android/camera/effect/FilterInfo;
 
     const/4 v10, 0x2
 
-    .line 94
+    .line 121
     invoke-virtual {v8}, Lcom/miui/filtersdk/filter/helper/FilterType;->ordinal()I
 
     move-result v11
@@ -412,16 +349,16 @@
 
     invoke-direct/range {v9 .. v14}, Lcom/android/camera/effect/FilterInfo;-><init>(IIIII)V
 
-    .line 95
+    .line 122
     invoke-virtual {v0, v6}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 96
+    .line 123
     nop
 
-    .line 97
+    .line 124
     nop
 
-    .line 27
+    .line 28
     move v6, v3
 
     move v12, v6
@@ -440,11 +377,11 @@
 
     goto/16 :goto_0
 
-    .line 100
+    .line 127
     :cond_1
     invoke-static {v0}, Ljava/util/Collections;->sort(Ljava/util/List;)V
 
-    .line 101
+    .line 128
     return-object v0
 
     nop
@@ -467,7 +404,7 @@
 .end method
 
 .method public static initIndiaBeautyFilterInfo()Ljava/util/ArrayList;
-    .locals 15
+    .locals 1
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "()",
@@ -477,296 +414,10 @@
         }
     .end annotation
 
-    .line 105
+    .line 132
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    .line 106
-    nop
-
-    .line 108
-    new-instance v1, Lcom/android/camera/effect/FilterInfo;
-
-    sget v2, Lcom/android/camera/effect/FilterInfo;->FILTER_ID_NONE:I
-
-    const/4 v3, 0x0
-
-    const v4, 0x7f0b0068
-
-    const v5, 0x7f020188
-
-    invoke-direct {v1, v2, v4, v5, v3}, Lcom/android/camera/effect/FilterInfo;-><init>(IIII)V
-
-    .line 112
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    .line 113
-    sget-object v1, Lcom/miui/filtersdk/filter/helper/FilterFactory$FilterScene;->BEAUTY_INDIA:Lcom/miui/filtersdk/filter/helper/FilterFactory$FilterScene;
-
-    invoke-static {v1}, Lcom/miui/filtersdk/filter/helper/FilterFactory;->getFiltersByScene(Lcom/miui/filtersdk/filter/helper/FilterFactory$FilterScene;)[Lcom/miui/filtersdk/filter/helper/FilterType;
-
-    move-result-object v1
-
-    .line 114
-    nop
-
-    .line 115
-    nop
-
-    .line 116
-    array-length v2, v1
-
-    move v4, v3
-
-    move v5, v4
-
-    move v6, v5
-
-    move v7, v6
-
-    :goto_0
-    if-ge v4, v2, :cond_1
-
-    aget-object v8, v1, v4
-
-    .line 117
-    sget-object v9, Lcom/android/camera/effect/BeautyInfoFactory$1;->$SwitchMap$com$miui$filtersdk$filter$helper$FilterType:[I
-
-    invoke-virtual {v8}, Lcom/miui/filtersdk/filter/helper/FilterType;->ordinal()I
-
-    move-result v10
-
-    aget v9, v9, v10
-
-    packed-switch v9, :pswitch_data_0
-
-    .line 176
-    move v12, v5
-
-    move v13, v6
-
-    move v5, v7
-
-    goto/16 :goto_2
-
-    .line 169
-    :pswitch_0
-    const/16 v5, 0x6e
-
-    .line 170
-    const v6, 0x7f0b025b
-
-    .line 171
-    const v7, 0x7f020187
-
-    .line 172
-    goto :goto_1
-
-    .line 164
-    :pswitch_1
-    const/16 v5, 0x64
-
-    .line 165
-    const v6, 0x7f0b025a
-
-    .line 166
-    const v7, 0x7f02018c
-
-    .line 167
-    goto :goto_1
-
-    .line 159
-    :pswitch_2
-    const/16 v5, 0x5a
-
-    .line 160
-    const v6, 0x7f0b0259
-
-    .line 161
-    const v7, 0x7f020191
-
-    .line 162
-    goto :goto_1
-
-    .line 154
-    :pswitch_3
-    const/16 v5, 0x50
-
-    .line 155
-    const v6, 0x7f0b0258
-
-    .line 156
-    const v7, 0x7f02018b
-
-    .line 157
-    goto :goto_1
-
-    .line 149
-    :pswitch_4
-    const/16 v5, 0x46
-
-    .line 150
-    const v6, 0x7f0b0257
-
-    .line 151
-    const v7, 0x7f02018a
-
-    .line 152
-    goto :goto_1
-
-    .line 144
-    :pswitch_5
-    const/16 v5, 0x3c
-
-    .line 145
-    const v6, 0x7f0b0256
-
-    .line 146
-    const v7, 0x7f02018f
-
-    .line 147
-    goto :goto_1
-
-    .line 139
-    :pswitch_6
-    const/16 v5, 0x32
-
-    .line 140
-    const v6, 0x7f0b0255
-
-    .line 141
-    const v7, 0x7f020190
-
-    .line 142
-    goto :goto_1
-
-    .line 134
-    :pswitch_7
-    const/16 v5, 0x28
-
-    .line 135
-    const v6, 0x7f0b0254
-
-    .line 136
-    const v7, 0x7f02018d
-
-    .line 137
-    goto :goto_1
-
-    .line 129
-    :pswitch_8
-    const/16 v5, 0x1e
-
-    .line 130
-    const v6, 0x7f0b0253
-
-    .line 131
-    const v7, 0x7f020186
-
-    .line 132
-    goto :goto_1
-
-    .line 124
-    :pswitch_9
-    const/16 v5, 0x14
-
-    .line 125
-    const v6, 0x7f0b0252
-
-    .line 126
-    const v7, 0x7f020189
-
-    .line 127
-    goto :goto_1
-
-    .line 119
-    :pswitch_a
-    const/16 v5, 0xa
-
-    .line 120
-    const v6, 0x7f0b0251
-
-    .line 121
-    const v7, 0x7f02018e
-
-    .line 122
-    nop
-
-    .line 176
-    :goto_1
-    move v12, v6
-
-    move v13, v7
-
-    :goto_2
-    if-eqz v12, :cond_0
-
-    if-eqz v13, :cond_0
-
-    .line 177
-    new-instance v6, Lcom/android/camera/effect/FilterInfo;
-
-    const/4 v10, 0x2
-
-    .line 178
-    invoke-virtual {v8}, Lcom/miui/filtersdk/filter/helper/FilterType;->ordinal()I
-
-    move-result v11
-
-    move-object v9, v6
-
-    move v14, v5
-
-    invoke-direct/range {v9 .. v14}, Lcom/android/camera/effect/FilterInfo;-><init>(IIIII)V
-
-    .line 179
-    invoke-virtual {v0, v6}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    .line 180
-    nop
-
-    .line 181
-    nop
-
-    .line 116
-    move v6, v3
-
-    move v12, v6
-
-    goto :goto_3
-
-    :cond_0
-    move v6, v13
-
-    :goto_3
-    add-int/lit8 v4, v4, 0x1
-
-    move v7, v5
-
-    move v5, v12
-
-    goto/16 :goto_0
-
-    .line 184
-    :cond_1
-    invoke-static {v0}, Ljava/util/Collections;->sort(Ljava/util/List;)V
-
-    .line 185
     return-object v0
-
-    :pswitch_data_0
-    .packed-switch 0xd
-        :pswitch_a
-        :pswitch_9
-        :pswitch_8
-        :pswitch_7
-        :pswitch_6
-        :pswitch_5
-        :pswitch_4
-        :pswitch_3
-        :pswitch_2
-        :pswitch_1
-        :pswitch_0
-    .end packed-switch
 .end method

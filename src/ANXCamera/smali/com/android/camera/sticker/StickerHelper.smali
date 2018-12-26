@@ -188,7 +188,7 @@
 
     const/4 v2, 0x0
 
-    const v3, 0x7f020170
+    const v3, 0x7f02017f
 
     invoke-direct {v1, v2, v3}, Lcom/android/camera/sticker/StickerInfo;-><init>(Ljava/lang/String;I)V
 
@@ -205,7 +205,7 @@
 
     move-result-object v3
 
-    const v4, 0x7f02016b
+    const v4, 0x7f02017a
 
     invoke-direct {v2, v3, v4}, Lcom/android/camera/sticker/StickerInfo;-><init>(Ljava/lang/String;I)V
 
@@ -222,7 +222,7 @@
 
     move-result-object v4
 
-    const v5, 0x7f02016c
+    const v5, 0x7f02017b
 
     invoke-direct {v3, v4, v5}, Lcom/android/camera/sticker/StickerInfo;-><init>(Ljava/lang/String;I)V
 

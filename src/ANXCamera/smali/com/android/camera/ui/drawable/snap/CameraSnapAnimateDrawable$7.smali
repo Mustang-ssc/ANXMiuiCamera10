@@ -96,17 +96,27 @@
     .line 380
     long-to-float v1, v1
 
-    mul-float/2addr v0, v1
+    mul-float/2addr v1, v0
 
-    iget-object v1, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$7;->val$animationConfig:Lcom/android/camera/fragment/bottom/BottomAnimationConfig;
+    iget-object v2, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$7;->val$animationConfig:Lcom/android/camera/fragment/bottom/BottomAnimationConfig;
 
-    iget v1, v1, Lcom/android/camera/fragment/bottom/BottomAnimationConfig;->mDuration:I
+    iget v2, v2, Lcom/android/camera/fragment/bottom/BottomAnimationConfig;->mDuration:I
 
-    int-to-float v1, v1
+    int-to-float v2, v2
 
-    div-float v1, v0, v1
+    div-float/2addr v1, v2
+
+    .line 381
+    cmpl-float v2, v1, v0
+
+    if-lez v2, :cond_0
 
     .line 382
+    nop
+
+    .line 385
+    move v1, v0
+
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$7;->this$0:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
@@ -116,16 +126,16 @@
 
     iput v1, v0, Lcom/android/camera/ui/drawable/CameraPaintBase;->timeAngle:F
 
-    .line 383
+    .line 386
     invoke-super {p0, p1}, Landroid/view/animation/LinearInterpolator;->getInterpolation(F)F
 
     move-result p1
 
-    .line 384
+    .line 387
     iget-object v0, p0, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable$7;->this$0:Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;
 
     invoke-virtual {v0}, Lcom/android/camera/ui/drawable/snap/CameraSnapAnimateDrawable;->invalidateSelf()V
 
-    .line 385
+    .line 388
     return p1
 .end method

@@ -90,7 +90,7 @@
     .locals 1
 
     .line 136
-    const v0, 0x7f04002b
+    const v0, 0x7f04002c
 
     return v0
 .end method
@@ -141,7 +141,7 @@
     iput v0, v1, Landroid/view/ViewGroup$LayoutParams;->height:I
 
     .line 48
-    const v0, 0x7f0d0013
+    const v0, 0x7f0d0015
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -194,7 +194,7 @@
     invoke-virtual {v0, v1}, Lcom/android/camera/ui/NoScrollViewPager;->setOnPageChangeListener(Landroid/support/v4/view/ViewPager$OnPageChangeListener;)V
 
     .line 76
-    const v0, 0x7f0d0080
+    const v0, 0x7f0d008d
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -216,12 +216,12 @@
     .line 95
     iget-object v0, p0, Lcom/android/camera/fragment/sticker/FragmentSticker;->mRadioGroup:Landroid/widget/RadioGroup;
 
-    const v1, 0x7f0d0081
+    const v1, 0x7f0d008e
 
     invoke-virtual {v0, v1}, Landroid/widget/RadioGroup;->check(I)V
 
     .line 97
-    const v0, 0x7f0d0083
+    const v0, 0x7f0d0090
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -281,7 +281,7 @@
 
     .line 197
     :cond_0
-    const v1, 0x7f0d0019
+    const v1, 0x7f0d001b
 
     invoke-interface {p1, v1}, Lcom/android/camera/protocol/ModeProtocol$BaseDelegate;->getActiveFragment(I)I
 

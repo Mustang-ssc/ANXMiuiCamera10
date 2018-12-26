@@ -74,7 +74,7 @@
 
     const-string v3, "0"
 
-    const v4, 0x7f0b0061
+    const v4, 0x7f0b0063
 
     invoke-direct {v0, v1, v2, v4, v3}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
@@ -88,22 +88,22 @@
 .method private getComponentValueInternal(I)Ljava/lang/String;
     .locals 2
 
-    .line 103
+    .line 118
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemRunning()Lcom/android/camera/data/data/runing/DataItemRunning;
 
     move-result-object v0
 
-    .line 104
+    .line 119
     const-string v1, "pref_camera_scenemode_setting_key"
 
     invoke-virtual {v0, v1}, Lcom/android/camera/data/data/runing/DataItemRunning;->isSwitchOn(Ljava/lang/String;)Z
 
     move-result v1
 
-    .line 105
+    .line 120
     if-eqz v1, :cond_0
 
-    .line 106
+    .line 121
     invoke-virtual {v0}, Lcom/android/camera/data/data/runing/DataItemRunning;->getComponentRunningSceneValue()Lcom/android/camera/data/data/runing/ComponentRunningSceneValue;
 
     move-result-object v0
@@ -112,22 +112,22 @@
 
     move-result-object v0
 
-    .line 107
+    .line 122
     invoke-static {v0}, Lcom/android/camera/CameraSettings;->getFlashModeByScene(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 108
+    .line 123
     invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
     move-result v1
 
     if-nez v1, :cond_0
 
-    .line 109
+    .line 124
     return-object v0
 
-    .line 112
+    .line 127
     :cond_0
     invoke-super {p0, p1}, Lcom/android/camera/data/data/ComponentData;->getComponentValue(I)Ljava/lang/String;
 
@@ -139,8 +139,8 @@
 .method private getFlashAutoRes()I
     .locals 1
 
-    .line 266
-    const v0, 0x7f02010a
+    .line 290
+    const v0, 0x7f020119
 
     return v0
 .end method
@@ -148,8 +148,8 @@
 .method private getFlashOffRes()I
     .locals 1
 
-    .line 262
-    const v0, 0x7f02010b
+    .line 286
+    const v0, 0x7f02011a
 
     return v0
 .end method
@@ -157,8 +157,8 @@
 .method private getFlashOnRes()I
     .locals 1
 
-    .line 258
-    const v0, 0x7f02010c
+    .line 282
+    const v0, 0x7f02011b
 
     return v0
 .end method
@@ -166,8 +166,8 @@
 .method private getFlashTorchRes()I
     .locals 1
 
-    .line 270
-    const v0, 0x7f02010d
+    .line 294
+    const v0, 0x7f02011c
 
     return v0
 .end method
@@ -177,31 +177,46 @@
 .method public clearClosed()V
     .locals 1
 
-    .line 275
+    .line 299
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mIsClosed:Z
 
-    .line 276
+    .line 300
     return-void
+.end method
+
+.method public disableUpdate()Z
+    .locals 1
+
+    .line 105
+    invoke-static {}, Lcom/android/camera/ThermalDetector;->getInstance()Lcom/android/camera/ThermalDetector;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lcom/android/camera/ThermalDetector;->thermalConstrained()Z
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public getComponentValue(I)Ljava/lang/String;
     .locals 1
 
-    .line 93
+    .line 94
     invoke-virtual {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->isClosed()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 94
+    .line 95
     const-string p1, "0"
 
     return-object p1
 
-    .line 96
+    .line 97
     :cond_0
     invoke-virtual {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->isEmpty()Z
 
@@ -209,12 +224,12 @@
 
     if-eqz v0, :cond_1
 
-    .line 97
+    .line 98
     const-string p1, "0"
 
     return-object p1
 
-    .line 99
+    .line 100
     :cond_1
     invoke-direct {p0, p1}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getComponentValueInternal(I)Ljava/lang/String;
 
@@ -226,17 +241,39 @@
 .method public getDefaultValue(I)Ljava/lang/String;
     .locals 0
 
-    .line 88
+    .line 89
     const-string p1, "0"
 
     return-object p1
+.end method
+
+.method public getDisableReasonString()I
+    .locals 1
+
+    .line 110
+    invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    .line 111
+    const v0, 0x7f0b0225
+
+    return v0
+
+    .line 113
+    :cond_0
+    const v0, 0x7f0b0226
+
+    return v0
 .end method
 
 .method public getDisplayTitleString()I
     .locals 1
 
     .line 62
-    const v0, 0x7f0b005e
+    const v0, 0x7f0b0060
 
     return v0
 .end method
@@ -252,7 +289,7 @@
         }
     .end annotation
 
-    .line 136
+    .line 151
     iget-object v0, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
     return-object v0
@@ -266,6 +303,10 @@
 
     if-eq p1, v0, :cond_0
 
+    const/16 v0, 0xae
+
+    if-eq p1, v0, :cond_0
+
     packed-switch p1, :pswitch_data_0
 
     packed-switch p1, :pswitch_data_1
@@ -275,7 +316,7 @@
 
     return-object p1
 
-    .line 81
+    .line 82
     :pswitch_0
     new-instance p1, Ljava/lang/RuntimeException;
 
@@ -285,7 +326,7 @@
 
     throw p1
 
-    .line 78
+    .line 79
     :cond_0
     :pswitch_1
     const-string p1, "pref_camera_video_flashmode_key"
@@ -310,7 +351,7 @@
 .method public getPersistValue(I)Ljava/lang/String;
     .locals 0
 
-    .line 125
+    .line 140
     invoke-super {p0, p1}, Lcom/android/camera/data/data/ComponentData;->getComponentValue(I)Ljava/lang/String;
 
     move-result-object p1
@@ -321,12 +362,12 @@
 .method public getValueSelectedDrawableIgnoreClose(I)I
     .locals 1
 
-    .line 238
+    .line 262
     invoke-virtual {p0, p1}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getComponentValue(I)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 239
+    .line 263
     const-string v0, "1"
 
     invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -335,14 +376,14 @@
 
     if-eqz v0, :cond_0
 
-    .line 240
+    .line 264
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
 
     move-result p1
 
     return p1
 
-    .line 241
+    .line 265
     :cond_0
     const-string v0, "3"
 
@@ -352,14 +393,14 @@
 
     if-eqz v0, :cond_1
 
-    .line 242
+    .line 266
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
 
     move-result p1
 
     return p1
 
-    .line 243
+    .line 267
     :cond_1
     const-string v0, "0"
 
@@ -369,14 +410,14 @@
 
     if-eqz v0, :cond_2
 
-    .line 244
+    .line 268
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
 
     move-result p1
 
     return p1
 
-    .line 245
+    .line 269
     :cond_2
     const-string v0, "2"
 
@@ -386,7 +427,7 @@
 
     if-eqz v0, :cond_4
 
-    .line 246
+    .line 270
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result p1
@@ -407,7 +448,7 @@
     :goto_0
     return p1
 
-    .line 247
+    .line 271
     :cond_4
     const-string v0, "103"
 
@@ -417,14 +458,14 @@
 
     if-eqz v0, :cond_5
 
-    .line 248
+    .line 272
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
 
     move-result p1
 
     return p1
 
-    .line 249
+    .line 273
     :cond_5
     const-string v0, "101"
 
@@ -434,14 +475,14 @@
 
     if-eqz p1, :cond_6
 
-    .line 250
+    .line 274
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
 
     move-result p1
 
     return p1
 
-    .line 253
+    .line 277
     :cond_6
     const/4 p1, -0x1
 
@@ -451,26 +492,26 @@
 .method public getValueSelectedStringIdIgnoreClose(I)I
     .locals 3
 
-    .line 284
+    .line 308
     invoke-virtual {p0, p1}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getComponentValue(I)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 285
+    .line 309
     const-string v0, "1"
 
     invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v0
 
-    const v1, 0x7f0b00d8
+    const v1, 0x7f0b00de
 
     if-eqz v0, :cond_0
 
-    .line 286
+    .line 310
     return v1
 
-    .line 287
+    .line 311
     :cond_0
     const-string v0, "3"
 
@@ -478,14 +519,14 @@
 
     move-result v0
 
-    const v2, 0x7f0b00d9
+    const v2, 0x7f0b00df
 
     if-eqz v0, :cond_1
 
-    .line 288
+    .line 312
     return v2
 
-    .line 289
+    .line 313
     :cond_1
     const-string v0, "0"
 
@@ -495,12 +536,12 @@
 
     if-eqz v0, :cond_2
 
-    .line 290
-    const p1, 0x7f0b00da
+    .line 314
+    const p1, 0x7f0b00e0
 
     return p1
 
-    .line 291
+    .line 315
     :cond_2
     const-string v0, "2"
 
@@ -510,7 +551,7 @@
 
     if-eqz v0, :cond_4
 
-    .line 292
+    .line 316
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result p1
@@ -520,12 +561,12 @@
     goto :goto_0
 
     :cond_3
-    const v1, 0x7f0b00db
+    const v1, 0x7f0b00e1
 
     :goto_0
     return v1
 
-    .line 293
+    .line 317
     :cond_4
     const-string v0, "103"
 
@@ -535,10 +576,10 @@
 
     if-eqz v0, :cond_5
 
-    .line 294
+    .line 318
     return v2
 
-    .line 295
+    .line 319
     :cond_5
     const-string v0, "101"
 
@@ -548,10 +589,10 @@
 
     if-eqz p1, :cond_6
 
-    .line 296
+    .line 320
     return v1
 
-    .line 298
+    .line 322
     :cond_6
     const/4 p1, -0x1
 
@@ -570,7 +611,7 @@
 .method public isValidFlashValue(Ljava/lang/String;)Z
     .locals 1
 
-    .line 307
+    .line 331
     const-string v0, "^[0-9]+$"
 
     invoke-virtual {p1, v0}, Ljava/lang/String;->matches(Ljava/lang/String;)Z
@@ -580,12 +621,13 @@
     return p1
 .end method
 
-.method public reInit(IILcom/android/camera2/CameraCapabilities;)Ljava/util/List;
+.method public reInit(IILcom/android/camera2/CameraCapabilities;Lcom/android/camera/data/data/config/ComponentConfigUltraWide;)Ljava/util/List;
     .locals 6
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "(II",
             "Lcom/android/camera2/CameraCapabilities;",
+            "Lcom/android/camera/data/data/config/ComponentConfigUltraWide;",
             ")",
             "Ljava/util/List<",
             "Lcom/android/camera/data/data/ComponentDataItem;",
@@ -593,12 +635,12 @@
         }
     .end annotation
 
-    .line 141
+    .line 156
     iget-object v0, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
     if-nez v0, :cond_0
 
-    .line 142
+    .line 157
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
@@ -607,13 +649,13 @@
 
     goto :goto_0
 
-    .line 144
+    .line 159
     :cond_0
     iget-object v0, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->clear()V
 
-    .line 149
+    .line 164
     :goto_0
     const/16 v0, 0xa6
 
@@ -629,43 +671,43 @@
 
     goto :goto_1
 
-    .line 153
+    .line 168
     :cond_1
     if-nez p2, :cond_2
 
-    .line 154
+    .line 169
     iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
     return-object p1
 
-    .line 160
+    .line 175
     :cond_2
     :goto_1
     invoke-virtual {p3}, Lcom/android/camera2/CameraCapabilities;->isFlashSupported()Z
 
     move-result p3
 
-    const v0, 0x7f0b005f
+    const v0, 0x7f0b0061
 
-    const v2, 0x7f0b0061
+    const v2, 0x7f0b0062
 
-    const v3, 0x7f0b0060
+    const v3, 0x7f0b0063
 
-    if-nez p3, :cond_5
+    if-nez p3, :cond_6
 
-    .line 161
+    .line 176
     const/4 p3, 0x1
 
     if-ne p2, p3, :cond_4
 
-    .line 162
-    invoke-static {}, Lcom/mi/config/b;->hu()Z
+    .line 177
+    invoke-static {}, Lcom/mi/config/b;->hw()Z
 
     move-result p2
 
     if-eqz p2, :cond_4
 
-    .line 163
+    .line 178
     const/16 p2, 0xa3
 
     if-eq p1, p2, :cond_3
@@ -676,78 +718,8 @@
 
     if-ne p1, v1, :cond_4
 
-    .line 166
+    .line 181
     :cond_3
-    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
-
-    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
-
-    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
-
-    move-result p3
-
-    .line 167
-    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
-
-    move-result v1
-
-    const-string v4, "0"
-
-    invoke-direct {p2, p3, v1, v2, v4}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
-
-    .line 166
-    invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
-    .line 170
-    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
-
-    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
-
-    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
-
-    move-result p3
-
-    .line 171
-    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
-
-    move-result v1
-
-    const-string v2, "103"
-
-    invoke-direct {p2, p3, v1, v0, v2}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
-
-    .line 170
-    invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
-    .line 174
-    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
-
-    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
-
-    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
-
-    move-result p3
-
-    .line 175
-    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
-
-    move-result v0
-
-    const-string v1, "101"
-
-    invoke-direct {p2, p3, v0, v3, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
-
-    .line 174
-    invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
-    .line 180
-    :cond_4
-    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
-
-    return-object p1
-
-    .line 183
-    :cond_5
     iget-object p2, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
     new-instance p3, Lcom/android/camera/data/data/ComponentDataItem;
@@ -756,93 +728,196 @@
 
     move-result v1
 
-    .line 184
+    .line 182
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
 
     move-result v4
 
     const-string v5, "0"
 
-    invoke-direct {p3, v1, v4, v2, v5}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+    invoke-direct {p3, v1, v4, v3, v5}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
-    .line 183
+    .line 181
     invoke-interface {p2, p3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 188
-    const/16 p2, 0xac
+    .line 185
+    iget-object p2, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
-    const p3, 0x7f0b0062
-
-    if-eq p1, p2, :cond_8
-
-    packed-switch p1, :pswitch_data_0
-
-    packed-switch p1, :pswitch_data_1
-
-    .line 192
-    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
-
-    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
+    new-instance p3, Lcom/android/camera/data/data/ComponentDataItem;
 
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
 
     move-result v1
 
-    .line 193
+    .line 186
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
 
-    move-result v2
+    move-result v4
 
-    const-string v4, "3"
+    const-string v5, "103"
 
-    invoke-direct {p2, v1, v2, v0, v4}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+    invoke-direct {p3, v1, v4, v0, v5}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
-    .line 192
-    invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+    .line 185
+    invoke-interface {p2, p3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 196
-    invoke-static {}, Lcom/android/camera/CameraSettings;->isBackCamera()Z
+    .line 189
+    iget-object p2, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
-    move-result p1
-
-    if-eqz p1, :cond_6
-
-    .line 197
-    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
-
-    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
+    new-instance p3, Lcom/android/camera/data/data/ComponentDataItem;
 
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
 
     move-result v0
 
-    .line 198
+    .line 190
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
 
     move-result v1
 
-    const-string v2, "1"
+    const-string v4, "101"
 
-    invoke-direct {p2, v0, v1, v3, v2}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+    invoke-direct {p3, v0, v1, v2, v4}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+
+    .line 189
+    invoke-interface {p2, p3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    .line 196
+    :cond_4
+    invoke-virtual {p4, p1}, Lcom/android/camera/data/data/config/ComponentConfigUltraWide;->isOpenUltrWide(I)Z
+
+    move-result p1
+
+    if-eqz p1, :cond_5
+
+    .line 197
+    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
+
+    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
+
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
+
+    move-result p3
+
+    .line 198
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
+
+    move-result p4
+
+    const-string v0, "0"
+
+    invoke-direct {p2, p3, p4, v3, v0}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
     .line 197
     invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 202
+    .line 203
+    :cond_5
+    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
+
+    return-object p1
+
+    .line 206
     :cond_6
+    iget-object p2, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
+
+    new-instance p3, Lcom/android/camera/data/data/ComponentDataItem;
+
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
+
+    move-result p4
+
+    .line 207
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOffRes()I
+
+    move-result v1
+
+    const-string v4, "0"
+
+    invoke-direct {p3, p4, v1, v3, v4}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+
+    .line 206
+    invoke-interface {p2, p3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    .line 211
+    const/16 p2, 0xac
+
+    const p3, 0x7f0b0064
+
+    if-eq p1, p2, :cond_9
+
+    const/16 p2, 0xae
+
+    if-eq p1, p2, :cond_9
+
+    packed-switch p1, :pswitch_data_0
+
+    packed-switch p1, :pswitch_data_1
+
+    .line 215
+    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
+
+    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
+
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
+
+    move-result p4
+
+    .line 216
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashAutoRes()I
+
+    move-result v1
+
+    const-string v3, "3"
+
+    invoke-direct {p2, p4, v1, v0, v3}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+
+    .line 215
+    invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    .line 219
+    invoke-static {}, Lcom/android/camera/CameraSettings;->isBackCamera()Z
+
+    move-result p1
+
+    if-eqz p1, :cond_7
+
+    .line 220
+    iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
+
+    new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
+
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
+
+    move-result p4
+
+    .line 221
+    invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
+
+    move-result v0
+
+    const-string v1, "1"
+
+    invoke-direct {p2, p4, v0, v2, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+
+    .line 220
+    invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    .line 225
+    :cond_7
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result p1
 
-    if-eqz p1, :cond_7
+    if-eqz p1, :cond_8
 
-    invoke-static {}, Lcom/mi/config/b;->ho()Z
+    invoke-static {}, Lcom/mi/config/b;->hq()Z
 
     move-result p1
 
-    if-eqz p1, :cond_7
+    if-eqz p1, :cond_8
 
-    .line 203
+    .line 226
     iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
     new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
@@ -851,53 +926,53 @@
 
     move-result p3
 
-    .line 204
+    .line 227
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashOnRes()I
 
-    move-result v0
+    move-result p4
 
-    const-string v1, "2"
+    const-string v0, "2"
 
-    invoke-direct {p2, p3, v0, v3, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+    invoke-direct {p2, p3, p4, v2, v0}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
-    .line 203
+    .line 226
     invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     goto :goto_2
 
-    .line 207
-    :cond_7
-    invoke-static {}, Lcom/mi/config/b;->gv()Z
+    .line 230
+    :cond_8
+    invoke-static {}, Lcom/mi/config/b;->gy()Z
 
     move-result p1
 
-    if-eqz p1, :cond_9
+    if-eqz p1, :cond_a
 
-    .line 208
+    .line 231
     iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
     new-instance p2, Lcom/android/camera/data/data/ComponentDataItem;
 
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashTorchRes()I
 
-    move-result v0
+    move-result p4
 
-    .line 209
+    .line 232
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashTorchRes()I
 
-    move-result v1
+    move-result v0
 
-    const-string v2, "2"
+    const-string v1, "2"
 
-    invoke-direct {p2, v0, v1, p3, v2}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+    invoke-direct {p2, p4, v0, p3, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
-    .line 208
+    .line 231
     invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     goto :goto_2
 
-    .line 221
-    :cond_8
+    .line 245
+    :cond_9
     :pswitch_0
     iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
@@ -905,22 +980,22 @@
 
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashTorchRes()I
 
-    move-result v0
+    move-result p4
 
-    .line 222
+    .line 246
     invoke-direct {p0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getFlashTorchRes()I
 
-    move-result v1
+    move-result v0
 
-    const-string v2, "2"
+    const-string v1, "2"
 
-    invoke-direct {p2, v0, v1, p3, v2}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
+    invoke-direct {p2, p4, v0, p3, v1}, Lcom/android/camera/data/data/ComponentDataItem;-><init>(IIILjava/lang/String;)V
 
-    .line 221
+    .line 245
     invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 228
-    :cond_9
+    .line 252
+    :cond_a
     :goto_2
     iget-object p1, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mItems:Ljava/util/List;
 
@@ -953,26 +1028,26 @@
 .method public setComponentValue(ILjava/lang/String;)V
     .locals 1
 
-    .line 130
+    .line 145
     const/4 v0, 0x0
 
     invoke-virtual {p0, v0}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->setClosed(Z)V
 
-    .line 131
+    .line 146
     invoke-super {p0, p1, p2}, Lcom/android/camera/data/data/ComponentData;->setComponentValue(ILjava/lang/String;)V
 
-    .line 132
+    .line 147
     return-void
 .end method
 
 .method public setSceneModeFlashValue(ILjava/lang/String;)V
     .locals 1
 
-    .line 116
+    .line 131
     iget-object v0, p0, Lcom/android/camera/data/data/config/ComponentConfigFlash;->mFlashValuesForSceneMode:Landroid/util/SparseArray;
 
     invoke-virtual {v0, p1, p2}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
 
-    .line 117
+    .line 132
     return-void
 .end method

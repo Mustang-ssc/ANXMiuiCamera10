@@ -796,7 +796,7 @@
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/mi/config/a;->fp()Z
+    invoke-virtual {v0}, Lcom/mi/config/a;->fr()Z
 
     move-result v0
 

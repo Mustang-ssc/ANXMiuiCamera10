@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/FragmentFullScreen;)V
     .locals 0
 
-    .line 94
+    .line 106
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$1;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -43,7 +43,7 @@
         }
     .end annotation
 
-    .line 97
+    .line 109
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentFullScreen$1;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
     invoke-static {v0}, Lcom/android/camera/fragment/FragmentFullScreen;->access$000(Lcom/android/camera/fragment/FragmentFullScreen;)Landroid/view/View;
@@ -54,7 +54,7 @@
 
     invoke-virtual {v0, v1}, Landroid/view/View;->setVisibility(I)V
 
-    .line 98
+    .line 110
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentFullScreen$1;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
     invoke-static {v0}, Lcom/android/camera/fragment/FragmentFullScreen;->access$100(Lcom/android/camera/fragment/FragmentFullScreen;)Landroid/view/View;
@@ -63,6 +63,6 @@
 
     invoke-virtual {v0, v1}, Landroid/view/View;->setVisibility(I)V
 
-    .line 99
+    .line 111
     return-void
 .end method

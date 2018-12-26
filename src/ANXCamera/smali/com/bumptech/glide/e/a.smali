@@ -78,7 +78,7 @@
     return-object p0
 .end method
 
-.method public static n(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
+.method public static m(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
     .locals 2
     .param p0    # Landroid/content/Context;
         .annotation build Landroid/support/annotation/NonNull;
@@ -105,7 +105,7 @@
     if-nez v1, :cond_1
 
     .line 32
-    invoke-static {p0}, Lcom/bumptech/glide/e/a;->o(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
+    invoke-static {p0}, Lcom/bumptech/glide/e/a;->n(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
 
     move-result-object v1
 
@@ -133,7 +133,7 @@
     return-object v1
 .end method
 
-.method private static o(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
+.method private static n(Landroid/content/Context;)Lcom/bumptech/glide/load/c;
     .locals 1
     .param p0    # Landroid/content/Context;
         .annotation build Landroid/support/annotation/NonNull;
@@ -143,7 +143,7 @@
     .end annotation
 
     .line 50
-    invoke-static {p0}, Lcom/bumptech/glide/e/a;->p(Landroid/content/Context;)Landroid/content/pm/PackageInfo;
+    invoke-static {p0}, Lcom/bumptech/glide/e/a;->o(Landroid/content/Context;)Landroid/content/pm/PackageInfo;
 
     move-result-object p0
 
@@ -160,7 +160,7 @@
     return-object v0
 .end method
 
-.method private static p(Landroid/content/Context;)Landroid/content/pm/PackageInfo;
+.method private static o(Landroid/content/Context;)Landroid/content/pm/PackageInfo;
     .locals 4
     .param p0    # Landroid/content/Context;
         .annotation build Landroid/support/annotation/NonNull;

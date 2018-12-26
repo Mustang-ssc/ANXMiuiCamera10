@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;)V
     .locals 0
 
-    .line 5170
+    .line 5401
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$28;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,20 +38,20 @@
 .method public run()V
     .locals 3
 
-    .line 5173
+    .line 5404
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$28;->this$0:Lcom/android/camera/module/Camera2Module;
 
     const/4 v1, 0x1
 
     const/4 v2, 0x0
 
-    invoke-static {v0, v2, v1}, Lcom/android/camera/module/Camera2Module;->access$3000(Lcom/android/camera/module/Camera2Module;IZ)V
+    invoke-static {v0, v2, v1}, Lcom/android/camera/module/Camera2Module;->access$4200(Lcom/android/camera/module/Camera2Module;IZ)V
 
-    .line 5174
+    .line 5405
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$28;->this$0:Lcom/android/camera/module/Camera2Module;
 
-    invoke-static {v0, v1}, Lcom/android/camera/module/Camera2Module;->access$3202(Lcom/android/camera/module/Camera2Module;Z)Z
+    invoke-static {v0, v1}, Lcom/android/camera/module/Camera2Module;->access$4402(Lcom/android/camera/module/Camera2Module;Z)Z
 
-    .line 5175
+    .line 5406
     return-void
 .end method

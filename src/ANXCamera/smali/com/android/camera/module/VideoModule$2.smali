@@ -22,7 +22,7 @@
 .method constructor <init>(Lcom/android/camera/module/VideoModule;JJ)V
     .locals 0
 
-    .line 1367
+    .line 1385
     iput-object p1, p0, Lcom/android/camera/module/VideoModule$2;->this$0:Lcom/android/camera/module/VideoModule;
 
     invoke-direct {p0, p2, p3, p4, p5}, Landroid/os/CountDownTimer;-><init>(JJ)V
@@ -35,7 +35,7 @@
 .method public onFinish()V
     .locals 3
 
-    .line 1379
+    .line 1397
     iget-object v0, p0, Lcom/android/camera/module/VideoModule$2;->this$0:Lcom/android/camera/module/VideoModule;
 
     const/4 v1, 0x1
@@ -44,14 +44,14 @@
 
     invoke-virtual {v0, v1, v2}, Lcom/android/camera/module/VideoModule;->stopVideoRecording(ZZ)V
 
-    .line 1380
+    .line 1398
     return-void
 .end method
 
 .method public onTick(J)V
     .locals 2
 
-    .line 1370
+    .line 1388
     const-wide/16 v0, 0x3b6
 
     add-long/2addr p1, v0
@@ -66,7 +66,7 @@
 
     move-result-object p1
 
-    .line 1372
+    .line 1390
     iget-object p2, p0, Lcom/android/camera/module/VideoModule$2;->this$0:Lcom/android/camera/module/VideoModule;
 
     invoke-static {p2}, Lcom/android/camera/module/VideoModule;->access$000(Lcom/android/camera/module/VideoModule;)Lcom/android/camera/protocol/ModeProtocol$TopAlert;
@@ -75,7 +75,7 @@
 
     if-eqz p2, :cond_0
 
-    .line 1373
+    .line 1391
     iget-object p2, p0, Lcom/android/camera/module/VideoModule$2;->this$0:Lcom/android/camera/module/VideoModule;
 
     invoke-static {p2}, Lcom/android/camera/module/VideoModule;->access$000(Lcom/android/camera/module/VideoModule;)Lcom/android/camera/protocol/ModeProtocol$TopAlert;
@@ -84,7 +84,7 @@
 
     invoke-interface {p2, p1}, Lcom/android/camera/protocol/ModeProtocol$TopAlert;->updateRecordingTime(Ljava/lang/String;)V
 
-    .line 1375
+    .line 1393
     :cond_0
     return-void
 .end method

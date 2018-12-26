@@ -199,7 +199,7 @@
     invoke-virtual {v1, v0}, Landroid/view/View;->setTag(Ljava/lang/Object;)V
 
     .line 64
-    const v1, 0x7f0d0074
+    const v1, 0x7f0d007e
 
     invoke-virtual {p1, v1}, Lcom/android/camera/fragment/CommonRecyclerViewHolder;->getView(I)Landroid/view/View;
 
@@ -208,7 +208,7 @@
     check-cast v1, Landroid/widget/TextView;
 
     .line 65
-    const v2, 0x7f0d0073
+    const v2, 0x7f0d007d
 
     invoke-virtual {p1, v2}, Lcom/android/camera/fragment/CommonRecyclerViewHolder;->getView(I)Landroid/view/View;
 
@@ -305,7 +305,7 @@
 
     move-result-object p1
 
-    const p2, 0x7f090091
+    const p2, 0x7f090095
 
     .line 85
     invoke-virtual {p1, p2}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
@@ -456,7 +456,7 @@
     move-result-object p2
 
     .line 49
-    const v0, 0x7f040024
+    const v0, 0x7f040025
 
     const/4 v1, 0x0
 

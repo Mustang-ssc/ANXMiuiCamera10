@@ -3,12 +3,12 @@
 .source "FragmentFullScreen.java"
 
 # interfaces
-.implements Ljava/lang/Runnable;
+.implements Lcom/ss/android/vesdk/VECommonCallback;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/camera/fragment/FragmentFullScreen;->onCombineSuccess()V
+    value = Lcom/android/camera/fragment/FragmentFullScreen;->initLiveListener()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/FragmentFullScreen;)V
     .locals 0
 
-    .line 383
+    .line 437
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$7;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -35,16 +35,51 @@
 
 
 # virtual methods
-.method public run()V
-    .locals 2
+.method public onCallback(IIFLjava/lang/String;)V
+    .locals 3
 
-    .line 386
-    iget-object v0, p0, Lcom/android/camera/fragment/FragmentFullScreen$7;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
+    .line 440
+    const-string v0, "FragmentFullScreen"
 
-    const/4 v1, 0x1
+    new-instance v1, Ljava/lang/StringBuilder;
 
-    invoke-virtual {v0, v1}, Lcom/android/camera/fragment/FragmentFullScreen;->quitLiveRecordPreview(Z)V
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    .line 387
+    const-string v2, "CombineError: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    const-string p1, " | "
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    const-string p1, " | "
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v1, p3}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
+
+    const-string p1, " | "
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v1, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-static {v0, p1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 441
+    iget-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$7;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
+
+    invoke-static {p1}, Lcom/android/camera/fragment/FragmentFullScreen;->access$300(Lcom/android/camera/fragment/FragmentFullScreen;)V
+
+    .line 442
     return-void
 .end method

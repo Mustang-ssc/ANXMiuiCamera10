@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/top/FragmentTopAlert;)V
     .locals 0
 
-    .line 397
+    .line 419
     iput-object p1, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$3;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onCheckedChanged(Lcom/android/camera/ui/ToggleSwitch;Z)V
     .locals 1
 
-    .line 400
+    .line 422
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object p1
@@ -51,29 +51,29 @@
 
     check-cast p1, Lcom/android/camera/protocol/ModeProtocol$ConfigChanges;
 
-    .line 401
+    .line 423
     if-eqz p2, :cond_0
 
-    .line 402
+    .line 424
     if-eqz p1, :cond_1
 
-    .line 403
+    .line 425
     const/16 p2, 0xf6
 
     invoke-interface {p1, p2}, Lcom/android/camera/protocol/ModeProtocol$ConfigChanges;->onConfigChanged(I)V
 
     goto :goto_0
 
-    .line 406
+    .line 428
     :cond_0
     if-eqz p1, :cond_1
 
-    .line 407
+    .line 429
     const/16 p2, 0xf7
 
     invoke-interface {p1, p2}, Lcom/android/camera/protocol/ModeProtocol$ConfigChanges;->onConfigChanged(I)V
 
-    .line 410
+    .line 432
     :cond_1
     :goto_0
     return-void

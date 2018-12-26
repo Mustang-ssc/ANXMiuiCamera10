@@ -39,7 +39,7 @@
     .locals 1
 
     .line 46
-    const v0, 0x7f04001c
+    const v0, 0x7f04001d
 
     return v0
 .end method
@@ -48,7 +48,7 @@
     .locals 3
 
     .line 23
-    const v0, 0x7f0d0059
+    const v0, 0x7f0d0061
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -110,7 +110,7 @@
     iput v1, v0, Landroid/view/ViewGroup$MarginLayoutParams;->height:I
 
     .line 35
-    const v0, 0x7f0d0056
+    const v0, 0x7f0d005d
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -121,7 +121,7 @@
     .line 38
     iget-object p1, p0, Lcom/android/camera/fragment/dialog/LiveRecordPreviewFragment;->mBottomLayout:Landroid/view/ViewGroup;
 
-    const v0, 0x7f0d005a
+    const v0, 0x7f0d0062
 
     invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
 
@@ -132,7 +132,7 @@
     .line 39
     iget-object p1, p0, Lcom/android/camera/fragment/dialog/LiveRecordPreviewFragment;->mBottomLayout:Landroid/view/ViewGroup;
 
-    const v0, 0x7f0d005c
+    const v0, 0x7f0d0064
 
     invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
 
@@ -143,7 +143,7 @@
     .line 40
     iget-object p1, p0, Lcom/android/camera/fragment/dialog/LiveRecordPreviewFragment;->mBottomLayout:Landroid/view/ViewGroup;
 
-    const v0, 0x7f0d005e
+    const v0, 0x7f0d0066
 
     invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
 
@@ -163,17 +163,17 @@
 
     move-result p1
 
-    const v0, 0x7f0d0056
+    const v0, 0x7f0d005d
 
     const/16 v1, 0xd1
 
     if-eq p1, v0, :cond_2
 
-    const v0, 0x7f0d005a
+    const v0, 0x7f0d0062
 
     if-eq p1, v0, :cond_1
 
-    const v0, 0x7f0d005c
+    const v0, 0x7f0d0064
 
     if-eq p1, v0, :cond_0
 

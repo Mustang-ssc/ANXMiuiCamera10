@@ -605,7 +605,7 @@
     sput-object v1, Lcom/ss/android/vesdk/runtime/cloudconfig/DeviceInfoDetector;->opengl_version:Ljava/lang/String;
 
     .line 159
-    const-string v1, "2.0.4.23_20181129172937_31536f2a4"
+    const-string v1, "2.0.4.23_xiaomi_20181130185104_31536f2a4"
 
     sput-object v1, Lcom/ss/android/vesdk/runtime/cloudconfig/DeviceInfoDetector;->ve_version:Ljava/lang/String;
 

@@ -36,7 +36,7 @@
         Lcom/android/gallery3d/exif/ExifInterface$ResolutionUnit;,
         Lcom/android/gallery3d/exif/ExifInterface$Compression;,
         Lcom/android/gallery3d/exif/ExifInterface$YCbCrPositioning;,
-        Lcom/android/gallery3d/exif/ExifInterface$Orientation;
+        Lcom/android/gallery3d/exif/ExifInterface$ExifOrientationFlag;
     }
 .end annotation
 
@@ -2196,6 +2196,58 @@
     return p0
 .end method
 
+.method public static getExifOrientationValue(I)S
+    .locals 1
+
+    .line 1845
+    rem-int/lit16 p0, p0, 0x168
+
+    .line 1846
+    if-gez p0, :cond_0
+
+    .line 1847
+    add-int/lit16 p0, p0, 0x168
+
+    .line 1849
+    :cond_0
+    const/16 v0, 0x5a
+
+    if-ge p0, v0, :cond_1
+
+    .line 1850
+    const/4 p0, 0x1
+
+    return p0
+
+    .line 1851
+    :cond_1
+    const/16 v0, 0xb4
+
+    if-ge p0, v0, :cond_2
+
+    .line 1852
+    const/4 p0, 0x6
+
+    return p0
+
+    .line 1853
+    :cond_2
+    const/16 v0, 0x10e
+
+    if-ge p0, v0, :cond_3
+
+    .line 1854
+    const/4 p0, 0x3
+
+    return p0
+
+    .line 1856
+    :cond_3
+    const/16 p0, 0x8
+
+    return p0
+.end method
+
 .method protected static getFlagsFromAllowedIfds([I)I
     .locals 8
 
@@ -2277,59 +2329,7 @@
     return v0
 .end method
 
-.method public static getOrientationValueForRotation(I)S
-    .locals 1
-
-    .line 1845
-    rem-int/lit16 p0, p0, 0x168
-
-    .line 1846
-    if-gez p0, :cond_0
-
-    .line 1847
-    add-int/lit16 p0, p0, 0x168
-
-    .line 1849
-    :cond_0
-    const/16 v0, 0x5a
-
-    if-ge p0, v0, :cond_1
-
-    .line 1850
-    const/4 p0, 0x1
-
-    return p0
-
-    .line 1851
-    :cond_1
-    const/16 v0, 0xb4
-
-    if-ge p0, v0, :cond_2
-
-    .line 1852
-    const/4 p0, 0x6
-
-    return p0
-
-    .line 1853
-    :cond_2
-    const/16 v0, 0x10e
-
-    if-ge p0, v0, :cond_3
-
-    .line 1854
-    const/4 p0, 0x3
-
-    return p0
-
-    .line 1856
-    :cond_3
-    const/16 p0, 0x8
-
-    return p0
-.end method
-
-.method public static getRotationForOrientationValue(S)I
+.method public static getRotation(S)I
     .locals 2
 
     .line 1867
@@ -3627,11 +3627,11 @@
     .locals 6
 
     .line 1760
-    const-string v0, "algo exif:"
+    sget-object v0, Lcom/android/gallery3d/exif/ExifInterface;->TAG:Ljava/lang/String;
 
-    const-string v1, "removeParallel "
+    const-string v1, "algo exif: removeParallel"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 1761
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
@@ -4292,13 +4292,13 @@
     .locals 3
 
     .line 1752
-    const-string v0, "algo exif:"
+    sget-object v0, Lcom/android/gallery3d/exif/ExifInterface;->TAG:Ljava/lang/String;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v2, "addParallel "
+    const-string v2, "algo exif: addParallel "
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -4308,7 +4308,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 1753
     sget v0, Lcom/android/gallery3d/exif/ExifInterface;->TAG_PARALLEL_PROCESS_COMMENT:I
@@ -4322,7 +4322,11 @@
     sget p1, Lcom/android/gallery3d/exif/ExifInterface;->TAG_ORIENTATION:I
 
     .line 1754
-    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {p2}, Lcom/android/gallery3d/exif/ExifInterface;->getExifOrientationValue(I)S
+
+    move-result p2
+
+    invoke-static {p2}, Ljava/lang/Short;->valueOf(S)Ljava/lang/Short;
 
     move-result-object p2
 

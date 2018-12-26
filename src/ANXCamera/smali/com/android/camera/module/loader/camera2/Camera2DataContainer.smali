@@ -166,7 +166,7 @@
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v4, " BACK: [main, aux, mux, bokeh, virtual, infrared] = "
+    const-string v4, "BACK: [main, aux, mux, bokeh, virtual, infrared] = "
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -424,7 +424,7 @@
 
     move-result-object v7
 
-    invoke-virtual {v7}, Lcom/mi/config/a;->fu()Z
+    invoke-virtual {v7}, Lcom/mi/config/a;->fw()Z
 
     move-result v7
 
@@ -634,7 +634,7 @@
 
     monitor-enter p0
 
-    .line 372
+    .line 375
     :try_start_0
     invoke-direct {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->isInitialized()Z
 
@@ -642,7 +642,7 @@
 
     if-nez v0, :cond_0
 
-    .line 373
+    .line 376
     sget-object p2, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v0, "Warning: getActualOpenCameraId(): #init() failed."
@@ -651,25 +651,25 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 374
+    .line 377
     monitor-exit p0
 
     return p1
 
-    .line 376
+    .line 379
     :cond_0
     nop
 
-    .line 377
+    .line 380
     const/4 v0, 0x0
 
     const/4 v1, 0x1
 
     const/4 v2, -0x1
 
-    if-nez p1, :cond_c
+    if-nez p1, :cond_d
 
-    .line 378
+    .line 381
     :try_start_1
     invoke-static {}, Lcom/android/camera/CameraSettings;->isDualCameraEnable()Z
 
@@ -677,7 +677,7 @@
 
     if-eqz v3, :cond_2
 
-    .line 379
+    .line 382
     invoke-static {}, Lcom/android/camera/CameraSettings;->isSupportedOpticalZoom()Z
 
     move-result v3
@@ -692,35 +692,35 @@
 
     if-eqz v3, :cond_2
 
-    .line 381
+    .line 384
     :cond_1
     move v3, v1
 
     goto :goto_0
 
-    .line 379
+    .line 382
     :cond_2
     nop
 
-    .line 381
+    .line 384
     move v3, v0
 
     :goto_0
     if-nez v3, :cond_3
 
-    .line 382
+    .line 385
     monitor-exit p0
 
     return p1
 
-    .line 385
+    .line 388
     :cond_3
     packed-switch p2, :pswitch_data_0
 
     :pswitch_0
     goto/16 :goto_2
 
-    .line 388
+    .line 391
     :pswitch_1
     :try_start_2
     invoke-static {}, Lcom/android/camera/CameraSettings;->isUltraWideBokehOn()Z
@@ -735,14 +735,14 @@
 
     if-eq v3, v2, :cond_4
 
-    .line 389
+    .line 392
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getUltraWideBokehCameraId()I
 
     move-result v2
 
     goto/16 :goto_3
 
-    .line 390
+    .line 393
     :cond_4
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehCameraId()I
 
@@ -750,36 +750,36 @@
 
     if-eq v3, v2, :cond_5
 
-    .line 391
+    .line 394
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehCameraId()I
 
     move-result v2
 
     goto/16 :goto_3
 
-    .line 393
+    .line 396
     :cond_5
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getMuxCameraId()I
 
     move-result v2
 
-    .line 395
+    .line 398
     goto/16 :goto_3
 
-    .line 412
+    .line 420
     :pswitch_2
     invoke-static {}, Lcom/android/camera/CameraSettings;->isSwitchCameraZoomMode()Z
 
     move-result v2
 
-    if-eqz v2, :cond_b
+    if-eqz v2, :cond_c
 
-    .line 413
+    .line 421
     invoke-static {p2}, Lcom/android/camera/CameraSettings;->getCameraZoomMode(I)Ljava/lang/String;
 
     move-result-object v2
 
-    .line 414
+    .line 422
     const-string v3, "wide"
 
     invoke-virtual {v3, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -788,14 +788,14 @@
 
     if-eqz v3, :cond_6
 
-    .line 415
+    .line 423
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getMainBackCameraId()I
 
     move-result v2
 
     goto :goto_1
 
-    .line 416
+    .line 424
     :cond_6
     const-string v3, "tele"
 
@@ -805,14 +805,14 @@
 
     if-eqz v3, :cond_7
 
-    .line 417
+    .line 425
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getAuxCameraId()I
 
     move-result v2
 
     goto :goto_1
 
-    .line 418
+    .line 426
     :cond_7
     const-string v3, "ultra"
 
@@ -822,171 +822,162 @@
 
     if-eqz v2, :cond_8
 
-    .line 419
+    .line 427
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getUltraWideCameraId()I
 
     move-result v2
 
     goto :goto_1
 
-    .line 421
+    .line 429
     :cond_8
     move v2, p1
 
     :goto_1
     goto :goto_3
 
-    .line 399
+    .line 401
     :pswitch_3
+    invoke-static {}, Lcom/android/camera/CameraSettings;->isMeunUltraPixelPhotographyOn()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_9
+
+    .line 402
+    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getMainBackCameraId()I
+
+    move-result v2
+
+    .line 403
+    goto :goto_3
+
+    .line 406
+    :cond_9
+    :pswitch_4
     invoke-static {}, Lcom/android/camera/CameraSettings;->isDualCameraSatEnable()Z
 
     move-result v2
 
-    if-eqz v2, :cond_a
+    if-eqz v2, :cond_b
 
     invoke-static {}, Lcom/mi/config/b;->isSupportedOpticalZoom()Z
 
     move-result v2
 
+    if-eqz v2, :cond_b
+
+    .line 407
+    invoke-static {p2}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen(I)Z
+
+    move-result v2
+
     if-eqz v2, :cond_a
 
-    .line 400
-    invoke-static {}, Lcom/mi/config/b;->fu()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_9
-
-    invoke-static {}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_9
-
-    .line 401
+    .line 408
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getUltraWideCameraId()I
 
     move-result v2
 
     goto :goto_3
 
-    .line 403
-    :cond_9
+    .line 410
+    :cond_a
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getMuxCameraId()I
 
     move-result v2
 
     goto :goto_3
 
-    .line 405
-    :cond_a
-    invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemFeature()Lcom/mi/config/a;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Lcom/mi/config/a;->fu()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_b
-
-    invoke-static {}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_b
-
-    .line 406
-    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getUltraWideCameraId()I
-
-    move-result v2
-
-    goto :goto_3
-
-    .line 426
-    :pswitch_4
-    invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemFeature()Lcom/mi/config/a;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Lcom/mi/config/a;->fu()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_b
-
-    invoke-static {}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_b
-
-    .line 427
-    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getUltraWideCameraId()I
-
-    move-result v2
-
-    goto :goto_3
-
-    .line 433
+    .line 412
     :cond_b
+    invoke-static {p2}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen(I)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_c
+
+    .line 413
+    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getUltraWideCameraId()I
+
+    move-result v2
+
+    goto :goto_3
+
+    .line 435
+    :pswitch_5
+    invoke-static {p2}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen(I)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_c
+
+    .line 436
+    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getUltraWideCameraId()I
+
+    move-result v2
+
+    goto :goto_3
+
+    .line 442
+    :cond_c
     :goto_2
     move v2, p1
 
     :goto_3
     goto :goto_5
 
-    :cond_c
-    if-ne p1, v1, :cond_e
+    :cond_d
+    if-ne p1, v1, :cond_f
 
-    .line 434
+    .line 443
     const/16 v3, 0xab
 
-    if-eq p2, v3, :cond_d
+    if-eq p2, v3, :cond_e
 
     packed-switch p2, :pswitch_data_1
 
     goto :goto_4
 
-    .line 442
-    :pswitch_5
+    .line 451
+    :pswitch_6
     invoke-static {}, Lcom/android/camera/CameraSettings;->isVideoBokehOn()Z
 
     move-result v3
 
-    .line 443
-    if-eqz v3, :cond_e
+    .line 452
+    if-eqz v3, :cond_f
 
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehFrontCameraId()I
 
     move-result v3
 
-    if-eq v3, v2, :cond_e
+    if-eq v3, v2, :cond_f
 
-    .line 444
+    .line 453
     invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehFrontCameraId()I
 
     move-result v2
 
     goto :goto_5
 
-    .line 436
-    :cond_d
-    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehFrontCameraId()I
-
-    move-result v3
-
-    if-eq v3, v2, :cond_e
-
-    .line 437
-    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehFrontCameraId()I
-
-    move-result v2
-
-    goto :goto_5
-
-    .line 449
+    .line 445
     :cond_e
+    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehFrontCameraId()I
+
+    move-result v3
+
+    if-eq v3, v2, :cond_f
+
+    .line 446
+    invoke-virtual {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getBokehFrontCameraId()I
+
+    move-result v2
+
+    goto :goto_5
+
+    .line 458
+    :cond_f
     :goto_4
     move v2, p1
 
@@ -1001,7 +992,7 @@
 
     new-array v6, v6, [Ljava/lang/Object;
 
-    .line 450
+    .line 459
     invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object p2
@@ -1022,7 +1013,7 @@
 
     aput-object p2, v6, p1
 
-    .line 449
+    .line 458
     invoke-static {v4, v5, v6}, Ljava/lang/String;->format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object p1
@@ -1031,12 +1022,12 @@
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    .line 451
+    .line 460
     monitor-exit p0
 
     return v2
 
-    .line 371
+    .line 374
     :catchall_0
     move-exception p1
 
@@ -1044,15 +1035,13 @@
 
     throw p1
 
-    nop
-
     :pswitch_data_0
     .packed-switch 0xa1
-        :pswitch_4
-        :pswitch_4
+        :pswitch_5
+        :pswitch_5
         :pswitch_3
         :pswitch_0
-        :pswitch_3
+        :pswitch_4
         :pswitch_2
         :pswitch_2
         :pswitch_0
@@ -1060,13 +1049,14 @@
         :pswitch_0
         :pswitch_1
         :pswitch_0
-        :pswitch_4
+        :pswitch_5
+        :pswitch_5
     .end packed-switch
 
     :pswitch_data_1
     .packed-switch 0xa1
-        :pswitch_5
-        :pswitch_5
+        :pswitch_6
+        :pswitch_6
     .end packed-switch
 .end method
 
@@ -1128,7 +1118,7 @@
 
     monitor-enter p0
 
-    .line 300
+    .line 303
     :try_start_0
     invoke-direct {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->isInitialized()Z
 
@@ -1136,7 +1126,7 @@
 
     if-nez v0, :cond_0
 
-    .line 301
+    .line 304
     sget-object v0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v1, "Warning: getAuxFrontCameraId(): #init() failed."
@@ -1145,14 +1135,14 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 302
+    .line 305
     const/4 v0, -0x1
 
     monitor-exit p0
 
     return v0
 
-    .line 304
+    .line 307
     :cond_0
     :try_start_1
     iget-object v0, p0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->mOrderedCameraIds:[I
@@ -1173,7 +1163,7 @@
 
     return v0
 
-    .line 299
+    .line 302
     :catchall_0
     move-exception v0
 
@@ -1240,7 +1230,7 @@
 
     monitor-enter p0
 
-    .line 316
+    .line 319
     :try_start_0
     invoke-direct {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->isInitialized()Z
 
@@ -1248,7 +1238,7 @@
 
     if-nez v0, :cond_0
 
-    .line 317
+    .line 320
     sget-object v0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v1, "Warning: getBokehFrontCameraId(): #init() failed."
@@ -1257,14 +1247,14 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 318
+    .line 321
     const/4 v0, -0x1
 
     monitor-exit p0
 
     return v0
 
-    .line 320
+    .line 323
     :cond_0
     :try_start_1
     iget-object v0, p0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->mOrderedCameraIds:[I
@@ -1285,7 +1275,7 @@
 
     return v0
 
-    .line 315
+    .line 318
     :catchall_0
     move-exception v0
 
@@ -1299,7 +1289,7 @@
 
     monitor-enter p0
 
-    .line 348
+    .line 351
     :try_start_0
     invoke-direct {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->isInitialized()Z
 
@@ -1307,7 +1297,7 @@
 
     if-nez v0, :cond_0
 
-    .line 349
+    .line 352
     sget-object p1, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v0, "Warning: getCapabilities(): #init() failed."
@@ -1316,14 +1306,14 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 350
+    .line 353
     const/4 p1, 0x0
 
     monitor-exit p0
 
     return-object p1
 
-    .line 352
+    .line 355
     :cond_0
     :try_start_1
     iget-object v0, p0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->mCapabilities:Landroid/util/SparseArray;
@@ -1334,10 +1324,10 @@
 
     check-cast v0, Lcom/android/camera2/CameraCapabilities;
 
-    .line 353
+    .line 356
     if-nez v0, :cond_1
 
-    .line 354
+    .line 357
     sget-object v1, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -1358,13 +1348,13 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 356
+    .line 359
     :cond_1
     monitor-exit p0
 
     return-object v0
 
-    .line 347
+    .line 350
     :catchall_0
     move-exception p1
 
@@ -1378,7 +1368,7 @@
 
     monitor-enter p0
 
-    .line 368
+    .line 371
     :try_start_0
     invoke-virtual {p0, p1, p2}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getActualOpenCameraId(II)I
 
@@ -1407,7 +1397,7 @@
 
     monitor-enter p0
 
-    .line 360
+    .line 363
     :try_start_0
     iget v0, p0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->mCurrentOpenedCameraId:I
 
@@ -1415,14 +1405,14 @@
 
     if-ne v0, v1, :cond_0
 
-    .line 361
+    .line 364
     sget-object v0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v1, "Warning: getCurrentCameraCapabilities(): mCurrentOpenedCameraId is invalid."
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 363
+    .line 366
     :cond_0
     iget v0, p0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->mCurrentOpenedCameraId:I
 
@@ -1436,7 +1426,7 @@
 
     return-object v0
 
-    .line 359
+    .line 362
     :catchall_0
     move-exception v0
 
@@ -1615,7 +1605,7 @@
 
     monitor-enter p0
 
-    .line 308
+    .line 311
     :try_start_0
     invoke-direct {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->isInitialized()Z
 
@@ -1623,7 +1613,7 @@
 
     if-nez v0, :cond_0
 
-    .line 309
+    .line 312
     sget-object v0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v1, "Warning: getMuxFrontCameraId(): #init() failed."
@@ -1632,14 +1622,14 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 310
+    .line 313
     const/4 v0, -0x1
 
     monitor-exit p0
 
     return v0
 
-    .line 312
+    .line 315
     :cond_0
     :try_start_1
     iget-object v0, p0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->mOrderedCameraIds:[I
@@ -1660,7 +1650,7 @@
 
     return v0
 
-    .line 307
+    .line 310
     :catchall_0
     move-exception v0
 
@@ -1720,7 +1710,7 @@
 
     monitor-enter p0
 
-    .line 455
+    .line 464
     :try_start_0
     invoke-direct {p0}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->isInitialized()Z
 
@@ -1728,7 +1718,7 @@
 
     if-nez v0, :cond_0
 
-    .line 456
+    .line 465
     sget-object v0, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v1, "Warning: getUltraWideCameraId(): #init() failed."
@@ -1737,14 +1727,14 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 457
+    .line 466
     const/4 v0, -0x1
 
     monitor-exit p0
 
     return v0
 
-    .line 459
+    .line 468
     :cond_0
     const/16 v0, 0x15
 
@@ -1752,7 +1742,7 @@
 
     return v0
 
-    .line 454
+    .line 463
     :catchall_0
     move-exception v0
 
@@ -1828,18 +1818,18 @@
 
     monitor-enter p0
 
-    .line 324
+    .line 327
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getCapabilities(I)Lcom/android/camera2/CameraCapabilities;
 
     move-result-object p1
 
-    .line 325
+    .line 328
     const/4 v0, 0x0
 
     if-nez p1, :cond_0
 
-    .line 326
+    .line 329
     sget-object p1, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->TAG:Ljava/lang/String;
 
     const-string v1, "Warning: isFrontCameraId(): #init() failed."
@@ -1848,12 +1838,12 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 327
+    .line 330
     monitor-exit p0
 
     return v0
 
-    .line 329
+    .line 332
     :cond_0
     :try_start_1
     invoke-virtual {p1}, Lcom/android/camera2/CameraCapabilities;->getFacing()I
@@ -1873,7 +1863,7 @@
 
     return v0
 
-    .line 323
+    .line 326
     :catchall_0
     move-exception p1
 

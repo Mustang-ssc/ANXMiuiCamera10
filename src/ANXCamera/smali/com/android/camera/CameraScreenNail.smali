@@ -70,7 +70,7 @@
 
 .field private mLastFrameGaussianBitmap:Landroid/graphics/Bitmap;
 
-.field private mLock:Ljava/lang/Object;
+.field private final mLock:Ljava/lang/Object;
 
 .field private mModuleAnimManager:Lcom/android/camera/SwitchAnimManager;
 
@@ -1991,30 +1991,30 @@
     :try_start_0
     iget-boolean v0, p0, Lcom/android/camera/CameraScreenNail;->mFirstFrameArrived:Z
 
-    const/4 v1, 0x1
-
     if-nez v0, :cond_2
 
     .line 642
     sget-object v0, Lcom/android/camera/CameraScreenNail;->TAG:Ljava/lang/String;
 
-    const-string v2, "onFrameAvailable first frame arrived."
+    const-string v1, "onFrameAvailable first frame arrived."
 
-    invoke-static {v0, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 644
     iget v0, p0, Lcom/android/camera/CameraScreenNail;->mFrameNumber:I
 
     invoke-static {}, Lcom/android/camera/CameraSettings;->getSkipFrameNumber()I
 
-    move-result v2
+    move-result v1
 
-    if-ge v0, v2, :cond_1
+    const/4 v2, 0x1
+
+    if-ge v0, v1, :cond_1
 
     .line 645
     iget v0, p0, Lcom/android/camera/CameraScreenNail;->mFrameNumber:I
 
-    add-int/2addr v0, v1
+    add-int/2addr v0, v2
 
     iput v0, p0, Lcom/android/camera/CameraScreenNail;->mFrameNumber:I
 
@@ -2034,16 +2034,16 @@
     invoke-static {}, Lcom/android/camera/statistic/ScenarioTrackUtil;->trackSwitchModeEnd()V
 
     .line 652
-    invoke-direct {p0, v1}, Lcom/android/camera/CameraScreenNail;->notifyFrameAvailable(I)V
+    invoke-direct {p0, v2}, Lcom/android/camera/CameraScreenNail;->notifyFrameAvailable(I)V
 
     .line 653
-    iput-boolean v1, p0, Lcom/android/camera/CameraScreenNail;->mVisible:Z
+    iput-boolean v2, p0, Lcom/android/camera/CameraScreenNail;->mVisible:Z
 
-    .line 656
-    :cond_2
-    iput-boolean v1, p0, Lcom/android/camera/CameraScreenNail;->mFirstFrameArrived:Z
+    .line 654
+    iput-boolean v2, p0, Lcom/android/camera/CameraScreenNail;->mFirstFrameArrived:Z
 
     .line 657
+    :cond_2
     iget-boolean v0, p0, Lcom/android/camera/CameraScreenNail;->mVisible:Z
 
     if-eqz v0, :cond_5
@@ -2619,7 +2619,7 @@
     invoke-static {v1, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 683
-    invoke-static {}, Lcom/mi/config/b;->gE()Z
+    invoke-static {}, Lcom/mi/config/b;->gH()Z
 
     move-result v1
 
@@ -2638,7 +2638,7 @@
     iput v1, p0, Lcom/android/camera/CameraScreenNail;->mSurfaceWidth:I
 
     .line 684
-    invoke-static {}, Lcom/mi/config/b;->gE()Z
+    invoke-static {}, Lcom/mi/config/b;->gH()Z
 
     move-result v1
 

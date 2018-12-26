@@ -15,7 +15,7 @@
 
 
 # static fields
-.field private static final ACCESS_KEY:Ljava/lang/String; = "f5c61e00bf9a11e79515bdb2ca03e788"
+.field private static final ACCESS_KEY:Ljava/lang/String; = "d4cd3080e95111e89708f1366a45264e"
 
 .field private static final APP_VERSION:Ljava/lang/String; = "7.5.0"
 
@@ -27,7 +27,7 @@
 
 .field private static final PLATFORM:Ljava/lang/String; = "android"
 
-.field private static final SDK_VERSION:Ljava/lang/String; = "3.0.1"
+.field private static final SDK_VERSION:Ljava/lang/String; = "3.4.0"
 
 
 # direct methods
@@ -56,14 +56,14 @@
     .line 28
     const-string v0, "access_key"
 
-    const-string v1, "f5c61e00bf9a11e79515bdb2ca03e788"
+    const-string v1, "d4cd3080e95111e89708f1366a45264e"
 
     invoke-virtual {p0, v0, v1}, Lcom/android/camera/network/live/TTLiveStickerResourceRequest;->addParam(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 29
     const-string v0, "sdk_version"
 
-    const-string v1, "3.0.1"
+    const-string v1, "3.4.0"
 
     invoke-virtual {p0, v0, v1}, Lcom/android/camera/network/live/TTLiveStickerResourceRequest;->addParam(Ljava/lang/String;Ljava/lang/String;)V
 

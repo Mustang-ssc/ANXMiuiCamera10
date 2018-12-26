@@ -21,66 +21,114 @@
 
 # direct methods
 .method public constructor <init>(Landroid/graphics/Bitmap;IIIFFF)V
-    .locals 0
+    .locals 1
 
-    .line 19
+    .line 22
     invoke-direct {p0, p2, p3, p4}, Lcom/android/camera/effect/renders/WaterMark;-><init>(III)V
 
-    .line 21
+    .line 24
     invoke-static {p2, p3}, Ljava/lang/Math;->min(II)I
 
     move-result p2
 
-    .line 22
+    .line 25
     int-to-float p2, p2
 
     const/high16 p3, 0x44870000    # 1080.0f
 
     div-float/2addr p2, p3
 
-    .line 23
-    mul-float/2addr p5, p2
+    .line 27
+    invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemFeature()Lcom/mi/config/a;
 
-    invoke-static {p5}, Ljava/lang/Math;->round(F)I
+    move-result-object p3
+
+    invoke-virtual {p3}, Lcom/mi/config/a;->fE()Z
 
     move-result p3
 
-    and-int/lit8 p3, p3, -0x2
+    .line 28
+    const/high16 p4, 0x3f800000    # 1.0f
 
-    iput p3, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mHeight:I
+    const v0, 0x7f090125
 
-    .line 24
-    iget p3, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mHeight:I
+    invoke-static {v0, p4}, Lcom/android/camera/CameraSettings;->getResourceFloat(IF)F
+
+    move-result v0
+
+    .line 29
+    if-nez p3, :cond_0
+
+    .line 30
+    nop
+
+    .line 31
+    move v0, p4
+
+    :cond_0
+    mul-float/2addr p5, p2
+
+    mul-float/2addr p5, v0
+
+    invoke-static {p5}, Ljava/lang/Math;->round(F)I
+
+    move-result p5
+
+    and-int/lit8 p5, p5, -0x2
+
+    iput p5, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mHeight:I
+
+    .line 32
+    iget p5, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mHeight:I
 
     invoke-virtual {p1}, Landroid/graphics/Bitmap;->getWidth()I
 
-    move-result p4
+    move-result v0
 
-    mul-int/2addr p3, p4
+    mul-int/2addr p5, v0
 
     invoke-virtual {p1}, Landroid/graphics/Bitmap;->getHeight()I
 
-    move-result p4
+    move-result v0
 
-    div-int/2addr p3, p4
+    div-int/2addr p5, v0
 
-    and-int/lit8 p3, p3, -0x2
+    and-int/lit8 p5, p5, -0x2
 
-    iput p3, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mWidth:I
+    iput p5, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mWidth:I
 
-    .line 25
+    .line 33
     mul-float/2addr p6, p2
 
     invoke-static {p6}, Ljava/lang/Math;->round(F)I
 
-    move-result p3
+    move-result p5
 
-    and-int/lit8 p3, p3, -0x2
+    and-int/lit8 p5, p5, -0x2
 
-    iput p3, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingX:I
+    iput p5, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingX:I
 
-    .line 26
+    .line 35
+    const p5, 0x7f090126
+
+    invoke-static {p5, p4}, Lcom/android/camera/CameraSettings;->getResourceFloat(IF)F
+
+    move-result p5
+
+    .line 36
+    if-nez p3, :cond_1
+
+    .line 37
+    goto :goto_0
+
+    .line 38
+    :cond_1
+    move p4, p5
+
+    :goto_0
     mul-float/2addr p7, p2
+
+    mul-float/2addr p7, p4
 
     invoke-static {p7}, Ljava/lang/Math;->round(F)I
 
@@ -90,31 +138,31 @@
 
     iput p2, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingY:I
 
-    .line 28
+    .line 39
     new-instance p2, Lcom/android/gallery3d/ui/BitmapTexture;
 
     invoke-direct {p2, p1}, Lcom/android/gallery3d/ui/BitmapTexture;-><init>(Landroid/graphics/Bitmap;)V
 
     iput-object p2, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mImageTexture:Lcom/android/gallery3d/ui/BitmapTexture;
 
-    .line 29
+    .line 40
     iget-object p1, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mImageTexture:Lcom/android/gallery3d/ui/BitmapTexture;
 
     const/4 p2, 0x0
 
     invoke-virtual {p1, p2}, Lcom/android/gallery3d/ui/BitmapTexture;->setOpaque(Z)V
 
-    .line 30
+    .line 41
     invoke-direct {p0}, Lcom/android/camera/effect/renders/ImageWaterMark;->calcCenterAxis()V
 
-    .line 31
+    .line 42
     return-void
 .end method
 
 .method private calcCenterAxis()V
     .locals 2
 
-    .line 34
+    .line 45
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mOrientation:I
 
     if-eqz v0, :cond_3
@@ -133,7 +181,7 @@
 
     goto :goto_0
 
-    .line 48
+    .line 59
     :cond_0
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingY:I
 
@@ -147,7 +195,7 @@
 
     iput v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterX:I
 
-    .line 49
+    .line 60
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingX:I
 
     invoke-virtual {p0}, Lcom/android/camera/effect/renders/ImageWaterMark;->getWidth()I
@@ -162,7 +210,7 @@
 
     goto :goto_0
 
-    .line 44
+    .line 55
     :cond_1
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPictureWidth:I
 
@@ -180,7 +228,7 @@
 
     iput v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterX:I
 
-    .line 45
+    .line 56
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingY:I
 
     invoke-virtual {p0}, Lcom/android/camera/effect/renders/ImageWaterMark;->getHeight()I
@@ -193,10 +241,10 @@
 
     iput v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterY:I
 
-    .line 46
+    .line 57
     goto :goto_0
 
-    .line 40
+    .line 51
     :cond_2
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPictureWidth:I
 
@@ -214,7 +262,7 @@
 
     iput v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterX:I
 
-    .line 41
+    .line 52
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPictureHeight:I
 
     iget v1, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingX:I
@@ -231,10 +279,10 @@
 
     iput v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterY:I
 
-    .line 42
+    .line 53
     goto :goto_0
 
-    .line 36
+    .line 47
     :cond_3
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingX:I
 
@@ -248,7 +296,7 @@
 
     iput v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterX:I
 
-    .line 37
+    .line 48
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPictureHeight:I
 
     iget v1, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mPaddingY:I
@@ -265,10 +313,10 @@
 
     iput v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterY:I
 
-    .line 38
+    .line 49
     nop
 
-    .line 52
+    .line 63
     :goto_0
     return-void
 .end method
@@ -278,7 +326,7 @@
 .method public getCenterX()I
     .locals 1
 
-    .line 56
+    .line 67
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterX:I
 
     return v0
@@ -287,7 +335,7 @@
 .method public getCenterY()I
     .locals 1
 
-    .line 61
+    .line 72
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mCenterY:I
 
     return v0
@@ -296,7 +344,7 @@
 .method public getHeight()I
     .locals 1
 
-    .line 71
+    .line 82
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mHeight:I
 
     return v0
@@ -305,7 +353,7 @@
 .method public getTexture()Lcom/android/gallery3d/ui/BasicTexture;
     .locals 1
 
-    .line 76
+    .line 87
     iget-object v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mImageTexture:Lcom/android/gallery3d/ui/BitmapTexture;
 
     return-object v0
@@ -314,7 +362,7 @@
 .method public getWidth()I
     .locals 1
 
-    .line 66
+    .line 77
     iget v0, p0, Lcom/android/camera/effect/renders/ImageWaterMark;->mWidth:I
 
     return v0

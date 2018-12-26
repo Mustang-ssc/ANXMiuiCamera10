@@ -1888,7 +1888,7 @@
 
     move-result-object v0
 
-    invoke-virtual {v0, p0}, Lcom/bumptech/glide/manager/l;->j(Landroid/content/Context;)Lcom/bumptech/glide/i;
+    invoke-virtual {v0, p0}, Lcom/bumptech/glide/manager/l;->i(Landroid/content/Context;)Lcom/bumptech/glide/i;
 
     move-result-object p0
 

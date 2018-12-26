@@ -83,7 +83,7 @@
 
     sput-object v0, Lcom/android/camera/fragment/beauty/BeautyParameters;->TAG:Ljava/lang/String;
 
-    .line 62
+    .line 75
     const/4 v0, 0x2
 
     new-array v1, v0, [Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
@@ -102,14 +102,14 @@
 
     sput-object v1, Lcom/android/camera/fragment/beauty/BeautyParameters;->sSupportTwoWayAdjustableTypes:[Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
-    .line 105
+    .line 118
     new-instance v1, Ljava/util/ArrayList;
 
     invoke-direct {v1}, Ljava/util/ArrayList;-><init>()V
 
     sput-object v1, Lcom/android/camera/fragment/beauty/BeautyParameters;->sSupportSeekBarAdjustBeautyType:Ljava/util/List;
 
-    .line 106
+    .line 119
     sget-object v1, Lcom/android/camera/fragment/beauty/BeautyParameters;->sSupportSeekBarAdjustBeautyType:Ljava/util/List;
 
     invoke-static {v0}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
@@ -118,7 +118,7 @@
 
     invoke-interface {v1, v0}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 107
+    .line 120
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautyParameters;->sSupportSeekBarAdjustBeautyType:Ljava/util/List;
 
     const/4 v1, 0x3
@@ -129,7 +129,7 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 108
+    .line 121
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautyParameters;->sSupportSeekBarAdjustBeautyType:Ljava/util/List;
 
     const/4 v1, 0x5
@@ -140,17 +140,28 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 109
+    .line 122
+    sget-object v0, Lcom/android/camera/fragment/beauty/BeautyParameters;->sSupportSeekBarAdjustBeautyType:Ljava/util/List;
+
+    const/4 v1, 0x7
+
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v1
+
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    .line 123
     return-void
 .end method
 
 .method private constructor <init>()V
     .locals 4
 
-    .line 128
+    .line 142
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 287
+    .line 310
     const/4 v0, 0x6
 
     new-array v0, v0, [[F
@@ -205,7 +216,7 @@
 
     iput-object v0, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mCameraLevelParameters:[[F
 
-    .line 129
+    .line 143
     return-void
 
     nop
@@ -262,7 +273,10 @@
 .method public static convert(Lcom/miui/filtersdk/beauty/BeautyParameterType;)Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
     .locals 1
 
-    .line 240
+    .line 260
+    if-eqz p0, :cond_0
+
+    .line 263
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautyParameters$1;->$SwitchMap$com$miui$filtersdk$beauty$BeautyParameterType:[I
 
     invoke-virtual {p0}, Lcom/miui/filtersdk/beauty/BeautyParameterType;->ordinal()I
@@ -273,36 +287,44 @@
 
     packed-switch p0, :pswitch_data_0
 
-    .line 250
+    .line 273
     new-instance p0, Ljava/lang/IllegalArgumentException;
 
     invoke-direct {p0}, Ljava/lang/IllegalArgumentException;-><init>()V
 
     throw p0
 
-    .line 248
+    .line 271
     :pswitch_0
     sget-object p0, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;->SHRINK_FACE_RATIO:Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
     return-object p0
 
-    .line 246
+    .line 269
     :pswitch_1
     sget-object p0, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;->ENLARGE_EYE_RATIO:Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
     return-object p0
 
-    .line 244
+    .line 267
     :pswitch_2
     sget-object p0, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;->WHITEN_STRENGTH:Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
     return-object p0
 
-    .line 242
+    .line 265
     :pswitch_3
     sget-object p0, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;->SMOOTH_STRENGTH:Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
     return-object p0
+
+    .line 261
+    :cond_0
+    new-instance p0, Ljava/lang/IllegalArgumentException;
+
+    invoke-direct {p0}, Ljava/lang/IllegalArgumentException;-><init>()V
+
+    throw p0
 
     nop
 
@@ -315,10 +337,10 @@
     .end packed-switch
 .end method
 
-.method public static getFaceBeautyRatioKey(Lcom/android/camera/fragment/beauty/BeautyParameters$Type;)Ljava/lang/String;
+.method public static getBeautyRatioSettingKey(Lcom/android/camera/fragment/beauty/BeautyParameters$Type;)Ljava/lang/String;
     .locals 1
 
-    .line 190
+    .line 204
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautyParameters$1;->$SwitchMap$com$android$camera$fragment$beauty$BeautyParameters$Type:[I
 
     invoke-virtual {p0}, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;->ordinal()I
@@ -329,129 +351,148 @@
 
     packed-switch p0, :pswitch_data_0
 
-    .line 230
+    .line 250
     const-string p0, ""
 
     return-object p0
 
-    .line 228
+    .line 248
     :pswitch_0
+    const-string p0, "key_live_whiten_strength"
+
+    return-object p0
+
+    .line 246
+    :pswitch_1
+    const-string p0, "key_live_enlarge_eye_ratio"
+
+    return-object p0
+
+    .line 244
+    :pswitch_2
+    const-string p0, "key_live_shrink_face_ratio"
+
+    return-object p0
+
+    .line 242
+    :pswitch_3
     const-string p0, "key_beauty_leg_slim_ratio"
 
     return-object p0
 
-    .line 226
-    :pswitch_1
+    .line 240
+    :pswitch_4
     const-string p0, "pref_beauty_shoulder_slim_ratio"
 
     return-object p0
 
-    .line 224
-    :pswitch_2
+    .line 238
+    :pswitch_5
     const-string p0, "pref_beauty_body_slim_ratio"
 
     return-object p0
 
-    .line 222
-    :pswitch_3
+    .line 236
+    :pswitch_6
     const-string p0, "pref_beauty_head_slim_ratio"
 
     return-object p0
 
-    .line 220
-    :pswitch_4
+    .line 234
+    :pswitch_7
     const-string p0, "pref_beautify_eyebrow_dye_ratio_key"
 
     return-object p0
 
-    .line 218
-    :pswitch_5
+    .line 232
+    :pswitch_8
     const-string p0, "pref_beautify_pupil_line_ratio_key"
 
     return-object p0
 
-    .line 216
-    :pswitch_6
+    .line 230
+    :pswitch_9
     const-string p0, "pref_beautify_jelly_lips_ratio_key"
 
     return-object p0
 
-    .line 214
-    :pswitch_7
+    .line 228
+    :pswitch_a
     const-string p0, "pref_beautify_blusher_ratio_key"
 
     return-object p0
 
-    .line 212
-    :pswitch_8
+    .line 226
+    :pswitch_b
     const-string p0, "pref_beautify_slim_nose_ratio_key"
 
     return-object p0
 
-    .line 210
-    :pswitch_9
+    .line 224
+    :pswitch_c
     const-string p0, "pref_beautify_smile_ratio_key"
 
     return-object p0
 
-    .line 208
-    :pswitch_a
+    .line 222
+    :pswitch_d
     const-string p0, "pref_beautify_neck_ratio_key"
 
     return-object p0
 
-    .line 206
-    :pswitch_b
+    .line 220
+    :pswitch_e
     const-string p0, "pref_beautify_chin_ratio_key"
 
     return-object p0
 
-    .line 204
-    :pswitch_c
+    .line 218
+    :pswitch_f
     const-string p0, "pref_beautify_lips_ratio_key"
 
     return-object p0
 
-    .line 202
-    :pswitch_d
+    .line 216
+    :pswitch_10
     const-string p0, "pref_beautify_risorius_ratio_key"
 
     return-object p0
 
-    .line 200
-    :pswitch_e
+    .line 214
+    :pswitch_11
     const-string p0, "pref_beautify_nose_ratio_key"
 
     return-object p0
 
-    .line 198
-    :pswitch_f
+    .line 212
+    :pswitch_12
     const-string p0, "pref_beautify_slim_face_ratio_key"
 
     return-object p0
 
-    .line 196
-    :pswitch_10
+    .line 210
+    :pswitch_13
     const-string p0, "pref_beautify_enlarge_eye_ratio_key"
 
     return-object p0
 
-    .line 194
-    :pswitch_11
+    .line 208
+    :pswitch_14
     const-string p0, "pref_beautify_skin_color_ratio_key"
 
     return-object p0
 
-    .line 192
-    :pswitch_12
+    .line 206
+    :pswitch_15
     const-string p0, "pref_beautify_skin_smooth_ratio_key"
 
     return-object p0
 
-    nop
-
     :pswitch_data_0
     .packed-switch 0x1
+        :pswitch_15
+        :pswitch_14
+        :pswitch_13
         :pswitch_12
         :pswitch_11
         :pswitch_10
@@ -481,20 +522,20 @@
 
     monitor-enter v0
 
-    .line 133
+    .line 147
     :try_start_0
     sget-object v1, Lcom/android/camera/fragment/beauty/BeautyParameters;->sInstance:Lcom/android/camera/fragment/beauty/BeautyParameters;
 
     if-nez v1, :cond_0
 
-    .line 134
+    .line 148
     new-instance v1, Lcom/android/camera/fragment/beauty/BeautyParameters;
 
     invoke-direct {v1}, Lcom/android/camera/fragment/beauty/BeautyParameters;-><init>()V
 
     sput-object v1, Lcom/android/camera/fragment/beauty/BeautyParameters;->sInstance:Lcom/android/camera/fragment/beauty/BeautyParameters;
 
-    .line 136
+    .line 150
     :cond_0
     sget-object v1, Lcom/android/camera/fragment/beauty/BeautyParameters;->sInstance:Lcom/android/camera/fragment/beauty/BeautyParameters;
     :try_end_0
@@ -504,7 +545,7 @@
 
     return-object v1
 
-    .line 132
+    .line 146
     :catchall_0
     move-exception v1
 
@@ -527,30 +568,30 @@
         }
     .end annotation
 
-    .line 346
-    invoke-static {}, Lcom/mi/config/b;->hp()Z
+    .line 369
+    invoke-static {}, Lcom/mi/config/b;->hr()Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 347
+    .line 370
     add-int/lit8 p2, p2, -0x1
 
-    .line 349
+    .line 372
     :cond_0
     invoke-virtual {p1, p2}, Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;->getIntelligentLevelParams(I)Ljava/util/Map;
 
     move-result-object p1
 
-    .line 363
+    .line 386
     return-object p1
 .end method
 
 .method public static isCurrentModeSupportVideoBeauty()Z
     .locals 2
 
-    .line 146
+    .line 160
     invoke-static {}, Lcom/android/camera/data/DataRepository;->provider()Lcom/android/camera/data/provider/DataProvider;
 
     move-result-object v0
@@ -561,12 +602,12 @@
 
     check-cast v0, Lcom/android/camera/data/data/global/DataItemGlobal;
 
-    .line 147
+    .line 161
     invoke-virtual {v0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
     move-result v0
 
-    .line 149
+    .line 163
     const/16 v1, 0xa2
 
     if-eq v0, v1, :cond_1
@@ -593,12 +634,12 @@
 .method public static isFaceBeautyOn()Z
     .locals 1
 
-    .line 255
+    .line 278
     invoke-static {}, Lcom/android/camera/CameraSettings;->getBeautyShowLevel()I
 
     move-result v0
 
-    .line 256
+    .line 279
     if-lez v0, :cond_0
 
     const/4 v0, 0x1
@@ -615,7 +656,7 @@
 .method public static isSupportTwoWayAdjustable(Lcom/android/camera/fragment/beauty/BeautyParameters$Type;)Z
     .locals 2
 
-    .line 276
+    .line 299
     invoke-static {}, Lcom/android/camera/fragment/beauty/BeautyHelper;->getBeautyType()I
 
     move-result v0
@@ -624,12 +665,12 @@
 
     if-eq v0, v1, :cond_0
 
-    .line 277
+    .line 300
     const/4 p0, 0x0
 
     return p0
 
-    .line 279
+    .line 302
     :cond_0
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautyParameters;->sSupportTwoWayAdjustableTypes:[Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
@@ -647,12 +688,12 @@
 .method private setBeautyParameters()V
     .locals 2
 
-    .line 327
+    .line 350
     invoke-static {}, Lcom/android/camera/CameraSettings;->getBeautyShowLevel()I
 
     move-result v0
 
-    .line 328
+    .line 351
     invoke-static {}, Lcom/android/camera/effect/EffectController;->getInstance()Lcom/android/camera/effect/EffectController;
 
     move-result-object v1
@@ -663,47 +704,47 @@
 
     if-eqz v1, :cond_0
 
-    .line 329
+    .line 352
     iget-object v1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mStickerMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
     if-eqz v1, :cond_1
 
-    .line 330
+    .line 353
     iget-object v1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mStickerMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
-    .line 331
+    .line 354
     invoke-direct {p0, v1, v0}, Lcom/android/camera/fragment/beauty/BeautyParameters;->getProcessorBeautyParams(Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;I)Ljava/util/Map;
 
     move-result-object v0
 
-    .line 332
+    .line 355
     iget-object v1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mStickerMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
     invoke-virtual {v1, v0}, Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;->setBeautyParamsDegree(Ljava/util/Map;)V
 
-    .line 333
+    .line 356
     goto :goto_0
 
-    .line 335
+    .line 358
     :cond_0
     iget-object v1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
     if-eqz v1, :cond_1
 
-    .line 336
+    .line 359
     iget-object v1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
-    .line 337
+    .line 360
     invoke-direct {p0, v1, v0}, Lcom/android/camera/fragment/beauty/BeautyParameters;->getProcessorBeautyParams(Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;I)Ljava/util/Map;
 
     move-result-object v0
 
-    .line 338
+    .line 361
     iget-object v1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
     invoke-virtual {v1, v0}, Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;->setBeautyParamsDegree(Ljava/util/Map;)V
 
-    .line 341
+    .line 364
     :cond_1
     :goto_0
     return-void
@@ -723,7 +764,7 @@
         }
     .end annotation
 
-    .line 158
+    .line 172
     if-eqz p0, :cond_5
 
     invoke-interface {p0}, Ljava/util/List;->isEmpty()Z
@@ -734,23 +775,23 @@
 
     goto :goto_3
 
-    .line 161
+    .line 175
     :cond_0
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v0
 
-    .line 162
+    .line 176
     invoke-virtual {v0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId()I
 
     move-result v1
 
-    .line 163
+    .line 177
     invoke-virtual {v0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
     move-result v0
 
-    .line 164
+    .line 178
     invoke-static {}, Lcom/android/camera/module/loader/camera2/Camera2DataContainer;->getInstance()Lcom/android/camera/module/loader/camera2/Camera2DataContainer;
 
     move-result-object v2
@@ -759,7 +800,7 @@
 
     move-result-object v0
 
-    .line 166
+    .line 180
     new-instance v1, Ljava/util/ArrayList;
 
     invoke-interface {p0}, Ljava/util/List;->size()I
@@ -768,10 +809,10 @@
 
     invoke-direct {v1, v2}, Ljava/util/ArrayList;-><init>(I)V
 
-    .line 167
+    .line 181
     if-nez v0, :cond_1
 
-    .line 168
+    .line 182
     sget-object p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->TAG:Ljava/lang/String;
 
     const-string v0, "updateSupportedTypes, but CameraCapabilities is null!"
@@ -780,7 +821,7 @@
 
     goto :goto_1
 
-    .line 170
+    .line 184
     :cond_1
     invoke-interface {p0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
@@ -799,28 +840,28 @@
 
     check-cast v2, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
-    .line 171
+    .line 185
     invoke-virtual {v0, v2}, Lcom/android/camera2/CameraCapabilities;->isSupportBeautyType(Lcom/android/camera/fragment/beauty/BeautyParameters$Type;)Z
 
     move-result v3
 
     if-eqz v3, :cond_2
 
-    .line 172
+    .line 186
     invoke-virtual {v1, v2}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 174
+    .line 188
     :cond_2
     goto :goto_0
 
-    .line 177
+    .line 191
     :cond_3
     :goto_1
     new-instance p0, Ljava/util/ArrayList;
 
     invoke-direct {p0}, Ljava/util/ArrayList;-><init>()V
 
-    .line 178
+    .line 192
     const/4 v0, 0x0
 
     :goto_2
@@ -830,7 +871,7 @@
 
     if-ge v0, v2, :cond_4
 
-    .line 179
+    .line 193
     invoke-virtual {v1, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v2
@@ -839,16 +880,16 @@
 
     invoke-interface {p0, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 178
+    .line 192
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_2
 
-    .line 181
+    .line 195
     :cond_4
     return-object p0
 
-    .line 159
+    .line 173
     :cond_5
     :goto_3
     const/4 p0, 0x0
@@ -869,7 +910,7 @@
         }
     .end annotation
 
-    .line 260
+    .line 283
     invoke-virtual {p0}, Lcom/android/camera/fragment/beauty/BeautyParameters;->getSupportBeautyTypes()Ljava/util/List;
 
     move-result-object v0
@@ -880,10 +921,10 @@
 .method public getMakeupProcessor()Lcom/miui/filtersdk/beauty/BeautyProcessor;
     .locals 1
 
-    .line 305
+    .line 328
     monitor-enter p0
 
-    .line 306
+    .line 329
     :try_start_0
     iget-object v0, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
@@ -891,7 +932,7 @@
 
     return-object v0
 
-    .line 307
+    .line 330
     :catchall_0
     move-exception v0
 
@@ -905,10 +946,10 @@
 .method public getStickerMakeupProcessor()Lcom/miui/filtersdk/beauty/BeautyProcessor;
     .locals 1
 
-    .line 321
+    .line 344
     monitor-enter p0
 
-    .line 322
+    .line 345
     :try_start_0
     iget-object v0, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mStickerMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
@@ -916,7 +957,7 @@
 
     return-object v0
 
-    .line 323
+    .line 346
     :catchall_0
     move-exception v0
 
@@ -938,28 +979,28 @@
         }
     .end annotation
 
-    .line 264
-    invoke-static {}, Lcom/mi/config/b;->hA()Z
+    .line 287
+    invoke-static {}, Lcom/mi/config/b;->hC()Z
 
     move-result v0
 
     if-eqz v0, :cond_1
 
-    .line 265
+    .line 288
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 266
+    .line 289
     invoke-static {}, Lcom/android/camera/fragment/beauty/BeautySettingManager;->getFrontSupportedBeautyTypes()Ljava/util/List;
 
     move-result-object v0
 
     return-object v0
 
-    .line 268
+    .line 291
     :cond_0
     invoke-static {}, Lcom/android/camera/fragment/beauty/BeautySettingManager;->getBackSupportedBeautyTypes()Ljava/util/List;
 
@@ -967,7 +1008,7 @@
 
     return-object v0
 
-    .line 271
+    .line 294
     :cond_1
     invoke-static {}, Lcom/android/camera/fragment/beauty/BeautySettingManager;->getLegacySupportedBeautyTypes()Ljava/util/List;
 
@@ -979,38 +1020,38 @@
 .method public setMakeupProcessor(Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;)V
     .locals 1
 
-    .line 295
+    .line 318
     monitor-enter p0
 
-    .line 296
+    .line 319
     :try_start_0
     invoke-static {}, Lcom/android/camera/CameraSettings;->getBeautyShowLevel()I
 
     move-result v0
 
-    .line 297
+    .line 320
     iput-object p1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
-    .line 298
+    .line 321
     nop
 
-    .line 299
+    .line 322
     invoke-direct {p0, p1, v0}, Lcom/android/camera/fragment/beauty/BeautyParameters;->getProcessorBeautyParams(Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;I)Ljava/util/Map;
 
     move-result-object p1
 
-    .line 300
+    .line 323
     iget-object v0, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
     invoke-virtual {v0, p1}, Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;->setBeautyParamsDegree(Ljava/util/Map;)V
 
-    .line 301
+    .line 324
     monitor-exit p0
 
-    .line 302
+    .line 325
     return-void
 
-    .line 301
+    .line 324
     :catchall_0
     move-exception p1
 
@@ -1024,38 +1065,38 @@
 .method public setStickerMakeupProcessor(Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;)V
     .locals 1
 
-    .line 311
+    .line 334
     monitor-enter p0
 
-    .line 312
+    .line 335
     :try_start_0
     invoke-static {}, Lcom/android/camera/CameraSettings;->getBeautyShowLevel()I
 
     move-result v0
 
-    .line 313
+    .line 336
     iput-object p1, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mStickerMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
-    .line 314
+    .line 337
     nop
 
-    .line 315
+    .line 338
     invoke-direct {p0, p1, v0}, Lcom/android/camera/fragment/beauty/BeautyParameters;->getProcessorBeautyParams(Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;I)Ljava/util/Map;
 
     move-result-object p1
 
-    .line 316
+    .line 339
     iget-object v0, p0, Lcom/android/camera/fragment/beauty/BeautyParameters;->mStickerMakeupProcessor:Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;
 
     invoke-virtual {v0, p1}, Lcom/miui/filtersdk/beauty/IntelligentBeautyProcessor;->setBeautyParamsDegree(Ljava/util/Map;)V
 
-    .line 317
+    .line 340
     monitor-exit p0
 
-    .line 318
+    .line 341
     return-void
 
-    .line 317
+    .line 340
     :catchall_0
     move-exception p1
 

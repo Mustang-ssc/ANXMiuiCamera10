@@ -242,7 +242,7 @@
     .locals 1
 
     .line 123
-    const v0, 0x7f040039
+    const v0, 0x7f04003c
 
     return v0
 .end method
@@ -319,7 +319,7 @@
     .line 180
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mUseHint:Landroid/widget/TextView;
 
-    const p2, 0x7f0b00c8
+    const p2, 0x7f0b00ce
 
     invoke-virtual {p1, p2}, Landroid/widget/TextView;->setText(I)V
 
@@ -336,7 +336,7 @@
     .line 87
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b6
+    const v0, 0x7f0d00c4
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -349,7 +349,7 @@
     .line 88
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b8
+    const v0, 0x7f0d00c6
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -395,7 +395,7 @@
     :cond_0
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b3
+    const v0, 0x7f0d00c1
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -408,7 +408,7 @@
     .line 97
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b5
+    const v0, 0x7f0d00c3
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -421,7 +421,7 @@
     .line 98
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b9
+    const v0, 0x7f0d00c7
 
     .line 99
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
@@ -435,7 +435,7 @@
     .line 101
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b2
+    const v0, 0x7f0d00c0
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -446,7 +446,7 @@
     .line 102
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b4
+    const v0, 0x7f0d00c2
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -457,7 +457,7 @@
     .line 104
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
-    const v0, 0x7f0d00b1
+    const v0, 0x7f0d00bf
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -783,17 +783,17 @@
 .method public notifyAfterFrameAvailable(I)V
     .locals 1
 
-    .line 431
+    .line 432
     invoke-super {p0, p1}, Lcom/android/camera/fragment/BaseFragment;->notifyAfterFrameAvailable(I)V
 
-    .line 433
+    .line 434
     iget p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mCurrentMode:I
 
     const/16 v0, 0xa6
 
     if-ne p1, v0, :cond_0
 
-    .line 434
+    .line 435
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
     invoke-virtual {p1}, Landroid/view/View;->getVisibility()I
@@ -802,12 +802,12 @@
 
     if-eqz p1, :cond_0
 
-    .line 435
+    .line 436
     const/4 p1, 0x1
 
     invoke-virtual {p0, p1}, Lcom/android/camera/fragment/FragmentPanorama;->showSmallPreview(Z)V
 
-    .line 438
+    .line 439
     :cond_0
     return-void
 .end method
@@ -830,7 +830,7 @@
     .line 328
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentPanorama;->mUseHint:Landroid/widget/TextView;
 
-    const v1, 0x7f0b00c7
+    const v1, 0x7f0b00cd
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 
@@ -978,7 +978,7 @@
     .line 316
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentPanorama;->mUseHint:Landroid/widget/TextView;
 
-    const v1, 0x7f0b018a
+    const v1, 0x7f0b0191
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 
@@ -997,7 +997,7 @@
     .line 318
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentPanorama;->mUseHint:Landroid/widget/TextView;
 
-    const v1, 0x7f0b0189
+    const v1, 0x7f0b0190
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 
@@ -1007,7 +1007,7 @@
     :cond_1
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentPanorama;->mUseHint:Landroid/widget/TextView;
 
-    const v1, 0x7f0b00c7
+    const v1, 0x7f0b00cd
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 
@@ -1062,15 +1062,15 @@
         }
     .end annotation
 
-    .line 411
+    .line 412
     invoke-super {p0, p1, p2, p3}, Lcom/android/camera/fragment/BaseFragment;->provideAnimateElement(ILjava/util/List;Z)V
 
-    .line 413
+    .line 414
     const/16 p3, 0xa6
 
     if-eq p1, p3, :cond_1
 
-    .line 417
+    .line 418
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
     invoke-virtual {p1}, Landroid/view/View;->getVisibility()I
@@ -1079,17 +1079,17 @@
 
     if-nez p1, :cond_2
 
-    .line 418
+    .line 419
     if-nez p2, :cond_0
 
-    .line 419
+    .line 420
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama;->mPanoramaViewRoot:Landroid/view/View;
 
     invoke-static {p1}, Lcom/android/camera/animation/type/AlphaOutOnSubscribe;->directSetResult(Landroid/view/View;)V
 
     goto :goto_0
 
-    .line 421
+    .line 422
     :cond_0
     new-instance p1, Lcom/android/camera/animation/type/AlphaOutOnSubscribe;
 
@@ -1099,12 +1099,12 @@
 
     const/16 p3, 0x96
 
-    .line 422
+    .line 423
     invoke-virtual {p1, p3}, Lcom/android/camera/animation/type/AlphaOutOnSubscribe;->setDurationTime(I)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object p1
 
-    .line 421
+    .line 422
     invoke-static {p1}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object p1
@@ -1113,11 +1113,11 @@
 
     goto :goto_0
 
-    .line 415
+    .line 416
     :cond_1
     nop
 
-    .line 427
+    .line 428
     :cond_2
     :goto_0
     return-void
@@ -1199,7 +1199,7 @@
     .line 254
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentPanorama;->mUseHint:Landroid/widget/TextView;
 
-    const v1, 0x7f0b00c8
+    const v1, 0x7f0b00ce
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 

@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)V
     .locals 0
 
-    .line 169
+    .line 202
     iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$1;->this$0:Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onCreateTexture()Lcom/ss/android/vesdk/Texture;
     .locals 3
 
-    .line 172
+    .line 205
     invoke-static {}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->access$000()Ljava/lang/String;
 
     move-result-object v0
@@ -47,24 +47,24 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 174
+    .line 207
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$1;->this$0:Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
 
     const/4 v1, 0x1
 
     invoke-static {v0, v1}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->access$102(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;Z)Z
 
-    .line 176
+    .line 209
     new-instance v0, Lcom/android/gallery3d/ui/ExtTexture;
 
     invoke-direct {v0}, Lcom/android/gallery3d/ui/ExtTexture;-><init>()V
 
-    .line 177
+    .line 210
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/android/gallery3d/ui/ExtTexture;->onBind(Lcom/android/gallery3d/ui/GLCanvas;)Z
 
-    .line 178
+    .line 211
     iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$1;->this$0:Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
 
     invoke-static {v1}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->access$200(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Landroid/graphics/SurfaceTexture;
@@ -77,7 +77,7 @@
 
     invoke-virtual {v1, v2}, Landroid/graphics/SurfaceTexture;->attachToGLContext(I)V
 
-    .line 179
+    .line 212
     new-instance v1, Lcom/ss/android/vesdk/Texture;
 
     invoke-virtual {v0}, Lcom/android/gallery3d/ui/ExtTexture;->getId()I
@@ -92,14 +92,14 @@
 
     invoke-direct {v1, v0, v2}, Lcom/ss/android/vesdk/Texture;-><init>(ILandroid/graphics/SurfaceTexture;)V
 
-    .line 180
+    .line 213
     return-object v1
 .end method
 
 .method public onDestroy()Z
     .locals 2
 
-    .line 188
+    .line 223
     invoke-static {}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->access$000()Ljava/lang/String;
 
     move-result-object v0
@@ -108,7 +108,7 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 189
+    .line 224
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$1;->this$0:Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->access$200(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Landroid/graphics/SurfaceTexture;
@@ -117,15 +117,20 @@
 
     invoke-virtual {v0}, Landroid/graphics/SurfaceTexture;->detachFromGLContext()V
 
-    .line 190
-    const/4 v0, 0x0
+    .line 225
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$1;->this$0:Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
 
-    return v0
+    const/4 v1, 0x0
+
+    invoke-static {v0, v1}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->access$102(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;Z)Z
+
+    .line 226
+    return v1
 .end method
 
 .method public onTextureCreated(Lcom/ss/android/vesdk/Texture;)V
     .locals 0
 
-    .line 185
+    .line 219
     return-void
 .end method

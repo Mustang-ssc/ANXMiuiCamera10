@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/ActivityBase;)V
     .locals 0
 
-    .line 589
+    .line 588
     iput-object p1, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public getOrientation()I
     .locals 1
 
-    .line 653
+    .line 656
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     iget v0, v0, Lcom/android/camera/ActivityBase;->mOrientation:I
@@ -49,7 +49,7 @@
 .method public isKeptBitmapTexture()Z
     .locals 1
 
-    .line 658
+    .line 661
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     iget-object v0, v0, Lcom/android/camera/ActivityBase;->mCurrentModule:Lcom/android/camera/module/Module;
@@ -64,7 +64,7 @@
 .method public onFrameAvailable(I)V
     .locals 7
 
-    .line 617
+    .line 620
     const/4 v0, 0x1
 
     if-ne v0, p1, :cond_1
@@ -79,7 +79,7 @@
 
     if-eqz v0, :cond_1
 
-    .line 619
+    .line 622
     :try_start_0
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
@@ -91,10 +91,10 @@
 
     sub-long/2addr v0, v4
 
-    .line 620
+    .line 623
     invoke-static {v0, v1}, Lcom/android/camera/statistic/CameraStatUtil;->trackStartAppCost(J)V
 
-    .line 621
+    .line 624
     iget-object v4, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-static {v4}, Lcom/android/camera/ActivityBase;->access$100(Lcom/android/camera/ActivityBase;)Ljava/util/HashMap;
@@ -103,7 +103,7 @@
 
     if-eqz v4, :cond_0
 
-    .line 622
+    .line 625
     iget-object v4, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-static {v4}, Lcom/android/camera/ActivityBase;->access$100(Lcom/android/camera/ActivityBase;)Ljava/util/HashMap;
@@ -120,13 +120,13 @@
 
     goto :goto_0
 
-    .line 624
+    .line 627
     :cond_0
     sget-object v4, Lcom/android/camera/statistic/ScenarioTrackUtil;->sLaunchTimeScenario:Lcom/android/camera/statistic/ScenarioTrackUtil$CameraEventScenario;
 
     invoke-static {v4}, Lcom/android/camera/statistic/ScenarioTrackUtil;->trackScenarioAbort(Lcom/android/camera/statistic/ScenarioTrackUtil$CameraEventScenario;)V
 
-    .line 626
+    .line 629
     :goto_0
     const-string v4, "ActivityBase"
 
@@ -148,14 +148,14 @@
     :try_end_0
     .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 630
+    .line 633
     goto :goto_1
 
-    .line 627
+    .line 630
     :catch_0
     move-exception v0
 
-    .line 628
+    .line 631
     const-string v1, "ActivityBase"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -182,7 +182,7 @@
 
     invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 629
+    .line 632
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v5
@@ -193,16 +193,16 @@
 
     move-result-object v0
 
-    .line 628
+    .line 631
     invoke-static {v1, v0}, Lcom/android/camera/log/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 631
+    .line 634
     :goto_1
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     iput-wide v2, v0, Lcom/android/camera/ActivityBase;->mAppStartTime:J
 
-    .line 633
+    .line 636
     :cond_1
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
@@ -210,7 +210,7 @@
 
     if-eqz v0, :cond_2
 
-    .line 636
+    .line 639
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     iget-object v0, v0, Lcom/android/camera/ActivityBase;->mGLCoverView:Landroid/widget/ImageView;
@@ -221,60 +221,75 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/ImageView;->post(Ljava/lang/Runnable;)Z
 
-    .line 648
+    .line 651
     :cond_2
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-virtual {v0, p1}, Lcom/android/camera/ActivityBase;->notifyOnFirstFrameArrived(I)V
 
-    .line 649
+    .line 652
     return-void
 .end method
 
 .method public onPreviewPixelsRead([BII)V
     .locals 1
 
-    .line 612
+    .line 615
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     iget-object v0, v0, Lcom/android/camera/ActivityBase;->mCurrentModule:Lcom/android/camera/module/Module;
 
     invoke-interface {v0, p1, p2, p3}, Lcom/android/camera/module/Module;->onPreviewPixelsRead([BII)V
 
-    .line 613
+    .line 616
     return-void
 .end method
 
 .method public onPreviewTextureCopied()V
     .locals 0
 
-    .line 608
+    .line 611
     return-void
 .end method
 
 .method public onSurfaceTextureCreated(Landroid/graphics/SurfaceTexture;)V
     .locals 0
 
-    .line 593
+    .line 592
     return-void
 .end method
 
 .method public onSurfaceTextureReleased()V
     .locals 1
 
-    .line 602
+    .line 603
+    iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
+
+    iget-object v0, v0, Lcom/android/camera/ActivityBase;->mCurrentModule:Lcom/android/camera/module/Module;
+
+    if-eqz v0, :cond_0
+
+    .line 604
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
 
     iget-object v0, v0, Lcom/android/camera/ActivityBase;->mCurrentModule:Lcom/android/camera/module/Module;
 
     invoke-interface {v0}, Lcom/android/camera/module/Module;->onSurfaceTextureReleased()V
 
-    .line 603
+    .line 606
+    :cond_0
     return-void
 .end method
 
 .method public onSurfaceTextureUpdated(Lcom/android/camera/effect/draw_mode/DrawExtTexAttribute;)V
     .locals 1
+
+    .line 596
+    iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
+
+    iget-object v0, v0, Lcom/android/camera/ActivityBase;->mCurrentModule:Lcom/android/camera/module/Module;
+
+    if-eqz v0, :cond_0
 
     .line 597
     iget-object v0, p0, Lcom/android/camera/ActivityBase$7;->this$0:Lcom/android/camera/ActivityBase;
@@ -283,6 +298,7 @@
 
     invoke-interface {v0, p1}, Lcom/android/camera/module/Module;->onSurfaceTextureUpdated(Lcom/android/camera/effect/draw_mode/DrawExtTexAttribute;)V
 
-    .line 598
+    .line 599
+    :cond_0
     return-void
 .end method

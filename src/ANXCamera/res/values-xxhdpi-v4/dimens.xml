@@ -99,6 +99,8 @@
     <dimen name="eye_light_item_height">32.669983dip</dimen>
     <dimen name="fragment_eye_light_back_width">56.669983dip</dimen>
     <dimen name="music_back_margin_left">23.0dip</dimen>
+    <dimen name="music_back_margin_top">24.329987dip</dimen>
+    <dimen name="music_title_margin_top">35.0dip</dimen>
     <dimen name="music_thumbnail_width">66.66998dip</dimen>
     <dimen name="music_thumbnail_height">66.66998dip</dimen>
     <dimen name="music_item_margin_top">30.0dip</dimen>
@@ -134,7 +136,7 @@
     <dimen name="live_sticker_image_size">34.0dip</dimen>
     <dimen name="live_sticker_selected_corner_radius">6.669983dip</dimen>
     <dimen name="live_sticker_selected_stroke_width">1.3299866dip</dimen>
-    <dimen name="live_sticker_selected_size">49.329987dip</dimen>
+    <dimen name="live_sticker_selected_size">52.0dip</dimen>
     <dimen name="live_sticker_download_size">13.329987dip</dimen>
     <dimen name="negative_half_live_sticker_download_size">-6.669983dip</dimen>
     <dimen name="popup_tip_live_speed_padding">13.0dip</dimen>
@@ -143,12 +145,13 @@
     <dimen name="live_speed_list_margin">28.669983dip</dimen>
     <dimen name="live_speed_item_width">40.0dip</dimen>
     <dimen name="live_speed_item_textSize">12.0sp</dimen>
+    <dimen name="live_time_margin">7.0dip</dimen>
+    <dimen name="bottom_popu_left_image_intro_marginleft">18.0dip</dimen>
     <dimen name="front_camera_hint_animation_padding">4.0dip</dimen>
     <dimen name="front_camera_hint_animation_margin">206.66998dip</dimen>
     <dimen name="front_camera_hint_text_rotate_margin">310.0dip</dimen>
     <dimen name="front_camera_hint_text_place_margin">342.66406dip</dimen>
     <dimen name="front_camera_hint_text_rotate_textSize">18.0sp</dimen>
     <dimen name="front_camera_hint_text_place_textSize">12.669983sp</dimen>
-    <dimen name="music_back_top_left">26.669983dip</dimen>
     <dimen name="music_thumbnail_radius">5.3299866dip</dimen>
 </resources>

@@ -34,22 +34,22 @@
 .method public constructor <init>(Lcom/android/camera2/MiCamera2;ILcom/android/camera2/Camera2Proxy$CameraPreviewCallback;)V
     .locals 0
 
-    .line 3188
+    .line 2550
     iput-object p1, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-direct {p0}, Landroid/hardware/camera2/CameraCaptureSession$StateCallback;-><init>()V
 
-    .line 3189
+    .line 2551
     iput p2, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mId:I
 
-    .line 3190
+    .line 2552
     new-instance p1, Ljava/lang/ref/WeakReference;
 
     invoke-direct {p1, p3}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
 
     iput-object p1, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
-    .line 3191
+    .line 2553
     return-void
 .end method
 
@@ -62,7 +62,7 @@
         .end annotation
     .end param
 
-    .line 3244
+    .line 2606
     invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
     move-result-object v0
@@ -97,12 +97,12 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3245
+    .line 2607
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
     if-eqz v0, :cond_0
 
-    .line 3246
+    .line 2608
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
     invoke-virtual {v0}, Ljava/lang/ref/WeakReference;->get()Ljava/lang/Object;
@@ -111,13 +111,13 @@
 
     check-cast v0, Lcom/android/camera2/Camera2Proxy$CameraPreviewCallback;
 
-    .line 3247
+    .line 2609
     if-eqz v0, :cond_0
 
-    .line 3248
+    .line 2610
     invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$CameraPreviewCallback;->onPreviewSessionClosed(Landroid/hardware/camera2/CameraCaptureSession;)V
 
-    .line 3251
+    .line 2613
     :cond_0
     return-void
 .end method
@@ -129,7 +129,7 @@
         .end annotation
     .end param
 
-    .line 3233
+    .line 2595
     invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
     move-result-object v0
@@ -164,12 +164,12 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3234
+    .line 2596
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
     if-eqz v0, :cond_0
 
-    .line 3235
+    .line 2597
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
     invoke-virtual {v0}, Ljava/lang/ref/WeakReference;->get()Ljava/lang/Object;
@@ -178,13 +178,13 @@
 
     check-cast v0, Lcom/android/camera2/Camera2Proxy$CameraPreviewCallback;
 
-    .line 3236
+    .line 2598
     if-eqz v0, :cond_0
 
-    .line 3237
+    .line 2599
     invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$CameraPreviewCallback;->onPreviewSessionFailed(Landroid/hardware/camera2/CameraCaptureSession;)V
 
-    .line 3240
+    .line 2602
     :cond_0
     return-void
 .end method
@@ -196,7 +196,7 @@
         .end annotation
     .end param
 
-    .line 3199
+    .line 2561
     iget v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mId:I
 
     iget-object v1, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
@@ -207,7 +207,7 @@
 
     if-ne v0, v1, :cond_3
 
-    .line 3200
+    .line 2562
     invoke-static {}, Lcom/android/camera2/MiCamera2;->access$000()Ljava/lang/String;
 
     move-result-object v0
@@ -236,12 +236,12 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3201
+    .line 2563
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-static {v0, p1}, Lcom/android/camera2/MiCamera2;->access$402(Lcom/android/camera2/MiCamera2;Landroid/hardware/camera2/CameraCaptureSession;)Landroid/hardware/camera2/CameraCaptureSession;
 
-    .line 3202
+    .line 2564
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-static {v0}, Lcom/android/camera2/MiCamera2;->access$500(Lcom/android/camera2/MiCamera2;)Z
@@ -260,19 +260,19 @@
 
     if-ne v0, v1, :cond_0
 
-    .line 3203
+    .line 2565
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-virtual {v0}, Lcom/android/camera2/MiCamera2;->notifyVideoStreamEnd()V
 
-    .line 3204
+    .line 2566
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
     const/4 v1, 0x0
 
     invoke-static {v0, v1}, Lcom/android/camera2/MiCamera2;->access$502(Lcom/android/camera2/MiCamera2;Z)Z
 
-    .line 3209
+    .line 2571
     :cond_0
     :try_start_0
     invoke-static {}, Lcom/android/camera/module/ModuleManager;->isVideoModule()Z
@@ -281,28 +281,28 @@
 
     if-nez v0, :cond_2
 
-    .line 3210
+    .line 2572
     invoke-static {}, Lcom/android/camera/module/ModuleManager;->isFastMotionModule()Z
 
     move-result v0
 
     if-nez v0, :cond_2
 
-    .line 3211
+    .line 2573
     invoke-static {}, Lcom/android/camera/module/ModuleManager;->isSlowMotionModule()Z
 
     move-result v0
 
     if-nez v0, :cond_2
 
-    .line 3212
+    .line 2574
     invoke-static {}, Lcom/android/camera/module/ModuleManager;->isFunModule()Z
 
     move-result v0
 
     if-nez v0, :cond_2
 
-    .line 3213
+    .line 2575
     invoke-static {}, Lcom/android/camera/module/ModuleManager;->isVideoNewSlowMotion()Z
 
     move-result v0
@@ -311,7 +311,7 @@
 
     goto :goto_0
 
-    .line 3216
+    .line 2578
     :cond_1
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
 
@@ -325,7 +325,7 @@
 
     goto :goto_1
 
-    .line 3214
+    .line 2576
     :cond_2
     :goto_0
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->this$0:Lcom/android/camera2/MiCamera2;
@@ -340,24 +340,24 @@
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 3220
+    .line 2582
     :goto_1
     goto :goto_2
 
-    .line 3218
+    .line 2580
     :catch_0
     move-exception v0
 
-    .line 3219
+    .line 2581
     invoke-virtual {v0}, Ljava/lang/Exception;->printStackTrace()V
 
-    .line 3222
+    .line 2584
     :goto_2
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
     if-eqz v0, :cond_3
 
-    .line 3223
+    .line 2585
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
     invoke-virtual {v0}, Ljava/lang/ref/WeakReference;->get()Ljava/lang/Object;
@@ -366,13 +366,13 @@
 
     check-cast v0, Lcom/android/camera2/Camera2Proxy$CameraPreviewCallback;
 
-    .line 3224
+    .line 2586
     if-eqz v0, :cond_3
 
-    .line 3225
+    .line 2587
     invoke-interface {v0, p1}, Lcom/android/camera2/Camera2Proxy$CameraPreviewCallback;->onPreviewSessionSuccess(Landroid/hardware/camera2/CameraCaptureSession;)V
 
-    .line 3229
+    .line 2591
     :cond_3
     return-void
 .end method
@@ -380,13 +380,13 @@
 .method public setClientCb(Lcom/android/camera2/Camera2Proxy$CameraPreviewCallback;)V
     .locals 1
 
-    .line 3194
+    .line 2556
     new-instance v0, Ljava/lang/ref/WeakReference;
 
     invoke-direct {v0, p1}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
 
     iput-object v0, p0, Lcom/android/camera2/MiCamera2$CaptureSessionStateCallback;->mClientCb:Ljava/lang/ref/WeakReference;
 
-    .line 3195
+    .line 2557
     return-void
 .end method

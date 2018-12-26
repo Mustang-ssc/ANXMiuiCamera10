@@ -56,7 +56,7 @@
 
     .line 108
     :cond_0
-    const v1, 0x7f0d0018
+    const v1, 0x7f0d001a
 
     invoke-interface {p1, v1}, Lcom/android/camera/protocol/ModeProtocol$BaseDelegate;->getActiveFragment(I)I
 

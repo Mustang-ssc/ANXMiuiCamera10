@@ -23,14 +23,12 @@
 
 .field public static final network_security_config:I = 0x7f070003
 
-.field public static final screen_light:I = 0x7f070004
-
 
 # direct methods
 .method public constructor <init>()V
     .locals 0
 
-    .line 2849
+    .line 2851
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

@@ -353,7 +353,7 @@
 
     move-result-object p3
 
-    invoke-virtual {p3}, Lcom/mi/config/a;->eX()Z
+    invoke-virtual {p3}, Lcom/mi/config/a;->eY()Z
 
     move-result p3
 
@@ -383,7 +383,7 @@
     invoke-virtual {p0, p1}, Lcom/android/camera/fragment/dialog/PortraitNewbieDialogFragment;->initViewOnTouchListener(Landroid/view/View;)V
 
     .line 49
-    const p2, 0x7f0d0040
+    const p2, 0x7f0d0045
 
     invoke-virtual {p1, p2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

@@ -31,10 +31,10 @@
 .method public abstract onDestory()V
 .end method
 
-.method public abstract onResume()V
+.method public abstract pausePlay()V
 .end method
 
-.method public abstract pausePlay()V
+.method public abstract setEncodeSize(II)V
 .end method
 
 .method public abstract startPlay()V

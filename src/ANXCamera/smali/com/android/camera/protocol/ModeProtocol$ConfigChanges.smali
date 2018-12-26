@@ -114,6 +114,9 @@
 .method public abstract reCheckMutexConfigs(I)V
 .end method
 
+.method public abstract reCheckUltraPixelPhotoGraphy()V
+.end method
+
 .method public abstract restoreAllMutexElement(Ljava/lang/String;)V
 .end method
 

@@ -73,7 +73,7 @@
     :cond_0
     iget-object v0, p0, Lcom/bumptech/glide/manager/e;->context:Landroid/content/Context;
 
-    invoke-virtual {p0, v0}, Lcom/bumptech/glide/manager/e;->h(Landroid/content/Context;)Z
+    invoke-virtual {p0, v0}, Lcom/bumptech/glide/manager/e;->isConnected(Landroid/content/Context;)Z
 
     move-result v0
 
@@ -161,7 +161,7 @@
 
 
 # virtual methods
-.method h(Landroid/content/Context;)Z
+.method isConnected(Landroid/content/Context;)Z
     .locals 3
     .param p1    # Landroid/content/Context;
         .annotation build Landroid/support/annotation/NonNull;

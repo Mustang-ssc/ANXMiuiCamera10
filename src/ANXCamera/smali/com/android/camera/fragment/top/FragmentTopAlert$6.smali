@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/top/FragmentTopAlert;)V
     .locals 0
 
-    .line 794
+    .line 821
     iput-object p1, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$6;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public run()V
     .locals 3
 
-    .line 797
+    .line 824
     iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$6;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-static {v0}, Lcom/android/camera/fragment/top/FragmentTopAlert;->access$1300(Lcom/android/camera/fragment/top/FragmentTopAlert;)Landroid/widget/TextView;
@@ -53,10 +53,10 @@
 
     if-ne v0, v1, :cond_0
 
-    .line 798
+    .line 825
     return-void
 
-    .line 800
+    .line 827
     :cond_0
     iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$6;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
@@ -66,7 +66,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setVisibility(I)V
 
-    .line 801
+    .line 828
     iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$6;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-static {v0}, Lcom/android/camera/fragment/top/FragmentTopAlert;->access$000(Lcom/android/camera/fragment/top/FragmentTopAlert;)Landroid/widget/ImageView;
@@ -91,7 +91,7 @@
 
     if-eqz v0, :cond_1
 
-    .line 802
+    .line 829
     iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$6;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     invoke-static {v0}, Lcom/android/camera/fragment/top/FragmentTopAlert;->access$1300(Lcom/android/camera/fragment/top/FragmentTopAlert;)Landroid/widget/TextView;
@@ -104,7 +104,7 @@
 
     check-cast v0, Landroid/view/ViewGroup$MarginLayoutParams;
 
-    .line 803
+    .line 830
     iget-object v1, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$6;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
 
     iget-object v2, p0, Lcom/android/camera/fragment/top/FragmentTopAlert$6;->this$0:Lcom/android/camera/fragment/top/FragmentTopAlert;
@@ -117,7 +117,7 @@
 
     invoke-static {v1, v2, v0}, Lcom/android/camera/fragment/top/FragmentTopAlert;->access$900(Lcom/android/camera/fragment/top/FragmentTopAlert;Landroid/view/View;I)V
 
-    .line 805
+    .line 832
     :cond_1
     return-void
 .end method

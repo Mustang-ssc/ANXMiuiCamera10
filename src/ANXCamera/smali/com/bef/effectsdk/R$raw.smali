@@ -19,7 +19,7 @@
 
 .field public static final blank:I = 0x7f080001
 
-.field public static final feature_beryllium:I = 0x7f080002
+.field public static final feature_polaris:I = 0x7f080002
 
 .field public static final goofy_face:I = 0x7f080003
 
@@ -30,7 +30,7 @@
 .method public constructor <init>()V
     .locals 0
 
-    .line 1870
+    .line 1849
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

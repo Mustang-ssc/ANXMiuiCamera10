@@ -369,7 +369,7 @@
     if-eqz v1, :cond_1
 
     .line 166
-    const v1, 0x7f0d00d6
+    const v1, 0x7f0d00e4
 
     invoke-interface {v0, v1, p1}, Lcom/android/camera/protocol/ModeProtocol$MainContentProtocol;->onViewTouchEvent(ILandroid/view/MotionEvent;)Z
 
@@ -431,7 +431,7 @@
     move-result v1
 
     .line 181
-    const v3, 0x7f0d00d1
+    const v3, 0x7f0d00df
 
     invoke-interface {v0, v3, p1}, Lcom/android/camera/protocol/ModeProtocol$MainContentProtocol;->onViewTouchEvent(ILandroid/view/MotionEvent;)Z
 

@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/module/VideoBase;)V
     .locals 0
 
-    .line 1580
+    .line 1582
     iput-object p1, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,18 +38,36 @@
 .method public isWorking()Z
     .locals 1
 
-    .line 1589
+    .line 1590
+    iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
+
+    invoke-virtual {v0}, Lcom/android/camera/module/VideoBase;->isAlive()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
     iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
     iget-boolean v0, v0, Lcom/android/camera/module/VideoBase;->mPreviewing:Z
 
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    goto :goto_0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    :goto_0
     return v0
 .end method
 
 .method public notifyDevicePostureChanged()V
     .locals 1
 
-    .line 1625
+    .line 1626
     iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
     iget-object v0, v0, Lcom/android/camera/module/VideoBase;->mActivity:Lcom/android/camera/Camera;
@@ -60,35 +78,35 @@
 
     invoke-virtual {v0}, Lcom/android/camera/ui/V9EdgeShutterView;->onDevicePostureChanged()V
 
-    .line 1626
+    .line 1627
     return-void
 .end method
 
 .method public onDeviceBecomeStable()V
     .locals 2
 
-    .line 1584
+    .line 1585
     sget-object v0, Lcom/android/camera/module/VideoBase;->TAG:Ljava/lang/String;
 
     const-string v1, "onDeviceBecomeStable"
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 1585
+    .line 1586
     return-void
 .end method
 
 .method public onDeviceBeginMoving()V
     .locals 0
 
-    .line 1611
+    .line 1612
     return-void
 .end method
 
 .method public onDeviceKeepMoving(D)V
     .locals 7
 
-    .line 1594
+    .line 1595
     iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
     iget-object v0, v0, Lcom/android/camera/module/VideoBase;->mMainProtocol:Lcom/android/camera/protocol/ModeProtocol$MainContentProtocol;
@@ -107,7 +125,7 @@
 
     if-nez v0, :cond_0
 
-    .line 1596
+    .line 1597
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v1
@@ -126,14 +144,14 @@
 
     iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
-    .line 1597
+    .line 1598
     invoke-virtual {v0}, Lcom/android/camera/module/VideoBase;->is3ALocked()Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 1599
+    .line 1600
     iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
     iget-object v0, v0, Lcom/android/camera/module/VideoBase;->mFocusManager:Lcom/android/camera/module/loader/camera2/FocusManager2;
@@ -150,7 +168,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 1601
+    .line 1602
     iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
     invoke-virtual {v0}, Lcom/android/camera/module/VideoBase;->isVideoRecording()Z
@@ -159,14 +177,14 @@
 
     if-nez v0, :cond_0
 
-    .line 1602
+    .line 1603
     iget-object v0, p0, Lcom/android/camera/module/VideoBase$5;->this$0:Lcom/android/camera/module/VideoBase;
 
     iget-object v0, v0, Lcom/android/camera/module/VideoBase;->mFocusManager:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
     invoke-virtual {v0, p1, p2}, Lcom/android/camera/module/loader/camera2/FocusManager2;->onDeviceKeepMoving(D)V
 
-    .line 1606
+    .line 1607
     :cond_0
     return-void
 .end method
@@ -174,13 +192,13 @@
 .method public onDeviceKeepStable()V
     .locals 0
 
-    .line 1616
+    .line 1617
     return-void
 .end method
 
 .method public onDeviceOrientationChanged(FZ)V
     .locals 0
 
-    .line 1621
+    .line 1622
     return-void
 .end method

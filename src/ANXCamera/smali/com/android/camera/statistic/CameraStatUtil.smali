@@ -1238,7 +1238,7 @@
     move-result-object v0
 
     .line 274
-    const v1, 0x7f0b0106
+    const v1, 0x7f0b010c
 
     .line 275
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
@@ -1259,7 +1259,7 @@
 
     .line 277
     :cond_0
-    const v1, 0x7f0b0107
+    const v1, 0x7f0b010d
 
     .line 278
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
@@ -1280,7 +1280,7 @@
 
     .line 280
     :cond_1
-    const v1, 0x7f0b0108
+    const v1, 0x7f0b010e
 
     .line 281
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
@@ -2366,13 +2366,13 @@
 .method private static round(JI)J
     .locals 2
 
-    .line 604
+    .line 605
     if-gtz p2, :cond_0
 
-    .line 605
+    .line 606
     return-wide p0
 
-    .line 607
+    .line 608
     :cond_0
     div-int/lit8 v0, p2, 0x2
 
@@ -2540,7 +2540,7 @@
 .method private static timeLapseIntervalToName(I)Ljava/lang/String;
     .locals 5
 
-    .line 571
+    .line 572
     const/4 v0, 0x0
 
     const/4 v1, 0x1
@@ -2549,7 +2549,7 @@
 
     if-ge p0, v2, :cond_0
 
-    .line 572
+    .line 573
     sget-object v2, Ljava/util/Locale;->ENGLISH:Ljava/util/Locale;
 
     const-string v3, "%.2fs"
@@ -2574,7 +2574,7 @@
 
     return-object p0
 
-    .line 574
+    .line 575
     :cond_0
     sget-object v3, Ljava/util/Locale;->ENGLISH:Ljava/util/Locale;
 
@@ -2600,7 +2600,7 @@
 .method public static varargs track(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V
     .locals 4
 
-    .line 579
+    .line 580
     array-length v0, p2
 
     rem-int/lit8 v0, v0, 0x2
@@ -2619,18 +2619,18 @@
     :goto_0
     invoke-static {v0}, Lcom/android/camera/Util;->Assert(Z)V
 
-    .line 580
+    .line 581
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 581
+    .line 582
     :goto_1
     array-length v2, p2
 
     if-ge v1, v2, :cond_1
 
-    .line 582
+    .line 583
     aget-object v2, p2, v1
 
     add-int/lit8 v3, v1, 0x1
@@ -2639,44 +2639,44 @@
 
     invoke-interface {v0, v2, v3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 581
+    .line 582
     add-int/lit8 v1, v1, 0x2
 
     goto :goto_1
 
-    .line 584
+    .line 585
     :cond_1
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 585
+    .line 586
     return-void
 .end method
 
 .method public static trackAISceneChanged(IILandroid/content/res/Resources;)V
     .locals 2
 
-    .line 1004
+    .line 1005
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1005
+    .line 1006
     return-void
 
-    .line 1007
+    .line 1008
     :cond_0
     const-string v0, "\u672a\u77e5"
 
-    .line 1008
+    .line 1009
     const/high16 v1, 0x7f0e0000
 
     invoke-virtual {p2, v1}, Landroid/content/res/Resources;->obtainTypedArray(I)Landroid/content/res/TypedArray;
 
     move-result-object p2
 
-    .line 1009
+    .line 1010
     if-ltz p1, :cond_1
 
     invoke-virtual {p2}, Landroid/content/res/TypedArray;->length()I
@@ -2685,21 +2685,21 @@
 
     if-ge p1, v1, :cond_1
 
-    .line 1010
+    .line 1011
     invoke-virtual {p2, p1}, Landroid/content/res/TypedArray;->getString(I)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 1012
+    .line 1013
     :cond_1
     invoke-virtual {p2}, Landroid/content/res/TypedArray;->recycle()V
 
-    .line 1014
+    .line 1015
     new-instance p1, Ljava/util/HashMap;
 
     invoke-direct {p1}, Ljava/util/HashMap;-><init>()V
 
-    .line 1015
+    .line 1016
     const-string p2, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -2708,42 +2708,42 @@
 
     invoke-interface {p1, p2, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1016
+    .line 1017
     const-string p0, "\u667a\u80fd\u573a\u666f\u53d1\u73b0"
 
     invoke-interface {p1, p0, v0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1017
+    .line 1018
     const-string p0, "counter"
 
     const-string p2, "ai_scene_changed"
 
     invoke-static {p0, p2, p1}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1018
+    .line 1019
     return-void
 .end method
 
 .method public static trackAwbChanged(Ljava/lang/String;)V
     .locals 2
 
-    .line 1067
+    .line 1068
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1068
+    .line 1069
     return-void
 
-    .line 1070
+    .line 1071
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1071
+    .line 1072
     const-string v1, "\u767d\u5e73\u8861"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->autoWhiteBalanceToName(Ljava/lang/String;)Ljava/lang/String;
@@ -2752,38 +2752,38 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1072
+    .line 1073
     const-string p0, "counter"
 
     const-string v1, "manual_awb_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1074
+    .line 1075
     return-void
 .end method
 
 .method public static trackBeautyInfo(ILjava/lang/String;Lcom/android/camera/fragment/beauty/BeautyValues;)V
     .locals 4
 
-    .line 1136
+    .line 1137
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1137
+    .line 1138
     const-string v1, "\u524d\u540e\u6444"
 
     invoke-interface {v0, v1, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1139
-    invoke-static {}, Lcom/mi/config/b;->hA()Z
+    .line 1140
+    invoke-static {}, Lcom/mi/config/b;->hC()Z
 
     move-result p1
 
     if-eqz p1, :cond_1
 
-    .line 1140
+    .line 1141
     invoke-static {}, Lcom/android/camera/fragment/beauty/BeautyParameters;->getInstance()Lcom/android/camera/fragment/beauty/BeautyParameters;
 
     move-result-object p1
@@ -2809,7 +2809,7 @@
 
     check-cast v1, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;
 
-    .line 1141
+    .line 1142
     sget-object v2, Lcom/android/camera/statistic/CameraStatUtil;->sBeautyTypeToName:Landroid/util/SparseArray;
 
     invoke-virtual {v1}, Lcom/android/camera/fragment/beauty/BeautyParameters$Type;->ordinal()I
@@ -2822,10 +2822,10 @@
 
     check-cast v2, Ljava/lang/String;
 
-    .line 1142
+    .line 1143
     if-eqz v2, :cond_0
 
-    .line 1143
+    .line 1144
     invoke-virtual {p2, v1}, Lcom/android/camera/fragment/beauty/BeautyValues;->get(Lcom/android/camera/fragment/beauty/BeautyParameters$Type;)I
 
     move-result v1
@@ -2836,75 +2836,75 @@
 
     invoke-interface {v0, v2, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1145
+    .line 1146
     :cond_0
     goto :goto_0
 
-    .line 1147
+    .line 1148
     :cond_1
     const-string p1, "\u7626\u8138"
 
     iget v1, p2, Lcom/android/camera/fragment/beauty/BeautyValues;->mBeautySlimFace:I
 
-    .line 1148
+    .line 1149
     invoke-static {v1}, Lcom/android/camera/statistic/CameraStatUtil;->faceBeautyRatioToName(I)Ljava/lang/String;
 
     move-result-object v1
 
-    .line 1147
+    .line 1148
     invoke-interface {v0, p1, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1149
+    .line 1150
     const-string p1, "\u5927\u773c"
 
     iget v1, p2, Lcom/android/camera/fragment/beauty/BeautyValues;->mBeautyEnlargeEye:I
 
-    .line 1150
+    .line 1151
     invoke-static {v1}, Lcom/android/camera/statistic/CameraStatUtil;->faceBeautyRatioToName(I)Ljava/lang/String;
 
     move-result-object v1
 
-    .line 1149
+    .line 1150
     invoke-interface {v0, p1, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1151
+    .line 1152
     const-string p1, "\u7f8e\u767d"
 
     iget v1, p2, Lcom/android/camera/fragment/beauty/BeautyValues;->mBeautySkinColor:I
 
-    .line 1152
+    .line 1153
     invoke-static {v1}, Lcom/android/camera/statistic/CameraStatUtil;->faceBeautyRatioToName(I)Ljava/lang/String;
 
     move-result-object v1
 
-    .line 1151
+    .line 1152
     invoke-interface {v0, p1, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1153
+    .line 1154
     const-string p1, "\u5ae9\u80a4"
 
     iget v1, p2, Lcom/android/camera/fragment/beauty/BeautyValues;->mBeautySkinSmooth:I
 
-    .line 1154
+    .line 1155
     invoke-static {v1}, Lcom/android/camera/statistic/CameraStatUtil;->faceBeautyRatioToName(I)Ljava/lang/String;
 
     move-result-object v1
 
-    .line 1153
+    .line 1154
     invoke-interface {v0, p1, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1157
+    .line 1158
     :cond_2
-    invoke-static {}, Lcom/mi/config/b;->hp()Z
+    invoke-static {}, Lcom/mi/config/b;->hr()Z
 
     move-result p1
 
     if-eqz p1, :cond_4
 
-    .line 1158
+    .line 1159
     const-string p1, "\u7b49\u7ea7"
 
-    .line 1159
+    .line 1160
     invoke-static {}, Lcom/android/camera/CameraSettings;->isAdvancedBeautyOn()Z
 
     move-result v1
@@ -2915,7 +2915,7 @@
 
     goto :goto_1
 
-    .line 1160
+    .line 1161
     :cond_3
     iget-object p2, p2, Lcom/android/camera/fragment/beauty/BeautyValues;->mBeautyLevel:Ljava/lang/String;
 
@@ -2927,11 +2927,11 @@
 
     move-result-object p2
 
-    .line 1158
+    .line 1159
     :goto_1
     invoke-interface {v0, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1161
+    .line 1162
     const-string p1, "capture"
 
     const-string p2, "picture_taken_beauty_legacy"
@@ -2942,7 +2942,7 @@
 
     goto :goto_2
 
-    .line 1164
+    .line 1165
     :cond_4
     iget-object p1, p2, Lcom/android/camera/fragment/beauty/BeautyValues;->mBeautyLevel:Ljava/lang/String;
 
@@ -2950,7 +2950,7 @@
 
     move-result p1
 
-    .line 1165
+    .line 1166
     const-string p2, "\u7b49\u7ea7"
 
     invoke-static {p1}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
@@ -2959,7 +2959,7 @@
 
     invoke-interface {v0, p2, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1166
+    .line 1167
     const-string p1, "capture"
 
     const-string p2, "picture_taken_beauty"
@@ -2968,7 +2968,7 @@
 
     invoke-static {p1, p2, v1, v2, v0}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;JLjava/util/Map;)V
 
-    .line 1169
+    .line 1170
     :goto_2
     return-void
 .end method
@@ -2976,23 +2976,23 @@
 .method public static trackBeautySwitchChanged(ILjava/lang/String;)V
     .locals 2
 
-    .line 945
+    .line 946
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 946
+    .line 947
     return-void
 
-    .line 948
+    .line 949
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 949
+    .line 950
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -3001,17 +3001,17 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 950
+    .line 951
     const-string p0, "\u524d\u540e\u6444"
 
-    .line 951
+    .line 952
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v1
 
     if-eqz v1, :cond_1
 
-    .line 952
+    .line 953
     const-string v1, "\u524d\u6444"
 
     goto :goto_0
@@ -3019,16 +3019,16 @@
     :cond_1
     const-string v1, "\u540e\u6444"
 
-    .line 950
+    .line 951
     :goto_0
     invoke-interface {v0, p0, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 953
+    .line 954
     invoke-static {p1}, Lcom/android/camera/CameraSettings;->intelligentValueToBeautyLevel(Ljava/lang/String;)I
 
     move-result p0
 
-    .line 954
+    .line 955
     const-string p1, "\u7b49\u7ea7"
 
     invoke-static {p0}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
@@ -3037,36 +3037,36 @@
 
     invoke-interface {v0, p1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 955
+    .line 956
     const-string p0, "counter"
 
     const-string p1, "beauty_switch_changed"
 
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 957
+    .line 958
     return-void
 .end method
 
 .method public static trackBroadcastKillService()V
     .locals 3
 
-    .line 549
+    .line 550
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 550
+    .line 551
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 551
+    .line 552
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 552
+    .line 553
     const-string v2, "\u524d\u6444"
 
     goto :goto_0
@@ -3074,14 +3074,14 @@
     :cond_0
     const-string v2, "\u540e\u6444"
 
-    .line 550
+    .line 551
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 553
+    .line 554
     const-string v1, "\u6a21\u5f0f"
 
-    .line 554
+    .line 555
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v2
@@ -3094,39 +3094,39 @@
 
     move-result-object v2
 
-    .line 553
+    .line 554
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 555
+    .line 556
     const-string v1, "counter"
 
     const-string v2, "camera_broadcast_kill_service"
 
     invoke-static {v1, v2, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 557
+    .line 558
     return-void
 .end method
 
 .method public static trackCameraError(Ljava/lang/String;)V
     .locals 3
 
-    .line 523
+    .line 524
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 524
+    .line 525
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 525
+    .line 526
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 526
+    .line 527
     const-string v2, "\u524d\u6444"
 
     goto :goto_0
@@ -3134,14 +3134,14 @@
     :cond_0
     const-string v2, "\u540e\u6444"
 
-    .line 524
+    .line 525
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 527
+    .line 528
     const-string v1, "\u6a21\u5f0f"
 
-    .line 528
+    .line 529
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v2
@@ -3154,44 +3154,44 @@
 
     move-result-object v2
 
-    .line 527
+    .line 528
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 529
+    .line 530
     const-string v1, "error"
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 530
+    .line 531
     const-string p0, "counter"
 
     const-string v1, "camera_hardware_error"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 532
+    .line 533
     return-void
 .end method
 
 .method public static trackCameraErrorDialogShow()V
     .locals 3
 
-    .line 538
+    .line 539
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 539
+    .line 540
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 540
+    .line 541
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 541
+    .line 542
     const-string v2, "\u524d\u6444"
 
     goto :goto_0
@@ -3199,14 +3199,14 @@
     :cond_0
     const-string v2, "\u540e\u6444"
 
-    .line 539
+    .line 540
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 542
+    .line 543
     const-string v1, "\u6a21\u5f0f"
 
-    .line 543
+    .line 544
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v2
@@ -3219,43 +3219,43 @@
 
     move-result-object v2
 
-    .line 542
+    .line 543
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 544
+    .line 545
     const-string v1, "counter"
 
     const-string v2, "camera_error_dialog_show"
 
     invoke-static {v1, v2, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 546
+    .line 547
     return-void
 .end method
 
 .method public static trackConfigChange(Ljava/lang/String;Ljava/lang/String;ZZZ)V
     .locals 2
 
-    .line 927
+    .line 928
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 928
+    .line 929
     return-void
 
-    .line 930
+    .line 931
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 931
+    .line 932
     if-eqz p3, :cond_1
 
-    .line 932
+    .line 933
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object p3
@@ -3264,7 +3264,7 @@
 
     move-result p3
 
-    .line 933
+    .line 934
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p3}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -3273,21 +3273,21 @@
 
     invoke-interface {v0, v1, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 935
+    .line 936
     :cond_1
     if-eqz p4, :cond_3
 
-    .line 936
+    .line 937
     const-string p3, "\u524d\u540e\u6444"
 
-    .line 937
+    .line 938
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result p4
 
     if-eqz p4, :cond_2
 
-    .line 938
+    .line 939
     const-string p4, "\u524d\u6444"
 
     goto :goto_0
@@ -3295,11 +3295,11 @@
     :cond_2
     const-string p4, "\u540e\u6444"
 
-    .line 936
+    .line 937
     :goto_0
     invoke-interface {v0, p3, p4}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 940
+    .line 941
     :cond_3
     if-eqz p2, :cond_4
 
@@ -3313,43 +3313,43 @@
     :goto_1
     invoke-interface {v0, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 941
+    .line 942
     const-string p1, "counter"
 
     invoke-static {p1, p0, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 942
+    .line 943
     return-void
 .end method
 
 .method public static trackDirectionChanged(I)V
     .locals 3
 
-    .line 1044
+    .line 1045
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1045
+    .line 1046
     return-void
 
-    .line 1047
+    .line 1048
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1048
+    .line 1049
     const-string v1, "\u65b9\u5411"
 
-    .line 1049
+    .line 1050
     const/4 v2, 0x3
 
     if-ne v2, p0, :cond_1
 
-    .line 1050
+    .line 1051
     const-string p0, "\u4ece\u5de6\u5f80\u53f3"
 
     goto :goto_0
@@ -3357,30 +3357,30 @@
     :cond_1
     const-string p0, "\u4ece\u53f3\u5f80\u5de6"
 
-    .line 1048
+    .line 1049
     :goto_0
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1051
+    .line 1052
     const-string p0, "counter"
 
     const-string v1, "panorama_direction_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1053
+    .line 1054
     return-void
 .end method
 
 .method public static trackDualWaterMarkChanged(Z)V
     .locals 2
 
-    .line 960
+    .line 961
     const-string v0, "settings"
 
     const-string v1, "pref_dualcamera_watermark"
 
-    .line 962
+    .line 963
     if-eqz p0, :cond_0
 
     const-string p0, "on"
@@ -3390,34 +3390,34 @@
     :cond_0
     const-string p0, "off"
 
-    .line 960
+    .line 961
     :goto_0
     invoke-static {v0, v1, p0}, Lcom/android/camera/statistic/CameraStat;->recordStringPropertyEvent(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 963
+    .line 964
     return-void
 .end method
 
 .method public static trackDualZoomChanged(ILjava/lang/String;)V
     .locals 2
 
-    .line 882
+    .line 883
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 883
+    .line 884
     return-void
 
-    .line 885
+    .line 886
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 886
+    .line 887
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -3426,43 +3426,43 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 887
+    .line 888
     const-string p0, "\u53d8\u7126"
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 888
+    .line 889
     const-string p0, "counter"
 
     const-string p1, "dual_zoom_changed"
 
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 890
+    .line 891
     return-void
 .end method
 
 .method public static trackEvAdjusted()V
     .locals 3
 
-    .line 858
+    .line 859
     new-instance v0, Ljava/util/HashMap;
 
     const/4 v1, 0x2
 
     invoke-direct {v0, v1}, Ljava/util/HashMap;-><init>(I)V
 
-    .line 859
+    .line 860
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 860
+    .line 861
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 861
+    .line 862
     const-string v2, "\u524d\u6444"
 
     goto :goto_0
@@ -3470,14 +3470,14 @@
     :cond_0
     const-string v2, "\u540e\u6444"
 
-    .line 859
+    .line 860
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 862
+    .line 863
     const-string v1, "\u6a21\u5f0f"
 
-    .line 863
+    .line 864
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v2
@@ -3490,40 +3490,40 @@
 
     move-result-object v2
 
-    .line 862
+    .line 863
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 864
+    .line 865
     const-string v1, "counter"
 
     const-string v2, "ev_adjusted"
 
     invoke-static {v1, v2, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 865
+    .line 866
     return-void
 .end method
 
 .method public static trackExposureTimeChanged(Ljava/lang/String;)V
     .locals 2
 
-    .line 1077
+    .line 1078
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1078
+    .line 1079
     return-void
 
-    .line 1080
+    .line 1081
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1081
+    .line 1082
     const-string v1, "\u5feb\u95e8"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->exposureTimeToName(Ljava/lang/String;)Ljava/lang/String;
@@ -3532,37 +3532,37 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1082
+    .line 1083
     const-string p0, "counter"
 
     const-string v1, "manual_exposure_time_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1084
+    .line 1085
     return-void
 .end method
 
 .method public static trackFilterChanged(IIZ)V
     .locals 2
 
-    .line 893
+    .line 894
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 894
+    .line 895
     return-void
 
-    .line 896
+    .line 897
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 897
+    .line 898
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -3571,7 +3571,7 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 898
+    .line 899
     const-string p0, "\u6ee4\u955c"
 
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->filterIdToName(I)Ljava/lang/String;
@@ -3580,10 +3580,10 @@
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 899
+    .line 900
     const-string p0, "\u65b9\u5f0f"
 
-    .line 900
+    .line 901
     if-eqz p2, :cond_1
 
     const-string p1, "\u70b9\u51fb"
@@ -3593,41 +3593,41 @@
     :cond_1
     const-string p1, "\u6ed1\u52a8"
 
-    .line 899
+    .line 900
     :goto_0
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 901
+    .line 902
     const-string p0, "counter"
 
     const-string p1, "filter_changed"
 
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 902
+    .line 903
     return-void
 .end method
 
 .method public static trackFlashChanged(ILjava/lang/String;)V
     .locals 2
 
-    .line 905
+    .line 906
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 906
+    .line 907
     return-void
 
-    .line 908
+    .line 909
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 909
+    .line 910
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -3636,7 +3636,7 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 910
+    .line 911
     const-string p0, "\u95ea\u5149\u706f"
 
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->flashModeToName(Ljava/lang/String;)Ljava/lang/String;
@@ -3645,80 +3645,80 @@
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 911
+    .line 912
     const-string p0, "counter"
 
     const-string p1, "flash_changed"
 
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 913
+    .line 914
     return-void
 .end method
 
 .method public static trackFocusPositionChanged(I)V
     .locals 2
 
-    .line 1033
+    .line 1034
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1034
+    .line 1035
     return-void
 
-    .line 1036
+    .line 1037
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1037
+    .line 1038
     const-string v1, "\u5bf9\u7126"
 
-    .line 1038
+    .line 1039
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->focusPositionToName(I)Ljava/lang/String;
 
     move-result-object p0
 
-    .line 1037
+    .line 1038
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1039
+    .line 1040
     const-string p0, "counter"
 
     const-string v1, "manual_focus_position_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1041
+    .line 1042
     return-void
 .end method
 
 .method public static trackGeneralInfo(IZIIZLcom/android/camera/MutexModeManager;Ljava/lang/String;)V
     .locals 5
 
-    .line 654
+    .line 655
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemRunning()Lcom/android/camera/data/data/runing/DataItemRunning;
 
     move-result-object v0
 
-    .line 655
+    .line 656
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemConfig()Lcom/android/camera/data/data/config/DataItemConfig;
 
     move-result-object v1
 
-    .line 656
+    .line 657
     new-instance v2, Ljava/util/HashMap;
 
     invoke-direct {v2}, Ljava/util/HashMap;-><init>()V
 
-    .line 657
+    .line 658
     nop
 
-    .line 658
+    .line 659
     const-string v3, "\u6a21\u5f0f"
 
     invoke-static {p2}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -3727,10 +3727,10 @@
 
     invoke-interface {v2, v3, v4}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 659
+    .line 660
     const-string v3, "\u5408\u5f71\u4f18\u9009"
 
-    .line 660
+    .line 661
     if-nez p1, :cond_0
 
     invoke-static {}, Lcom/android/camera/CameraSettings;->isGroupShotOn()Z
@@ -3746,11 +3746,11 @@
     :cond_0
     const-string v4, "off"
 
-    .line 659
+    .line 660
     :goto_0
     invoke-interface {v2, v3, v4}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 661
+    .line 662
     const-string v3, "\u89e6\u53d1\u65b9\u5f0f"
 
     invoke-static {p3}, Lcom/android/camera/statistic/CameraStatUtil;->triggerModeToName(I)Ljava/lang/String;
@@ -3759,48 +3759,48 @@
 
     invoke-interface {v2, v3, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 663
+    .line 664
     const-string p3, "0"
 
-    .line 664
+    .line 665
     if-nez p1, :cond_1
 
-    .line 665
+    .line 666
     invoke-virtual {v0}, Lcom/android/camera/data/data/runing/DataItemRunning;->getComponentRunningTimer()Lcom/android/camera/data/data/runing/ComponentRunningTimer;
 
     move-result-object v3
 
-    .line 666
+    .line 667
     if-eqz v3, :cond_1
 
-    .line 667
+    .line 668
     invoke-virtual {v3, p2}, Lcom/android/camera/data/data/runing/ComponentRunningTimer;->getComponentValue(I)Ljava/lang/String;
 
     move-result-object p3
 
-    .line 670
+    .line 671
     :cond_1
     const-string v3, "\u5012\u8ba1\u65f6"
 
     invoke-interface {v2, v3, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 672
+    .line 673
     const-string p3, "0"
 
-    .line 673
+    .line 674
     invoke-virtual {v1}, Lcom/android/camera/data/data/config/DataItemConfig;->getComponentFlash()Lcom/android/camera/data/data/config/ComponentConfigFlash;
 
     move-result-object v3
 
-    .line 674
+    .line 675
     if-eqz v3, :cond_2
 
-    .line 675
+    .line 676
     invoke-virtual {v3, p2}, Lcom/android/camera/data/data/config/ComponentConfigFlash;->getComponentValue(I)Ljava/lang/String;
 
     move-result-object p3
 
-    .line 676
+    .line 677
     if-eqz p1, :cond_2
 
     const-string v3, "2"
@@ -3811,21 +3811,21 @@
 
     if-nez v3, :cond_2
 
-    .line 677
+    .line 678
     const-string p3, "0"
 
-    .line 680
+    .line 681
     :cond_2
     if-eqz p6, :cond_3
 
-    .line 681
+    .line 682
     const-string p3, "\u95ea\u5149\u706f"
 
     invoke-interface {v2, p3, p6}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
     goto :goto_1
 
-    .line 683
+    .line 684
     :cond_3
     const-string p6, "\u95ea\u5149\u706f"
 
@@ -3835,7 +3835,7 @@
 
     invoke-interface {v2, p6, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 686
+    .line 687
     :goto_1
     invoke-static {}, Lcom/android/camera/effect/EffectController;->getInstance()Lcom/android/camera/effect/EffectController;
 
@@ -3847,10 +3847,10 @@
 
     move-result p3
 
-    .line 687
+    .line 688
     const-string p6, "\u6ee4\u955c"
 
-    .line 688
+    .line 689
     if-eqz p1, :cond_4
 
     const-string p3, "none"
@@ -3862,17 +3862,17 @@
 
     move-result-object p3
 
-    .line 687
+    .line 688
     :goto_2
     invoke-interface {v2, p6, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 689
+    .line 690
     if-eqz p4, :cond_7
 
-    .line 690
+    .line 691
     const-string p1, "\u5e74\u9f84\u68c0\u6d4b"
 
-    .line 691
+    .line 692
     invoke-static {}, Lcom/android/camera/CameraSettings;->showGenderAge()Z
 
     move-result p2
@@ -3886,14 +3886,14 @@
     :cond_5
     const-string p2, "off"
 
-    .line 690
+    .line 691
     :goto_3
     invoke-interface {v2, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 692
+    .line 693
     const-string p1, "\u9b54\u955c"
 
-    .line 693
+    .line 694
     invoke-static {}, Lcom/android/camera/CameraSettings;->isMagicMirrorOn()Z
 
     move-result p2
@@ -3907,11 +3907,11 @@
     :cond_6
     const-string p2, "off"
 
-    .line 692
+    .line 693
     :goto_4
     invoke-interface {v2, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 694
+    .line 695
     const-string p1, "capture"
 
     const-string p2, "front_camera_info"
@@ -3922,11 +3922,11 @@
 
     goto/16 :goto_a
 
-    .line 697
+    .line 698
     :cond_7
     const-string p3, "\u79fb\u8f74"
 
-    .line 698
+    .line 699
     if-nez p1, :cond_8
 
     invoke-static {}, Lcom/android/camera/CameraSettings;->isTiltShiftOn()Z
@@ -3935,15 +3935,15 @@
 
     if-eqz p4, :cond_8
 
-    .line 700
+    .line 701
     nop
 
-    .line 699
+    .line 700
     invoke-virtual {v0}, Lcom/android/camera/data/data/runing/DataItemRunning;->getComponentRunningTiltValue()Lcom/android/camera/data/data/runing/ComponentRunningTiltValue;
 
     move-result-object p4
 
-    .line 700
+    .line 701
     invoke-virtual {p4, p2}, Lcom/android/camera/data/data/runing/ComponentRunningTiltValue;->getComponentValue(I)Ljava/lang/String;
 
     move-result-object p4
@@ -3953,14 +3953,14 @@
     :cond_8
     const-string p4, "off"
 
-    .line 697
+    .line 698
     :goto_5
     invoke-interface {v2, p3, p4}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 701
+    .line 702
     const-string p3, "\u6c34\u5e73\u4eea"
 
-    .line 702
+    .line 703
     if-nez p1, :cond_9
 
     invoke-static {}, Lcom/android/camera/CameraSettings;->isGradienterOn()Z
@@ -3969,7 +3969,7 @@
 
     if-eqz p4, :cond_9
 
-    .line 703
+    .line 704
     const-string p4, "on"
 
     goto :goto_6
@@ -3977,14 +3977,14 @@
     :cond_9
     const-string p4, "off"
 
-    .line 701
+    .line 702
     :goto_6
     invoke-interface {v2, p3, p4}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 704
+    .line 705
     const-string p3, "HHT"
 
-    .line 705
+    .line 706
     if-nez p1, :cond_a
 
     if-eqz p5, :cond_a
@@ -3995,7 +3995,7 @@
 
     if-eqz p4, :cond_a
 
-    .line 706
+    .line 707
     const-string p4, "on"
 
     goto :goto_7
@@ -4003,34 +4003,34 @@
     :cond_a
     const-string p4, "off"
 
-    .line 704
+    .line 705
     :goto_7
     invoke-interface {v2, p3, p4}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 708
+    .line 709
     const-string p3, "off"
 
-    .line 709
+    .line 710
     if-nez p1, :cond_d
 
     if-eqz p5, :cond_d
 
-    .line 710
+    .line 711
     invoke-virtual {p5}, Lcom/android/camera/MutexModeManager;->isHdr()Z
 
     move-result p4
 
-    .line 711
+    .line 712
     invoke-virtual {v1}, Lcom/android/camera/data/data/config/DataItemConfig;->getComponentHdr()Lcom/android/camera/data/data/config/ComponentConfigHdr;
 
     move-result-object p6
 
-    .line 712
+    .line 713
     if-eqz p6, :cond_c
 
     const-string v0, "auto"
 
-    .line 713
+    .line 714
     invoke-virtual {p6, p2}, Lcom/android/camera/data/data/config/ComponentConfigHdr;->getComponentValue(I)Ljava/lang/String;
 
     move-result-object p6
@@ -4041,7 +4041,7 @@
 
     if-eqz p6, :cond_c
 
-    .line 714
+    .line 715
     if-eqz p4, :cond_b
 
     const-string p3, "auto-on"
@@ -4053,24 +4053,24 @@
 
     goto :goto_8
 
-    .line 715
+    .line 716
     :cond_c
     if-eqz p4, :cond_d
 
-    .line 716
+    .line 717
     const-string p3, "on"
 
-    .line 719
+    .line 720
     :cond_d
     :goto_8
     const-string p4, "HDR"
 
     invoke-interface {v2, p4, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 721
+    .line 722
     const-string p3, "\u8d85\u5206\u8fa8\u7387"
 
-    .line 722
+    .line 723
     if-nez p1, :cond_e
 
     if-eqz p5, :cond_e
@@ -4081,7 +4081,7 @@
 
     if-eqz p1, :cond_e
 
-    .line 723
+    .line 724
     const-string p1, "on"
 
     goto :goto_9
@@ -4089,11 +4089,11 @@
     :cond_e
     const-string p1, "off"
 
-    .line 721
+    .line 722
     :goto_9
     invoke-interface {v2, p3, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 724
+    .line 725
     const-string p1, "\u53d8\u7126"
 
     invoke-static {p2}, Lcom/android/camera/statistic/CameraStatUtil;->getDualZoomName(I)Ljava/lang/String;
@@ -4102,7 +4102,7 @@
 
     invoke-interface {v2, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 725
+    .line 726
     const-string p1, "capture"
 
     const-string p2, "back_camera_info"
@@ -4111,7 +4111,7 @@
 
     invoke-static {p1, p2, p3, p4, v2}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;JLjava/util/Map;)V
 
-    .line 728
+    .line 729
     :goto_a
     return-void
 .end method
@@ -4119,83 +4119,83 @@
 .method public static trackGotoGallery(I)V
     .locals 2
 
-    .line 786
+    .line 787
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 787
+    .line 788
     const-string v1, "\u6a21\u5f0f"
 
-    .line 788
+    .line 789
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
 
     move-result-object p0
 
-    .line 787
+    .line 788
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 789
+    .line 790
     const-string p0, "counter"
 
     const-string v1, "goto_gallery"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 790
+    .line 791
     return-void
 .end method
 
 .method public static trackGotoSettings(I)V
     .locals 2
 
-    .line 779
+    .line 780
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 780
+    .line 781
     const-string v1, "\u6a21\u5f0f"
 
-    .line 781
+    .line 782
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
 
     move-result-object p0
 
-    .line 780
+    .line 781
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 782
+    .line 783
     const-string p0, "counter"
 
     const-string v1, "goto_settings"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 783
+    .line 784
     return-void
 .end method
 
 .method public static trackHdrChanged(ILjava/lang/String;)V
     .locals 2
 
-    .line 916
+    .line 917
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 917
+    .line 918
     return-void
 
-    .line 919
+    .line 920
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 920
+    .line 921
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -4204,42 +4204,42 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 921
+    .line 922
     const-string p0, "HDR"
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 922
+    .line 923
     const-string p0, "counter"
 
     const-string p1, "hdr_changed"
 
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 923
+    .line 924
     return-void
 .end method
 
 .method public static trackIsoChanged(Ljava/lang/String;)V
     .locals 2
 
-    .line 1087
+    .line 1088
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1088
+    .line 1089
     return-void
 
-    .line 1090
+    .line 1091
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1091
+    .line 1092
     const-string v1, "\u611f\u5149\u5ea6"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->isoToName(Ljava/lang/String;)Ljava/lang/String;
@@ -4248,72 +4248,72 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1092
+    .line 1093
     const-string p0, "counter"
 
     const-string v1, "manual_iso_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1094
+    .line 1095
     return-void
 .end method
 
 .method public static trackLensChanged(Ljava/lang/String;)V
     .locals 2
 
-    .line 1097
+    .line 1098
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1098
+    .line 1099
     return-void
 
-    .line 1100
+    .line 1101
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1101
+    .line 1102
     const-string v1, "\u955c\u5934"
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1102
+    .line 1103
     const-string p0, "counter"
 
     const-string v1, "manual_lens_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1104
+    .line 1105
     return-void
 .end method
 
 .method public static trackLightingChanged(ILjava/lang/String;)V
     .locals 2
 
-    .line 1022
+    .line 1023
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1023
+    .line 1024
     return-void
 
-    .line 1026
+    .line 1027
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1027
+    .line 1028
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -4322,43 +4322,43 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1028
+    .line 1029
     const-string p0, "\u5149\u6548"
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1029
+    .line 1030
     const-string p0, "counter"
 
     const-string p1, "lighting_changed"
 
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1030
+    .line 1031
     return-void
 .end method
 
 .method public static trackNewSlowMotionVideoRecorded(Ljava/lang/String;IIIJ)V
     .locals 3
 
-    .line 845
+    .line 846
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 846
+    .line 847
     const-string v1, "\u524d\u540e\u6444"
 
     const-string v2, "\u540e\u6444"
 
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 847
+    .line 848
     const-string v1, "\u6a21\u5f0f"
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 848
+    .line 849
     const-string p0, "\u753b\u8d28"
 
     invoke-static {p1}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
@@ -4371,15 +4371,15 @@
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 849
+    .line 850
     const-string p0, "\u95ea\u5149\u706f"
 
-    .line 850
+    .line 851
     const/4 p1, 0x2
 
     if-ne p2, p1, :cond_0
 
-    .line 851
+    .line 852
     const-string p1, "torch"
 
     goto :goto_0
@@ -4387,11 +4387,11 @@
     :cond_0
     const-string p1, "off"
 
-    .line 849
+    .line 850
     :goto_0
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 852
+    .line 853
     const-string p0, "\u5e27\u7387"
 
     invoke-static {p3}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
@@ -4400,7 +4400,7 @@
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 853
+    .line 854
     const-string p0, "\u65f6\u957f"
 
     invoke-static {p4, p5}, Ljava/lang/String;->valueOf(J)Ljava/lang/String;
@@ -4409,29 +4409,29 @@
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 854
+    .line 855
     const-string p0, "capture"
 
     const-string p1, "video_taken"
 
     invoke-static {p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 855
+    .line 856
     return-void
 .end method
 
 .method public static trackPauseVideoRecording(Z)V
     .locals 2
 
-    .line 800
+    .line 801
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 801
+    .line 802
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 802
+    .line 803
     if-eqz p0, :cond_0
 
     const-string p0, "\u524d\u6444"
@@ -4441,36 +4441,36 @@
     :cond_0
     const-string p0, "\u540e\u6444"
 
-    .line 801
+    .line 802
     :goto_0
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 803
+    .line 804
     const-string p0, "capture"
 
     const-string v1, "video_pause_recording"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 805
+    .line 806
     return-void
 .end method
 
 .method public static trackPictureTaken(IZIZZLjava/lang/String;)V
     .locals 3
 
-    .line 736
+    .line 737
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 737
+    .line 738
     nop
 
-    .line 738
+    .line 739
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 739
+    .line 740
     if-eqz p3, :cond_0
 
     const-string v2, "\u524d\u6444"
@@ -4480,17 +4480,17 @@
     :cond_0
     const-string v2, "\u540e\u6444"
 
-    .line 738
+    .line 739
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 740
+    .line 741
     nop
 
-    .line 741
+    .line 742
     const-string v1, "\u753b\u5e45"
 
-    .line 742
+    .line 743
     const/16 v2, 0xa5
 
     if-ne v2, p2, :cond_1
@@ -4506,11 +4506,11 @@
 
     move-result-object v2
 
-    .line 741
+    .line 742
     :goto_1
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 743
+    .line 744
     const-string v1, "\u753b\u8d28"
 
     invoke-static {p1}, Lcom/android/camera/CameraSettings;->getJpegQuality(Z)Ljava/lang/String;
@@ -4519,10 +4519,10 @@
 
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 744
+    .line 745
     const-string v1, "\u65f6\u95f4\u6c34\u5370"
 
-    .line 745
+    .line 746
     invoke-static {}, Lcom/android/camera/CameraSettings;->isTimeWaterMarkOpen()Z
 
     move-result v2
@@ -4536,14 +4536,14 @@
     :cond_2
     const-string v2, "off"
 
-    .line 744
+    .line 745
     :goto_2
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 746
+    .line 747
     const-string v1, "\u53cc\u6444\u6c34\u5370"
 
-    .line 747
+    .line 748
     invoke-static {}, Lcom/android/camera/CameraSettings;->isDualCameraWaterMarkOpen()Z
 
     move-result v2
@@ -4557,21 +4557,21 @@
     :cond_3
     const-string v2, "off"
 
-    .line 746
+    .line 747
     :goto_3
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 748
+    .line 749
     const-string v1, "\u5730\u7406\u4f4d\u7f6e"
 
-    .line 749
+    .line 750
     if-eqz p4, :cond_4
 
     const-string p4, "\u6709"
 
     goto :goto_4
 
-    .line 750
+    .line 751
     :cond_4
     invoke-static {}, Lcom/android/camera/CameraSettings;->isRecordLocation()Z
 
@@ -4579,7 +4579,7 @@
 
     if-eqz p4, :cond_5
 
-    .line 751
+    .line 752
     const-string p4, "\u65e0"
 
     goto :goto_4
@@ -4587,19 +4587,19 @@
     :cond_5
     const-string p4, "\u5173"
 
-    .line 748
+    .line 749
     :goto_4
     invoke-interface {v0, v1, p4}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 754
+    .line 755
     if-eqz p5, :cond_6
 
-    .line 755
+    .line 756
     const-string p4, "\u667a\u80fd\u573a\u666f\u53d1\u73b0"
 
     invoke-interface {v0, p4, p5}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 758
+    .line 759
     :cond_6
     const/16 p4, 0xab
 
@@ -4607,7 +4607,7 @@
 
     if-nez p3, :cond_7
 
-    .line 759
+    .line 760
     const-string p2, "\u5149\u6548"
 
     invoke-static {}, Lcom/android/camera/CameraSettings;->getPortraitLightingPattern()I
@@ -4620,7 +4620,7 @@
 
     invoke-interface {v0, p2, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 762
+    .line 763
     :cond_7
     const-string p2, "capture"
 
@@ -4630,10 +4630,10 @@
 
     invoke-static {p2, p3, p4, p5, v0}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;JLjava/util/Map;)V
 
-    .line 765
+    .line 766
     if-eqz p1, :cond_9
 
-    .line 766
+    .line 767
     invoke-static {}, Lcom/android/camera/CameraSettings;->isPressDownCapture()Z
 
     move-result p1
@@ -4644,16 +4644,16 @@
 
     if-le p0, p1, :cond_8
 
-    .line 767
+    .line 768
     add-int/lit8 p0, p0, -0x1
 
-    .line 769
+    .line 770
     :cond_8
     new-instance p1, Ljava/util/HashMap;
 
     invoke-direct {p1}, Ljava/util/HashMap;-><init>()V
 
-    .line 770
+    .line 771
     const-string p2, "\u5f20\u6570"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->burstShotNumToName(I)Ljava/lang/String;
@@ -4662,7 +4662,7 @@
 
     invoke-interface {p1, p2, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 771
+    .line 772
     const-string p2, "capture"
 
     const-string p3, "picture_taken_burst"
@@ -4671,14 +4671,14 @@
 
     invoke-static {p2, p3, p4, p5, p1}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;JLjava/util/Map;)V
 
-    .line 773
+    .line 774
     const-string p0, "capture"
 
     const-string p2, "burst_shot_times"
 
     invoke-static {p0, p2, p1}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 776
+    .line 777
     :cond_9
     return-void
 .end method
@@ -4686,12 +4686,12 @@
 .method public static trackPictureTakenInManual(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V
     .locals 2
 
-    .line 1120
+    .line 1121
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1121
+    .line 1122
     const-string v1, "\u767d\u5e73\u8861"
 
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->autoWhiteBalanceToName(Ljava/lang/String;)Ljava/lang/String;
@@ -4700,10 +4700,10 @@
 
     invoke-interface {v0, v1, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1122
+    .line 1123
     const-string p1, "\u5bf9\u7126"
 
-    .line 1123
+    .line 1124
     invoke-static {}, Lcom/android/camera/CameraSettings;->getFocusPosition()I
 
     move-result v1
@@ -4712,10 +4712,10 @@
 
     move-result-object v1
 
-    .line 1122
+    .line 1123
     invoke-interface {v0, p1, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1124
+    .line 1125
     const-string p1, "\u5feb\u95e8"
 
     invoke-static {p2}, Lcom/android/camera/statistic/CameraStatUtil;->exposureTimeToName(Ljava/lang/String;)Ljava/lang/String;
@@ -4724,7 +4724,7 @@
 
     invoke-interface {v0, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1125
+    .line 1126
     const-string p1, "\u611f\u5149\u5ea6"
 
     invoke-static {p3}, Lcom/android/camera/statistic/CameraStatUtil;->isoToName(Ljava/lang/String;)Ljava/lang/String;
@@ -4733,7 +4733,7 @@
 
     invoke-interface {v0, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1126
+    .line 1127
     const-string p1, "\u955c\u5934"
 
     invoke-static {p4}, Lcom/android/camera/CameraSettings;->getCameraZoomMode(I)Ljava/lang/String;
@@ -4742,7 +4742,7 @@
 
     invoke-interface {v0, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1127
+    .line 1128
     const-string p1, "\u5cf0\u503c\u5bf9\u7126"
 
     invoke-static {}, Lcom/android/camera/effect/EffectController;->getInstance()Lcom/android/camera/effect/EffectController;
@@ -4755,7 +4755,7 @@
 
     if-eqz p2, :cond_0
 
-    .line 1128
+    .line 1129
     const-string p2, "on"
 
     goto :goto_0
@@ -4763,16 +4763,16 @@
     :cond_0
     const-string p2, "off"
 
-    .line 1127
+    .line 1128
     :goto_0
     invoke-interface {v0, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1129
+    .line 1130
     invoke-static {}, Lcom/android/camera/CameraSettings;->readZoom()F
 
     move-result p1
 
-    .line 1130
+    .line 1131
     const-string p2, "\u53d8\u7126"
 
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->zoomRatioToName(F)Ljava/lang/String;
@@ -4781,7 +4781,7 @@
 
     invoke-interface {v0, p2, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1131
+    .line 1132
     const-string p1, "capture"
 
     const-string p2, "picture_taken_manual"
@@ -4790,22 +4790,22 @@
 
     invoke-static {p1, p2, p3, p4, v0}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;JLjava/util/Map;)V
 
-    .line 1133
+    .line 1134
     return-void
 .end method
 
 .method public static trackPictureTakenInPanorama(I)V
     .locals 5
 
-    .line 1107
+    .line 1108
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1108
+    .line 1109
     const-string v1, "\u65b9\u5411"
 
-    .line 1109
+    .line 1110
     invoke-static {}, Lcom/android/camera/CameraSettings;->getPanoramaMoveDirection()I
 
     move-result v2
@@ -4814,7 +4814,7 @@
 
     if-ne v3, v2, :cond_0
 
-    .line 1110
+    .line 1111
     const-string v2, "\u4ece\u5de6\u5f80\u53f3"
 
     goto :goto_0
@@ -4822,11 +4822,11 @@
     :cond_0
     const-string v2, "\u4ece\u53f3\u5f80\u5de6"
 
-    .line 1108
+    .line 1109
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1111
+    .line 1112
     const-string v1, "capture"
 
     const-string v2, "picture_taken_panorama"
@@ -4835,14 +4835,14 @@
 
     invoke-static {v1, v2, v3, v4, v0}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;JLjava/util/Map;)V
 
-    .line 1113
+    .line 1114
     return-void
 .end method
 
 .method public static trackPocketModeEnter(Ljava/lang/String;)V
     .locals 5
 
-    .line 868
+    .line 869
     const-string v0, "counter"
 
     const-string v1, "pocket_mode_enter"
@@ -4863,14 +4863,14 @@
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/statistic/CameraStatUtil;->track(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V
 
-    .line 870
+    .line 871
     return-void
 .end method
 
 .method public static trackPocketModeExit(Ljava/lang/String;)V
     .locals 5
 
-    .line 873
+    .line 874
     const-string v0, "counter"
 
     const-string v1, "pocket_mode_keyguard_exit"
@@ -4891,40 +4891,40 @@
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/statistic/CameraStatUtil;->track(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V
 
-    .line 875
+    .line 876
     return-void
 .end method
 
 .method public static trackPocketModeSensorDelay()V
     .locals 2
 
-    .line 878
+    .line 879
     const-string v0, "counter"
 
     const-string v1, "pocket_mode_sensor_delay"
 
     invoke-static {v0, v1}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 879
+    .line 880
     return-void
 .end method
 
 .method public static trackPreferenceChange(Ljava/lang/String;Ljava/lang/Object;)V
     .locals 3
 
-    .line 1199
+    .line 1200
     if-nez p0, :cond_0
 
-    .line 1200
+    .line 1201
     return-void
 
-    .line 1203
+    .line 1204
     :cond_0
     instance-of v0, p1, Ljava/lang/Boolean;
 
     if-eqz v0, :cond_2
 
-    .line 1204
+    .line 1205
     check-cast p1, Ljava/lang/Boolean;
 
     invoke-virtual {p1}, Ljava/lang/Boolean;->booleanValue()Z
@@ -4942,13 +4942,13 @@
 
     goto :goto_0
 
-    .line 1206
+    .line 1207
     :cond_2
     invoke-static {p1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1209
+    .line 1210
     :goto_0
     const/4 v0, -0x1
 
@@ -5107,7 +5107,7 @@
 
     goto :goto_2
 
-    .line 1247
+    .line 1248
     :pswitch_0
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->slowMotionQualityIdToName(Ljava/lang/String;)Ljava/lang/String;
 
@@ -5115,105 +5115,105 @@
 
     goto :goto_2
 
-    .line 1244
+    .line 1245
     :pswitch_1
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->antiBandingToName(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1245
+    .line 1246
     goto :goto_2
 
-    .line 1241
+    .line 1242
     :pswitch_2
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->sharpnessToName(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1242
+    .line 1243
     goto :goto_2
 
-    .line 1238
+    .line 1239
     :pswitch_3
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->saturationToName(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1239
+    .line 1240
     goto :goto_2
 
-    .line 1235
+    .line 1236
     :pswitch_4
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->contrastToName(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1236
+    .line 1237
     goto :goto_2
 
-    .line 1232
+    .line 1233
     :pswitch_5
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->autoExposureToName(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1233
+    .line 1234
     goto :goto_2
 
-    .line 1229
+    .line 1230
     :pswitch_6
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->addCameraSuffix(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p0
 
-    .line 1230
+    .line 1231
     goto :goto_2
 
-    .line 1226
+    .line 1227
     :pswitch_7
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->addCameraSuffix(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p0
 
-    .line 1227
+    .line 1228
     goto :goto_2
 
-    .line 1223
+    .line 1224
     :pswitch_8
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->addCameraSuffix(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p0
 
-    .line 1224
+    .line 1225
     goto :goto_2
 
-    .line 1216
+    .line 1217
     :pswitch_9
     :try_start_0
     invoke-static {p1}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
 
     move-result v0
 
-    .line 1217
+    .line 1218
     invoke-static {v0}, Lcom/android/camera/statistic/CameraStatUtil;->timeLapseIntervalToName(I)Ljava/lang/String;
 
     move-result-object v0
     :try_end_0
     .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 1220
+    .line 1221
     nop
 
-    .line 1250
+    .line 1251
     move-object p1, v0
 
     goto :goto_2
 
-    .line 1218
+    .line 1219
     :catch_0
     move-exception v0
 
-    .line 1219
+    .line 1220
     sget-object v0, Lcom/android/camera/statistic/CameraStatUtil;->TAG:Ljava/lang/String;
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -5232,30 +5232,30 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 1221
+    .line 1222
     goto :goto_2
 
-    .line 1211
+    .line 1212
     :pswitch_a
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->addCameraSuffix(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p0
 
-    .line 1212
+    .line 1213
     invoke-static {p1}, Lcom/android/camera/statistic/CameraStatUtil;->videoQualityToName(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1213
+    .line 1214
     nop
 
-    .line 1250
+    .line 1251
     :goto_2
     const-string v0, "settings"
 
     invoke-static {v0, p0, p1}, Lcom/android/camera/statistic/CameraStat;->recordStringPropertyEvent(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 1251
+    .line 1252
     return-void
 
     nop
@@ -5294,12 +5294,12 @@
 .method public static trackSnapInfo(Z)V
     .locals 2
 
-    .line 1193
+    .line 1194
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1194
+    .line 1195
     const-string v1, "mode"
 
     if-eqz p0, :cond_0
@@ -5314,21 +5314,21 @@
     :goto_0
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1195
+    .line 1196
     const-string p0, "capture"
 
     const-string v1, "snap_camera"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1196
+    .line 1197
     return-void
 .end method
 
 .method public static trackStartAppCost(J)V
     .locals 3
 
-    .line 611
+    .line 612
     const-wide/16 v0, 0x0
 
     cmp-long v0, p0, v0
@@ -5341,25 +5341,25 @@
 
     if-gtz v0, :cond_0
 
-    .line 612
+    .line 613
     const-string v0, "capture"
 
     const-string v1, "start_app_cost"
 
     const/16 v2, 0x32
 
-    .line 613
+    .line 614
     invoke-static {p0, p1, v2}, Lcom/android/camera/statistic/CameraStatUtil;->round(JI)J
 
     move-result-wide p0
 
-    .line 612
+    .line 613
     invoke-static {v0, v1, p0, p1}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;J)V
 
-    .line 617
+    .line 618
     return-void
 
-    .line 615
+    .line 616
     :cond_0
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
@@ -5385,15 +5385,15 @@
 .method public static trackTakePictureCost(JZI)V
     .locals 2
 
-    .line 595
+    .line 596
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 596
+    .line 597
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 597
+    .line 598
     if-eqz p2, :cond_0
 
     const-string p2, "\u524d\u6444"
@@ -5403,11 +5403,11 @@
     :cond_0
     const-string p2, "\u540e\u6444"
 
-    .line 596
+    .line 597
     :goto_0
     invoke-interface {v0, v1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 598
+    .line 599
     const-string p2, "\u6a21\u5f0f"
 
     invoke-static {p3}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -5416,45 +5416,45 @@
 
     invoke-interface {v0, p2, p3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 599
+    .line 600
     const-string p2, "capture"
 
     const-string p3, "take_picture_cost"
 
     const/16 v1, 0x32
 
-    .line 600
+    .line 601
     invoke-static {p0, p1, v1}, Lcom/android/camera/statistic/CameraStatUtil;->round(JI)J
 
     move-result-wide p0
 
-    .line 599
+    .line 600
     invoke-static {p2, p3, p0, p1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCalculateEvent(Ljava/lang/String;Ljava/lang/String;JLjava/util/Map;)V
 
-    .line 601
+    .line 602
     return-void
 .end method
 
 .method public static trackTiltShiftChanged(Ljava/lang/String;)V
     .locals 3
 
-    .line 990
+    .line 991
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 991
+    .line 992
     return-void
 
-    .line 993
+    .line 994
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 994
+    .line 995
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v1
@@ -5463,7 +5463,7 @@
 
     move-result v1
 
-    .line 995
+    .line 996
     const-string v2, "\u6a21\u5f0f"
 
     invoke-static {v1}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -5472,42 +5472,42 @@
 
     invoke-interface {v0, v2, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 996
+    .line 997
     const-string v1, "\u79fb\u8f74"
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 997
+    .line 998
     const-string p0, "counter"
 
     const-string v1, "tiltshift_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 999
+    .line 1000
     return-void
 .end method
 
 .method public static trackTimerChanged(Ljava/lang/String;)V
     .locals 3
 
-    .line 976
+    .line 977
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 977
+    .line 978
     return-void
 
-    .line 979
+    .line 980
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 980
+    .line 981
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v1
@@ -5516,7 +5516,7 @@
 
     move-result v1
 
-    .line 981
+    .line 982
     const-string v2, "\u6a21\u5f0f"
 
     invoke-static {v1}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -5525,17 +5525,17 @@
 
     invoke-interface {v0, v2, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 982
+    .line 983
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 983
+    .line 984
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v2
 
     if-eqz v2, :cond_1
 
-    .line 984
+    .line 985
     const-string v2, "\u524d\u6444"
 
     goto :goto_0
@@ -5543,73 +5543,73 @@
     :cond_1
     const-string v2, "\u540e\u6444"
 
-    .line 982
+    .line 983
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 985
+    .line 986
     const-string v1, "\u5012\u8ba1\u65f6"
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 986
+    .line 987
     const-string p0, "counter"
 
     const-string v1, "timer_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 987
+    .line 988
     return-void
 .end method
 
 .method public static trackVideoModeChanged(Ljava/lang/String;)V
     .locals 2
 
-    .line 966
+    .line 967
     invoke-static {}, Lcom/android/camera/statistic/CameraStat;->isCounterEventDisabled()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 967
+    .line 968
     return-void
 
-    .line 969
+    .line 970
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 970
+    .line 971
     const-string v1, "\u6a21\u5f0f"
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 971
+    .line 972
     const-string p0, "counter"
 
     const-string v1, "video_mode_changed"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 973
+    .line 974
     return-void
 .end method
 
 .method public static trackVideoRecorded(ZLjava/lang/String;IIIILcom/android/camera/fragment/beauty/BeautyValues;J)V
     .locals 3
 
-    .line 815
+    .line 816
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 816
+    .line 817
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 817
+    .line 818
     if-eqz p0, :cond_0
 
     const-string p0, "\u524d\u6444"
@@ -5619,16 +5619,16 @@
     :cond_0
     const-string p0, "\u540e\u6444"
 
-    .line 816
+    .line 817
     :goto_0
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 818
+    .line 819
     const-string p0, "\u6a21\u5f0f"
 
     invoke-interface {v0, p0, p1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 819
+    .line 820
     const-string p0, "\u753b\u8d28"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -5651,15 +5651,15 @@
 
     invoke-interface {v0, p0, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 820
+    .line 821
     const-string p0, "\u95ea\u5149\u706f"
 
-    .line 821
+    .line 822
     const/4 p2, 0x2
 
     if-ne p3, p2, :cond_1
 
-    .line 822
+    .line 823
     const-string p2, "torch"
 
     goto :goto_1
@@ -5667,11 +5667,11 @@
     :cond_1
     const-string p2, "off"
 
-    .line 820
+    .line 821
     :goto_1
     invoke-interface {v0, p0, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 823
+    .line 824
     const-string p0, "\u5e27\u7387"
 
     invoke-static {p4}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
@@ -5680,27 +5680,27 @@
 
     invoke-interface {v0, p0, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 824
+    .line 825
     if-eqz p6, :cond_2
 
-    .line 825
+    .line 826
     const-string p0, "\u7b49\u7ea7"
 
     iget-object p2, p6, Lcom/android/camera/fragment/beauty/BeautyValues;->mBeautyLevel:Ljava/lang/String;
 
-    .line 826
+    .line 827
     invoke-static {p2}, Lcom/android/camera/CameraSettings;->intelligentValueToBeautyLevel(Ljava/lang/String;)I
 
     move-result p2
 
-    .line 825
+    .line 826
     invoke-static {p2}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
 
     move-result-object p2
 
     invoke-interface {v0, p0, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 828
+    .line 829
     :cond_2
     const-string p0, "\u65f6\u957f"
 
@@ -5710,14 +5710,14 @@
 
     invoke-interface {v0, p0, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 829
+    .line 830
     const-string p0, "capture"
 
     const-string p2, "video_taken"
 
     invoke-static {p0, p2, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 831
+    .line 832
     if-lez p5, :cond_3
 
     const-string p0, "fast"
@@ -5728,30 +5728,30 @@
 
     if-eqz p0, :cond_3
 
-    .line 832
+    .line 833
     new-instance p0, Ljava/util/HashMap;
 
     invoke-direct {p0}, Ljava/util/HashMap;-><init>()V
 
-    .line 833
+    .line 834
     const-string p1, "\u95f4\u9694"
 
-    .line 834
+    .line 835
     invoke-static {p5}, Lcom/android/camera/statistic/CameraStatUtil;->timeLapseIntervalToName(I)Ljava/lang/String;
 
     move-result-object p2
 
-    .line 833
+    .line 834
     invoke-interface {p0, p1, p2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 835
+    .line 836
     const-string p1, "capture"
 
     const-string p2, "video_time_lapse_interval"
 
     invoke-static {p1, p2, p0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 838
+    .line 839
     :cond_3
     return-void
 .end method
@@ -5759,15 +5759,15 @@
 .method public static trackVideoSnapshot(Z)V
     .locals 2
 
-    .line 793
+    .line 794
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 794
+    .line 795
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 795
+    .line 796
     if-eqz p0, :cond_0
 
     const-string p0, "\u524d\u6444"
@@ -5777,40 +5777,40 @@
     :cond_0
     const-string p0, "\u540e\u6444"
 
-    .line 794
+    .line 795
     :goto_0
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 796
+    .line 797
     const-string p0, "capture"
 
     const-string v1, "video_snapshot"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 797
+    .line 798
     return-void
 .end method
 
 .method public static trackVoiceControl(Landroid/content/Intent;)V
     .locals 3
 
-    .line 1172
+    .line 1173
     if-nez p0, :cond_0
 
-    .line 1173
+    .line 1174
     return-void
 
-    .line 1176
+    .line 1177
     :cond_0
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 1177
+    .line 1178
     nop
 
-    .line 1179
+    .line 1180
     const/4 v1, 0x0
 
     :try_start_0
@@ -5824,14 +5824,14 @@
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 1182
+    .line 1183
     goto :goto_0
 
-    .line 1180
+    .line 1181
     :catch_0
     move-exception v2
 
-    .line 1183
+    .line 1184
     move v2, v1
 
     :goto_0
@@ -5841,7 +5841,7 @@
 
     nop
 
-    .line 1184
+    .line 1185
     :cond_1
     invoke-static {p0}, Lcom/android/camera/CameraIntentManager;->getInstance(Landroid/content/Intent;)Lcom/android/camera/CameraIntentManager;
 
@@ -5851,12 +5851,12 @@
 
     move-result p0
 
-    .line 1185
+    .line 1186
     const-string v2, "\u524d\u540e\u6444"
 
     if-nez v1, :cond_2
 
-    .line 1186
+    .line 1187
     const-string v1, "\u540e\u6444"
 
     goto :goto_1
@@ -5864,11 +5864,11 @@
     :cond_2
     const-string v1, "\u524d\u6444"
 
-    .line 1185
+    .line 1186
     :goto_1
     invoke-interface {v0, v2, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1187
+    .line 1188
     const-string v1, "\u6a21\u5f0f"
 
     invoke-static {p0}, Lcom/android/camera/statistic/CameraStatUtil;->modeIdToName(I)Ljava/lang/String;
@@ -5877,36 +5877,36 @@
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 1188
+    .line 1189
     const-string p0, "counter"
 
     const-string v1, "voice_assist_call_event"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 1190
+    .line 1191
     return-void
 .end method
 
 .method public static trackZoomAdjusted(Ljava/lang/String;)V
     .locals 3
 
-    .line 560
+    .line 561
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 561
+    .line 562
     const-string v1, "\u524d\u540e\u6444"
 
-    .line 562
+    .line 563
     invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
 
     move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 563
+    .line 564
     const-string v2, "\u524d\u6444"
 
     goto :goto_0
@@ -5914,14 +5914,14 @@
     :cond_0
     const-string v2, "\u540e\u6444"
 
-    .line 561
+    .line 562
     :goto_0
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 564
+    .line 565
     const-string v1, "\u6a21\u5f0f"
 
-    .line 565
+    .line 566
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v2
@@ -5934,22 +5934,22 @@
 
     move-result-object v2
 
-    .line 564
+    .line 565
     invoke-interface {v0, v1, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 566
+    .line 567
     const-string v1, "mode"
 
     invoke-interface {v0, v1, p0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 567
+    .line 568
     const-string p0, "counter"
 
     const-string v1, "zoom_adjusted"
 
     invoke-static {p0, v1, v0}, Lcom/android/camera/statistic/CameraStat;->recordCountEvent(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 
-    .line 568
+    .line 569
     return-void
 .end method
 

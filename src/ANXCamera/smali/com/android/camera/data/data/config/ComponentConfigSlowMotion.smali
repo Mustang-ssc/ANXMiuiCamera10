@@ -12,7 +12,7 @@
 
 .field public static final DATA_CONFIG_NEW_SLOW_MOTION_KEY:Ljava/lang/String; = "key_new_slow_motion"
 
-.field private static final SLOW_MOTIO_MODE:[Ljava/lang/String;
+.field private static final SLOW_MOTION_MODE:[Ljava/lang/String;
 
 
 # direct methods
@@ -24,7 +24,7 @@
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/mi/config/a;->fp()Z
+    invoke-virtual {v0}, Lcom/mi/config/a;->fr()Z
 
     move-result v0
 
@@ -41,7 +41,7 @@
 
     move-result-object v0
 
-    sput-object v0, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTIO_MODE:[Ljava/lang/String;
+    sput-object v0, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTION_MODE:[Ljava/lang/String;
 
     goto :goto_0
 
@@ -55,7 +55,7 @@
 
     move-result-object v0
 
-    sput-object v0, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTIO_MODE:[Ljava/lang/String;
+    sput-object v0, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTION_MODE:[Ljava/lang/String;
 
     .line 44
     :goto_0
@@ -94,7 +94,7 @@
     if-eqz v1, :cond_0
 
     .line 104
-    const v0, 0x7f0b00fa
+    const v0, 0x7f0b0100
 
     return v0
 
@@ -109,13 +109,13 @@
     if-eqz v0, :cond_1
 
     .line 106
-    const v0, 0x7f0b00fb
+    const v0, 0x7f0b0101
 
     return v0
 
     .line 108
     :cond_1
-    const v0, 0x7f0b00fc
+    const v0, 0x7f0b0102
 
     return v0
 .end method
@@ -126,7 +126,7 @@
     .end annotation
 
     .line 63
-    sget-object p1, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTIO_MODE:[Ljava/lang/String;
+    sget-object p1, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTION_MODE:[Ljava/lang/String;
 
     const/4 v0, 0x0
 
@@ -164,7 +164,7 @@
     if-eqz v1, :cond_0
 
     .line 93
-    const v0, 0x7f020120
+    const v0, 0x7f02012f
 
     return v0
 
@@ -179,13 +179,13 @@
     if-eqz v0, :cond_1
 
     .line 95
-    const v0, 0x7f020121
+    const v0, 0x7f020130
 
     return v0
 
     .line 97
     :cond_1
-    const v0, 0x7f020122
+    const v0, 0x7f020131
 
     return v0
 .end method
@@ -227,7 +227,7 @@
     move-result-object v0
 
     .line 82
-    sget-object v1, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTIO_MODE:[Ljava/lang/String;
+    sget-object v1, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTION_MODE:[Ljava/lang/String;
 
     array-length v1, v1
 
@@ -237,7 +237,7 @@
     if-ge v2, v1, :cond_1
 
     .line 83
-    sget-object v3, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTIO_MODE:[Ljava/lang/String;
+    sget-object v3, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTION_MODE:[Ljava/lang/String;
 
     aget-object v3, v3, v2
 
@@ -248,7 +248,7 @@
     if-eqz v3, :cond_0
 
     .line 84
-    sget-object p1, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTIO_MODE:[Ljava/lang/String;
+    sget-object p1, Lcom/android/camera/data/data/config/ComponentConfigSlowMotion;->SLOW_MOTION_MODE:[Ljava/lang/String;
 
     add-int/lit8 v2, v2, 0x1
 

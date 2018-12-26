@@ -27,7 +27,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/live/FragmentLiveMusic$1;Ljava/util/List;)V
     .locals 0
 
-    .line 98
+    .line 173
     iput-object p1, p0, Lcom/android/camera/fragment/live/FragmentLiveMusic$1$1;->this$1:Lcom/android/camera/fragment/live/FragmentLiveMusic$1;
 
     iput-object p2, p0, Lcom/android/camera/fragment/live/FragmentLiveMusic$1$1;->val$list:Ljava/util/List;
@@ -40,9 +40,20 @@
 
 # virtual methods
 .method public run()V
-    .locals 2
+    .locals 3
 
-    .line 101
+    .line 176
+    invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemRunning()Lcom/android/camera/data/data/runing/DataItemRunning;
+
+    move-result-object v0
+
+    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+
+    move-result-wide v1
+
+    invoke-virtual {v0, v1, v2}, Lcom/android/camera/data/data/runing/DataItemRunning;->setLiveMusicFirstRequestTime(J)V
+
+    .line 177
     iget-object v0, p0, Lcom/android/camera/fragment/live/FragmentLiveMusic$1$1;->this$1:Lcom/android/camera/fragment/live/FragmentLiveMusic$1;
 
     iget-object v0, v0, Lcom/android/camera/fragment/live/FragmentLiveMusic$1;->this$0:Lcom/android/camera/fragment/live/FragmentLiveMusic;
@@ -51,6 +62,6 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/fragment/live/FragmentLiveMusic;->access$000(Lcom/android/camera/fragment/live/FragmentLiveMusic;Ljava/util/List;)V
 
-    .line 102
+    .line 178
     return-void
 .end method

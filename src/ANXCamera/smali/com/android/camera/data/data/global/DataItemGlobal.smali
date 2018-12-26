@@ -20,9 +20,9 @@
 
 .field public static final DATA_COMMON_CURRENT_MODE:Ljava/lang/String; = "pref_camera_mode_key_intent_"
 
-.field public static final DATA_COMMON_DUALCAMERA_USERDEFINE_WATERMARK:Ljava/lang/String; = "user_define_watermark"
+.field public static final DATA_COMMON_DEVICE_WATERMARK:Ljava/lang/String; = "pref_dualcamera_watermark"
 
-.field public static final DATA_COMMON_DUALCAMERA_WATERMARK:Ljava/lang/String; = "pref_dualcamera_watermark"
+.field public static final DATA_COMMON_DUALCAMERA_USERDEFINE_WATERMARK:Ljava/lang/String; = "user_define_watermark"
 
 .field public static final DATA_COMMON_FOCUS_SHOOT:Ljava/lang/String; = "pref_camera_focus_shoot_key"
 
@@ -33,6 +33,8 @@
 .field public static final DATA_COMMON_PORTRAIT_HINT:Ljava/lang/String; = "pref_camera_first_portrait_use_hint_shown_key"
 
 .field public static final DATA_COMMON_TIME_WATER_MARK:Ljava/lang/String; = "pref_watermark_key"
+
+.field public static final DATA_COMMON_ULTRA_WIDE_HINT:Ljava/lang/String; = "pref_camera_first_ultra_wide_use_hint_shown_key"
 
 .field public static final INTENT_TYPE_IMAGE:I = 0x1
 
@@ -71,41 +73,41 @@
 .method public constructor <init>()V
     .locals 1
 
-    .line 84
+    .line 89
     invoke-direct {p0}, Lcom/android/camera/data/data/DataItemBase;-><init>()V
 
-    .line 82
+    .line 87
     const/4 v0, 0x0
 
     iput v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
-    .line 85
+    .line 90
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId()I
 
     move-result v0
 
     iput v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mLastCameraId:I
 
-    .line 86
+    .line 91
     new-instance v0, Lcom/android/camera/data/data/global/ComponentModuleList;
 
     invoke-direct {v0, p0}, Lcom/android/camera/data/data/global/ComponentModuleList;-><init>(Lcom/android/camera/data/data/global/DataItemGlobal;)V
 
     iput-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mModuleList:Lcom/android/camera/data/data/global/ComponentModuleList;
 
-    .line 87
+    .line 92
     return-void
 .end method
 
 .method private determineTimeOut()Z
     .locals 4
 
-    .line 288
+    .line 297
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
 
-    .line 290
+    .line 299
     const-string v2, "pref_camera_open_time"
 
     invoke-virtual {p0, v2, v0, v1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getLong(Ljava/lang/String;J)J
@@ -128,18 +130,18 @@
 
     goto :goto_0
 
-    .line 293
+    .line 302
     :cond_0
     move v0, v1
 
     goto :goto_1
 
-    .line 290
+    .line 299
     :cond_1
     :goto_0
     const/4 v0, 0x1
 
-    .line 293
+    .line 302
     :goto_1
     if-eqz v0, :cond_2
 
@@ -149,10 +151,10 @@
 
     if-eqz v2, :cond_2
 
-    .line 294
+    .line 303
     nop
 
-    .line 297
+    .line 306
     move v0, v1
 
     :cond_2
@@ -162,16 +164,16 @@
 .method private getCurrentCameraId(I)I
     .locals 2
 
-    .line 114
+    .line 119
     const/4 v0, 0x0
 
     packed-switch p1, :pswitch_data_0
 
-    .line 128
+    .line 133
     :pswitch_0
     const-string v0, "pref_camera_id_key"
 
-    .line 129
+    .line 134
     invoke-direct {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getDefaultCameraId(I)I
 
     move-result p1
@@ -180,7 +182,7 @@
 
     move-result-object p1
 
-    .line 128
+    .line 133
     invoke-virtual {p0, v0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
@@ -195,18 +197,18 @@
 
     return p1
 
-    .line 116
+    .line 121
     :pswitch_1
-    invoke-static {}, Lcom/mi/config/b;->hb()Z
+    invoke-static {}, Lcom/mi/config/b;->he()Z
 
     move-result v1
 
     if-eqz v1, :cond_0
 
-    .line 117
+    .line 122
     const-string v0, "pref_camera_id_key"
 
-    .line 118
+    .line 123
     invoke-direct {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getDefaultCameraId(I)I
 
     move-result p1
@@ -215,7 +217,7 @@
 
     move-result-object p1
 
-    .line 117
+    .line 122
     invoke-virtual {p0, v0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p1
@@ -230,11 +232,11 @@
 
     return p1
 
-    .line 120
+    .line 125
     :cond_0
     return v0
 
-    .line 126
+    .line 131
     :pswitch_2
     return v0
 
@@ -254,7 +256,7 @@
 .method private getCurrentMode(I)I
     .locals 2
 
-    .line 196
+    .line 201
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -269,7 +271,7 @@
 
     move-result-object v0
 
-    .line 197
+    .line 202
     invoke-virtual {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getDefaultMode(I)I
 
     move-result p1
@@ -278,50 +280,50 @@
 
     move-result p1
 
-    .line 198
+    .line 203
     return p1
 .end method
 
 .method private getCurrentModeForFrontCamera(I)I
     .locals 2
 
-    .line 135
+    .line 140
     invoke-direct {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode(I)I
 
     move-result p1
 
-    .line 136
+    .line 141
     const/16 v0, 0xa3
 
     packed-switch p1, :pswitch_data_0
 
     goto :goto_1
 
-    .line 138
+    .line 143
     :pswitch_0
-    invoke-static {}, Lcom/mi/config/b;->hb()Z
+    invoke-static {}, Lcom/mi/config/b;->he()Z
 
     move-result v1
 
     if-nez v1, :cond_0
 
-    .line 139
+    .line 144
     goto :goto_0
 
-    .line 151
+    .line 156
     :pswitch_1
     const/16 p1, 0xa2
 
     goto :goto_1
 
-    .line 145
+    .line 150
     :pswitch_2
     nop
 
-    .line 146
+    .line 151
     nop
 
-    .line 154
+    .line 159
     :goto_0
     move p1, v0
 
@@ -345,10 +347,10 @@
 .method private getDefaultCameraId(I)I
     .locals 0
 
-    .line 158
+    .line 163
     nop
 
-    .line 164
+    .line 169
     const/4 p1, 0x0
 
     return p1
@@ -359,7 +361,7 @@
 .method public getCTACanCollect()Z
     .locals 2
 
-    .line 239
+    .line 248
     const-string v0, "can_connect_network"
 
     const/4 v1, 0x0
@@ -374,7 +376,7 @@
 .method public getComponentModuleList()Lcom/android/camera/data/data/global/ComponentModuleList;
     .locals 1
 
-    .line 213
+    .line 218
     iget-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mModuleList:Lcom/android/camera/data/data/global/ComponentModuleList;
 
     return-object v0
@@ -383,7 +385,7 @@
 .method public getCurrentCameraId()I
     .locals 1
 
-    .line 100
+    .line 105
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
     move-result v0
@@ -398,7 +400,7 @@
 .method public getCurrentMode()I
     .locals 1
 
-    .line 191
+    .line 196
     iget v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
     invoke-direct {p0, v0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode(I)I
@@ -411,7 +413,7 @@
 .method public getDataBackUpKey(I)I
     .locals 1
 
-    .line 434
+    .line 443
     iget v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
     add-int/lit8 v0, v0, 0x2
@@ -420,17 +422,17 @@
 
     or-int/2addr p1, v0
 
-    .line 435
+    .line 444
     iget-boolean v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mStartFromKeyguard:Z
 
     if-eqz v0, :cond_0
 
-    .line 436
+    .line 445
     const/high16 v0, 0x10000
 
     or-int/2addr p1, v0
 
-    .line 438
+    .line 447
     :cond_0
     return p1
 .end method
@@ -438,21 +440,21 @@
 .method public getDefaultMode(I)I
     .locals 1
 
-    .line 264
+    .line 273
     const/16 v0, 0xa3
 
     packed-switch p1, :pswitch_data_0
 
-    .line 274
+    .line 283
     return v0
 
-    .line 271
+    .line 280
     :pswitch_0
     const/16 p1, 0xa2
 
     return p1
 
-    .line 268
+    .line 277
     :pswitch_1
     return v0
 
@@ -467,19 +469,19 @@
 .method public getGlobalRaw()Lcom/android/camera/data/data/global/ComponentGlobalRaw;
     .locals 1
 
-    .line 206
+    .line 211
     iget-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mManuallyRaw:Lcom/android/camera/data/data/global/ComponentGlobalRaw;
 
     if-nez v0, :cond_0
 
-    .line 207
+    .line 212
     new-instance v0, Lcom/android/camera/data/data/global/ComponentGlobalRaw;
 
     invoke-direct {v0, p0}, Lcom/android/camera/data/data/global/ComponentGlobalRaw;-><init>(Lcom/android/camera/data/data/global/DataItemGlobal;)V
 
     iput-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mManuallyRaw:Lcom/android/camera/data/data/global/ComponentGlobalRaw;
 
-    .line 209
+    .line 214
     :cond_0
     iget-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mManuallyRaw:Lcom/android/camera/data/data/global/ComponentGlobalRaw;
 
@@ -489,7 +491,7 @@
 .method public getIntentType()I
     .locals 1
 
-    .line 256
+    .line 265
     iget v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
     return v0
@@ -498,7 +500,7 @@
 .method public getLastCameraId()I
     .locals 1
 
-    .line 104
+    .line 109
     iget v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mLastCameraId:I
 
     return v0
@@ -507,8 +509,23 @@
 .method public getStartFromKeyguard()Z
     .locals 1
 
-    .line 305
+    .line 314
     iget-boolean v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mStartFromKeyguard:Z
+
+    return v0
+.end method
+
+.method public isFirstShowCTAConCollect()Z
+    .locals 1
+
+    .line 244
+    const-string v0, "can_connect_network"
+
+    invoke-virtual {p0, v0}, Lcom/android/camera/data/data/global/DataItemGlobal;->contains(Ljava/lang/String;)Z
+
+    move-result v0
+
+    xor-int/lit8 v0, v0, 0x1
 
     return v0
 .end method
@@ -516,7 +533,7 @@
 .method public isGlobalSwitchOn(Ljava/lang/String;)Z
     .locals 1
 
-    .line 247
+    .line 256
     const/4 v0, 0x0
 
     invoke-virtual {p0, p1, v0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getBoolean(Ljava/lang/String;Z)Z
@@ -529,7 +546,7 @@
 .method public isIntentAction()Z
     .locals 1
 
-    .line 251
+    .line 260
     iget v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
     if-eqz v0, :cond_0
@@ -548,7 +565,7 @@
 .method public isNormalIntent()Z
     .locals 1
 
-    .line 260
+    .line 269
     iget v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
     if-nez v0, :cond_0
@@ -567,7 +584,7 @@
 .method public isRetriedIfCameraError()Z
     .locals 1
 
-    .line 442
+    .line 451
     iget-boolean v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mRetriedIfCameraError:Z
 
     return v0
@@ -576,7 +593,7 @@
 .method public isTimeOut()Z
     .locals 1
 
-    .line 279
+    .line 288
     iget-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIsTimeOut:Ljava/lang/Boolean;
 
     if-eqz v0, :cond_1
@@ -607,7 +624,7 @@
 .method public isTransient()Z
     .locals 1
 
-    .line 96
+    .line 101
     const/4 v0, 0x0
 
     return v0
@@ -628,12 +645,12 @@
         }
     .end annotation
 
-    .line 314
+    .line 323
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemFeature()Lcom/mi/config/a;
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/mi/config/a;->fj()Z
+    invoke-virtual {v0}, Lcom/mi/config/a;->fk()Z
 
     move-result v0
 
@@ -641,7 +658,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 315
+    .line 324
     invoke-static {}, Lcom/android/camera/CameraAppImpl;->getAndroidContext()Landroid/content/Context;
 
     move-result-object v0
@@ -652,22 +669,22 @@
 
     if-eqz v0, :cond_0
 
-    .line 316
+    .line 325
     invoke-virtual {p0, v1}, Lcom/android/camera/data/data/global/DataItemGlobal;->setCameraId(I)V
 
-    .line 319
+    .line 328
     :cond_0
     invoke-virtual {p1}, Landroid/content/Intent;->getAction()Ljava/lang/String;
 
     move-result-object v0
 
-    .line 320
+    .line 329
     if-nez v0, :cond_1
 
-    .line 321
+    .line 330
     const-string v0, "<unknown>"
 
-    .line 325
+    .line 334
     :cond_1
     invoke-virtual {v0}, Ljava/lang/String;->hashCode()I
 
@@ -783,16 +800,16 @@
     :goto_1
     packed-switch v2, :pswitch_data_0
 
-    .line 382
+    .line 391
     nop
 
-    .line 387
+    .line 396
     :goto_2
     move v3, v1
 
     goto/16 :goto_5
 
-    .line 339
+    .line 348
     :pswitch_0
     invoke-virtual {p2}, Ljava/lang/Boolean;->booleanValue()Z
 
@@ -800,53 +817,53 @@
 
     if-nez p2, :cond_3
 
-    .line 340
+    .line 349
     nop
 
-    .line 341
+    .line 350
     goto :goto_2
 
-    .line 344
+    .line 353
     :cond_3
     :pswitch_1
     nop
 
-    .line 345
+    .line 354
     invoke-static {p1}, Lcom/android/camera/CameraIntentManager;->getInstance(Landroid/content/Intent;)Lcom/android/camera/CameraIntentManager;
 
     move-result-object p1
 
-    .line 346
+    .line 355
     invoke-virtual {p1}, Lcom/android/camera/CameraIntentManager;->getCameraModeId()I
 
     move-result p2
 
-    .line 347
+    .line 356
     const/16 p4, 0xa0
 
     if-ne p2, p4, :cond_5
 
-    .line 348
+    .line 357
     invoke-direct {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->determineTimeOut()Z
 
     move-result p2
 
     if-eqz p2, :cond_4
 
-    .line 349
+    .line 358
     invoke-virtual {p0, v1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getDefaultMode(I)I
 
     move-result p2
 
     goto :goto_3
 
-    .line 351
+    .line 360
     :cond_4
     invoke-direct {p0, v1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode(I)I
 
     move-result p2
 
-    .line 356
+    .line 365
     :cond_5
     :goto_3
     :try_start_0
@@ -856,34 +873,34 @@
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 363
+    .line 372
     goto :goto_4
 
-    .line 357
+    .line 366
     :catch_0
     move-exception p1
 
-    .line 358
+    .line 367
     invoke-direct {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->determineTimeOut()Z
 
     move-result p1
 
     if-eqz p1, :cond_6
 
-    .line 359
+    .line 368
     invoke-direct {p0, p2}, Lcom/android/camera/data/data/global/DataItemGlobal;->getDefaultCameraId(I)I
 
     move-result p1
 
     goto :goto_4
 
-    .line 361
+    .line 370
     :cond_6
     invoke-direct {p0, p2}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId(I)I
 
     move-result p1
 
-    .line 365
+    .line 374
     :goto_4
     const-string p4, "DataItemGlobal"
 
@@ -909,33 +926,33 @@
 
     invoke-static {p4, p5}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 370
+    .line 379
     iput v1, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
-    .line 371
+    .line 380
     iput-boolean p3, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mStartFromKeyguard:Z
 
-    .line 372
+    .line 381
     iget-object p3, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mModuleList:Lcom/android/camera/data/data/global/ComponentModuleList;
 
     iget p4, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
     invoke-virtual {p3, p4}, Lcom/android/camera/data/data/global/ComponentModuleList;->setIntentType(I)V
 
-    .line 373
+    .line 382
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
     move-result p3
 
     if-eq p2, p3, :cond_7
 
-    .line 374
+    .line 383
     invoke-virtual {p0, p2}, Lcom/android/camera/data/data/global/DataItemGlobal;->setCurrentMode(I)V
 
-    .line 375
+    .line 384
     invoke-static {p2}, Lcom/android/camera/module/ModuleManager;->setActiveModuleIndex(I)V
 
-    .line 377
+    .line 386
     :cond_7
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId()I
 
@@ -943,10 +960,10 @@
 
     if-eq p1, p3, :cond_8
 
-    .line 378
+    .line 387
     invoke-virtual {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->setCameraId(I)V
 
-    .line 380
+    .line 389
     :cond_8
     new-instance p3, Landroid/support/v4/util/Pair;
 
@@ -962,33 +979,33 @@
 
     return-object p3
 
-    .line 334
+    .line 343
     :pswitch_2
     nop
 
-    .line 335
+    .line 344
     goto :goto_5
 
-    .line 330
+    .line 339
     :pswitch_3
     nop
 
-    .line 331
+    .line 340
     nop
 
-    .line 387
+    .line 396
     move v3, v4
 
     goto :goto_5
 
-    .line 327
+    .line 336
     :pswitch_4
     nop
 
-    .line 328
+    .line 337
     nop
 
-    .line 387
+    .line 396
     move v3, v6
 
     :goto_5
@@ -1000,13 +1017,13 @@
 
     move-result p1
 
-    .line 388
+    .line 397
     if-eq p1, v5, :cond_9
 
-    .line 389
+    .line 398
     invoke-virtual {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->setCameraIdTransient(I)V
 
-    .line 393
+    .line 402
     :cond_9
     if-eqz p5, :cond_a
 
@@ -1018,16 +1035,16 @@
 
     if-eqz p2, :cond_a
 
-    .line 394
+    .line 403
     move p2, v6
 
     goto :goto_6
 
-    .line 393
+    .line 402
     :cond_a
     nop
 
-    .line 394
+    .line 403
     move p2, v1
 
     :goto_6
@@ -1044,7 +1061,7 @@
     :cond_b
     goto :goto_8
 
-    .line 396
+    .line 405
     :cond_c
     :goto_7
     move v1, v6
@@ -1060,17 +1077,17 @@
 
     if-eqz p5, :cond_d
 
-    .line 397
+    .line 406
     const/16 p1, 0xa3
 
-    .line 398
+    .line 407
     invoke-direct {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId(I)I
 
     move-result p5
 
     goto :goto_b
 
-    .line 399
+    .line 408
     :cond_d
     if-eqz v1, :cond_e
 
@@ -1082,26 +1099,26 @@
 
     if-eqz p5, :cond_e
 
-    .line 400
+    .line 409
     const/16 p1, 0xa2
 
-    .line 401
+    .line 410
     invoke-direct {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId(I)I
 
     move-result p5
 
     goto :goto_b
 
-    .line 403
+    .line 412
     :cond_e
     if-eqz p2, :cond_10
 
-    .line 404
+    .line 413
     invoke-virtual {p0, v3}, Lcom/android/camera/data/data/global/DataItemGlobal;->getDefaultMode(I)I
 
     move-result p5
 
-    .line 405
+    .line 414
     if-gez p1, :cond_f
 
     invoke-direct {p0, p5}, Lcom/android/camera/data/data/global/DataItemGlobal;->getDefaultCameraId(I)I
@@ -1110,13 +1127,13 @@
 
     goto :goto_9
 
-    .line 406
+    .line 415
     :cond_f
     invoke-direct {p0, p5}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId(I)I
 
     move-result p1
 
-    .line 415
+    .line 424
     :goto_9
     move v7, p5
 
@@ -1126,57 +1143,57 @@
 
     goto :goto_b
 
-    .line 408
+    .line 417
     :cond_10
     if-eq p1, v6, :cond_11
 
-    .line 409
+    .line 418
     invoke-direct {p0, v3}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode(I)I
 
     move-result p1
 
     goto :goto_a
 
-    .line 410
+    .line 419
     :cond_11
     invoke-direct {p0, v3}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentModeForFrontCamera(I)I
 
     move-result p1
 
-    .line 411
+    .line 420
     :goto_a
     invoke-direct {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId(I)I
 
     move-result p5
 
-    .line 415
+    .line 424
     :goto_b
     if-nez p4, :cond_14
 
-    .line 416
+    .line 425
     invoke-static {p2}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
 
     move-result-object p2
 
     iput-object p2, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIsTimeOut:Ljava/lang/Boolean;
 
-    .line 417
+    .line 426
     if-eqz v1, :cond_12
 
-    .line 418
+    .line 427
     iput v3, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
-    .line 419
+    .line 428
     iput-boolean p3, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mStartFromKeyguard:Z
 
-    .line 420
+    .line 429
     iget-object p2, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mModuleList:Lcom/android/camera/data/data/global/ComponentModuleList;
 
     iget p3, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIntentType:I
 
     invoke-virtual {p2, p3}, Lcom/android/camera/data/data/global/ComponentModuleList;->setIntentType(I)V
 
-    .line 422
+    .line 431
     :cond_12
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
@@ -1184,13 +1201,13 @@
 
     if-eq p1, p2, :cond_13
 
-    .line 423
+    .line 432
     invoke-virtual {p0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->setCurrentMode(I)V
 
-    .line 424
+    .line 433
     invoke-static {p1}, Lcom/android/camera/module/ModuleManager;->setActiveModuleIndex(I)V
 
-    .line 426
+    .line 435
     :cond_13
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentCameraId()I
 
@@ -1198,10 +1215,10 @@
 
     if-eq p5, p2, :cond_14
 
-    .line 427
+    .line 436
     invoke-virtual {p0, p5}, Lcom/android/camera/data/data/global/DataItemGlobal;->setCameraId(I)V
 
-    .line 430
+    .line 439
     :cond_14
     new-instance p2, Landroid/support/v4/util/Pair;
 
@@ -1243,7 +1260,7 @@
 .method public provideKey()Ljava/lang/String;
     .locals 1
 
-    .line 91
+    .line 96
     const-string v0, "camera_settings_global"
 
     return-object v0
@@ -1252,17 +1269,17 @@
 .method public reInit()V
     .locals 4
 
-    .line 218
+    .line 223
     iget-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mModuleList:Lcom/android/camera/data/data/global/ComponentModuleList;
 
     invoke-virtual {v0}, Lcom/android/camera/data/data/global/ComponentModuleList;->reInit()V
 
-    .line 220
+    .line 225
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->editor()Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
     move-result-object v0
 
-    .line 223
+    .line 228
     const/4 v1, 0x0
 
     invoke-static {v1}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
@@ -1271,7 +1288,7 @@
 
     iput-object v1, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIsTimeOut:Ljava/lang/Boolean;
 
-    .line 224
+    .line 229
     const-string v1, "pref_camera_open_time"
 
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
@@ -1280,14 +1297,14 @@
 
     invoke-interface {v0, v1, v2, v3}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->putLong(Ljava/lang/String;J)Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
-    .line 227
+    .line 232
     const-string v1, "open_camera_fail_key"
 
     const-wide/16 v2, 0x0
 
     invoke-interface {v0, v1, v2, v3}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->putLong(Ljava/lang/String;J)Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
-    .line 230
+    .line 235
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
     move-result v1
@@ -1296,10 +1313,10 @@
 
     move-result v1
 
-    .line 231
+    .line 236
     iput v1, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mLastCameraId:I
 
-    .line 232
+    .line 237
     const-string v2, "pref_camera_id_key"
 
     invoke-static {v1}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
@@ -1308,22 +1325,22 @@
 
     invoke-interface {v0, v2, v1}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->putString(Ljava/lang/String;Ljava/lang/String;)Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
-    .line 235
+    .line 240
     invoke-interface {v0}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->apply()V
 
-    .line 236
+    .line 241
     return-void
 .end method
 
 .method public resetAll()V
     .locals 3
 
-    .line 450
+    .line 459
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIsTimeOut:Ljava/lang/Boolean;
 
-    .line 451
+    .line 460
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->editor()Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
     move-result-object v0
@@ -1334,24 +1351,24 @@
 
     const-string v1, "pref_version_key"
 
-    .line 454
+    .line 463
     const/4 v2, 0x4
 
     invoke-interface {v0, v1, v2}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->putInt(Ljava/lang/String;I)Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
     move-result-object v0
 
-    .line 455
+    .line 464
     invoke-interface {v0}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->apply()V
 
-    .line 456
+    .line 465
     return-void
 .end method
 
 .method public resetTimeOut()V
     .locals 4
 
-    .line 283
+    .line 292
     const/4 v0, 0x0
 
     invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
@@ -1360,7 +1377,7 @@
 
     iput-object v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mIsTimeOut:Ljava/lang/Boolean;
 
-    .line 284
+    .line 293
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->editor()Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
     move-result-object v0
@@ -1377,14 +1394,14 @@
 
     invoke-interface {v0}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->apply()V
 
-    .line 285
+    .line 294
     return-void
 .end method
 
 .method public setCTACanCollect(Z)V
     .locals 2
 
-    .line 243
+    .line 252
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->editor()Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
     move-result-object v0
@@ -1397,14 +1414,14 @@
 
     invoke-interface {p1}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->apply()V
 
-    .line 244
+    .line 253
     return-void
 .end method
 
 .method public setCameraId(I)V
     .locals 2
 
-    .line 174
+    .line 179
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
     move-result v0
@@ -1415,7 +1432,7 @@
 
     iput v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mLastCameraId:I
 
-    .line 175
+    .line 180
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->editor()Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
     move-result-object v0
@@ -1432,14 +1449,14 @@
 
     invoke-interface {p1}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->apply()V
 
-    .line 176
+    .line 181
     return-void
 .end method
 
 .method public setCameraIdTransient(I)V
     .locals 1
 
-    .line 184
+    .line 189
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->getCurrentMode()I
 
     move-result v0
@@ -1450,7 +1467,7 @@
 
     iput v0, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mLastCameraId:I
 
-    .line 185
+    .line 190
     const-string v0, "pref_camera_id_key"
 
     invoke-static {p1}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
@@ -1459,14 +1476,14 @@
 
     invoke-virtual {p0, v0, p1}, Lcom/android/camera/data/data/global/DataItemGlobal;->putString(Ljava/lang/String;Ljava/lang/String;)Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
-    .line 187
+    .line 192
     return-void
 .end method
 
 .method public setCurrentMode(I)V
     .locals 3
 
-    .line 202
+    .line 207
     invoke-virtual {p0}, Lcom/android/camera/data/data/global/DataItemGlobal;->editor()Lcom/android/camera/data/provider/DataProvider$ProviderEditor;
 
     move-result-object v0
@@ -1493,26 +1510,26 @@
 
     invoke-interface {p1}, Lcom/android/camera/data/provider/DataProvider$ProviderEditor;->apply()V
 
-    .line 203
+    .line 208
     return-void
 .end method
 
 .method public setRetriedIfCameraError(Z)V
     .locals 0
 
-    .line 446
+    .line 455
     iput-boolean p1, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mRetriedIfCameraError:Z
 
-    .line 447
+    .line 456
     return-void
 .end method
 
 .method public setStartFromKeyguard(Z)V
     .locals 0
 
-    .line 301
+    .line 310
     iput-boolean p1, p0, Lcom/android/camera/data/data/global/DataItemGlobal;->mStartFromKeyguard:Z
 
-    .line 302
+    .line 311
     return-void
 .end method

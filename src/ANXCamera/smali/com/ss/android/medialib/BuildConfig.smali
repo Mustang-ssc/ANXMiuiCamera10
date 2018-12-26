@@ -6,7 +6,7 @@
 # static fields
 .field public static final AAR_POM_ARTIFACT_ID:Ljava/lang/String; = "medialib_oem"
 
-.field public static final AAR_VERSION_NAME:Ljava/lang/String; = "2.9.0.14_20181129172835_2fdc4b2b5"
+.field public static final AAR_VERSION_NAME:Ljava/lang/String; = "2.9.0.14_20181130184957_xiaomi_d348db6cc"
 
 .field public static final APPLICATION_ID:Ljava/lang/String; = "com.ss.android.medialib"
 

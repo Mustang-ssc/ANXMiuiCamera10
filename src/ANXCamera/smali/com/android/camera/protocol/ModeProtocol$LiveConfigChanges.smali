@@ -22,6 +22,9 @@
 
 
 # virtual methods
+.method public abstract getAuthResult()Lcom/ss/android/ttve/oauth/TEOAuthResult;
+.end method
+
 .method public abstract getConcatResult()Landroid/util/Pair;
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -40,10 +43,16 @@
 .method public abstract getRecordSpeed()F
 .end method
 
-.method public abstract getStartRecordintTime()J
+.method public abstract getStartRecordingTime()J
 .end method
 
-.method public abstract getTotalRecordintTime()J
+.method public abstract getTimeValue()Ljava/lang/String;
+.end method
+
+.method public abstract getTotalRecordingTime()J
+.end method
+
+.method public abstract hasSegments()Z
 .end method
 
 .method public abstract initPreview(IIZI)V
@@ -59,6 +68,9 @@
 .end method
 
 .method public abstract onBGMChanged(Ljava/lang/String;)V
+.end method
+
+.method public abstract onDeviceRotationChange([F)V
 .end method
 
 .method public abstract onRecordConcat()V
@@ -80,6 +92,15 @@
 .end method
 
 .method public abstract release()V
+.end method
+
+.method public abstract setBeautify(ZF)V
+.end method
+
+.method public abstract setBeautyFaceReshape(FF)V
+.end method
+
+.method public abstract setFilter(ZLjava/lang/String;)V
 .end method
 
 .method public abstract setRecordSpeed(I)V

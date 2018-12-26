@@ -34,7 +34,7 @@
 .method constructor <init>(Lcom/android/camera/ActivityBase;)V
     .locals 0
 
-    .line 387
+    .line 386
     iput-object p1, p0, Lcom/android/camera/ActivityBase$5;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -52,7 +52,7 @@
         }
     .end annotation
 
-    .line 387
+    .line 386
     check-cast p1, Ljava/util/HashMap;
 
     invoke-virtual {p0, p1}, Lcom/android/camera/ActivityBase$5;->accept(Ljava/util/HashMap;)V
@@ -63,11 +63,11 @@
 .method public accept(Ljava/util/HashMap;)V
     .locals 1
 
-    .line 390
+    .line 389
     iget-object v0, p0, Lcom/android/camera/ActivityBase$5;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-static {v0, p1}, Lcom/android/camera/ActivityBase;->access$102(Lcom/android/camera/ActivityBase;Ljava/util/HashMap;)Ljava/util/HashMap;
 
-    .line 391
+    .line 390
     return-void
 .end method

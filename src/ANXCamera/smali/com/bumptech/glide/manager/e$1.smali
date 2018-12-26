@@ -49,7 +49,7 @@
 
     iget-object v1, p0, Lcom/bumptech/glide/manager/e$1;->mm:Lcom/bumptech/glide/manager/e;
 
-    invoke-virtual {v1, p1}, Lcom/bumptech/glide/manager/e;->h(Landroid/content/Context;)Z
+    invoke-virtual {v1, p1}, Lcom/bumptech/glide/manager/e;->isConnected(Landroid/content/Context;)Z
 
     move-result p1
 

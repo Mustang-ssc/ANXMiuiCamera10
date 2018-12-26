@@ -15,9 +15,9 @@
 
 
 # static fields
-.field public static final BEAUTY_FRAGMENT_CONTAINER_ID:I = 0x7f0d0018
+.field public static final BEAUTY_FRAGMENT_CONTAINER_ID:I = 0x7f0d001a
 
-.field public static final EYE_LIGHT_POPU_TIP_FRAGMENT_CONTAINER_ID:I = 0x7f0d00e2
+.field public static final EYE_LIGHT_POPU_TIP_FRAGMENT_CONTAINER_ID:I = 0x7f0d00f0
 
 .field public static final FRAGMENT_BEAUTY:I = 0xfb
 
@@ -75,7 +75,7 @@
 
 .field public static final FRAGMENT_VERTICAL:I = 0xff8
 
-.field public static final MAKE_UP_POPU_FRAGMENT_CONTAINER_ID:I = 0x7f0d00e1
+.field public static final MAKE_UP_POPU_FRAGMENT_CONTAINER_ID:I = 0x7f0d00ef
 
 .field private static final TAG:Ljava/lang/String;
 
@@ -1305,15 +1305,15 @@
     .line 608
     const/16 v1, 0xff1
 
-    const v2, 0x7f0d00e0
+    const v2, 0x7f0d00ee
 
     const/16 v3, 0xf1
 
-    const v4, 0x7f0d00e1
+    const v4, 0x7f0d00ef
 
-    const v5, 0x7f0d0019
+    const v5, 0x7f0d001b
 
-    const v6, 0x7f0d0018
+    const v6, 0x7f0d001a
 
     packed-switch p1, :pswitch_data_0
 
@@ -1437,7 +1437,7 @@
 
     .line 728
     :pswitch_4
-    const p1, 0x7f0d00e2
+    const p1, 0x7f0d00f0
 
     invoke-virtual {p0, p1}, Lcom/android/camera/fragment/BaseFragmentDelegate;->getActiveFragment(I)I
 
@@ -1527,13 +1527,13 @@
 
     const/16 v1, 0xff3
 
-    const v4, 0x7f0d00de
+    const v4, 0x7f0d00ec
 
-    const v6, 0x7f0d00d9
+    const v6, 0x7f0d00e7
 
-    const v7, 0x7f0d00dd
+    const v7, 0x7f0d00eb
 
-    const v8, 0x7f0d00dc
+    const v8, 0x7f0d00ea
 
     if-eq p1, v1, :cond_5
 
@@ -1712,7 +1712,7 @@
 
     if-nez p1, :cond_7
 
-    invoke-static {}, Lcom/mi/config/b;->ha()Z
+    invoke-static {}, Lcom/mi/config/b;->hd()Z
 
     move-result p1
 
@@ -2206,7 +2206,7 @@
 
     move-result-object v13
 
-    const v14, 0x7f0d00e0
+    const v14, 0x7f0d00ee
 
     invoke-virtual {v12, v14, v6, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2215,7 +2215,7 @@
 
     move-result-object v13
 
-    const v15, 0x7f0d0019
+    const v15, 0x7f0d001b
 
     invoke-virtual {v12, v15, v7, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2224,7 +2224,7 @@
 
     move-result-object v13
 
-    const v15, 0x7f0d00dc
+    const v15, 0x7f0d00ea
 
     invoke-virtual {v12, v15, v4, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2233,7 +2233,7 @@
 
     move-result-object v13
 
-    const v15, 0x7f0d00dd
+    const v15, 0x7f0d00eb
 
     invoke-virtual {v12, v15, v5, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2242,7 +2242,7 @@
 
     move-result-object v13
 
-    const v15, 0x7f0d00d9
+    const v15, 0x7f0d00e7
 
     invoke-virtual {v12, v15, v8, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2251,7 +2251,7 @@
 
     move-result-object v13
 
-    const v15, 0x7f0d00da
+    const v15, 0x7f0d00e8
 
     invoke-virtual {v12, v15, v9, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2260,7 +2260,7 @@
 
     move-result-object v13
 
-    const v15, 0x7f0d00e3
+    const v15, 0x7f0d00f1
 
     invoke-virtual {v12, v15, v10, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2269,7 +2269,7 @@
 
     move-result-object v13
 
-    const v15, 0x7f0d00db
+    const v15, 0x7f0d00e9
 
     invoke-virtual {v12, v15, v11, v13}, Landroid/support/v4/app/FragmentTransaction;->replace(ILandroid/support/v4/app/Fragment;Ljava/lang/String;)Landroid/support/v4/app/FragmentTransaction;
 
@@ -2294,7 +2294,7 @@
 
     .line 198
     :cond_0
-    invoke-static {}, Lcom/mi/config/b;->ha()Z
+    invoke-static {}, Lcom/mi/config/b;->hd()Z
 
     move-result v13
 
@@ -2314,7 +2314,7 @@
     const/4 v13, 0x0
 
     :goto_0
-    const v15, 0x7f0d00de
+    const v15, 0x7f0d00ec
 
     if-eqz v13, :cond_2
 
@@ -2375,7 +2375,7 @@
 
     move-result v14
 
-    const v15, 0x7f0d00df
+    const v15, 0x7f0d00ed
 
     invoke-virtual {v13, v15, v14}, Landroid/util/SparseIntArray;->put(II)V
 
@@ -2403,7 +2403,7 @@
 
     move-result v13
 
-    const v14, 0x7f0d00e0
+    const v14, 0x7f0d00ee
 
     invoke-virtual {v2, v14, v13}, Landroid/util/SparseIntArray;->put(II)V
 
@@ -2414,7 +2414,7 @@
 
     move-result v13
 
-    const v14, 0x7f0d0019
+    const v14, 0x7f0d001b
 
     invoke-virtual {v2, v14, v13}, Landroid/util/SparseIntArray;->put(II)V
 
@@ -2425,14 +2425,14 @@
 
     move-result v13
 
-    const v14, 0x7f0d00dc
+    const v14, 0x7f0d00ea
 
     invoke-virtual {v2, v14, v13}, Landroid/util/SparseIntArray;->put(II)V
 
     .line 222
     iget-object v2, v0, Lcom/android/camera/fragment/BaseFragmentDelegate;->originalFragments:Landroid/util/SparseIntArray;
 
-    const v13, 0x7f0d00e1
+    const v13, 0x7f0d00ef
 
     invoke-virtual {v2, v13, v3}, Landroid/util/SparseIntArray;->put(II)V
 
@@ -2443,7 +2443,7 @@
 
     move-result v13
 
-    const v14, 0x7f0d00dd
+    const v14, 0x7f0d00eb
 
     invoke-virtual {v2, v14, v13}, Landroid/util/SparseIntArray;->put(II)V
 
@@ -2454,7 +2454,7 @@
 
     move-result v13
 
-    const v14, 0x7f0d00d9
+    const v14, 0x7f0d00e7
 
     invoke-virtual {v2, v14, v13}, Landroid/util/SparseIntArray;->put(II)V
 
@@ -2465,7 +2465,7 @@
 
     move-result v13
 
-    const v14, 0x7f0d00da
+    const v14, 0x7f0d00e8
 
     invoke-virtual {v2, v14, v13}, Landroid/util/SparseIntArray;->put(II)V
 
@@ -2476,21 +2476,21 @@
 
     move-result v13
 
-    const v14, 0x7f0d00e3
+    const v14, 0x7f0d00f1
 
     invoke-virtual {v2, v14, v13}, Landroid/util/SparseIntArray;->put(II)V
 
     .line 228
     iget-object v2, v0, Lcom/android/camera/fragment/BaseFragmentDelegate;->originalFragments:Landroid/util/SparseIntArray;
 
-    const v13, 0x7f0d0018
+    const v13, 0x7f0d001a
 
     invoke-virtual {v2, v13, v3}, Landroid/util/SparseIntArray;->put(II)V
 
     .line 229
     iget-object v2, v0, Lcom/android/camera/fragment/BaseFragmentDelegate;->originalFragments:Landroid/util/SparseIntArray;
 
-    const v13, 0x7f0d00e2
+    const v13, 0x7f0d00f0
 
     invoke-virtual {v2, v13, v3}, Landroid/util/SparseIntArray;->put(II)V
 

@@ -20,13 +20,17 @@
 # instance fields
 .field final synthetic this$1:Lcom/android/camera/fragment/live/FragmentLiveSticker$3;
 
+.field final synthetic val$list:Ljava/util/List;
+
 
 # direct methods
-.method constructor <init>(Lcom/android/camera/fragment/live/FragmentLiveSticker$3;)V
+.method constructor <init>(Lcom/android/camera/fragment/live/FragmentLiveSticker$3;Ljava/util/List;)V
     .locals 0
 
-    .line 216
+    .line 271
     iput-object p1, p0, Lcom/android/camera/fragment/live/FragmentLiveSticker$3$2;->this$1:Lcom/android/camera/fragment/live/FragmentLiveSticker$3;
+
+    iput-object p2, p0, Lcom/android/camera/fragment/live/FragmentLiveSticker$3$2;->val$list:Ljava/util/List;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -38,15 +42,15 @@
 .method public run()V
     .locals 2
 
-    .line 219
+    .line 274
     iget-object v0, p0, Lcom/android/camera/fragment/live/FragmentLiveSticker$3$2;->this$1:Lcom/android/camera/fragment/live/FragmentLiveSticker$3;
 
     iget-object v0, v0, Lcom/android/camera/fragment/live/FragmentLiveSticker$3;->this$0:Lcom/android/camera/fragment/live/FragmentLiveSticker;
 
-    const/4 v1, 0x0
+    iget-object v1, p0, Lcom/android/camera/fragment/live/FragmentLiveSticker$3$2;->val$list:Ljava/util/List;
 
     invoke-static {v0, v1}, Lcom/android/camera/fragment/live/FragmentLiveSticker;->access$000(Lcom/android/camera/fragment/live/FragmentLiveSticker;Ljava/util/List;)V
 
-    .line 220
+    .line 275
     return-void
 .end method

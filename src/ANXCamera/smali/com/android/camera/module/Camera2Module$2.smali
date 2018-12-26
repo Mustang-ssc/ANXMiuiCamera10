@@ -34,7 +34,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;)V
     .locals 0
 
-    .line 482
+    .line 502
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$2;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -47,12 +47,12 @@
 .method public onComplete()V
     .locals 3
 
-    .line 503
+    .line 523
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
 
-    .line 504
+    .line 524
     const/16 v1, 0xb8
 
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
@@ -61,14 +61,14 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$SnapShotIndicator;
 
-    .line 505
+    .line 525
     const/4 v1, 0x0
 
     const/4 v2, 0x1
 
     invoke-interface {v0, v1, v2}, Lcom/android/camera/protocol/ModeProtocol$SnapShotIndicator;->setSnapNumVisible(ZZ)V
 
-    .line 509
+    .line 528
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
@@ -81,33 +81,33 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$ConfigChanges;
 
-    .line 510
+    .line 529
     const-string v1, "d"
 
     invoke-interface {v0, v1}, Lcom/android/camera/protocol/ModeProtocol$ConfigChanges;->restoreAllMutexElement(Ljava/lang/String;)V
 
-    .line 511
+    .line 530
     return-void
 .end method
 
 .method public onError(Ljava/lang/Throwable;)V
     .locals 0
 
-    .line 498
+    .line 518
     return-void
 .end method
 
 .method public onNext(Ljava/lang/Integer;)V
     .locals 0
 
-    .line 493
+    .line 513
     return-void
 .end method
 
 .method public bridge synthetic onNext(Ljava/lang/Object;)V
     .locals 0
 
-    .line 482
+    .line 502
     check-cast p1, Ljava/lang/Integer;
 
     invoke-virtual {p0, p1}, Lcom/android/camera/module/Camera2Module$2;->onNext(Ljava/lang/Integer;)V
@@ -118,7 +118,7 @@
 .method public onSubscribe(Lio/reactivex/disposables/Disposable;)V
     .locals 3
 
-    .line 485
+    .line 505
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$2;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
@@ -127,11 +127,11 @@
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/module/Camera2Module;->access$102(Lcom/android/camera/module/Camera2Module;J)J
 
-    .line 486
+    .line 506
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$2;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-static {v0, p1}, Lcom/android/camera/module/Camera2Module;->access$202(Lcom/android/camera/module/Camera2Module;Lio/reactivex/disposables/Disposable;)Lio/reactivex/disposables/Disposable;
 
-    .line 487
+    .line 507
     return-void
 .end method

@@ -6,6 +6,7 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Lcom/android/camera/protocol/ModeProtocol$RecordState;,
         Lcom/android/camera/protocol/ModeProtocol$UltraWideProtocol;,
         Lcom/android/camera/protocol/ModeProtocol$OnFaceBeautyChangedProtocol;,
         Lcom/android/camera/protocol/ModeProtocol$VerticalProtocol;,
@@ -100,6 +101,8 @@
 
 .field public static final PROTOCOL_BEAUTY_RECORDING:I = 0xad
 
+.field public static final PROTOCOL_BEAUTY_SHOW_STATUS:I = 0xd5
+
 .field public static final PROTOCOL_BOKEH_F_NUMBER:I = 0xd2
 
 .field public static final PROTOCOL_BOTTOM_MENU:I = 0xc5
@@ -147,6 +150,8 @@
 .field public static final PROTOCOL_PLAY_VIDEO:I = 0xa7
 
 .field public static final PROTOCOL_PREVIEW_CHANGED:I = 0xa8
+
+.field public static final PROTOCOL_RECORDING_STATE:I = 0xd4
 
 .field public static final PROTOCOL_SCREEN_LIGHT:I = 0xc4
 

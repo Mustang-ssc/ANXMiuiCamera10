@@ -200,27 +200,28 @@
 
     move-result-object p1
 
+    .line 388
     invoke-interface {v0, p1}, Lcom/android/gallery3d/ui/GLCanvas;->draw(Lcom/android/camera/effect/draw_mode/DrawAttribute;)V
 
-    .line 388
+    .line 389
     invoke-interface {v0, v1, v2}, Lcom/android/gallery3d/ui/GLCanvas;->setSize(II)V
 
-    .line 389
+    .line 390
     invoke-interface {v0}, Lcom/android/gallery3d/ui/GLCanvas;->getState()Lcom/android/camera/effect/GLCanvasState;
 
     move-result-object p1
 
     invoke-virtual {p1}, Lcom/android/camera/effect/GLCanvasState;->popState()V
 
-    .line 391
+    .line 392
     invoke-interface {v0}, Lcom/android/gallery3d/ui/GLCanvas;->recycledResources()V
 
-    .line 392
+    .line 393
     monitor-exit v0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 393
+    .line 394
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama$StillPreviewRender;->this$0:Lcom/android/camera/fragment/FragmentPanorama;
 
     invoke-static {p1}, Lcom/android/camera/fragment/FragmentPanorama;->access$700(Lcom/android/camera/fragment/FragmentPanorama;)Z
@@ -229,14 +230,14 @@
 
     if-eqz p1, :cond_0
 
-    .line 394
+    .line 395
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama$StillPreviewRender;->this$0:Lcom/android/camera/fragment/FragmentPanorama;
 
     const/4 v0, 0x0
 
     invoke-static {p1, v0}, Lcom/android/camera/fragment/FragmentPanorama;->access$702(Lcom/android/camera/fragment/FragmentPanorama;Z)Z
 
-    .line 395
+    .line 396
     iget-object p1, p0, Lcom/android/camera/fragment/FragmentPanorama$StillPreviewRender;->this$0:Lcom/android/camera/fragment/FragmentPanorama;
 
     invoke-static {p1}, Lcom/android/camera/fragment/FragmentPanorama;->access$1000(Lcom/android/camera/fragment/FragmentPanorama;)Landroid/os/Handler;
@@ -251,7 +252,7 @@
 
     goto :goto_0
 
-    .line 392
+    .line 393
     :catchall_0
     move-exception p1
 
@@ -262,7 +263,7 @@
 
     throw p1
 
-    .line 405
+    .line 406
     :cond_0
     :goto_0
     return-void

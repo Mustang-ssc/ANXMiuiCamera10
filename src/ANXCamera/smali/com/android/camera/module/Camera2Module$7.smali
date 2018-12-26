@@ -34,7 +34,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;)V
     .locals 0
 
-    .line 1180
+    .line 1157
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$7;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -52,7 +52,7 @@
         }
     .end annotation
 
-    .line 1183
+    .line 1160
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$7;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-virtual {v0}, Lcom/android/camera/module/Camera2Module;->isAlive()Z
@@ -61,113 +61,89 @@
 
     if-nez v0, :cond_0
 
-    .line 1184
+    .line 1161
     return-void
 
-    .line 1186
+    .line 1164
     :cond_0
-    invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
-
-    move-result-object v0
-
-    const/16 v1, 0xaf
-
-    .line 1187
-    invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
-
-    move-result-object v0
-
-    check-cast v0, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;
-
-    .line 1188
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
 
     move-result p1
 
-    const/16 v1, 0x12c
+    const/16 v0, 0x12c
 
-    if-eq p1, v1, :cond_3
+    if-eq p1, v0, :cond_2
 
-    const/16 v1, 0x7d0
+    const/16 v0, 0x7d0
 
-    if-eq p1, v1, :cond_1
+    if-eq p1, v0, :cond_1
 
     goto :goto_0
 
-    .line 1197
+    .line 1176
     :cond_1
     iget-object p1, p0, Lcom/android/camera/module/Camera2Module$7;->this$0:Lcom/android/camera/module/Camera2Module;
 
-    invoke-static {p1}, Lcom/android/camera/module/Camera2Module;->access$300(Lcom/android/camera/module/Camera2Module;)V
+    invoke-static {p1}, Lcom/android/camera/module/Camera2Module;->access$400(Lcom/android/camera/module/Camera2Module;)V
 
-    .line 1198
+    .line 1177
     iget-object p1, p0, Lcom/android/camera/module/Camera2Module$7;->this$0:Lcom/android/camera/module/Camera2Module;
 
-    const/4 v1, 0x0
+    const/4 v0, 0x0
 
-    invoke-virtual {p1, v1}, Lcom/android/camera/module/Camera2Module;->playSound(I)V
+    invoke-virtual {p1, v0}, Lcom/android/camera/module/Camera2Module;->playCameraSound(I)V
 
-    .line 1200
+    .line 1179
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object p1
 
-    const/16 v1, 0xa2
+    const/16 v0, 0xd4
 
-    .line 1201
-    invoke-virtual {p1, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
-
-    move-result-object p1
-
-    check-cast p1, Lcom/android/camera/protocol/ModeProtocol$ActionProcessing;
-
-    .line 1202
-    invoke-interface {p1}, Lcom/android/camera/protocol/ModeProtocol$ActionProcessing;->processingPostAction()V
-
-    .line 1205
-    invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
+    .line 1180
+    invoke-virtual {p1, v0}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
 
     move-result-object p1
 
-    const/16 v1, 0xb6
+    check-cast p1, Lcom/android/camera/protocol/ModeProtocol$RecordState;
 
-    .line 1206
-    invoke-virtual {p1, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
+    .line 1181
+    if-eqz p1, :cond_3
 
-    move-result-object p1
-
-    check-cast p1, Lcom/android/camera/protocol/ModeProtocol$DualController;
-
-    .line 1207
-    if-eqz p1, :cond_2
-
-    .line 1208
-    invoke-interface {p1}, Lcom/android/camera/protocol/ModeProtocol$DualController;->showZoomButton()V
-
-    .line 1211
-    :cond_2
-    if-eqz v0, :cond_4
-
-    .line 1212
-    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->hideTipImage()V
+    .line 1182
+    invoke-interface {p1}, Lcom/android/camera/protocol/ModeProtocol$RecordState;->onPostSavingStart()V
 
     goto :goto_0
 
-    .line 1191
-    :cond_3
-    if-eqz v0, :cond_4
+    .line 1166
+    :cond_2
+    invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
-    .line 1192
-    const/16 p1, 0xb
+    move-result-object p1
 
-    const v1, 0x7f0b021c
+    const/16 v0, 0xaf
+
+    .line 1167
+    invoke-virtual {p1, v0}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
+
+    move-result-object p1
+
+    check-cast p1, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;
+
+    .line 1169
+    if-eqz p1, :cond_3
+
+    .line 1170
+    const/16 v0, 0xb
+
+    const v1, 0x7f0b0224
 
     const/4 v2, 0x4
 
-    invoke-interface {v0, p1, v1, v2}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->showTips(III)V
+    invoke-interface {p1, v0, v1, v2}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->showTips(III)V
 
-    .line 1216
-    :cond_4
+    .line 1187
+    :cond_3
     :goto_0
     return-void
 .end method
@@ -180,7 +156,7 @@
         }
     .end annotation
 
-    .line 1180
+    .line 1157
     check-cast p1, Ljava/lang/Integer;
 
     invoke-virtual {p0, p1}, Lcom/android/camera/module/Camera2Module$7;->accept(Ljava/lang/Integer;)V

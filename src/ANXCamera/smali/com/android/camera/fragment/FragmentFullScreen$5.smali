@@ -1,9 +1,6 @@
 .class Lcom/android/camera/fragment/FragmentFullScreen$5;
-.super Ljava/lang/Object;
+.super Landroid/os/Handler;
 .source "FragmentFullScreen.java"
-
-# interfaces
-.implements Lcom/ss/android/vesdk/VECommonCallback;
 
 
 # annotations
@@ -25,24 +22,22 @@
 .method constructor <init>(Lcom/android/camera/fragment/FragmentFullScreen;)V
     .locals 0
 
-    .line 361
+    .line 398
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$5;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0}, Landroid/os/Handler;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onCallback(IIFLjava/lang/String;)V
+.method public handleMessage(Landroid/os/Message;)V
     .locals 0
 
-    .line 364
-    iget-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$5;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
+    .line 401
+    invoke-super {p0, p1}, Landroid/os/Handler;->handleMessage(Landroid/os/Message;)V
 
-    invoke-static {p1}, Lcom/android/camera/fragment/FragmentFullScreen;->access$400(Lcom/android/camera/fragment/FragmentFullScreen;)V
-
-    .line 365
+    .line 402
     return-void
 .end method

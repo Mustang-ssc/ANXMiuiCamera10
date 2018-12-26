@@ -65,7 +65,7 @@
 
     move-result-object p1
 
-    const v0, 0x7f0d0082
+    const v0, 0x7f0d008f
 
     invoke-virtual {p1, v0}, Landroid/widget/RadioGroup;->check(I)V
 
@@ -79,7 +79,7 @@
 
     move-result-object p1
 
-    const v0, 0x7f0d0081
+    const v0, 0x7f0d008e
 
     invoke-virtual {p1, v0}, Landroid/widget/RadioGroup;->check(I)V
 

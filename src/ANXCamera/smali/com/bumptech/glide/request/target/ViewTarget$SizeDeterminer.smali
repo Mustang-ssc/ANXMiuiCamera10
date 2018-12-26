@@ -187,7 +187,7 @@
 
     move-result-object p1
 
-    invoke-static {p1}, Lcom/bumptech/glide/request/target/ViewTarget$SizeDeterminer;->l(Landroid/content/Context;)I
+    invoke-static {p1}, Lcom/bumptech/glide/request/target/ViewTarget$SizeDeterminer;->k(Landroid/content/Context;)I
 
     move-result p1
 
@@ -298,7 +298,7 @@
     return v0
 .end method
 
-.method private static l(Landroid/content/Context;)I
+.method private static k(Landroid/content/Context;)I
     .locals 1
     .param p0    # Landroid/content/Context;
         .annotation build Landroid/support/annotation/NonNull;

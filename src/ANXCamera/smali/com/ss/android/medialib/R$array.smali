@@ -21,6 +21,12 @@
 
 .field public static final beauty_level_list:I = 0x7f0e0028
 
+.field public static final live_filter_directory_name:I = 0x7f0e002b
+
+.field public static final live_filter_icon:I = 0x7f0e0029
+
+.field public static final live_filter_name:I = 0x7f0e002a
+
 .field public static final pref_camera_antibanding_entries:I = 0x7f0e001b
 
 .field public static final pref_camera_antibanding_entryvalues:I = 0x7f0e001c

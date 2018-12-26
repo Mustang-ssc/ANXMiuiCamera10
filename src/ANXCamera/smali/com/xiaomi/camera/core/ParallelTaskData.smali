@@ -4,93 +4,37 @@
 
 
 # static fields
+.field private static final GROUPSHOT_ORIGINAL_SUFFIX:Ljava/lang/String; = "_ORG"
+
 .field private static final TAG:Ljava/lang/String;
 
 
 # instance fields
-.field private mAgeGenderAndMagicMirrorWater:Z
+.field private isNeedThumbnail:Z
 
-.field private mAlgorithmName:Ljava/lang/String;
+.field private mAlgoType:I
 
-.field private mBokehFrontCamera:Z
+.field private mBurstNum:I
 
 .field private mCaptureResult:Lcom/xiaomi/protocol/ICustomCaptureResult;
 
 .field private mCoverFrameTimestamp:J
 
+.field private mDataParameter:Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
+
 .field private mDeparted:Z
-
-.field private mFaceWaterMarkList:Ljava/util/List;
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "Ljava/util/List<",
-            "Lcom/android/camera/watermark/WaterMarkData;",
-            ">;"
-        }
-    .end annotation
-.end field
-
-.field private mFilterId:I
-
-.field private mHasDualWaterMark:Z
-
-.field private mIsFrontCamera:Z
 
 .field private mJpegImageData:[B
 
-.field private mJpegRotation:I
-
-.field private mLightingPattern:I
-
-.field private mLocation:Landroid/location/Location;
-
-.field private mMirror:Z
-
-.field private mNeedCrateThumbnail:Z
-
-.field private mOrientation:I
-
-.field private mOutputHeight:I
-
-.field private mOutputWidth:I
-
 .field private mParallelType:I
-
-.field private mPictureHeight:I
-
-.field private mPictureInfo:Lcom/xiaomi/camera/core/PictureInfo;
-
-.field private mPictureWidth:I
 
 .field private mPortraitDepthData:[B
 
 .field private mPortraitRawData:[B
 
-.field private mPreviewHeight:I
-
-.field private mPreviewWidth:I
-
-.field private mResultFrameDataList:Ljava/util/List;
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "Ljava/util/List<",
-            "Lcom/xiaomi/engine/FrameData;",
-            ">;"
-        }
-    .end annotation
-.end field
-
 .field private mSavePath:Ljava/lang/String;
 
-.field private mShootOrientation:I
-
-.field private mShootRotation:F
-
-.field private mSuffix:Ljava/lang/String;
-
 .field private mTimeStamp:J
-
-.field private mTimeWaterMarkString:Ljava/lang/String;
 
 .field private mVideoRawData:[B
 
@@ -99,7 +43,7 @@
 .method static constructor <clinit>()V
     .locals 1
 
-    .line 18
+    .line 28
     const-class v0, Lcom/xiaomi/camera/core/ParallelTaskData;
 
     invoke-virtual {v0}, Ljava/lang/Class;->getSimpleName()Ljava/lang/String;
@@ -114,33 +58,99 @@
 .method public constructor <init>(JILjava/lang/String;)V
     .locals 1
 
-    .line 69
+    .line 64
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 36
+    .line 42
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
 
-    .line 70
+    .line 65
     iput-wide p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mTimeStamp:J
 
-    .line 71
+    .line 66
     iput p3, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mParallelType:I
 
-    .line 72
+    .line 67
     iput-object p4, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mSavePath:Ljava/lang/String;
 
+    .line 68
+    return-void
+.end method
+
+.method public constructor <init>(Lcom/xiaomi/camera/core/ParallelTaskData;)V
+    .locals 2
+
+    .line 73
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 42
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
+
     .line 74
-    new-instance p1, Ljava/util/ArrayList;
+    iget v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mParallelType:I
 
-    const/4 p2, 0x2
-
-    invoke-direct {p1, p2}, Ljava/util/ArrayList;-><init>(I)V
-
-    iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
+    iput v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mParallelType:I
 
     .line 75
+    iget-wide v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mTimeStamp:J
+
+    iput-wide v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mTimeStamp:J
+
+    .line 76
+    iget-object v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mCaptureResult:Lcom/xiaomi/protocol/ICustomCaptureResult;
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mCaptureResult:Lcom/xiaomi/protocol/ICustomCaptureResult;
+
+    .line 77
+    iget-object v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
+
+    .line 78
+    iget-object v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
+
+    .line 79
+    iget-object v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
+
+    .line 80
+    iget-object v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mSavePath:Ljava/lang/String;
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mSavePath:Ljava/lang/String;
+
+    .line 81
+    iget-boolean v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mDeparted:Z
+
+    iput-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mDeparted:Z
+
+    .line 82
+    iget-object v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mDataParameter:Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mDataParameter:Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
+
+    .line 83
+    iget-boolean v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->isNeedThumbnail:Z
+
+    iput-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->isNeedThumbnail:Z
+
+    .line 84
+    iget-object v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
+
+    iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
+
+    .line 85
+    iget-wide v0, p1, Lcom/xiaomi/camera/core/ParallelTaskData;->mCoverFrameTimestamp:J
+
+    iput-wide v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mCoverFrameTimestamp:J
+
+    .line 86
     return-void
 .end method
 
@@ -149,48 +159,151 @@
 .method public checkThread()V
     .locals 0
 
-    .line 104
+    .line 97
     return-void
 .end method
 
-.method public copyParameter(Lcom/xiaomi/camera/core/ParallelTaskData;)V
-    .locals 0
+.method public cloneTaskData(I)Lcom/xiaomi/camera/core/ParallelTaskData;
+    .locals 6
 
-    .line 310
-    return-void
-.end method
+    .line 201
+    new-instance v0, Lcom/xiaomi/camera/core/ParallelTaskData;
 
-.method public declared-synchronized fillFrameData(Lcom/xiaomi/engine/FrameData;Lcom/xiaomi/protocol/ICustomCaptureResult;)V
-    .locals 1
+    invoke-direct {v0, p0}, Lcom/xiaomi/camera/core/ParallelTaskData;-><init>(Lcom/xiaomi/camera/core/ParallelTaskData;)V
 
-    monitor-enter p0
+    .line 202
+    invoke-virtual {p0}, Lcom/xiaomi/camera/core/ParallelTaskData;->getSavePath()Ljava/lang/String;
 
-    .line 153
-    :try_start_0
-    invoke-virtual {p0}, Lcom/xiaomi/camera/core/ParallelTaskData;->checkThread()V
+    move-result-object v1
 
-    .line 154
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
+    .line 204
+    new-instance v2, Ljava/lang/StringBuilder;
 
-    invoke-interface {v0, p1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
-    .line 155
-    iput-object p2, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mCaptureResult:Lcom/xiaomi/protocol/ICustomCaptureResult;
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    const-string v3, "_ORG"
 
-    .line 156
-    monitor-exit p0
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    return-void
+    if-nez p1, :cond_0
 
-    .line 152
-    :catchall_0
-    move-exception p1
+    const-string v3, ""
 
-    monitor-exit p0
+    goto :goto_0
 
-    throw p1
+    :cond_0
+    const-string v3, "_"
+
+    :goto_0
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    .line 205
+    const-string v2, "."
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->lastIndexOf(Ljava/lang/String;)I
+
+    move-result v2
+
+    .line 206
+    const/4 v3, 0x0
+
+    if-lez v2, :cond_1
+
+    .line 207
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v1, v3, v2}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v4, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-virtual {v4, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    goto :goto_1
+
+    .line 209
+    :cond_1
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    .line 211
+    :goto_1
+    sget-object v1, Lcom/xiaomi/camera/core/ParallelTaskData;->TAG:Ljava/lang/String;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "[1] cloneTaskData: path="
+
+    invoke-virtual {v2, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 212
+    invoke-virtual {v0, p1}, Lcom/xiaomi/camera/core/ParallelTaskData;->setSavePath(Ljava/lang/String;)V
+
+    .line 213
+    invoke-virtual {v0, v3}, Lcom/xiaomi/camera/core/ParallelTaskData;->setNeedThumbnail(Z)V
+
+    .line 214
+    new-instance p1, Lcom/xiaomi/camera/core/ParallelTaskDataParameter$Builder;
+
+    invoke-virtual {p0}, Lcom/xiaomi/camera/core/ParallelTaskData;->getDataParameter()Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
+
+    move-result-object v1
+
+    invoke-direct {p1, v1}, Lcom/xiaomi/camera/core/ParallelTaskDataParameter$Builder;-><init>(Lcom/xiaomi/camera/core/ParallelTaskDataParameter;)V
+
+    .line 215
+    invoke-virtual {p1, v3}, Lcom/xiaomi/camera/core/ParallelTaskDataParameter$Builder;->setHasDualWaterMark(Z)Lcom/xiaomi/camera/core/ParallelTaskDataParameter$Builder;
+
+    .line 216
+    invoke-virtual {p1, v3}, Lcom/xiaomi/camera/core/ParallelTaskDataParameter$Builder;->setSaveGroupshotPrimitive(Z)Lcom/xiaomi/camera/core/ParallelTaskDataParameter$Builder;
+
+    .line 217
+    invoke-virtual {p1}, Lcom/xiaomi/camera/core/ParallelTaskDataParameter$Builder;->build()Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
+
+    move-result-object p1
+
+    invoke-virtual {v0, p1}, Lcom/xiaomi/camera/core/ParallelTaskData;->fillParameter(Lcom/xiaomi/camera/core/ParallelTaskDataParameter;)V
+
+    .line 219
+    return-object v0
 .end method
 
 .method public declared-synchronized fillJpegData([BI)V
@@ -198,29 +311,29 @@
 
     monitor-enter p0
 
-    .line 124
+    .line 117
     :try_start_0
     invoke-virtual {p0}, Lcom/xiaomi/camera/core/ParallelTaskData;->checkThread()V
 
-    .line 126
+    .line 119
     packed-switch p2, :pswitch_data_0
 
     goto :goto_0
 
-    .line 142
+    .line 135
     :pswitch_0
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
 
     if-nez v0, :cond_0
 
-    .line 145
+    .line 138
     array-length v0, p1
 
     new-array v0, v0, [B
 
     iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
 
-    .line 146
+    .line 139
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
 
     array-length v1, p1
@@ -231,7 +344,7 @@
 
     goto :goto_0
 
-    .line 143
+    .line 136
     :cond_0
     new-instance p1, Ljava/lang/RuntimeException;
 
@@ -241,19 +354,19 @@
 
     throw p1
 
-    .line 135
+    .line 128
     :pswitch_1
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
 
     if-nez v0, :cond_1
 
-    .line 138
+    .line 131
     iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
 
-    .line 139
+    .line 132
     goto :goto_0
 
-    .line 136
+    .line 129
     :cond_1
     new-instance p1, Ljava/lang/RuntimeException;
 
@@ -263,19 +376,19 @@
 
     throw p1
 
-    .line 128
+    .line 121
     :pswitch_2
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
 
     if-nez v0, :cond_2
 
-    .line 131
+    .line 124
     iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
 
-    .line 132
+    .line 125
     goto :goto_0
 
-    .line 129
+    .line 122
     :cond_2
     new-instance p1, Ljava/lang/RuntimeException;
 
@@ -285,7 +398,7 @@
 
     throw p1
 
-    .line 149
+    .line 142
     :goto_0
     sget-object v0, Lcom/xiaomi/camera/core/ParallelTaskData;->TAG:Ljava/lang/String;
 
@@ -293,13 +406,13 @@
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v2, "fillJpegData: jpegData"
+    const-string v2, "fillJpegData: jpegData="
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    const-string p1, "; result = "
+    const-string p1, "; imageType="
 
     invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -309,16 +422,16 @@
 
     move-result-object p1
 
-    invoke-static {v0, p1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 150
+    .line 143
     monitor-exit p0
 
     return-void
 
-    .line 123
+    .line 116
     :catchall_0
     move-exception p1
 
@@ -327,7 +440,7 @@
     throw p1
 
     :pswitch_data_0
-    .packed-switch 0x1
+    .packed-switch 0x0
         :pswitch_2
         :pswitch_1
         :pswitch_0
@@ -339,22 +452,22 @@
 
     monitor-enter p0
 
-    .line 107
+    .line 100
     :try_start_0
     invoke-virtual {p0}, Lcom/xiaomi/camera/core/ParallelTaskData;->checkThread()V
 
-    .line 108
+    .line 101
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
 
     if-nez v0, :cond_0
 
-    .line 111
+    .line 104
     iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
 
-    .line 112
+    .line 105
     iput-wide p2, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mCoverFrameTimestamp:J
 
-    .line 113
+    .line 106
     sget-object v0, Lcom/xiaomi/camera/core/ParallelTaskData;->TAG:Ljava/lang/String;
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -377,16 +490,16 @@
 
     move-result-object p1
 
-    invoke-static {v0, p1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 114
+    .line 107
     monitor-exit p0
 
     return-void
 
-    .line 109
+    .line 102
     :cond_0
     :try_start_1
     new-instance p1, Ljava/lang/IllegalStateException;
@@ -399,7 +512,7 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 106
+    .line 99
     :catchall_0
     move-exception p1
 
@@ -408,162 +521,38 @@
     throw p1
 .end method
 
-.method public fillParameter(ZZIIIIIIIIFILandroid/location/Location;Ljava/lang/String;Ljava/util/List;ZZIIZLjava/lang/String;Lcom/xiaomi/camera/core/PictureInfo;Ljava/lang/String;Z)V
-    .locals 2
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "(ZZIIIIIIIIFI",
-            "Landroid/location/Location;",
-            "Ljava/lang/String;",
-            "Ljava/util/List<",
-            "Lcom/android/camera/watermark/WaterMarkData;",
-            ">;ZZIIZ",
-            "Ljava/lang/String;",
-            "Lcom/xiaomi/camera/core/PictureInfo;",
-            "Ljava/lang/String;",
-            "Z)V"
-        }
-    .end annotation
+.method public fillParameter(Lcom/xiaomi/camera/core/ParallelTaskDataParameter;)V
+    .locals 0
 
-    move-object v0, p0
+    .line 190
+    iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mDataParameter:Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
 
-    .line 253
-    move v1, p1
-
-    iput-boolean v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mHasDualWaterMark:Z
-
-    .line 254
-    move v1, p2
-
-    iput-boolean v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mMirror:Z
-
-    .line 255
-    move v1, p3
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mLightingPattern:I
-
-    .line 256
-    move v1, p4
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPreviewWidth:I
-
-    .line 257
-    move v1, p5
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPreviewHeight:I
-
-    .line 258
-    move v1, p6
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPictureWidth:I
-
-    .line 259
-    move v1, p7
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPictureHeight:I
-
-    .line 260
-    move v1, p8
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mFilterId:I
-
-    .line 261
-    move v1, p9
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mOrientation:I
-
-    .line 262
-    move v1, p10
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegRotation:I
-
-    .line 263
-    move v1, p11
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mShootRotation:F
-
-    .line 264
-    move v1, p12
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mShootOrientation:I
-
-    .line 265
-    move-object v1, p13
-
-    iput-object v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mLocation:Landroid/location/Location;
-
-    .line 266
-    move-object/from16 v1, p14
-
-    iput-object v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mTimeWaterMarkString:Ljava/lang/String;
-
-    .line 267
-    move-object/from16 v1, p15
-
-    iput-object v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mFaceWaterMarkList:Ljava/util/List;
-
-    .line 268
-    move/from16 v1, p16
-
-    iput-boolean v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mAgeGenderAndMagicMirrorWater:Z
-
-    .line 269
-    move/from16 v1, p17
-
-    iput-boolean v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mIsFrontCamera:Z
-
-    .line 270
-    move/from16 v1, p18
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mOutputWidth:I
-
-    .line 271
-    move/from16 v1, p19
-
-    iput v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mOutputHeight:I
-
-    .line 272
-    move/from16 v1, p20
-
-    iput-boolean v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mBokehFrontCamera:Z
-
-    .line 273
-    move-object/from16 v1, p21
-
-    iput-object v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mAlgorithmName:Ljava/lang/String;
-
-    .line 274
-    move-object/from16 v1, p22
-
-    iput-object v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPictureInfo:Lcom/xiaomi/camera/core/PictureInfo;
-
-    .line 275
-    move-object/from16 v1, p23
-
-    iput-object v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mSuffix:Ljava/lang/String;
-
-    .line 276
-    move/from16 v1, p24
-
-    iput-boolean v1, v0, Lcom/xiaomi/camera/core/ParallelTaskData;->mNeedCrateThumbnail:Z
-
-    .line 277
+    .line 191
     return-void
 .end method
 
-.method public getAlgorithmName()Ljava/lang/String;
+.method public getAlgoType()I
     .locals 1
 
-    .line 438
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mAlgorithmName:Ljava/lang/String;
+    .line 273
+    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mAlgoType:I
 
-    return-object v0
+    return v0
+.end method
+
+.method public getBurstNum()I
+    .locals 1
+
+    .line 277
+    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mBurstNum:I
+
+    return v0
 .end method
 
 .method public getCaptureResult()Lcom/xiaomi/protocol/ICustomCaptureResult;
     .locals 1
 
-    .line 345
+    .line 252
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mCaptureResult:Lcom/xiaomi/protocol/ICustomCaptureResult;
 
     return-object v0
@@ -574,7 +563,7 @@
 
     monitor-enter p0
 
-    .line 321
+    .line 232
     :try_start_0
     iget-wide v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mCoverFrameTimestamp:J
     :try_end_0
@@ -592,64 +581,20 @@
     throw v0
 .end method
 
-.method public getFaceWaterMarkList()Ljava/util/List;
+.method public getDataParameter()Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
     .locals 1
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "()",
-            "Ljava/util/List<",
-            "Lcom/android/camera/watermark/WaterMarkData;",
-            ">;"
-        }
-    .end annotation
 
-    .line 422
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mFaceWaterMarkList:Ljava/util/List;
+    .line 265
+    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mDataParameter:Lcom/xiaomi/camera/core/ParallelTaskDataParameter;
 
     return-object v0
-.end method
-
-.method public getFilterId()I
-    .locals 1
-
-    .line 394
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mFilterId:I
-
-    return v0
 .end method
 
 .method public getJpegImageData()[B
     .locals 1
 
-    .line 325
+    .line 236
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
-
-    return-object v0
-.end method
-
-.method public getJpegRotation()I
-    .locals 1
-
-    .line 386
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegRotation:I
-
-    return v0
-.end method
-
-.method public getLightingPattern()I
-    .locals 1
-
-    .line 353
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mLightingPattern:I
-
-    return v0
-.end method
-
-.method public getLocation()Landroid/location/Location;
-    .locals 1
-
-    .line 382
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mLocation:Landroid/location/Location;
 
     return-object v0
 .end method
@@ -659,13 +604,13 @@
 
     monitor-enter p0
 
-    .line 314
+    .line 225
     :try_start_0
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
 
     if-eqz v0, :cond_0
 
-    .line 317
+    .line 228
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -674,7 +619,7 @@
 
     return-object v0
 
-    .line 315
+    .line 226
     :cond_0
     :try_start_1
     new-instance v0, Ljava/lang/IllegalStateException;
@@ -687,7 +632,7 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 313
+    .line 224
     :catchall_0
     move-exception v0
 
@@ -696,65 +641,11 @@
     throw v0
 .end method
 
-.method public getOrientation()I
-    .locals 1
-
-    .line 414
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mOrientation:I
-
-    return v0
-.end method
-
-.method public getOutputHeight()I
-    .locals 1
-
-    .line 434
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mOutputHeight:I
-
-    return v0
-.end method
-
-.method public getOutputWidth()I
-    .locals 1
-
-    .line 430
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mOutputWidth:I
-
-    return v0
-.end method
-
 .method public getParallelType()I
     .locals 1
 
-    .line 362
+    .line 257
     iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mParallelType:I
-
-    return v0
-.end method
-
-.method public getPictureHeight()I
-    .locals 1
-
-    .line 378
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPictureHeight:I
-
-    return v0
-.end method
-
-.method public getPictureInfo()Lcom/xiaomi/camera/core/PictureInfo;
-    .locals 1
-
-    .line 442
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPictureInfo:Lcom/xiaomi/camera/core/PictureInfo;
-
-    return-object v0
-.end method
-
-.method public getPictureWidth()I
-    .locals 1
-
-    .line 374
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPictureWidth:I
 
     return v0
 .end method
@@ -762,7 +653,7 @@
 .method public getPortraitDepthData()[B
     .locals 1
 
-    .line 337
+    .line 248
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
 
     return-object v0
@@ -771,65 +662,8 @@
 .method public getPortraitRawData()[B
     .locals 1
 
-    .line 333
+    .line 244
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
-
-    return-object v0
-.end method
-
-.method public getPreviewHeight()I
-    .locals 1
-
-    .line 370
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPreviewHeight:I
-
-    return v0
-.end method
-
-.method public getPreviewWidth()I
-    .locals 1
-
-    .line 366
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPreviewWidth:I
-
-    return v0
-.end method
-
-.method public getProcessUsedMemorySize()I
-    .locals 2
-
-    .line 298
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mParallelType:I
-
-    const/4 v1, 0x6
-
-    if-eq v0, v1, :cond_0
-
-    .line 300
-    const v0, 0xba0c00
-
-    return v0
-
-    .line 302
-    :cond_0
-    const v0, 0x1741800
-
-    return v0
-.end method
-
-.method public getResultFrameDataList()Ljava/util/List;
-    .locals 1
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "()",
-            "Ljava/util/List<",
-            "Lcom/xiaomi/engine/FrameData;",
-            ">;"
-        }
-    .end annotation
-
-    .line 341
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
 
     return-object v0
 .end method
@@ -837,35 +671,8 @@
 .method public getSavePath()Ljava/lang/String;
     .locals 1
 
-    .line 390
+    .line 261
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mSavePath:Ljava/lang/String;
-
-    return-object v0
-.end method
-
-.method public getShootOrientation()I
-    .locals 1
-
-    .line 410
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mShootOrientation:I
-
-    return v0
-.end method
-
-.method public getShootRotation()F
-    .locals 1
-
-    .line 406
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mShootRotation:F
-
-    return v0
-.end method
-
-.method public getSuffix()Ljava/lang/String;
-    .locals 1
-
-    .line 446
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mSuffix:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -873,152 +680,10 @@
 .method public getTimeStamp()J
     .locals 2
 
-    .line 329
+    .line 240
     iget-wide v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mTimeStamp:J
 
     return-wide v0
-.end method
-
-.method public getTimeWaterMarkString()Ljava/lang/String;
-    .locals 1
-
-    .line 357
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mTimeWaterMarkString:Ljava/lang/String;
-
-    return-object v0
-.end method
-
-.method public isAgeGenderAndMagicMirrorWater()Z
-    .locals 1
-
-    .line 418
-    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mAgeGenderAndMagicMirrorWater:Z
-
-    return v0
-.end method
-
-.method public isBokehFrontCamera()Z
-    .locals 1
-
-    .line 402
-    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mBokehFrontCamera:Z
-
-    return v0
-.end method
-
-.method public declared-synchronized isFrameDataReady()Z
-    .locals 4
-
-    monitor-enter p0
-
-    .line 198
-    :try_start_0
-    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mDeparted:Z
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    const/4 v1, 0x0
-
-    if-eqz v0, :cond_0
-
-    .line 199
-    monitor-exit p0
-
-    return v1
-
-    .line 201
-    :cond_0
-    :try_start_1
-    iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mParallelType:I
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    const/4 v2, 0x1
-
-    packed-switch v0, :pswitch_data_0
-
-    .line 208
-    monitor-exit p0
-
-    return v1
-
-    .line 203
-    :pswitch_0
-    :try_start_2
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
-
-    invoke-interface {v0}, Ljava/util/List;->size()I
-
-    move-result v0
-    :try_end_2
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
-
-    const/4 v3, 0x2
-
-    if-ne v0, v3, :cond_1
-
-    move v1, v2
-
-    nop
-
-    :cond_1
-    monitor-exit p0
-
-    return v1
-
-    .line 205
-    :pswitch_1
-    :try_start_3
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
-
-    invoke-interface {v0}, Ljava/util/List;->size()I
-
-    move-result v0
-    :try_end_3
-    .catchall {:try_start_3 .. :try_end_3} :catchall_0
-
-    if-ne v0, v2, :cond_2
-
-    move v1, v2
-
-    nop
-
-    :cond_2
-    monitor-exit p0
-
-    return v1
-
-    .line 197
-    :catchall_0
-    move-exception v0
-
-    monitor-exit p0
-
-    throw v0
-
-    :pswitch_data_0
-    .packed-switch 0x5
-        :pswitch_1
-        :pswitch_0
-    .end packed-switch
-.end method
-
-.method public isFrontCamera()Z
-    .locals 1
-
-    .line 426
-    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mIsFrontCamera:Z
-
-    return v0
-.end method
-
-.method public isHasDualWaterMark()Z
-    .locals 1
-
-    .line 349
-    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mHasDualWaterMark:Z
-
-    return v0
 .end method
 
 .method public declared-synchronized isJpegDataReady()Z
@@ -1026,10 +691,10 @@
 
     monitor-enter p0
 
-    .line 160
+    .line 146
     nop
 
-    .line 161
+    .line 147
     :try_start_0
     iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mDeparted:Z
     :try_end_0
@@ -1039,12 +704,12 @@
 
     if-eqz v0, :cond_0
 
-    .line 162
+    .line 148
     monitor-exit p0
 
     return v1
 
-    .line 165
+    .line 151
     :cond_0
     :try_start_1
     iget v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mParallelType:I
@@ -1056,76 +721,76 @@
     :pswitch_0
     goto :goto_2
 
-    .line 179
+    .line 162
     :pswitch_1
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
 
     if-eqz v0, :cond_1
 
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
+    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
 
     if-eqz v0, :cond_1
 
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
-
-    if-eqz v0, :cond_1
-
-    .line 182
+    .line 163
     move v1, v2
 
-    goto :goto_2
+    goto :goto_0
 
-    .line 179
+    .line 162
     :cond_1
+    nop
+
+    .line 163
+    :goto_0
     goto :goto_2
 
-    .line 174
+    .line 158
     :pswitch_2
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
 
     if-eqz v0, :cond_2
 
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mVideoRawData:[B
-
-    if-eqz v0, :cond_2
-
-    .line 175
+    .line 159
     move v1, v2
 
-    goto :goto_0
+    goto :goto_1
 
-    .line 174
+    .line 158
     :cond_2
     nop
 
-    .line 175
-    :goto_0
+    .line 159
+    :goto_1
     goto :goto_2
 
-    .line 170
+    .line 168
     :pswitch_3
     iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
+
+    if-eqz v0, :cond_3
+
+    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
+
+    if-eqz v0, :cond_3
+
+    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
 
     if-eqz v0, :cond_3
 
     .line 171
     move v1, v2
 
-    goto :goto_1
+    goto :goto_2
 
-    .line 170
+    .line 168
     :cond_3
     nop
 
     .line 171
-    :goto_1
-    nop
-
-    .line 182
     :goto_2
     if-eqz v1, :cond_4
 
-    .line 183
+    .line 172
     sget-object v0, Lcom/xiaomi/camera/core/ParallelTaskData;->TAG:Ljava/lang/String;
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -1150,11 +815,11 @@
 
     move-result-object v2
 
-    invoke-static {v0, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_3
 
-    .line 185
+    .line 174
     :cond_4
     sget-object v0, Lcom/xiaomi/camera/core/ParallelTaskData;->TAG:Ljava/lang/String;
 
@@ -1216,17 +881,17 @@
 
     move-result-object v2
 
-    invoke-static {v0, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 194
+    .line 183
     :goto_3
     monitor-exit p0
 
     return v1
 
-    .line 159
+    .line 145
     :catchall_0
     move-exception v0
 
@@ -1235,33 +900,27 @@
     throw v0
 
     :pswitch_data_0
-    .packed-switch -0x2
-        :pswitch_3
-        :pswitch_3
+    .packed-switch -0x3
         :pswitch_3
         :pswitch_2
+        :pswitch_2
+        :pswitch_2
         :pswitch_1
-        :pswitch_0
-        :pswitch_0
         :pswitch_3
-        :pswitch_1
+        :pswitch_0
+        :pswitch_0
+        :pswitch_2
+        :pswitch_3
+        :pswitch_2
+        :pswitch_2
     .end packed-switch
 .end method
 
-.method public isMirror()Z
+.method public isNeedThumbnail()Z
     .locals 1
 
-    .line 398
-    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mMirror:Z
-
-    return v0
-.end method
-
-.method public isNeedCrateThumbnail()Z
-    .locals 1
-
-    .line 458
-    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mNeedCrateThumbnail:Z
+    .line 269
+    iget-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->isNeedThumbnail:Z
 
     return v0
 .end method
@@ -1269,98 +928,92 @@
 .method public refillJpegData([B)V
     .locals 0
 
-    .line 120
+    .line 113
     iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
 
-    .line 121
+    .line 114
+    return-void
+.end method
+
+.method public setAlgoType(I)V
+    .locals 0
+
+    .line 294
+    iput p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mAlgoType:I
+
+    .line 295
+    return-void
+.end method
+
+.method public setBurstNum(I)V
+    .locals 0
+
+    .line 298
+    iput p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mBurstNum:I
+
+    .line 299
     return-void
 .end method
 
 .method public setCaptureResult(Lcom/xiaomi/protocol/ICustomCaptureResult;)V
     .locals 0
 
-    .line 78
+    .line 89
     iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mCaptureResult:Lcom/xiaomi/protocol/ICustomCaptureResult;
 
-    .line 80
+    .line 90
     return-void
 .end method
 
 .method public setDeparted()V
-    .locals 2
+    .locals 1
 
-    .line 280
+    .line 194
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mDeparted:Z
 
-    .line 281
+    .line 195
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mJpegImageData:[B
 
-    .line 282
+    .line 196
     iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitRawData:[B
 
-    .line 283
+    .line 197
     iput-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mPortraitDepthData:[B
 
-    .line 284
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
-
-    invoke-interface {v0}, Ljava/util/List;->size()I
-
-    move-result v0
-
-    if-lez v0, :cond_1
-
-    .line 285
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
-
-    invoke-interface {v0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
-
-    move-result-object v0
-
-    :goto_0
-    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v1
-
-    if-eqz v1, :cond_0
-
-    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Lcom/xiaomi/engine/FrameData;
-
-    .line 286
-    invoke-virtual {v1}, Lcom/xiaomi/engine/FrameData;->getBufferImage()Landroid/media/Image;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Landroid/media/Image;->close()V
-
-    .line 287
-    goto :goto_0
-
-    .line 288
-    :cond_0
-    iget-object v0, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mResultFrameDataList:Ljava/util/List;
-
-    invoke-interface {v0}, Ljava/util/List;->clear()V
-
-    .line 290
-    :cond_1
+    .line 198
     return-void
 .end method
 
-.method public setNeedCreateThumbnail(Z)V
+.method public setNeedThumbnail(Z)V
     .locals 0
 
-    .line 454
-    iput-boolean p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mNeedCrateThumbnail:Z
+    .line 290
+    iput-boolean p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->isNeedThumbnail:Z
 
-    .line 455
+    .line 291
+    return-void
+.end method
+
+.method public setSavePath(Ljava/lang/String;)V
+    .locals 0
+
+    .line 282
+    iput-object p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mSavePath:Ljava/lang/String;
+
+    .line 283
+    return-void
+.end method
+
+.method public setTimeStamp(J)V
+    .locals 0
+
+    .line 286
+    iput-wide p1, p0, Lcom/xiaomi/camera/core/ParallelTaskData;->mTimeStamp:J
+
+    .line 287
     return-void
 .end method

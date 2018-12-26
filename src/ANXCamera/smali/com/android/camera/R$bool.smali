@@ -53,7 +53,7 @@
 
 .field public static final pref_camera_ultra_wide_ldc_default:I = 0x7f0f0014
 
-.field public static final pref_dualcamera_watermark_default:I = 0x7f0f0012
+.field public static final pref_device_watermark_default:I = 0x7f0f0012
 
 .field public static final pref_groupshot_with_primitive_default:I = 0x7f0f0013
 
@@ -64,7 +64,7 @@
 .method public constructor <init>()V
     .locals 0
 
-    .line 331
+    .line 340
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

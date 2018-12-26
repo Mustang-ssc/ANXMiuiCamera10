@@ -196,7 +196,7 @@
     sput-object v1, Lcom/android/camera/constant/UpdateConstant;->CAMERA_TYPES_MANUALLY:[I
 
     .line 324
-    const/4 v1, 0x5
+    const/4 v1, 0x6
 
     new-array v2, v1, [I
 
@@ -204,39 +204,39 @@
 
     sput-object v2, Lcom/android/camera/constant/UpdateConstant;->VIDEO_TYPES_INIT:[I
 
-    .line 336
-    const/4 v2, 0x6
+    .line 337
+    new-array v1, v1, [I
 
-    new-array v3, v2, [I
+    fill-array-data v1, :array_4
 
-    fill-array-data v3, :array_4
+    sput-object v1, Lcom/android/camera/constant/UpdateConstant;->VIDEO_TYPES_ON_PREVIEW_SUCCESS:[I
 
-    sput-object v3, Lcom/android/camera/constant/UpdateConstant;->VIDEO_TYPES_ON_PREVIEW_SUCCESS:[I
+    .line 350
+    const/4 v1, 0x5
 
-    .line 349
     new-array v1, v1, [I
 
     fill-array-data v1, :array_5
 
     sput-object v1, Lcom/android/camera/constant/UpdateConstant;->VIDEO_TYPES_RECORD:[I
 
-    .line 361
-    new-array v1, v2, [I
-
-    fill-array-data v1, :array_6
-
-    sput-object v1, Lcom/android/camera/constant/UpdateConstant;->FUN_TYPES_INIT:[I
-
-    .line 374
+    .line 362
     const/4 v1, 0x7
 
+    new-array v2, v1, [I
+
+    fill-array-data v2, :array_6
+
+    sput-object v2, Lcom/android/camera/constant/UpdateConstant;->FUN_TYPES_INIT:[I
+
+    .line 376
     new-array v1, v1, [I
 
     fill-array-data v1, :array_7
 
     sput-object v1, Lcom/android/camera/constant/UpdateConstant;->FUN_TYPES_ON_PREVIEW_SUCCESS:[I
 
-    .line 388
+    .line 390
     const/4 v1, 0x1
 
     new-array v2, v1, [I
@@ -247,7 +247,7 @@
 
     sput-object v2, Lcom/android/camera/constant/UpdateConstant;->PANORAMA_TYPES_INIT:[I
 
-    .line 396
+    .line 398
     new-array v1, v1, [I
 
     const/16 v2, 0x20
@@ -256,7 +256,7 @@
 
     sput-object v1, Lcom/android/camera/constant/UpdateConstant;->PANORAMA_ON_PREVIEW_SUCCESS:[I
 
-    .line 401
+    .line 403
     new-array v0, v0, [I
 
     fill-array-data v0, :array_8
@@ -320,16 +320,17 @@
         0xd
         0x23
         0x13
+        0x2f
     .end array-data
 
     :array_4
     .array-data 4
+        0x1f
         0x5
         0x9
         0xa
         0xe
         0x19
-        0x1f
     .end array-data
 
     :array_5
@@ -349,6 +350,7 @@
         0x23
         0xd
         0x13
+        0x2f
     .end array-data
 
     :array_7

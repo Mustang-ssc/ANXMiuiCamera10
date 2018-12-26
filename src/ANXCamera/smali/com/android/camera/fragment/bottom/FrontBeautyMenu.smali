@@ -238,7 +238,7 @@
 
     move-result-object v6
 
-    const v7, 0x7f0200d3
+    const v7, 0x7f0200de
 
     invoke-virtual {v6, v7}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -400,7 +400,7 @@
 
     move-result-object v0
 
-    const v1, 0x7f0b01ca
+    const v1, 0x7f0b01d1
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -411,7 +411,7 @@
 
     move-result-object v1
 
-    const v2, 0x7f0b01cb
+    const v2, 0x7f0b01d2
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -422,14 +422,14 @@
 
     move-result-object v2
 
-    const v3, 0x7f0b0226
+    const v3, 0x7f0b0230
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
     move-result-object v2
 
     .line 104
-    invoke-static {}, Lcom/mi/config/b;->hA()Z
+    invoke-static {}, Lcom/mi/config/b;->hC()Z
 
     move-result v3
 
@@ -440,7 +440,7 @@
 
     move-result-object v0
 
-    const v1, 0x7f0b01cc
+    const v1, 0x7f0b01d3
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -451,7 +451,7 @@
 
     move-result-object v1
 
-    const v3, 0x7f0b01cd
+    const v3, 0x7f0b01d4
 
     invoke-virtual {v1, v3}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -507,7 +507,7 @@
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/mi/config/a;->fl()Z
+    invoke-virtual {v0}, Lcom/mi/config/a;->fm()Z
 
     move-result v0
 

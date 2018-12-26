@@ -12,7 +12,7 @@
     .locals 1
 
     .line 23
-    invoke-static {}, Lcom/mi/config/b;->fW()Z
+    invoke-static {}, Lcom/mi/config/b;->fZ()Z
 
     move-result v0
 
@@ -29,7 +29,7 @@
 
     .line 25
     :cond_0
-    invoke-static {}, Lcom/mi/config/b;->fZ()Z
+    invoke-static {}, Lcom/mi/config/b;->gd()Z
 
     move-result v0
 
@@ -78,13 +78,13 @@
     return-void
 .end method
 
-.method public static applyASDScene(Landroid/hardware/camera2/CaptureRequest$Builder;Ljava/lang/String;)V
+.method public static applyASDScene(Landroid/hardware/camera2/CaptureRequest$Builder;I)V
     .locals 1
 
     .line 182
     sget-object v0, Lcom/android/camera2/compat/MiCameraCompat;->IMPL:Lcom/android/camera2/compat/MiCameraCompatBaseImpl;
 
-    invoke-virtual {v0, p0, p1}, Lcom/android/camera2/compat/MiCameraCompatBaseImpl;->applyASDScene(Landroid/hardware/camera2/CaptureRequest$Builder;Ljava/lang/String;)V
+    invoke-virtual {v0, p0, p1}, Lcom/android/camera2/compat/MiCameraCompatBaseImpl;->applyASDScene(Landroid/hardware/camera2/CaptureRequest$Builder;I)V
 
     .line 183
     return-void

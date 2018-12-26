@@ -88,7 +88,7 @@
         }
     .end annotation
 
-    .line 79
+    .line 84
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBackSupportedBeautyType:Ljava/util/List;
 
     if-eqz v0, :cond_0
@@ -101,25 +101,25 @@
 
     if-nez v0, :cond_0
 
-    .line 80
+    .line 85
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBackSupportedBeautyType:Ljava/util/List;
 
     return-object v0
 
-    .line 82
+    .line 87
     :cond_0
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBackSupportedBeautyType:Ljava/util/List;
 
     if-nez v0, :cond_1
 
-    .line 83
+    .line 88
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     sput-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBackSupportedBeautyType:Ljava/util/List;
 
-    .line 86
+    .line 91
     :cond_1
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBackSupportedBeautyType:Ljava/util/List;
 
@@ -129,7 +129,7 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
 
-    .line 87
+    .line 92
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBackSupportedBeautyType:Ljava/util/List;
 
     return-object v0
@@ -146,7 +146,7 @@
         }
     .end annotation
 
-    .line 65
+    .line 70
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mFrontSupportedBeautyType:Ljava/util/List;
 
     if-eqz v0, :cond_0
@@ -159,25 +159,25 @@
 
     if-nez v0, :cond_0
 
-    .line 66
+    .line 71
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mFrontSupportedBeautyType:Ljava/util/List;
 
     return-object v0
 
-    .line 68
+    .line 73
     :cond_0
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mFrontSupportedBeautyType:Ljava/util/List;
 
     if-nez v0, :cond_1
 
-    .line 69
+    .line 74
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     sput-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mFrontSupportedBeautyType:Ljava/util/List;
 
-    .line 72
+    .line 77
     :cond_1
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mFrontSupportedBeautyType:Ljava/util/List;
 
@@ -187,7 +187,7 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
 
-    .line 74
+    .line 79
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mFrontSupportedBeautyType:Ljava/util/List;
 
     invoke-static {}, Lcom/android/camera/fragment/beauty/BeautyMakeupSettingBusiness;->getSupportBeautyTypes()Ljava/util/List;
@@ -196,7 +196,7 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
 
-    .line 75
+    .line 80
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mFrontSupportedBeautyType:Ljava/util/List;
 
     return-object v0
@@ -213,7 +213,7 @@
         }
     .end annotation
 
-    .line 91
+    .line 96
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mLegacySupportedBeautyType:Ljava/util/List;
 
     if-eqz v0, :cond_0
@@ -226,25 +226,25 @@
 
     if-nez v0, :cond_0
 
-    .line 92
+    .line 97
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mLegacySupportedBeautyType:Ljava/util/List;
 
     return-object v0
 
-    .line 94
+    .line 99
     :cond_0
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mLegacySupportedBeautyType:Ljava/util/List;
 
     if-nez v0, :cond_1
 
-    .line 95
+    .line 100
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     sput-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mLegacySupportedBeautyType:Ljava/util/List;
 
-    .line 97
+    .line 102
     :cond_1
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mLegacySupportedBeautyType:Ljava/util/List;
 
@@ -254,7 +254,7 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
 
-    .line 98
+    .line 103
     sget-object v0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mLegacySupportedBeautyType:Ljava/util/List;
 
     return-object v0
@@ -289,6 +289,10 @@
     iget v0, p0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBeautyType:I
 
     const/4 v1, 0x5
+
+    if-eq v0, v1, :cond_2
+
+    const/4 v1, 0x7
 
     if-eq v0, v1, :cond_1
 
@@ -334,8 +338,26 @@
     .line 46
     goto :goto_0
 
-    .line 53
+    .line 58
     :cond_1
+    new-instance v0, Lcom/android/camera/fragment/beauty/LiveBeautyModeSetting;
+
+    invoke-direct {v0}, Lcom/android/camera/fragment/beauty/LiveBeautyModeSetting;-><init>()V
+
+    .line 59
+    iput-object v0, p0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mCurrentBeautySetting:Lcom/android/camera/fragment/beauty/IBeautySettingBusiness;
+
+    .line 60
+    iget-object v1, p0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBeautySettingBusinessArray:Landroid/util/SparseArray;
+
+    iget v2, p0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mBeautyType:I
+
+    invoke-virtual {v1, v2, v0}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
+
+    goto :goto_0
+
+    .line 53
+    :cond_2
     new-instance v0, Lcom/android/camera/fragment/beauty/BeautyBodySettingBusiness;
 
     invoke-direct {v0}, Lcom/android/camera/fragment/beauty/BeautyBodySettingBusiness;-><init>()V
@@ -350,11 +372,12 @@
 
     invoke-virtual {v1, v2, v0}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
 
-    .line 58
+    .line 56
+    nop
+
+    .line 63
     :goto_0
     return-void
-
-    nop
 
     :pswitch_data_0
     .packed-switch 0x2
@@ -377,7 +400,7 @@
 .method public getCurrentBeautySettingBusiness()Lcom/android/camera/fragment/beauty/IBeautySettingBusiness;
     .locals 1
 
-    .line 61
+    .line 66
     iget-object v0, p0, Lcom/android/camera/fragment/beauty/BeautySettingManager;->mCurrentBeautySetting:Lcom/android/camera/fragment/beauty/IBeautySettingBusiness;
 
     return-object v0

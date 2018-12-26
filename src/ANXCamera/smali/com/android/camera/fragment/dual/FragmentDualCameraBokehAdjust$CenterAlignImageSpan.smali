@@ -22,26 +22,26 @@
 .method public constructor <init>(Lcom/android/camera/fragment/dual/FragmentDualCameraBokehAdjust;Landroid/graphics/Bitmap;)V
     .locals 0
 
-    .line 237
+    .line 234
     iput-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraBokehAdjust$CenterAlignImageSpan;->this$0:Lcom/android/camera/fragment/dual/FragmentDualCameraBokehAdjust;
 
-    .line 238
+    .line 235
     invoke-direct {p0, p2}, Landroid/text/style/ImageSpan;-><init>(Landroid/graphics/Bitmap;)V
 
-    .line 239
+    .line 236
     return-void
 .end method
 
 .method public constructor <init>(Lcom/android/camera/fragment/dual/FragmentDualCameraBokehAdjust;Landroid/graphics/drawable/Drawable;)V
     .locals 0
 
-    .line 233
+    .line 230
     iput-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraBokehAdjust$CenterAlignImageSpan;->this$0:Lcom/android/camera/fragment/dual/FragmentDualCameraBokehAdjust;
 
-    .line 234
+    .line 231
     invoke-direct {p0, p2}, Landroid/text/style/ImageSpan;-><init>(Landroid/graphics/drawable/Drawable;)V
 
-    .line 235
+    .line 232
     return-void
 .end method
 
@@ -50,17 +50,17 @@
 .method public draw(Landroid/graphics/Canvas;Ljava/lang/CharSequence;IIFIIILandroid/graphics/Paint;)V
     .locals 0
 
-    .line 243
+    .line 240
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraBokehAdjust$CenterAlignImageSpan;->getDrawable()Landroid/graphics/drawable/Drawable;
 
     move-result-object p2
 
-    .line 244
+    .line 241
     invoke-virtual {p9}, Landroid/graphics/Paint;->getFontMetricsInt()Landroid/graphics/Paint$FontMetricsInt;
 
     move-result-object p3
 
-    .line 245
+    .line 242
     iget p4, p3, Landroid/graphics/Paint$FontMetricsInt;->descent:I
 
     add-int/2addr p4, p7
@@ -83,20 +83,20 @@
 
     sub-int/2addr p4, p3
 
-    .line 246
+    .line 243
     invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
 
-    .line 247
+    .line 244
     int-to-float p3, p4
 
     invoke-virtual {p1, p5, p3}, Landroid/graphics/Canvas;->translate(FF)V
 
-    .line 248
+    .line 245
     invoke-virtual {p2, p1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
 
-    .line 249
+    .line 246
     invoke-virtual {p1}, Landroid/graphics/Canvas;->restore()V
 
-    .line 250
+    .line 247
     return-void
 .end method

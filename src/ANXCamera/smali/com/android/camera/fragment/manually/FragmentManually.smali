@@ -332,7 +332,7 @@
     invoke-interface {v1, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     .line 304
-    invoke-static {}, Lcom/mi/config/b;->gr()Z
+    invoke-static {}, Lcom/mi/config/b;->gu()Z
 
     move-result v1
 
@@ -944,7 +944,7 @@
     .locals 1
 
     .line 317
-    const v0, 0x7f040022
+    const v0, 0x7f040023
 
     return v0
 .end method
@@ -974,7 +974,7 @@
     iput v1, v0, Landroid/view/ViewGroup$MarginLayoutParams;->bottomMargin:I
 
     .line 79
-    const v0, 0x7f0d006b
+    const v0, 0x7f0d0075
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -990,7 +990,7 @@
     invoke-virtual {v0, p0}, Landroid/widget/ImageView;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
     .line 82
-    const v0, 0x7f0d006c
+    const v0, 0x7f0d0076
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1003,7 +1003,7 @@
     .line 83
     iget-object p1, p0, Lcom/android/camera/fragment/manually/FragmentManually;->mManuallyParent:Landroid/view/ViewGroup;
 
-    const v0, 0x7f0d006e
+    const v0, 0x7f0d0078
 
     invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
 
@@ -1016,7 +1016,7 @@
     .line 84
     iget-object p1, p0, Lcom/android/camera/fragment/manually/FragmentManually;->mRecyclerViewLayout:Landroid/view/ViewGroup;
 
-    const v0, 0x7f0d006f
+    const v0, 0x7f0d0079
 
     invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
 
@@ -1398,7 +1398,7 @@
 
     move-result v0
 
-    const v1, 0x7f0d006b
+    const v1, 0x7f0d0075
 
     const/4 v2, 0x0
 
@@ -1417,7 +1417,7 @@
     move-result v0
 
     .line 199
-    const v1, 0x7f0b0190
+    const v1, 0x7f0b0197
 
     const/4 v3, -0x1
 
@@ -1459,7 +1459,7 @@
 
     move-result-object p1
 
-    const v1, 0x7f0d006d
+    const v1, 0x7f0d0077
 
     iget-object v2, p0, Lcom/android/camera/fragment/manually/FragmentManually;->mFragmentManuallyExtra:Lcom/android/camera/fragment/manually/FragmentManuallyExtra;
 
@@ -1810,11 +1810,11 @@
 
     :sswitch_data_0
     .sparse-switch
-        0x7f0b0064 -> :sswitch_4
-        0x7f0b00a6 -> :sswitch_3
-        0x7f0b012e -> :sswitch_2
-        0x7f0b015e -> :sswitch_1
-        0x7f0b0190 -> :sswitch_0
+        0x7f0b0066 -> :sswitch_4
+        0x7f0b00ac -> :sswitch_3
+        0x7f0b0135 -> :sswitch_2
+        0x7f0b0165 -> :sswitch_1
+        0x7f0b0197 -> :sswitch_0
     .end sparse-switch
 .end method
 
@@ -2007,7 +2007,7 @@
 
     move-result-object v1
 
-    const v2, 0x7f090096
+    const v2, 0x7f09009a
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 

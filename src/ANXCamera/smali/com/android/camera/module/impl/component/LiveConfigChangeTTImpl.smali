@@ -17,19 +17,17 @@
 
 
 # instance fields
-.field private final BEAUTY_LEVEL:[F
-
 .field private final SPEEDS:[F
 
 .field private mActivity:Lcom/android/camera/ActivityBase;
 
 .field private mAudioEncodeSettings:Lcom/ss/android/vesdk/VEAudioEncodeSettings;
 
+.field private mAuthResult:Lcom/ss/android/ttve/oauth/TEOAuthResult;
+
 .field private mBGMPath:Ljava/lang/String;
 
 .field private mBeautyImpl:Lcom/android/camera/protocol/ModeProtocol$OnFaceBeautyChangedProtocol;
-
-.field private mConcatPaths:[Ljava/lang/String;
 
 .field private mConcatVideoPath:Ljava/lang/String;
 
@@ -65,6 +63,8 @@
 
 .field private mPreviewSettings:Lcom/ss/android/vesdk/VEPreviewSettings;
 
+.field private mPreviewSurface:Landroid/view/Surface;
+
 .field private mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
 .field private mSpeed:F
@@ -73,7 +73,11 @@
 
 .field private mStickerImpl:Lcom/android/camera/protocol/ModeProtocol$StickerProtocol;
 
+.field private mStickerPath:Ljava/lang/String;
+
 .field private mTTNativeIsInit:Z
+
+.field private mTimeValue:Ljava/lang/String;
 
 .field private mTotalRecordingTime:J
 
@@ -84,7 +88,7 @@
 .method static constructor <clinit>()V
     .locals 1
 
-    .line 45
+    .line 46
     const-class v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
 
     invoke-virtual {v0}, Ljava/lang/Class;->getSimpleName()Ljava/lang/String;
@@ -102,40 +106,33 @@
     .line 84
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 60
+    .line 61
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
-    .line 62
+    .line 63
     const-wide/16 v0, 0x0
 
     iput-wide v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
 
-    .line 63
+    .line 64
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTTNativeIsInit:Z
 
-    .line 66
+    .line 67
     const/4 v1, 0x5
 
-    new-array v2, v1, [F
-
-    fill-array-data v2, :array_0
-
-    iput-object v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->SPEEDS:[F
-
-    .line 67
     new-array v1, v1, [F
 
-    fill-array-data v1, :array_1
+    fill-array-data v1, :array_0
 
-    iput-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->BEAUTY_LEVEL:[F
+    iput-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->SPEEDS:[F
 
-    .line 76
+    .line 75
     iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
     .line 85
@@ -198,63 +195,29 @@
     iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceTexture:Landroid/graphics/SurfaceTexture;
 
     .line 94
-    new-instance p1, Ljava/lang/StringBuilder;
-
-    invoke-direct {p1}, Ljava/lang/StringBuilder;-><init>()V
-
-    sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
-
-    invoke-virtual {p1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->musicList:Ljava/util/List;
-
-    const/4 v1, 0x2
-
-    invoke-interface {v0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Ljava/lang/String;
-
-    invoke-virtual {p1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p1
-
-    iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
-
-    .line 95
     const/16 p1, 0x3a98
 
     iput p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMaxVideoDurationInMs:I
 
-    .line 96
+    .line 95
     return-void
+
+    nop
 
     :array_0
     .array-data 4
-        0x40400000    # 3.0f
-        0x40000000    # 2.0f
-        0x3f800000    # 1.0f
-        0x3f000000    # 0.5f
         0x3ea8f5c3    # 0.33f
-    .end array-data
-
-    :array_1
-    .array-data 4
-        0x3e4ccccd    # 0.2f
-        0x3ecccccd    # 0.4f
-        0x3f19999a    # 0.6f
-        0x3f4ccccd    # 0.8f
+        0x3f000000    # 0.5f
         0x3f800000    # 1.0f
+        0x40000000    # 2.0f
+        0x40400000    # 3.0f
     .end array-data
 .end method
 
 .method static synthetic access$000()Ljava/lang/String;
     .locals 1
 
-    .line 44
+    .line 45
     sget-object v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->TAG:Ljava/lang/String;
 
     return-object v0
@@ -263,7 +226,7 @@
 .method static synthetic access$102(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;Z)Z
     .locals 0
 
-    .line 44
+    .line 45
     iput-boolean p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceReady:Z
 
     return p1
@@ -272,7 +235,7 @@
 .method static synthetic access$200(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Landroid/graphics/SurfaceTexture;
     .locals 0
 
-    .line 44
+    .line 45
     iget-object p0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceTexture:Landroid/graphics/SurfaceTexture;
 
     return-object p0
@@ -281,34 +244,70 @@
 .method static synthetic access$302(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;Z)Z
     .locals 0
 
-    .line 44
+    .line 45
     iput-boolean p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTTNativeIsInit:Z
 
     return p1
 .end method
 
-.method static synthetic access$400(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Lcom/ss/android/vesdk/TERecorder;
+.method static synthetic access$400(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Ljava/lang/String;
     .locals 0
 
-    .line 44
+    .line 45
+    iget-object p0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mStickerPath:Ljava/lang/String;
+
+    return-object p0
+.end method
+
+.method static synthetic access$500(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Lcom/ss/android/vesdk/TERecorder;
+    .locals 0
+
+    .line 45
     iget-object p0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     return-object p0
 .end method
 
-.method static synthetic access$500(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)F
+.method static synthetic access$600(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Landroid/content/Context;
     .locals 0
 
-    .line 44
+    .line 45
+    iget-object p0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
+
+    return-object p0
+.end method
+
+.method static synthetic access$700(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Ljava/lang/String;
+    .locals 0
+
+    .line 45
+    iget-object p0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTimeValue:Ljava/lang/String;
+
+    return-object p0
+.end method
+
+.method static synthetic access$702(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;Ljava/lang/String;)Ljava/lang/String;
+    .locals 0
+
+    .line 45
+    iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTimeValue:Ljava/lang/String;
+
+    return-object p1
+.end method
+
+.method static synthetic access$800(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)F
+    .locals 0
+
+    .line 45
     iget p0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mSpeed:F
 
     return p0
 .end method
 
-.method static synthetic access$600(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Lcom/android/camera/ActivityBase;
+.method static synthetic access$900(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)Lcom/android/camera/ActivityBase;
     .locals 0
 
-    .line 44
+    .line 45
     iget-object p0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mActivity:Lcom/android/camera/ActivityBase;
 
     return-object p0
@@ -317,7 +316,7 @@
 .method public static create(Lcom/android/camera/ActivityBase;)Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
     .locals 1
 
-    .line 99
+    .line 98
     new-instance v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;
 
     invoke-direct {v0, p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;-><init>(Lcom/android/camera/ActivityBase;)V
@@ -328,25 +327,100 @@
 .method private deleteLastSegment()V
     .locals 1
 
-    .line 128
+    .line 147
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     if-nez v0, :cond_0
 
     return-void
 
-    .line 129
+    .line 148
     :cond_0
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->deleteLastFrag()V
 
-    .line 130
+    .line 149
+    return-void
+.end method
+
+.method private resumeEffect()V
+    .locals 3
+
+    .line 187
+    invoke-static {}, Lcom/android/camera/CameraSettings;->getCurrentLiveMusic()[Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 188
+    const/4 v1, 0x0
+
+    aget-object v2, v0, v1
+
+    invoke-virtual {v2}, Ljava/lang/String;->isEmpty()Z
+
+    move-result v2
+
+    if-nez v2, :cond_0
+
+    .line 189
+    aget-object v0, v0, v1
+
+    invoke-virtual {p0, v0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->onBGMChanged(Ljava/lang/String;)V
+
+    .line 192
+    :cond_0
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->STICKER_RESOURCE_DIR:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-static {}, Lcom/android/camera/CameraSettings;->getCurrentLiveSticker()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    iput-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mStickerPath:Ljava/lang/String;
+
+    .line 193
+    invoke-static {}, Lcom/android/camera/CameraSettings;->getCurrentLiveSpeed()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 194
+    invoke-static {v0}, Ljava/lang/Integer;->valueOf(Ljava/lang/String;)Ljava/lang/Integer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
+
+    move-result v0
+
+    invoke-virtual {p0, v0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->setRecordSpeed(I)V
+
+    .line 195
     return-void
 .end method
 
 
 # virtual methods
+.method public getAuthResult()Lcom/ss/android/ttve/oauth/TEOAuthResult;
+    .locals 1
+
+    .line 343
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mAuthResult:Lcom/ss/android/ttve/oauth/TEOAuthResult;
+
+    return-object v0
+.end method
+
 .method public getConcatResult()Landroid/util/Pair;
     .locals 3
     .annotation system Ldalvik/annotation/Signature;
@@ -359,22 +433,32 @@
         }
     .end annotation
 
-    .line 418
-    new-instance v0, Landroid/util/Pair;
+    .line 495
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mConcatWavPath:Ljava/lang/String;
 
-    iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mConcatVideoPath:Ljava/lang/String;
+    .line 496
+    iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
 
-    iget-object v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
+    if-eqz v1, :cond_0
 
-    invoke-direct {v0, v1, v2}, Landroid/util/Pair;-><init>(Ljava/lang/Object;Ljava/lang/Object;)V
+    .line 497
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
 
-    return-object v0
+    .line 499
+    :cond_0
+    new-instance v1, Landroid/util/Pair;
+
+    iget-object v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mConcatVideoPath:Ljava/lang/String;
+
+    invoke-direct {v1, v2, v0}, Landroid/util/Pair;-><init>(Ljava/lang/Object;Ljava/lang/Object;)V
+
+    return-object v1
 .end method
 
 .method public getInputSurfaceTexture()Landroid/graphics/SurfaceTexture;
     .locals 1
 
-    .line 213
+    .line 255
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceTexture:Landroid/graphics/SurfaceTexture;
 
     return-object v0
@@ -383,34 +467,70 @@
 .method public getRecordSpeed()F
     .locals 1
 
-    .line 429
+    .line 510
     iget v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mSpeed:F
 
     return v0
 .end method
 
-.method public getStartRecordintTime()J
+.method public getStartRecordingTime()J
     .locals 2
 
-    .line 439
+    .line 525
     iget-wide v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mStartTime:J
 
     return-wide v0
 .end method
 
-.method public getTotalRecordintTime()J
+.method public getTimeValue()Ljava/lang/String;
+    .locals 1
+
+    .line 515
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTimeValue:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public getTotalRecordingTime()J
     .locals 2
 
-    .line 434
+    .line 520
     iget-wide v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
 
     return-wide v0
 .end method
 
+.method public hasSegments()Z
+    .locals 1
+
+    .line 490
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
+
+    invoke-interface {v0}, Ljava/util/List;->isEmpty()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    const/4 v0, 0x1
+
+    goto :goto_0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    :goto_0
+    return v0
+.end method
+
 .method public initPreview(IIZI)V
     .locals 3
 
-    .line 133
+    .line 153
     const-string v0, "live initPreview:"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -429,7 +549,7 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 134
+    .line 154
     new-instance v0, Lcom/ss/android/vesdk/VEPreviewSettings;
 
     if-eqz p3, :cond_0
@@ -450,17 +570,17 @@
 
     iput-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mPreviewSettings:Lcom/ss/android/vesdk/VEPreviewSettings;
 
-    .line 135
+    .line 155
     iget-object p3, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceTexture:Landroid/graphics/SurfaceTexture;
 
     invoke-virtual {p3, p1, p2}, Landroid/graphics/SurfaceTexture;->setDefaultBufferSize(II)V
 
-    .line 136
-    iget-boolean p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInitialized:Z
+    .line 156
+    iget-boolean p3, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInitialized:Z
 
-    if-eqz p1, :cond_1
+    if-eqz p3, :cond_1
 
-    .line 137
+    .line 157
     iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     iget-object p2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mPreviewSettings:Lcom/ss/android/vesdk/VEPreviewSettings;
@@ -469,83 +589,79 @@
 
     goto :goto_2
 
-    .line 139
+    .line 159
     :cond_1
-    new-instance p1, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
+    new-instance p3, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
 
-    invoke-direct {p1}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;-><init>()V
+    invoke-direct {p3}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;-><init>()V
 
-    .line 140
-    const/4 p2, 0x1
+    .line 160
+    const/4 p4, 0x1
 
-    invoke-virtual {p1, p2}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setUsage(I)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
+    invoke-virtual {p3, p4}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setUsage(I)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
 
-    move-result-object p1
+    move-result-object p3
 
-    .line 141
-    const/4 p3, 0x0
+    .line 161
+    const/4 v0, 0x0
 
-    invoke-virtual {p1, p3}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->isUseCloudConfig(Z)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
+    invoke-virtual {p3, v0}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->isUseCloudConfig(Z)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
 
-    move-result-object p1
+    move-result-object p3
 
-    .line 142
-    invoke-virtual {p1, p2}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setHwEnc(Z)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
+    .line 162
+    invoke-virtual {p3, p4}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setHwEnc(Z)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
 
-    move-result-object p1
+    move-result-object p3
 
-    sget-object p4, Lcom/ss/android/vesdk/VEVideoEncodeSettings$ENCODE_PROFILE;->ENCODE_PROFILE_MAIN:Lcom/ss/android/vesdk/VEVideoEncodeSettings$ENCODE_PROFILE;
+    sget-object v1, Lcom/ss/android/vesdk/VEVideoEncodeSettings$ENCODE_PROFILE;->ENCODE_PROFILE_MAIN:Lcom/ss/android/vesdk/VEVideoEncodeSettings$ENCODE_PROFILE;
 
-    .line 143
-    invoke-virtual {p1, p4}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setEncodeProfile(Lcom/ss/android/vesdk/VEVideoEncodeSettings$ENCODE_PROFILE;)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
+    .line 163
+    invoke-virtual {p3, v1}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setEncodeProfile(Lcom/ss/android/vesdk/VEVideoEncodeSettings$ENCODE_PROFILE;)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
 
-    move-result-object p1
+    move-result-object p3
 
-    const/16 p4, 0x240
-
-    const/16 v0, 0x400
-
-    .line 144
-    invoke-virtual {p1, p4, v0}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setVideoRes(II)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
+    .line 164
+    invoke-virtual {p3, p2, p1}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->setVideoRes(II)Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;
 
     move-result-object p1
 
-    .line 145
+    .line 165
     invoke-virtual {p1}, Lcom/ss/android/vesdk/VEVideoEncodeSettings$Builder;->build()Lcom/ss/android/vesdk/VEVideoEncodeSettings;
 
     move-result-object p1
 
     iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mVideoEncodeSettings:Lcom/ss/android/vesdk/VEVideoEncodeSettings;
 
-    .line 147
+    .line 167
     iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
-    iget-object p4, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mVideoEncodeSettings:Lcom/ss/android/vesdk/VEVideoEncodeSettings;
+    iget-object p2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mVideoEncodeSettings:Lcom/ss/android/vesdk/VEVideoEncodeSettings;
 
-    const/4 v0, 0x0
+    const/4 p3, 0x0
 
     iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mPreviewSettings:Lcom/ss/android/vesdk/VEPreviewSettings;
 
-    invoke-virtual {p1, p4, v0, v1}, Lcom/ss/android/vesdk/TERecorder;->init(Lcom/ss/android/vesdk/VEVideoEncodeSettings;Lcom/ss/android/vesdk/VEAudioEncodeSettings;Lcom/ss/android/vesdk/VEPreviewSettings;)I
+    invoke-virtual {p1, p2, p3, v1}, Lcom/ss/android/vesdk/TERecorder;->init(Lcom/ss/android/vesdk/VEVideoEncodeSettings;Lcom/ss/android/vesdk/VEAudioEncodeSettings;Lcom/ss/android/vesdk/VEPreviewSettings;)I
 
-    .line 148
+    .line 168
     iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {p1}, Lcom/ss/android/vesdk/TERecorder;->tryRestore()I
 
-    .line 149
+    .line 169
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemRunning()Lcom/android/camera/data/data/runing/DataItemRunning;
 
     move-result-object p1
 
-    .line 150
+    .line 170
     invoke-virtual {p1}, Lcom/android/camera/data/data/runing/DataItemRunning;->getLiveConfigIsNeedRestore()Z
 
     move-result p1
 
     if-eqz p1, :cond_2
 
-    .line 151
+    .line 171
     iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {p1}, Lcom/ss/android/vesdk/TERecorder;->getSegmentInfo()Ljava/util/List;
@@ -554,70 +670,61 @@
 
     iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
-    .line 152
+    .line 172
     iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
     invoke-static {p1}, Lcom/ss/android/medialib/model/TimeSpeedModel;->calculateRealTime(Ljava/util/List;)I
 
     move-result p1
 
-    int-to-long v0, p1
+    int-to-long p1, p1
 
-    iput-wide v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
+    iput-wide p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
 
-    .line 154
-    iput-boolean p2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
+    .line 174
+    iput-boolean p4, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
 
-    .line 155
-    iput-boolean p3, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
+    .line 175
+    iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
     goto :goto_1
 
-    .line 157
+    .line 177
     :cond_2
     iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {p1}, Lcom/ss/android/vesdk/TERecorder;->clearEnv()V
 
-    .line 159
+    .line 179
     :goto_1
-    const-string p1, ""
+    iput-boolean p4, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInitialized:Z
 
-    invoke-virtual {p0, p1}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->onBGMChanged(Ljava/lang/String;)V
-
-    .line 160
-    iput-boolean p2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInitialized:Z
-
-    .line 162
+    .line 183
     :goto_2
+    invoke-direct {p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->resumeEffect()V
+
+    .line 184
     return-void
 .end method
 
 .method public initResource()V
     .locals 5
 
-    .line 245
-    const-string v0, "live test :"
-
-    const-string v1, "01"
-
-    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 246
+    .line 289
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
     sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->ROOT_DIR:Ljava/lang/String;
 
     invoke-static {v0, v1}, Lcom/ss/android/vesdk/VESDK;->init(Landroid/content/Context;Ljava/lang/String;)V
 
-    .line 248
+    .line 291
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
     invoke-static {v0}, Landroid/preference/PreferenceManager;->getDefaultSharedPreferences(Landroid/content/Context;)Landroid/content/SharedPreferences;
 
     move-result-object v0
 
-    .line 249
+    .line 292
     const-string v1, "activationCode"
 
     const-string v2, ""
@@ -626,7 +733,7 @@
 
     move-result-object v1
 
-    .line 250
+    .line 293
     iget-object v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
     const-string v3, "36ed10517245d52898e49b5e9cff6184dbaed4d373bf673cadeccd2322c1f0c0ea34824b4c3be2a18823fedfff368e2670e7361fc9f6b32e27c7bd16445821f6"
@@ -637,10 +744,16 @@
 
     move-result-object v1
 
-    .line 251
+    iput-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mAuthResult:Lcom/ss/android/ttve/oauth/TEOAuthResult;
+
+    .line 294
+    iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mAuthResult:Lcom/ss/android/ttve/oauth/TEOAuthResult;
+
     sget-object v2, Lcom/ss/android/ttve/oauth/TEOAuthResult;->OK:Lcom/ss/android/ttve/oauth/TEOAuthResult;
 
     if-eq v1, v2, :cond_1
+
+    iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mAuthResult:Lcom/ss/android/ttve/oauth/TEOAuthResult;
 
     sget-object v2, Lcom/ss/android/ttve/oauth/TEOAuthResult;->TBD:Lcom/ss/android/ttve/oauth/TEOAuthResult;
 
@@ -648,24 +761,24 @@
 
     goto :goto_0
 
-    .line 256
+    .line 299
     :cond_0
-    const-string v0, "live active:"
+    sget-object v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->TAG:Ljava/lang/String;
 
-    const-string v1, "failed"
+    const-string v1, "activation failed"
 
-    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_1
 
-    .line 252
+    .line 295
     :cond_1
     :goto_0
     invoke-static {}, Lcom/ss/android/vesdk/VESDK;->getActivationCode()Ljava/lang/String;
 
     move-result-object v1
 
-    .line 253
+    .line 296
     invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
 
     move-result-object v0
@@ -678,18 +791,15 @@
 
     invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
 
-    .line 254
-    const-string v0, "live active:"
+    .line 297
+    sget-object v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->TAG:Ljava/lang/String;
 
-    const-string v1, "success"
+    const-string v1, "activation success"
 
-    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 259
+    .line 302
     :goto_1
-    invoke-static {}, Lcom/ss/android/vesdk/VESDK;->needUpdateEffectModelFiles()Z
-
-    .line 263
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ROOT_DIR:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->hasDir(Ljava/lang/String;)Z
@@ -698,90 +808,88 @@
 
     if-eqz v0, :cond_2
 
-    .line 264
+    .line 303
     return-void
 
-    .line 267
+    .line 306
     :cond_2
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ROOT_DIR:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->delDir(Ljava/lang/String;)Z
 
-    .line 268
-    const-string v0, "live test :"
-
-    const-string v1, "02"
-
-    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 270
+    .line 309
     :try_start_0
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->FILTER_DIR:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->makeDir(Ljava/lang/String;)Z
 
-    .line 271
+    .line 310
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->RESOURCE_DIR:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->makeDir(Ljava/lang/String;)Z
 
-    .line 272
+    .line 311
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->RESHAPE_DIR_NAME:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->makeDir(Ljava/lang/String;)Z
 
-    .line 273
+    .line 312
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->VIDEO_TMP:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->makeDir(Ljava/lang/String;)Z
 
-    .line 274
-    sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
+    .line 313
+    sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_LOCAL:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->makeDir(Ljava/lang/String;)Z
 
-    .line 275
+    .line 314
+    sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_ONLINE:Ljava/lang/String;
+
+    invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->makeDir(Ljava/lang/String;)Z
+
+    .line 315
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ROOT_DIR:Ljava/lang/String;
 
     invoke-static {v0}, Lcom/android/camera/module/impl/component/FileUtils;->makeSureNoMedia(Ljava/lang/String;)V
 
-    .line 277
+    .line 321
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
-    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_LOCAL:Ljava/lang/String;
 
-    const-string v2, "music00001.mp3"
+    const-string v2, "Dynamic.mp3"
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/module/impl/component/FileUtils;->copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 278
+    .line 322
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
-    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_LOCAL:Ljava/lang/String;
 
-    const-string v2, "music00002.mp3"
+    const-string v2, "Happy.mp3"
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/module/impl/component/FileUtils;->copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 279
+    .line 323
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
-    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_LOCAL:Ljava/lang/String;
 
-    const-string v2, "music00003.mp3"
+    const-string v2, "Happy.png"
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/module/impl/component/FileUtils;->copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 280
+    .line 324
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
-    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_LOCAL:Ljava/lang/String;
 
-    const-string v2, "music00004.mp3"
+    const-string v2, "Dynamic.png"
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/module/impl/component/FileUtils;->copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 282
+    .line 326
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
@@ -801,7 +909,7 @@
 
     check-cast v1, Ljava/lang/String;
 
-    .line 283
+    .line 327
     iget-object v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -822,10 +930,10 @@
 
     invoke-static {v2, v1, v3}, Lcom/android/camera/module/impl/component/FileUtils;->UnZipAssetFolder(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 284
+    .line 328
     goto :goto_2
 
-    .line 285
+    .line 329
     :cond_3
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
@@ -835,7 +943,7 @@
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/module/impl/component/FileUtils;->UnZipAssetFolder(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 286
+    .line 330
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
 
     const-string v1, "filter.zip"
@@ -843,28 +951,48 @@
     sget-object v2, Lcom/android/camera/module/impl/component/FileUtils;->RESOURCE_DIR:Ljava/lang/String;
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/module/impl/component/FileUtils;->UnZipAssetFolder(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 331
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mContext:Landroid/content/Context;
+
+    const-string v1, "FaceReshape_V2.zip"
+
+    sget-object v2, Lcom/android/camera/module/impl/component/FileUtils;->RESOURCE_DIR:Ljava/lang/String;
+
+    invoke-static {v0, v1, v2}, Lcom/android/camera/module/impl/component/FileUtils;->UnZipAssetFolder(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 289
+    .line 334
     goto :goto_3
 
-    .line 287
+    .line 332
     :catch_0
     move-exception v0
 
-    .line 288
+    .line 333
     invoke-virtual {v0}, Ljava/lang/Exception;->printStackTrace()V
 
-    .line 291
+    .line 336
     :goto_3
+    invoke-static {}, Lcom/ss/android/vesdk/VESDK;->needUpdateEffectModelFiles()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_4
+
+    .line 337
+    invoke-static {}, Lcom/ss/android/vesdk/VESDK;->updateEffectModelFiles()V
+
+    .line 339
+    :cond_4
     return-void
 .end method
 
 .method public isRecording()Z
     .locals 1
 
-    .line 231
+    .line 274
     iget-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
     return v0
@@ -873,7 +1001,7 @@
 .method public isRecordingPaused()Z
     .locals 1
 
-    .line 236
+    .line 279
     iget-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
 
     return v0
@@ -882,15 +1010,15 @@
 .method public onBGMChanged(Ljava/lang/String;)V
     .locals 4
 
-    .line 357
+    .line 416
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     if-eqz v0, :cond_0
 
-    .line 358
+    .line 417
     iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
 
-    .line 359
+    .line 418
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     const/4 v1, 0x0
@@ -901,43 +1029,64 @@
 
     invoke-virtual {v0, p1, v1, v2, v3}, Lcom/ss/android/vesdk/TERecorder;->setRecordBGM(Ljava/lang/String;III)I
 
-    .line 361
+    .line 420
     :cond_0
+    return-void
+.end method
+
+.method public onDeviceRotationChange([F)V
+    .locals 1
+
+    .line 448
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    if-nez v0, :cond_0
+
+    .line 449
+    return-void
+
+    .line 451
+    :cond_0
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    invoke-virtual {v0, p1}, Lcom/ss/android/vesdk/TERecorder;->setDeviceRotation([F)I
+
+    .line 452
     return-void
 .end method
 
 .method public onRecordConcat()V
     .locals 2
 
-    .line 377
+    .line 441
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->concat()[Ljava/lang/String;
 
     move-result-object v0
 
-    .line 378
+    .line 442
     const/4 v1, 0x0
 
     aget-object v1, v0, v1
 
     iput-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mConcatVideoPath:Ljava/lang/String;
 
-    .line 379
+    .line 443
     const/4 v1, 0x1
 
     aget-object v0, v0, v1
 
     iput-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mConcatWavPath:Ljava/lang/String;
 
-    .line 380
+    .line 444
     return-void
 .end method
 
 .method public onRecordPause()V
     .locals 6
 
-    .line 309
+    .line 365
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     if-eqz v0, :cond_3
@@ -948,20 +1097,20 @@
 
     goto :goto_1
 
-    .line 313
+    .line 369
     :cond_0
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->stopRecord()I
 
-    .line 315
+    .line 371
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->getEndFrameTime()J
 
     move-result-wide v0
 
-    .line 318
+    .line 374
     const-wide/16 v2, 0xa
 
     cmp-long v2, v0, v2
@@ -974,12 +1123,12 @@
 
     if-ltz v0, :cond_1
 
-    .line 319
+    .line 375
     invoke-direct {p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->deleteLastSegment()V
 
     goto :goto_0
 
-    .line 321
+    .line 377
     :cond_1
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
@@ -989,7 +1138,7 @@
 
     iput-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
-    .line 322
+    .line 378
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
@@ -998,7 +1147,7 @@
 
     sub-long/2addr v0, v2
 
-    .line 323
+    .line 379
     iget-wide v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
 
     long-to-double v2, v2
@@ -1021,32 +1170,32 @@
 
     iput-wide v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
 
-    .line 326
+    .line 382
     :goto_0
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
 
-    .line 327
+    .line 383
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
-    .line 328
+    .line 384
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mCountDownTimer:Landroid/os/CountDownTimer;
 
     if-eqz v0, :cond_2
 
-    .line 329
+    .line 385
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mCountDownTimer:Landroid/os/CountDownTimer;
 
     invoke-virtual {v0}, Landroid/os/CountDownTimer;->cancel()V
 
-    .line 331
+    .line 387
     :cond_2
     return-void
 
-    .line 310
+    .line 366
     :cond_3
     :goto_1
     return-void
@@ -1055,7 +1204,7 @@
 .method public onRecordResume()V
     .locals 2
 
-    .line 335
+    .line 391
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     if-eqz v0, :cond_1
@@ -1066,31 +1215,31 @@
 
     goto :goto_0
 
-    .line 338
+    .line 394
     :cond_0
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
 
-    .line 339
+    .line 395
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
-    .line 340
+    .line 396
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     iget v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mSpeed:F
 
     invoke-virtual {v0, v1}, Lcom/ss/android/vesdk/TERecorder;->startRecord(F)I
 
-    .line 341
+    .line 397
     invoke-virtual {p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->updateRecordingTime()V
 
-    .line 342
+    .line 398
     return-void
 
-    .line 336
+    .line 392
     :cond_1
     :goto_0
     return-void
@@ -1099,21 +1248,22 @@
 .method public onRecordReverse()V
     .locals 2
 
-    .line 346
+    .line 402
     sget-object v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->TAG:Ljava/lang/String;
 
     const-string v1, "delete last frag !!!"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 347
+    .line 403
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     if-nez v0, :cond_0
 
+    .line 404
     return-void
 
-    .line 348
+    .line 406
     :cond_0
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
@@ -1123,7 +1273,7 @@
 
     iput-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
-    .line 349
+    .line 407
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->size()I
@@ -1132,7 +1282,7 @@
 
     if-lez v0, :cond_1
 
-    .line 350
+    .line 408
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
     iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
@@ -1149,7 +1299,7 @@
 
     check-cast v0, Lcom/ss/android/medialib/model/TimeSpeedModel;
 
-    .line 351
+    .line 409
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
 
     invoke-static {v0}, Lcom/ss/android/medialib/model/TimeSpeedModel;->calculateRealTime(Ljava/util/List;)I
@@ -1160,28 +1310,28 @@
 
     iput-wide v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
 
-    .line 353
+    .line 411
     :cond_1
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->deleteLastFrag()V
 
-    .line 354
+    .line 412
     return-void
 .end method
 
 .method public onRecordStart()V
-    .locals 3
+    .locals 5
 
-    .line 295
+    .line 348
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     if-nez v0, :cond_0
 
-    .line 296
+    .line 349
     return-void
 
-    .line 298
+    .line 351
     :cond_0
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemRunning()Lcom/android/camera/data/data/runing/DataItemRunning;
 
@@ -1191,40 +1341,55 @@
 
     invoke-virtual {v0, v1}, Lcom/android/camera/data/data/runing/DataItemRunning;->setLiveConfigIsNeedRestore(Z)V
 
-    .line 299
+    .line 352
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     iget v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mSpeed:F
 
     invoke-virtual {v0, v2}, Lcom/ss/android/vesdk/TERecorder;->startRecord(F)I
 
-    .line 302
-    const/4 v0, 0x0
+    .line 354
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
 
-    iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
+    const/4 v2, 0x0
 
-    .line 303
+    if-eqz v0, :cond_1
+
+    .line 355
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    iget-object v3, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
+
+    const/16 v4, 0x3a98
+
+    invoke-virtual {v0, v3, v2, v4, v1}, Lcom/ss/android/vesdk/TERecorder;->setRecordBGM(Ljava/lang/String;III)I
+
+    .line 358
+    :cond_1
+    iput-boolean v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
+
+    .line 359
     iput-boolean v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
-    .line 304
+    .line 360
     invoke-virtual {p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->updateRecordingTime()V
 
-    .line 305
+    .line 361
     return-void
 .end method
 
 .method public onRecordStop()V
-    .locals 2
+    .locals 4
 
-    .line 365
+    .line 424
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     if-nez v0, :cond_0
 
-    .line 366
+    .line 425
     return-void
 
-    .line 368
+    .line 427
     :cond_0
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemRunning()Lcom/android/camera/data/data/runing/DataItemRunning;
 
@@ -1234,23 +1399,48 @@
 
     invoke-virtual {v0, v1}, Lcom/android/camera/data/data/runing/DataItemRunning;->setLiveConfigIsNeedRestore(Z)V
 
-    .line 369
+    .line 428
     invoke-virtual {p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->onRecordPause()V
 
-    .line 370
+    .line 429
+    const-wide/16 v2, 0x0
+
+    iput-wide v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTotalRecordingTime:J
+
+    .line 430
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mDurings:Ljava/util/List;
+
+    invoke-interface {v0}, Ljava/util/List;->clear()V
+
+    .line 431
     iput-boolean v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecordingPaused:Z
 
-    .line 371
+    .line 432
     iput-boolean v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
-    .line 372
+    .line 433
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->clearEnv()V
+
+    .line 435
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->stopPreview()I
+
+    .line 436
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mPreviewSurface:Landroid/view/Surface;
+
+    invoke-virtual {p0, v0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->startPreview(Landroid/view/Surface;)V
+
+    .line 437
     return-void
 .end method
 
 .method public registerProtocol()V
     .locals 2
 
-    .line 105
+    .line 104
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
@@ -1259,109 +1449,180 @@
 
     invoke-virtual {v0, v1, p0}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->attachProtocol(ILcom/android/camera/protocol/ModeProtocol$BaseProtocol;)V
 
-    .line 106
+    .line 105
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mStickerImpl:Lcom/android/camera/protocol/ModeProtocol$StickerProtocol;
 
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$StickerProtocol;->registerProtocol()V
 
-    .line 107
+    .line 106
     return-void
 .end method
 
 .method public release()V
     .locals 2
 
-    .line 217
+    .line 260
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
-
-    if-eqz v0, :cond_1
-
-    .line 218
-    iget-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
     if-eqz v0, :cond_0
 
-    .line 219
-    invoke-virtual {p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->onRecordPause()V
-
-    .line 220
-    :cond_0
+    .line 261
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->stopPreview()I
 
-    .line 221
+    .line 262
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/ss/android/vesdk/TERecorder;->setRecrodStateCallback(Lcom/ss/android/vesdk/VEListener$VERecorderStateListener;)V
 
-    .line 222
+    .line 263
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0, v1}, Lcom/ss/android/vesdk/TERecorder;->setRenderCallback(Lcom/ss/android/vesdk/IRenderCallback;)V
 
-    .line 223
+    .line 264
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0}, Lcom/ss/android/vesdk/TERecorder;->destroy()V
 
-    .line 224
+    .line 266
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceReady:Z
+
+    .line 267
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceTexture:Landroid/graphics/SurfaceTexture;
 
     invoke-virtual {v0}, Landroid/graphics/SurfaceTexture;->release()V
 
-    .line 225
+    .line 268
     iput-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
-    .line 227
-    :cond_1
+    .line 270
+    :cond_0
     return-void
 .end method
 
-.method public setBeautyLevel(I)V
-    .locals 3
+.method public setBeautify(ZF)V
+    .locals 2
 
-    .line 122
+    .line 125
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_2
 
     iget-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTTNativeIsInit:Z
 
     if-nez v0, :cond_0
 
+    goto :goto_1
+
+    .line 126
+    :cond_0
+    if-eqz p1, :cond_1
+
+    .line 127
+    iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    const/4 v0, 0x3
+
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->BEAUTY_12_DIR:Ljava/lang/String;
+
+    invoke-virtual {p1, v0, v1}, Lcom/ss/android/vesdk/TERecorder;->setBeautyFace(ILjava/lang/String;)I
+
+    .line 128
+    iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    invoke-virtual {p1, p2, p2}, Lcom/ss/android/vesdk/TERecorder;->setBeautyFaceIntensity(FF)I
+
     goto :goto_0
 
-    .line 123
-    :cond_0
-    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+    .line 130
+    :cond_1
+    iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
-    const/4 v1, 0x3
+    const/4 p2, 0x0
 
-    sget-object v2, Lcom/android/camera/module/impl/component/FileUtils;->BEAUTY_12_DIR:Ljava/lang/String;
+    const-string v0, ""
 
-    invoke-virtual {v0, v1, v2}, Lcom/ss/android/vesdk/TERecorder;->setBeautyFace(ILjava/lang/String;)I
+    invoke-virtual {p1, p2, v0}, Lcom/ss/android/vesdk/TERecorder;->setBeautyFace(ILjava/lang/String;)I
 
-    .line 124
-    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
-
-    iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->BEAUTY_LEVEL:[F
-
-    aget v1, v1, p1
-
-    iget-object v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->BEAUTY_LEVEL:[F
-
-    aget p1, v2, p1
-
-    invoke-virtual {v0, v1, p1}, Lcom/ss/android/vesdk/TERecorder;->setBeautyFaceIntensity(FF)I
-
-    .line 125
+    .line 132
+    :goto_0
     return-void
 
-    .line 122
-    :cond_1
+    .line 125
+    :cond_2
+    :goto_1
+    return-void
+.end method
+
+.method public setBeautyFaceReshape(FF)V
+    .locals 2
+
+    .line 143
+    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->RESHAPE_DIR_NAME:Ljava/lang/String;
+
+    invoke-virtual {v0, v1, p1, p2}, Lcom/ss/android/vesdk/TERecorder;->setFaceReshape(Ljava/lang/String;FF)I
+
+    .line 144
+    return-void
+.end method
+
+.method public setFilter(ZLjava/lang/String;)V
+    .locals 2
+
+    .line 530
+    const/high16 v0, 0x3f800000    # 1.0f
+
+    if-eqz p1, :cond_0
+
+    invoke-static {p2}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result p1
+
+    if-nez p1, :cond_0
+
+    .line 531
+    new-instance p1, Ljava/lang/StringBuilder;
+
+    invoke-direct {p1}, Ljava/lang/StringBuilder;-><init>()V
+
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->FILTER_DIR:Ljava/lang/String;
+
+    invoke-virtual {p1, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    sget-object p2, Ljava/io/File;->separator:Ljava/lang/String;
+
+    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    .line 532
+    iget-object p2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    invoke-virtual {p2, p1, v0}, Lcom/ss/android/vesdk/TERecorder;->setFilter(Ljava/lang/String;F)I
+
+    goto :goto_0
+
+    .line 534
+    :cond_0
+    iget-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
+
+    const-string p2, ""
+
+    invoke-virtual {p1, p2, v0}, Lcom/ss/android/vesdk/TERecorder;->setFilter(Ljava/lang/String;F)I
+
+    .line 536
     :goto_0
     return-void
 .end method
@@ -1369,86 +1630,38 @@
 .method public setRecordSpeed(I)V
     .locals 1
 
-    .line 424
+    .line 505
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->SPEEDS:[F
 
     aget p1, v0, p1
 
     iput p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mSpeed:F
 
-    .line 425
-    return-void
-.end method
-
-.method public setSticker(I)V
-    .locals 3
-
-    .line 117
-    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
-
-    if-eqz v0, :cond_1
-
-    iget-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mTTNativeIsInit:Z
-
-    if-nez v0, :cond_0
-
-    goto :goto_0
-
-    .line 118
-    :cond_0
-    iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
-
-    new-instance v1, Ljava/lang/StringBuilder;
-
-    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
-
-    sget-object v2, Lcom/android/camera/module/impl/component/FileUtils;->STICKER_RESOURCE_DIR:Ljava/lang/String;
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    sget-object v2, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
-
-    invoke-interface {v2, p1}, Ljava/util/List;->get(I)Ljava/lang/Object;
-
-    move-result-object p1
-
-    check-cast p1, Ljava/lang/String;
-
-    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p1
-
-    invoke-virtual {v0, p1}, Lcom/ss/android/vesdk/TERecorder;->switchEffect(Ljava/lang/String;)I
-
-    .line 119
-    return-void
-
-    .line 117
-    :cond_1
-    :goto_0
+    .line 506
     return-void
 .end method
 
 .method public startPreview(Landroid/view/Surface;)V
-    .locals 6
+    .locals 3
 
-    .line 165
+    .line 198
     iget-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mInputSurfaceReady:Z
 
     if-eqz v0, :cond_0
 
-    .line 166
+    .line 199
     return-void
 
-    .line 169
+    .line 201
     :cond_0
+    iput-object p1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mPreviewSurface:Landroid/view/Surface;
+
+    .line 202
     new-instance v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$1;
 
     invoke-direct {v0, p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$1;-><init>(Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;)V
 
-    .line 194
+    .line 230
     iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     new-instance v2, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$2;
@@ -1457,37 +1670,24 @@
 
     invoke-virtual {v1, v2}, Lcom/ss/android/vesdk/TERecorder;->setRecrodStateCallback(Lcom/ss/android/vesdk/VEListener$VERecorderStateListener;)V
 
-    .line 206
-    iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
-
-    iget-object v2, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mBGMPath:Ljava/lang/String;
-
-    const/4 v3, 0x0
-
-    const/16 v4, 0x3a98
-
-    const/4 v5, 0x1
-
-    invoke-virtual {v1, v2, v3, v4, v5}, Lcom/ss/android/vesdk/TERecorder;->setRecordBGM(Ljava/lang/String;III)I
-
-    .line 207
+    .line 248
     iget-object v1, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v1, v0}, Lcom/ss/android/vesdk/TERecorder;->setRenderCallback(Lcom/ss/android/vesdk/IRenderCallback;)V
 
-    .line 208
+    .line 249
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mRecorder:Lcom/ss/android/vesdk/TERecorder;
 
     invoke-virtual {v0, p1}, Lcom/ss/android/vesdk/TERecorder;->startPreview(Landroid/view/Surface;)I
 
-    .line 210
+    .line 251
     return-void
 .end method
 
 .method public unRegisterProtocol()V
     .locals 2
 
-    .line 111
+    .line 110
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
@@ -1496,41 +1696,41 @@
 
     invoke-virtual {v0, v1, p0}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->detachProtocol(ILcom/android/camera/protocol/ModeProtocol$BaseProtocol;)V
 
-    .line 112
+    .line 111
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mStickerImpl:Lcom/android/camera/protocol/ModeProtocol$StickerProtocol;
 
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$StickerProtocol;->unRegisterProtocol()V
 
-    .line 113
+    .line 112
     invoke-virtual {p0}, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->release()V
 
-    .line 114
+    .line 113
     return-void
 .end method
 
 .method public updateRecordingTime()V
     .locals 7
 
-    .line 384
+    .line 456
     iget-boolean v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mMediaRecorderRecording:Z
 
     if-nez v0, :cond_0
 
-    .line 385
+    .line 457
     return-void
 
-    .line 388
+    .line 460
     :cond_0
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mCountDownTimer:Landroid/os/CountDownTimer;
 
     if-eqz v0, :cond_1
 
-    .line 389
+    .line 461
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mCountDownTimer:Landroid/os/CountDownTimer;
 
     invoke-virtual {v0}, Landroid/os/CountDownTimer;->cancel()V
 
-    .line 392
+    .line 464
     :cond_1
     new-instance v0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl$3;
 
@@ -1566,18 +1766,18 @@
 
     iput-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mCountDownTimer:Landroid/os/CountDownTimer;
 
-    .line 412
+    .line 484
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
 
     iput-wide v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mStartTime:J
 
-    .line 413
+    .line 485
     iget-object v0, p0, Lcom/android/camera/module/impl/component/LiveConfigChangeTTImpl;->mCountDownTimer:Landroid/os/CountDownTimer;
 
     invoke-virtual {v0}, Landroid/os/CountDownTimer;->start()Landroid/os/CountDownTimer;
 
-    .line 414
+    .line 486
     return-void
 .end method

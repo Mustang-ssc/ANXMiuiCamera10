@@ -63,7 +63,7 @@
     .line 183
     if-eqz p1, :cond_0
 
-    const v0, 0x7f0d0018
+    const v0, 0x7f0d001a
 
     .line 184
     invoke-interface {p1, v0}, Lcom/android/camera/protocol/ModeProtocol$BaseDelegate;->getActiveFragment(I)I

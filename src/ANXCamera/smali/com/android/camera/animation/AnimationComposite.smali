@@ -152,7 +152,7 @@
         }
     .end annotation
 
-    .line 277
+    .line 280
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v0
@@ -161,7 +161,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/camera/data/data/global/DataItemGlobal;->setRetriedIfCameraError(Z)V
 
-    .line 278
+    .line 281
     :goto_0
     iget-object v0, p0, Lcom/android/camera/animation/AnimationComposite;->mResourceSparseArray:Landroid/util/SparseArray;
 
@@ -171,7 +171,7 @@
 
     if-ge v1, v0, :cond_2
 
-    .line 279
+    .line 282
     iget-object v0, p0, Lcom/android/camera/animation/AnimationComposite;->mResourceSparseArray:Landroid/util/SparseArray;
 
     invoke-virtual {v0, v1}, Landroid/util/SparseArray;->valueAt(I)Ljava/lang/Object;
@@ -180,17 +180,17 @@
 
     check-cast v0, Lcom/android/camera/animation/AnimationDelegate$AnimationResource;
 
-    .line 280
+    .line 283
     invoke-interface {v0}, Lcom/android/camera/animation/AnimationDelegate$AnimationResource;->canProvide()Z
 
     move-result v2
 
     if-nez v2, :cond_0
 
-    .line 281
+    .line 284
     goto :goto_1
 
-    .line 283
+    .line 286
     :cond_0
     invoke-interface {v0}, Lcom/android/camera/animation/AnimationDelegate$AnimationResource;->isEnableClick()Z
 
@@ -198,12 +198,12 @@
 
     if-nez v2, :cond_1
 
-    .line 284
+    .line 287
     const/4 v2, 0x1
 
     invoke-interface {v0, v2}, Lcom/android/camera/animation/AnimationDelegate$AnimationResource;->setClickEnable(Z)V
 
-    .line 286
+    .line 289
     :cond_1
     invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
 
@@ -211,13 +211,13 @@
 
     invoke-interface {v0, v2}, Lcom/android/camera/animation/AnimationDelegate$AnimationResource;->notifyAfterFrameAvailable(I)V
 
-    .line 278
+    .line 281
     :goto_1
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 288
+    .line 291
     :cond_2
     return-void
 .end method

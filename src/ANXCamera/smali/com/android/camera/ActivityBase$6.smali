@@ -27,7 +27,7 @@
 .method constructor <init>(Lcom/android/camera/ActivityBase;Landroid/graphics/Bitmap;)V
     .locals 0
 
-    .line 565
+    .line 564
     iput-object p1, p0, Lcom/android/camera/ActivityBase$6;->this$0:Lcom/android/camera/ActivityBase;
 
     iput-object p2, p0, Lcom/android/camera/ActivityBase$6;->val$bitmap:Landroid/graphics/Bitmap;
@@ -42,11 +42,11 @@
 .method public run()V
     .locals 1
 
-    .line 568
+    .line 567
     iget-object v0, p0, Lcom/android/camera/ActivityBase$6;->val$bitmap:Landroid/graphics/Bitmap;
 
     invoke-static {v0}, Lcom/android/camera/Util;->saveLastFrameGaussian2File(Landroid/graphics/Bitmap;)V
 
-    .line 569
+    .line 568
     return-void
 .end method

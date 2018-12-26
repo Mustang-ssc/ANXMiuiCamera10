@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera2/MiCamera2;)V
     .locals 0
 
-    .line 271
+    .line 280
     iput-object p1, p0, Lcom/android/camera2/MiCamera2$3;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,18 +38,18 @@
 .method public onImageAvailable(Landroid/media/ImageReader;)V
     .locals 2
 
-    .line 274
+    .line 283
     invoke-virtual {p1}, Landroid/media/ImageReader;->acquireNextImage()Landroid/media/Image;
 
     move-result-object p1
 
-    .line 275
+    .line 284
     if-nez p1, :cond_0
 
-    .line 276
+    .line 285
     return-void
 
-    .line 278
+    .line 287
     :cond_0
     iget-object v0, p0, Lcom/android/camera2/MiCamera2$3;->this$0:Lcom/android/camera2/MiCamera2;
 
@@ -57,18 +57,18 @@
 
     move-result-object v0
 
-    .line 279
+    .line 288
     if-eqz v0, :cond_1
 
-    .line 281
+    .line 290
     iget-object v1, p0, Lcom/android/camera2/MiCamera2$3;->this$0:Lcom/android/camera2/MiCamera2;
 
     invoke-interface {v0, p1, v1}, Lcom/android/camera2/Camera2Proxy$PreviewCallback;->onPreviewFrame(Landroid/media/Image;Lcom/android/camera2/Camera2Proxy;)V
 
-    .line 283
+    .line 292
     :cond_1
     invoke-virtual {p1}, Landroid/media/Image;->close()V
 
-    .line 284
+    .line 293
     return-void
 .end method

@@ -121,7 +121,7 @@
 
     move-result p1
 
-    invoke-static {p1}, Lcom/android/camera/CameraSettings;->setUltraWideConfig(Z)V
+    invoke-static {p2, p1}, Lcom/android/camera/CameraSettings;->setUltraWideConfig(IZ)V
 
     .line 152
     invoke-static {v0}, Lcom/android/camera/statistic/CameraStatUtil;->trackLensChanged(Ljava/lang/String;)V
@@ -382,7 +382,7 @@
     move-result p1
 
     .line 82
-    invoke-static {}, Lcom/mi/config/b;->gC()Z
+    invoke-static {}, Lcom/mi/config/b;->gF()Z
 
     move-result p2
 

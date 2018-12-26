@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;)V
     .locals 0
 
-    .line 1984
+    .line 2137
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$14;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,16 +38,16 @@
 .method public onAvailabilityStatusFetched(I)V
     .locals 1
 
-    .line 1987
+    .line 2140
     iget-object v0, p0, Lcom/android/camera/module/Camera2Module$14;->this$0:Lcom/android/camera/module/Camera2Module;
 
-    invoke-static {v0, p1}, Lcom/android/camera/module/Camera2Module;->access$2502(Lcom/android/camera/module/Camera2Module;I)I
+    invoke-static {v0, p1}, Lcom/android/camera/module/Camera2Module;->access$3702(Lcom/android/camera/module/Camera2Module;I)I
 
-    .line 1988
+    .line 2141
     iget-object p1, p0, Lcom/android/camera/module/Camera2Module$14;->this$0:Lcom/android/camera/module/Camera2Module;
 
-    .line 1989
-    invoke-static {p1}, Lcom/android/camera/module/Camera2Module;->access$2500(Lcom/android/camera/module/Camera2Module;)I
+    .line 2142
+    invoke-static {p1}, Lcom/android/camera/module/Camera2Module;->access$3700(Lcom/android/camera/module/Camera2Module;)I
 
     move-result p1
 
@@ -60,10 +60,10 @@
     :cond_0
     const/4 p1, 0x0
 
-    .line 1988
+    .line 2141
     :goto_0
     invoke-static {p1}, Lcom/android/camera/CameraSettings;->setGoogleLensAvailability(Z)V
 
-    .line 1990
+    .line 2143
     return-void
 .end method

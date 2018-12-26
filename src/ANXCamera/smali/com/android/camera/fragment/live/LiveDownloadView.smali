@@ -30,7 +30,7 @@
     .locals 1
 
     .line 22
-    const v0, 0x7f020160
+    const v0, 0x7f02016f
 
     if-eqz p1, :cond_0
 
@@ -47,13 +47,13 @@
 
     .line 28
     :pswitch_1
-    const p1, 0x7f020161
+    const p1, 0x7f020170
 
     return p1
 
     .line 26
     :pswitch_2
-    const p1, 0x7f020162
+    const p1, 0x7f020171
 
     return p1
 

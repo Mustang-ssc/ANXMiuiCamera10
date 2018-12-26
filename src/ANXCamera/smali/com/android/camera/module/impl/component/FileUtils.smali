@@ -14,6 +14,8 @@
 
 .field public static final DOC:Ljava/lang/String;
 
+.field public static final FACE_RESHAPE:Ljava/lang/String; = "FaceReshape_V2.zip"
+
 .field public static final FILTER:Ljava/lang/String;
 
 .field public static final FILTER_DIR:Ljava/lang/String;
@@ -23,6 +25,10 @@
 .field public static final MUSIC:Ljava/lang/String;
 
 .field public static final MUSIC_EFFECT_DIR:Ljava/lang/String;
+
+.field public static final MUSIC_LOCAL:Ljava/lang/String;
+
+.field public static final MUSIC_ONLINE:Ljava/lang/String;
 
 .field public static final RESHAPE_DIR_NAME:Ljava/lang/String;
 
@@ -61,7 +67,7 @@
 .method static constructor <clinit>()V
     .locals 2
 
-    .line 24
+    .line 25
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -86,7 +92,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ROOT_DIR:Ljava/lang/String;
 
-    .line 25
+    .line 26
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -105,7 +111,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->RESOURCE_DIR:Ljava/lang/String;
 
-    .line 26
+    .line 27
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -124,7 +130,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->STICKER_RESOURCE_DIR:Ljava/lang/String;
 
-    .line 27
+    .line 28
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -143,7 +149,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MODELS_DIR:Ljava/lang/String;
 
-    .line 28
+    .line 29
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -162,7 +168,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->VIDEO_TMP:Ljava/lang/String;
 
-    .line 29
+    .line 30
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -181,7 +187,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->CONCAT_VIDEO_DIR:Ljava/lang/String;
 
-    .line 30
+    .line 31
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -200,7 +206,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->CACHE:Ljava/lang/String;
 
-    .line 31
+    .line 32
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -219,7 +225,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
 
-    .line 32
+    .line 33
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -238,12 +244,12 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->DOC:Ljava/lang/String;
 
-    .line 34
+    .line 35
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->RESOURCE_DIR:Ljava/lang/String;
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_EFFECT_DIR:Ljava/lang/String;
 
-    .line 35
+    .line 36
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -252,7 +258,7 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    const-string v1, "/filter/"
+    const-string v1, "filter/"
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -262,7 +268,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->FILTER_DIR:Ljava/lang/String;
 
-    .line 36
+    .line 37
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -271,7 +277,7 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    const-string v1, "Filter_02"
+    const-string v1, "Filter_02/"
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -281,7 +287,7 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->FILTER:Ljava/lang/String;
 
-    .line 37
+    .line 38
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -290,7 +296,7 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    const-string v1, "/Beauty_12/"
+    const-string v1, "Beauty_12/"
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -300,124 +306,176 @@
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->BEAUTY_12_DIR:Ljava/lang/String;
 
-    .line 40
-    sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->RESOURCE_DIR:Ljava/lang/String;
+    .line 41
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->RESOURCE_DIR:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    const-string v1, "FaceReshape_V2/"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->RESHAPE_DIR_NAME:Ljava/lang/String;
 
-    .line 44
+    .line 45
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    const-string v1, "/local/"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_LOCAL:Ljava/lang/String;
+
+    .line 46
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    sget-object v1, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    const-string v1, "/online/"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->MUSIC_ONLINE:Ljava/lang/String;
+
+    .line 48
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
-    .line 47
+    .line 51
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "2D_angel"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 48
+    .line 52
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "2D_bubble"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 49
+    .line 53
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "E12_3D_Glass_Crystal_a02"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 50
+    .line 54
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "E12_3D_hat_fj_a01_155"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 51
+    .line 55
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "E12_D_Glass_Diamond_a01"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 52
+    .line 56
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "E12_D_glasses_cobain_a02"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 53
+    .line 57
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "05311139_wuyun"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 54
+    .line 58
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "05311201"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 55
+    .line 59
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->ResourcesList:Ljava/util/List;
 
     const-string v1, "05311202"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 60
+    .line 64
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     sput-object v0, Lcom/android/camera/module/impl/component/FileUtils;->musicList:Ljava/util/List;
 
-    .line 62
+    .line 66
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->musicList:Ljava/util/List;
 
     const-string v1, "music00001.mp3"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 63
+    .line 67
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->musicList:Ljava/util/List;
 
     const-string v1, "music00002.mp3"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 64
+    .line 68
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->musicList:Ljava/util/List;
 
     const-string v1, "music00003.mp3"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 65
+    .line 69
     sget-object v0, Lcom/android/camera/module/impl/component/FileUtils;->musicList:Ljava/util/List;
 
     const-string v1, "music00004.mp3"
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 66
+    .line 70
     return-void
 .end method
 
 .method public constructor <init>()V
     .locals 0
 
-    .line 22
+    .line 23
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -426,26 +484,26 @@
 .method public static GetFileName(Ljava/lang/String;)Ljava/lang/String;
     .locals 3
 
-    .line 348
+    .line 352
     const-string v0, "/"
 
     invoke-virtual {p0, v0}, Ljava/lang/String;->lastIndexOf(Ljava/lang/String;)I
 
     move-result v0
 
-    .line 349
+    .line 353
     const-string v1, "."
 
     invoke-virtual {p0, v1}, Ljava/lang/String;->lastIndexOf(Ljava/lang/String;)I
 
     move-result v1
 
-    .line 351
+    .line 355
     const/4 v2, -0x1
 
     if-eq v1, v2, :cond_0
 
-    .line 352
+    .line 356
     add-int/lit8 v0, v0, 0x1
 
     invoke-virtual {p0, v0, v1}, Ljava/lang/String;->substring(II)Ljava/lang/String;
@@ -454,7 +512,7 @@
 
     return-object p0
 
-    .line 354
+    .line 358
     :cond_0
     const/4 p0, 0x0
 
@@ -469,7 +527,7 @@
         }
     .end annotation
 
-    .line 293
+    .line 297
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -484,7 +542,7 @@
 
     move-result-object p1
 
-    .line 294
+    .line 298
     invoke-virtual {p0}, Landroid/content/Context;->getAssets()Landroid/content/res/AssetManager;
 
     move-result-object v0
@@ -493,38 +551,38 @@
 
     move-result-object v0
 
-    .line 295
+    .line 299
     new-instance v1, Ljava/io/File;
 
     invoke-direct {v1, p2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 296
+    .line 300
     invoke-virtual {v1}, Ljava/io/File;->exists()Z
 
     move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 297
+    .line 301
     invoke-virtual {v1}, Ljava/io/File;->isFile()Z
 
     move-result v2
 
     if-eqz v2, :cond_1
 
-    .line 298
+    .line 302
     invoke-virtual {v1}, Ljava/io/File;->delete()Z
 
-    .line 299
+    .line 303
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
     goto :goto_0
 
-    .line 302
+    .line 306
     :cond_0
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
-    .line 305
+    .line 309
     :cond_1
     :goto_0
     new-instance v1, Ljava/io/File;
@@ -551,21 +609,21 @@
 
     invoke-direct {v1, v2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 306
+    .line 310
     invoke-virtual {v1}, Ljava/io/File;->exists()Z
 
     move-result v2
 
     if-eqz v2, :cond_2
 
-    .line 307
+    .line 311
     invoke-static {v1}, Lcom/android/camera/module/impl/component/FileUtils;->deleteDir(Ljava/io/File;)Z
 
-    .line 310
+    .line 314
     :cond_2
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
-    .line 311
+    .line 315
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -582,10 +640,10 @@
 
     move-result-object p2
 
-    .line 313
+    .line 317
     invoke-virtual {v0}, Ljava/io/InputStream;->close()V
 
-    .line 314
+    .line 318
     invoke-virtual {p0}, Landroid/content/Context;->getAssets()Landroid/content/res/AssetManager;
 
     move-result-object p0
@@ -594,10 +652,10 @@
 
     move-result-object p0
 
-    .line 316
+    .line 320
     invoke-static {p0, p2}, Lcom/android/camera/module/impl/component/FileUtils;->UnZipFolder(Ljava/io/InputStream;Ljava/lang/String;)V
 
-    .line 317
+    .line 321
     return-void
 .end method
 
@@ -609,7 +667,7 @@
         }
     .end annotation
 
-    .line 320
+    .line 324
     new-instance v0, Ljava/io/FileInputStream;
 
     new-instance v1, Ljava/io/File;
@@ -618,38 +676,38 @@
 
     invoke-direct {v0, v1}, Ljava/io/FileInputStream;-><init>(Ljava/io/File;)V
 
-    .line 321
+    .line 325
     new-instance v1, Ljava/io/File;
 
     invoke-direct {v1, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 322
+    .line 326
     invoke-virtual {v1}, Ljava/io/File;->exists()Z
 
     move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 323
+    .line 327
     invoke-virtual {v1}, Ljava/io/File;->isFile()Z
 
     move-result v2
 
     if-eqz v2, :cond_1
 
-    .line 324
+    .line 328
     invoke-virtual {v1}, Ljava/io/File;->delete()Z
 
-    .line 325
+    .line 329
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
     goto :goto_0
 
-    .line 328
+    .line 332
     :cond_0
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
-    .line 331
+    .line 335
     :cond_1
     :goto_0
     new-instance v1, Ljava/io/File;
@@ -676,21 +734,21 @@
 
     invoke-direct {v1, v2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 332
+    .line 336
     invoke-virtual {v1}, Ljava/io/File;->exists()Z
 
     move-result v2
 
     if-eqz v2, :cond_2
 
-    .line 333
+    .line 337
     invoke-static {v1}, Lcom/android/camera/module/impl/component/FileUtils;->deleteDir(Ljava/io/File;)Z
 
-    .line 336
+    .line 340
     :cond_2
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
-    .line 337
+    .line 341
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -711,10 +769,10 @@
 
     move-result-object p1
 
-    .line 339
+    .line 343
     invoke-virtual {v0}, Ljava/io/InputStream;->close()V
 
-    .line 340
+    .line 344
     new-instance v0, Ljava/io/FileInputStream;
 
     new-instance v1, Ljava/io/File;
@@ -723,10 +781,10 @@
 
     invoke-direct {v0, v1}, Ljava/io/FileInputStream;-><init>(Ljava/io/File;)V
 
-    .line 341
+    .line 345
     invoke-static {v0, p1}, Lcom/android/camera/module/impl/component/FileUtils;->UnZipFolder(Ljava/io/InputStream;Ljava/lang/String;)V
 
-    .line 342
+    .line 346
     const/4 p0, 0x0
 
     return p0
@@ -740,15 +798,15 @@
         }
     .end annotation
 
-    .line 253
+    .line 257
     nop
 
-    .line 256
+    .line 260
     new-instance v0, Ljava/util/zip/ZipInputStream;
 
     invoke-direct {v0, p0}, Ljava/util/zip/ZipInputStream;-><init>(Ljava/io/InputStream;)V
 
-    .line 258
+    .line 262
     :goto_0
     invoke-virtual {v0}, Ljava/util/zip/ZipInputStream;->getNextEntry()Ljava/util/zip/ZipEntry;
 
@@ -756,12 +814,12 @@
 
     if-eqz p0, :cond_4
 
-    .line 259
+    .line 263
     invoke-virtual {p0}, Ljava/util/zip/ZipEntry;->getName()Ljava/lang/String;
 
     move-result-object v1
 
-    .line 261
+    .line 265
     invoke-virtual {p0}, Ljava/util/zip/ZipEntry;->isDirectory()Z
 
     move-result p0
@@ -770,7 +828,7 @@
 
     if-eqz p0, :cond_1
 
-    .line 263
+    .line 267
     invoke-virtual {v1}, Ljava/lang/String;->length()I
 
     move-result p0
@@ -781,7 +839,7 @@
 
     move-result-object p0
 
-    .line 264
+    .line 268
     new-instance v1, Ljava/io/File;
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -802,24 +860,24 @@
 
     invoke-direct {v1, p0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 265
+    .line 269
     invoke-virtual {v1}, Ljava/io/File;->exists()Z
 
     move-result p0
 
     if-eqz p0, :cond_0
 
-    .line 266
+    .line 270
     goto :goto_0
 
-    .line 268
+    .line 272
     :cond_0
     invoke-virtual {v1}, Ljava/io/File;->mkdirs()Z
 
-    .line 269
+    .line 273
     goto :goto_0
 
-    .line 270
+    .line 274
     :cond_1
     new-instance p0, Ljava/io/File;
 
@@ -841,31 +899,31 @@
 
     invoke-direct {p0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 271
+    .line 275
     invoke-virtual {p0}, Ljava/io/File;->exists()Z
 
     move-result v1
 
     if-eqz v1, :cond_2
 
-    .line 272
+    .line 276
     goto :goto_2
 
-    .line 274
+    .line 278
     :cond_2
     invoke-virtual {p0}, Ljava/io/File;->createNewFile()Z
 
-    .line 276
+    .line 280
     new-instance v1, Ljava/io/FileOutputStream;
 
     invoke-direct {v1, p0}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
 
-    .line 278
+    .line 282
     const/16 p0, 0x400
 
     new-array p0, p0, [B
 
-    .line 280
+    .line 284
     :goto_1
     invoke-virtual {v0, p0}, Ljava/util/zip/ZipInputStream;->read([B)I
 
@@ -875,55 +933,55 @@
 
     if-eq v3, v4, :cond_3
 
-    .line 282
+    .line 286
     invoke-virtual {v1, p0, v2, v3}, Ljava/io/FileOutputStream;->write([BII)V
 
-    .line 283
+    .line 287
     invoke-virtual {v1}, Ljava/io/FileOutputStream;->flush()V
 
     goto :goto_1
 
-    .line 285
+    .line 289
     :cond_3
     invoke-virtual {v1}, Ljava/io/FileOutputStream;->close()V
 
-    .line 286
+    .line 290
     goto :goto_0
 
-    .line 289
+    .line 293
     :cond_4
     :goto_2
     invoke-virtual {v0}, Ljava/util/zip/ZipInputStream;->close()V
 
-    .line 290
+    .line 294
     return-void
 .end method
 
 .method public static copyAssetsDirectory(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
     .locals 11
 
-    .line 123
+    .line 127
     new-instance v0, Ljava/io/File;
 
     invoke-direct {v0, p2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 124
+    .line 128
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
     move-result v1
 
     if-nez v1, :cond_0
 
-    .line 125
+    .line 129
     invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
 
-    .line 128
+    .line 132
     :cond_0
     invoke-virtual {p0}, Landroid/content/Context;->getAssets()Landroid/content/res/AssetManager;
 
     move-result-object v0
 
-    .line 130
+    .line 134
     const/4 v1, 0x1
 
     :try_start_0
@@ -937,7 +995,7 @@
 
     if-eqz v2, :cond_1
 
-    .line 131
+    .line 135
     invoke-virtual {p1}, Ljava/lang/String;->length()I
 
     move-result v2
@@ -948,13 +1006,13 @@
 
     move-result-object p1
 
-    .line 133
+    .line 137
     :cond_1
     invoke-virtual {v0, p1}, Landroid/content/res/AssetManager;->list(Ljava/lang/String;)[Ljava/lang/String;
 
     move-result-object v2
 
-    .line 134
+    .line 138
     array-length v4, v2
 
     :goto_0
@@ -962,7 +1020,7 @@
 
     aget-object v5, v2, v3
 
-    .line 135
+    .line 139
     new-instance v6, Ljava/lang/StringBuilder;
 
     invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
@@ -979,7 +1037,7 @@
 
     move-result-object v6
 
-    .line 136
+    .line 140
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
@@ -998,13 +1056,13 @@
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_1
 
-    .line 138
+    .line 142
     :try_start_1
     invoke-virtual {v0, v6}, Landroid/content/res/AssetManager;->open(Ljava/lang/String;)Ljava/io/InputStream;
 
     move-result-object v8
 
-    .line 139
+    .line 143
     new-instance v9, Ljava/lang/StringBuilder;
 
     invoke-direct {v9}, Ljava/lang/StringBuilder;-><init>()V
@@ -1021,43 +1079,43 @@
 
     invoke-static {p0, v9, v6, v5}, Lcom/android/camera/module/impl/component/FileUtils;->copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 140
+    .line 144
     invoke-virtual {v8}, Ljava/io/InputStream;->close()V
     :try_end_1
     .catch Ljava/io/FileNotFoundException; {:try_start_1 .. :try_end_1} :catch_0
     .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_1
 
-    .line 144
+    .line 148
     goto :goto_1
 
-    .line 141
+    .line 145
     :catch_0
     move-exception v5
 
-    .line 143
+    .line 147
     :try_start_2
     invoke-static {p0, v6, v7}, Lcom/android/camera/module/impl/component/FileUtils;->copyAssetsDirectory(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
     :try_end_2
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_1
 
-    .line 134
+    .line 138
     :goto_1
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_0
 
-    .line 148
+    .line 152
     :cond_2
     goto :goto_2
 
-    .line 146
+    .line 150
     :catch_1
     move-exception p0
 
-    .line 147
+    .line 151
     invoke-virtual {p0}, Ljava/io/IOException;->printStackTrace()V
 
-    .line 150
+    .line 154
     :goto_2
     return v1
 .end method
@@ -1070,27 +1128,27 @@
         }
     .end annotation
 
-    .line 69
+    .line 73
     new-instance v0, Ljava/io/FileInputStream;
 
     invoke-direct {v0, p0}, Ljava/io/FileInputStream;-><init>(Ljava/io/File;)V
 
-    .line 70
+    .line 74
     new-instance p0, Ljava/io/FileOutputStream;
 
     invoke-direct {p0, p1}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
 
-    .line 71
+    .line 75
     invoke-virtual {v0}, Ljava/io/FileInputStream;->getChannel()Ljava/nio/channels/FileChannel;
 
     move-result-object v1
 
-    .line 72
+    .line 76
     invoke-virtual {p0}, Ljava/io/FileOutputStream;->getChannel()Ljava/nio/channels/FileChannel;
 
     move-result-object v6
 
-    .line 73
+    .line 77
     invoke-virtual {v1}, Ljava/nio/channels/FileChannel;->size()J
 
     move-result-wide v4
@@ -1099,20 +1157,20 @@
 
     invoke-virtual/range {v1 .. v6}, Ljava/nio/channels/FileChannel;->transferTo(JJLjava/nio/channels/WritableByteChannel;)J
 
-    .line 74
+    .line 78
     invoke-virtual {v0}, Ljava/io/FileInputStream;->close()V
 
-    .line 75
+    .line 79
     invoke-virtual {p0}, Ljava/io/FileOutputStream;->close()V
 
-    .line 76
+    .line 80
     return-void
 .end method
 
 .method public static copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
     .locals 0
 
-    .line 81
+    .line 85
     invoke-static {p0, p1, p2, p2}, Lcom/android/camera/module/impl/component/FileUtils;->copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
 
     move-result p0
@@ -1123,7 +1181,7 @@
 .method private static copyFileIfNeed(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
     .locals 2
 
-    .line 85
+    .line 89
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -1138,22 +1196,22 @@
 
     move-result-object p2
 
-    .line 88
+    .line 92
     new-instance v0, Ljava/io/File;
 
     invoke-direct {v0, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 89
+    .line 93
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
     move-result v1
 
     if-nez v1, :cond_0
 
-    .line 90
+    .line 94
     invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
 
-    .line 92
+    .line 96
     :cond_0
     new-instance v0, Ljava/lang/StringBuilder;
 
@@ -1167,32 +1225,32 @@
 
     move-result-object p1
 
-    .line 94
+    .line 98
     invoke-virtual {p1}, Ljava/lang/String;->isEmpty()Z
 
     move-result p3
 
     if-nez p3, :cond_3
 
-    .line 95
+    .line 99
     new-instance p3, Ljava/io/File;
 
     invoke-direct {p3, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 96
+    .line 100
     invoke-virtual {p3}, Ljava/io/File;->exists()Z
 
     move-result p1
 
     if-nez p1, :cond_3
 
-    .line 99
+    .line 103
     const/4 p1, 0x0
 
     :try_start_0
     invoke-virtual {p3}, Ljava/io/File;->createNewFile()Z
 
-    .line 100
+    .line 104
     invoke-virtual {p0}, Landroid/content/Context;->getApplicationContext()Landroid/content/Context;
 
     move-result-object p0
@@ -1205,24 +1263,24 @@
 
     move-result-object p0
 
-    .line 101
+    .line 105
     if-nez p0, :cond_1
 
-    .line 103
+    .line 107
     return p1
 
-    .line 105
+    .line 109
     :cond_1
     new-instance p2, Ljava/io/FileOutputStream;
 
     invoke-direct {p2, p3}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
 
-    .line 106
+    .line 110
     const/16 v0, 0x1000
 
     new-array v0, v0, [B
 
-    .line 108
+    .line 112
     :goto_0
     invoke-virtual {p0, v0}, Ljava/io/InputStream;->read([B)I
 
@@ -1230,34 +1288,34 @@
 
     if-lez v1, :cond_2
 
-    .line 109
+    .line 113
     invoke-virtual {p2, v0, p1, v1}, Ljava/io/OutputStream;->write([BII)V
 
     goto :goto_0
 
-    .line 111
+    .line 115
     :cond_2
     invoke-virtual {p0}, Ljava/io/InputStream;->close()V
 
-    .line 112
+    .line 116
     invoke-virtual {p2}, Ljava/io/OutputStream;->close()V
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 116
+    .line 120
     goto :goto_1
 
-    .line 113
+    .line 117
     :catch_0
     move-exception p0
 
-    .line 114
+    .line 118
     invoke-virtual {p3}, Ljava/io/File;->delete()Z
 
-    .line 115
+    .line 119
     return p1
 
-    .line 119
+    .line 123
     :cond_3
     :goto_1
     const/4 p0, 0x1
@@ -1272,7 +1330,7 @@
 
     monitor-enter v0
 
-    .line 360
+    .line 364
     :try_start_0
     new-instance v1, Ljava/util/Date;
 
@@ -1282,19 +1340,19 @@
 
     invoke-direct {v1, v2, v3}, Ljava/util/Date;-><init>(J)V
 
-    .line 361
+    .line 365
     new-instance v2, Ljava/text/SimpleDateFormat;
 
     const-string v3, "MMddHHmmssSSS"
 
     invoke-direct {v2, v3}, Ljava/text/SimpleDateFormat;-><init>(Ljava/lang/String;)V
 
-    .line 362
+    .line 366
     invoke-virtual {v2, v1}, Ljava/text/SimpleDateFormat;->format(Ljava/util/Date;)Ljava/lang/String;
 
     move-result-object v1
 
-    .line 363
+    .line 367
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
@@ -1315,12 +1373,12 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 364
+    .line 368
     monitor-exit v0
 
     return-object p0
 
-    .line 359
+    .line 363
     :catchall_0
     move-exception p0
 
@@ -1332,7 +1390,7 @@
 .method public static delDir(Ljava/lang/String;)Z
     .locals 2
 
-    .line 187
+    .line 191
     invoke-virtual {p0}, Ljava/lang/String;->isEmpty()Z
 
     move-result v0
@@ -1341,16 +1399,16 @@
 
     if-eqz v0, :cond_0
 
-    .line 188
+    .line 192
     return v1
 
-    .line 190
+    .line 194
     :cond_0
     new-instance v0, Ljava/io/File;
 
     invoke-direct {v0, p0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 191
+    .line 195
     invoke-virtual {v0}, Ljava/io/File;->isFile()Z
 
     move-result p0
@@ -1380,19 +1438,19 @@
 .method private static deleteDir(Ljava/io/File;)Z
     .locals 5
 
-    .line 222
+    .line 226
     invoke-virtual {p0}, Ljava/io/File;->isDirectory()Z
 
     move-result v0
 
     if-eqz v0, :cond_1
 
-    .line 223
+    .line 227
     invoke-virtual {p0}, Ljava/io/File;->list()[Ljava/lang/String;
 
     move-result-object v0
 
-    .line 225
+    .line 229
     const/4 v1, 0x0
 
     move v2, v1
@@ -1402,7 +1460,7 @@
 
     if-ge v2, v3, :cond_1
 
-    .line 226
+    .line 230
     new-instance v3, Ljava/io/File;
 
     aget-object v4, v0, v2
@@ -1413,19 +1471,19 @@
 
     move-result v3
 
-    .line 227
+    .line 231
     if-nez v3, :cond_0
 
-    .line 228
+    .line 232
     return v1
 
-    .line 225
+    .line 229
     :cond_0
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 233
+    .line 237
     :cond_1
     invoke-virtual {p0}, Ljava/io/File;->delete()Z
 
@@ -1437,7 +1495,7 @@
 .method private static doDeleteEmptyDir(Ljava/lang/String;)V
     .locals 3
 
-    .line 206
+    .line 210
     new-instance v0, Ljava/io/File;
 
     invoke-direct {v0, p0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
@@ -1446,10 +1504,10 @@
 
     move-result v0
 
-    .line 207
+    .line 211
     if-eqz v0, :cond_0
 
-    .line 208
+    .line 212
     sget-object v0, Ljava/lang/System;->out:Ljava/io/PrintStream;
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -1470,7 +1528,7 @@
 
     goto :goto_0
 
-    .line 210
+    .line 214
     :cond_0
     sget-object v0, Ljava/lang/System;->out:Ljava/io/PrintStream;
 
@@ -1490,7 +1548,7 @@
 
     invoke-virtual {v0, p0}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
 
-    .line 212
+    .line 216
     :goto_0
     return-void
 .end method
@@ -1498,7 +1556,7 @@
 .method public static getOutputMediaFile()Ljava/io/File;
     .locals 4
 
-    .line 154
+    .line 158
     new-instance v0, Ljava/io/File;
 
     sget-object v1, Landroid/os/Environment;->DIRECTORY_DCIM:Ljava/lang/String;
@@ -1511,33 +1569,33 @@
 
     invoke-direct {v0, v1, v2}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    .line 160
+    .line 164
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
     move-result v1
 
     if-nez v1, :cond_0
 
-    .line 161
+    .line 165
     invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
 
     move-result v1
 
     if-nez v1, :cond_0
 
-    .line 162
+    .line 166
     const-string v0, "FileUtil"
 
     const-string v1, "failed to create directory"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 163
+    .line 167
     const/4 v0, 0x0
 
     return-object v0
 
-    .line 168
+    .line 172
     :cond_0
     new-instance v1, Ljava/text/SimpleDateFormat;
 
@@ -1555,7 +1613,7 @@
 
     move-result-object v1
 
-    .line 169
+    .line 173
     new-instance v2, Ljava/io/File;
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -1588,19 +1646,19 @@
 
     invoke-direct {v2, v0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 172
+    .line 176
     return-object v2
 .end method
 
 .method public static hasDir(Ljava/lang/String;)Z
     .locals 1
 
-    .line 196
+    .line 200
     new-instance v0, Ljava/io/File;
 
     invoke-direct {v0, p0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 197
+    .line 201
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
     move-result p0
@@ -1632,15 +1690,15 @@
         }
     .end annotation
 
-    .line 237
+    .line 241
     new-instance v0, Ljava/util/zip/ZipInputStream;
 
     invoke-direct {v0, p0}, Ljava/util/zip/ZipInputStream;-><init>(Ljava/io/InputStream;)V
 
-    .line 240
+    .line 244
     nop
 
-    .line 241
+    .line 245
     const/4 p0, 0x1
 
     :cond_0
@@ -1651,12 +1709,12 @@
 
     if-eqz v1, :cond_1
 
-    .line 242
+    .line 246
     invoke-virtual {v1}, Ljava/util/zip/ZipEntry;->getName()Ljava/lang/String;
 
     move-result-object v1
 
-    .line 243
+    .line 247
     const-string v2, "config.json"
 
     invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -1665,23 +1723,23 @@
 
     if-eqz v1, :cond_0
 
-    .line 244
+    .line 248
     const/4 p0, 0x0
 
     goto :goto_0
 
-    .line 246
+    .line 250
     :cond_1
     invoke-virtual {v0}, Ljava/util/zip/ZipInputStream;->close()V
 
-    .line 247
+    .line 251
     return p0
 .end method
 
 .method public static makeDir(Ljava/lang/String;)Z
     .locals 2
 
-    .line 176
+    .line 180
     invoke-virtual {p0}, Ljava/lang/String;->isEmpty()Z
 
     move-result v0
@@ -1690,30 +1748,30 @@
 
     if-eqz v0, :cond_0
 
-    .line 177
+    .line 181
     return v1
 
-    .line 179
+    .line 183
     :cond_0
     new-instance v0, Ljava/io/File;
 
     invoke-direct {v0, p0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 180
+    .line 184
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
     move-result p0
 
     if-nez p0, :cond_1
 
-    .line 181
+    .line 185
     invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
 
     move-result p0
 
     return p0
 
-    .line 183
+    .line 187
     :cond_1
     return v1
 .end method
@@ -1721,7 +1779,7 @@
 .method public static makeSureNoMedia(Ljava/lang/String;)V
     .locals 2
 
-    .line 369
+    .line 373
     :try_start_0
     new-instance v0, Ljava/io/File;
 
@@ -1733,17 +1791,17 @@
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 372
+    .line 376
     goto :goto_0
 
-    .line 370
+    .line 374
     :catch_0
     move-exception p0
 
-    .line 371
+    .line 375
     invoke-virtual {p0}, Ljava/io/IOException;->printStackTrace()V
 
-    .line 373
+    .line 377
     :goto_0
     return-void
 .end method

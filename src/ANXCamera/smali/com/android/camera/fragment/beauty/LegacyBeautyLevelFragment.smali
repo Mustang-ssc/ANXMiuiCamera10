@@ -52,7 +52,7 @@
     .line 25
     new-instance v1, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;
 
-    const v2, 0x7f020036
+    const v2, 0x7f020041
 
     invoke-direct {v1, v2}, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;-><init>(I)V
 
@@ -61,7 +61,7 @@
     .line 26
     new-instance v1, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;
 
-    const v2, 0x7f020030
+    const v2, 0x7f02003b
 
     invoke-direct {v1, v2}, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;-><init>(I)V
 
@@ -70,7 +70,7 @@
     .line 27
     new-instance v1, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;
 
-    const v2, 0x7f020031
+    const v2, 0x7f02003c
 
     invoke-direct {v1, v2}, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;-><init>(I)V
 
@@ -79,7 +79,7 @@
     .line 28
     new-instance v1, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;
 
-    const v2, 0x7f020032
+    const v2, 0x7f02003d
 
     invoke-direct {v1, v2}, Lcom/android/camera/fragment/beauty/SingleCheckAdapter$LevelItem;-><init>(I)V
 

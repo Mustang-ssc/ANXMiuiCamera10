@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/module/VideoModule;)V
     .locals 0
 
-    .line 1572
+    .line 1635
     iput-object p1, p0, Lcom/android/camera/module/VideoModule$5;->this$0:Lcom/android/camera/module/VideoModule;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -36,29 +36,13 @@
 
 # virtual methods
 .method public run()V
-    .locals 2
+    .locals 1
 
-    .line 1576
-    invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
+    .line 1638
+    iget-object v0, p0, Lcom/android/camera/module/VideoModule$5;->this$0:Lcom/android/camera/module/VideoModule;
 
-    move-result-object v0
+    invoke-virtual {v0}, Lcom/android/camera/module/VideoModule;->handlePendingScreenSlide()V
 
-    .line 1577
-    const/16 v1, 0xa2
-
-    invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
-
-    move-result-object v0
-
-    check-cast v0, Lcom/android/camera/protocol/ModeProtocol$ActionProcessing;
-
-    .line 1578
-    if-eqz v0, :cond_0
-
-    .line 1580
-    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$ActionProcessing;->processingFinish()V
-
-    .line 1582
-    :cond_0
+    .line 1639
     return-void
 .end method

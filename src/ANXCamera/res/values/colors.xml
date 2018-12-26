@@ -108,7 +108,8 @@
     <color name="bokeh_popup_line_color_selected">#ff00a8ff</color>
     <color name="bokeh_popup_line_default_circle">#66ffffff</color>
     <color name="live_sticker_download_bg">#c0ffffff</color>
-    <color name="square_module_bg_popup_indicator">#ff3e3e3e</color>
+    <color name="square_module_bg_popup_indicator">#993e3e3e</color>
+    <color name="disable_status">#66ffffff</color>
     <color name="front_camera_hint_popup_background_color">#d9000000</color>
     <color name="front_camera_hint_text_rotate_color">#ffffffff</color>
     <color name="front_camera_hint_text_place_color">#99ffffff</color>

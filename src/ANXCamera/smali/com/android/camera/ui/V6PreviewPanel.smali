@@ -106,7 +106,7 @@
 
     move-result p1
 
-    const v0, 0x7f0d00d5
+    const v0, 0x7f0d00e3
 
     if-eq p1, v0, :cond_0
 
@@ -142,7 +142,7 @@
     invoke-super {p0}, Lcom/android/camera/ui/V6RelativeLayout;->onFinishInflate()V
 
     .line 40
-    const v0, 0x7f0d00cf
+    const v0, 0x7f0d00dd
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findChildrenById(I)Landroid/view/View;
 
@@ -153,7 +153,7 @@
     iput-object v0, p0, Lcom/android/camera/ui/V6PreviewPanel;->mFaceView:Lcom/android/camera/ui/FaceView;
 
     .line 41
-    const v0, 0x7f0d00d0
+    const v0, 0x7f0d00de
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findChildrenById(I)Landroid/view/View;
 
@@ -164,7 +164,7 @@
     iput-object v0, p0, Lcom/android/camera/ui/V6PreviewPanel;->mObjectView:Lcom/android/camera/ui/ObjectView;
 
     .line 42
-    const v0, 0x7f0d00d5
+    const v0, 0x7f0d00e3
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findChildrenById(I)Landroid/view/View;
 
@@ -175,7 +175,7 @@
     iput-object v0, p0, Lcom/android/camera/ui/V6PreviewPanel;->mVideoReviewPlay:Landroid/widget/ImageView;
 
     .line 43
-    const v0, 0x7f0d00d1
+    const v0, 0x7f0d00df
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findChildrenById(I)Landroid/view/View;
 
@@ -186,7 +186,7 @@
     iput-object v0, p0, Lcom/android/camera/ui/V6PreviewPanel;->mFocusView:Lcom/android/camera/ui/FocusView;
 
     .line 44
-    const v0, 0x7f0d00cd
+    const v0, 0x7f0d00db
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findChildrenById(I)Landroid/view/View;
 
@@ -197,7 +197,7 @@
     iput-object v0, p0, Lcom/android/camera/ui/V6PreviewPanel;->mPreviewFrame:Lcom/android/camera/ui/V6PreviewFrame;
 
     .line 45
-    const v0, 0x7f0d00d6
+    const v0, 0x7f0d00e4
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findChildrenById(I)Landroid/view/View;
 
@@ -208,7 +208,7 @@
     iput-object v0, p0, Lcom/android/camera/ui/V6PreviewPanel;->mCropView:Lcom/android/camera/ui/V6EffectCropView;
 
     .line 46
-    const v0, 0x7f0d00d4
+    const v0, 0x7f0d00e2
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findViewById(I)Landroid/view/View;
 
@@ -219,7 +219,7 @@
     iput-object v0, p0, Lcom/android/camera/ui/V6PreviewPanel;->mVideoReviewImage:Landroid/widget/ImageView;
 
     .line 47
-    const v0, 0x7f0d00cc
+    const v0, 0x7f0d00da
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/V6PreviewPanel;->findViewById(I)Landroid/view/View;
 

@@ -1756,7 +1756,7 @@
 
     const/4 v1, 0x0
 
-    const v2, 0x7f0d00e4
+    const v2, 0x7f0d00f2
 
     const/4 v3, 0x2
 

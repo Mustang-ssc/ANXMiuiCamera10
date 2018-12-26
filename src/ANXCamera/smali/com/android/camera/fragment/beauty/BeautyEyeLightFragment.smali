@@ -866,7 +866,7 @@
 
     move-result-object v0
 
-    const v1, 0x7f0900dc
+    const v1, 0x7f0900e0
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -892,7 +892,7 @@
 
     move-result-object v0
 
-    const v1, 0x7f0900de
+    const v1, 0x7f0900e2
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -901,7 +901,7 @@
     iput v0, p0, Lcom/android/camera/fragment/beauty/BeautyEyeLightFragment;->mBackButtonWidth:I
 
     .line 90
-    const v0, 0x7f0d004d
+    const v0, 0x7f0d0054
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -910,7 +910,7 @@
     iput-object v0, p0, Lcom/android/camera/fragment/beauty/BeautyEyeLightFragment;->mBackView:Landroid/view/View;
 
     .line 91
-    const v0, 0x7f0d004e
+    const v0, 0x7f0d0055
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1068,7 +1068,7 @@
 
     move-result p1
 
-    const v0, 0x7f0d004d
+    const v0, 0x7f0d0054
 
     if-ne p1, v0, :cond_1
 
@@ -1105,7 +1105,7 @@
     .end annotation
 
     .line 80
-    const p3, 0x7f040017
+    const p3, 0x7f040018
 
     const/4 v0, 0x0
 
@@ -1124,7 +1124,7 @@
     .locals 3
 
     .line 289
-    const v0, 0x7f0b01b8
+    const v0, 0x7f0b01bf
 
     invoke-direct {p0, v0}, Lcom/android/camera/fragment/beauty/BeautyEyeLightFragment;->hideTipMessage(I)V
 
@@ -1150,7 +1150,7 @@
 
     .line 296
     :cond_0
-    const v1, 0x7f0d00e1
+    const v1, 0x7f0d00ef
 
     invoke-interface {v0, v1}, Lcom/android/camera/protocol/ModeProtocol$BaseDelegate;->getActiveFragment(I)I
 
@@ -1179,7 +1179,7 @@
     .line 274
     const/16 v0, 0xa
 
-    const v1, 0x7f0b01b8
+    const v1, 0x7f0b01bf
 
     const/4 v2, 0x2
 
@@ -1207,7 +1207,7 @@
 
     .line 283
     :cond_0
-    const v1, 0x7f0d00e1
+    const v1, 0x7f0d00ef
 
     invoke-interface {v0, v1}, Lcom/android/camera/protocol/ModeProtocol$BaseDelegate;->getActiveFragment(I)I
 

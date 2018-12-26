@@ -366,33 +366,33 @@
 .method private attemptHideFaceRect()V
     .locals 4
 
-    .line 321
+    .line 320
     const/4 v0, 0x3
 
     iput v0, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
-    .line 322
+    .line 321
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x1
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 323
+    .line 322
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     const-wide/16 v2, 0x7d0
 
     invoke-virtual {v0, v1, v2, v3}, Landroid/os/Handler;->sendEmptyMessageDelayed(IJ)Z
 
-    .line 324
+    .line 323
     return-void
 .end method
 
 .method private cancelHideAnimator()V
     .locals 1
 
-    .line 333
+    .line 332
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mFaceRectHideAnimator:Landroid/animation/Animator;
 
     if-eqz v0, :cond_0
@@ -405,12 +405,12 @@
 
     if-eqz v0, :cond_0
 
-    .line 334
+    .line 333
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mFaceRectHideAnimator:Landroid/animation/Animator;
 
     invoke-virtual {v0}, Landroid/animation/Animator;->cancel()V
 
-    .line 336
+    .line 335
     :cond_0
     return-void
 .end method
@@ -418,38 +418,73 @@
 .method private clearAttemptHideFaceRect()V
     .locals 2
 
-    .line 327
+    .line 326
     const/4 v0, 0x1
 
     iput v0, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
-    .line 328
+    .line 327
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     invoke-virtual {v1, v0}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 329
+    .line 328
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x2
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->sendEmptyMessage(I)Z
 
-    .line 330
+    .line 329
     return-void
+.end method
+
+.method private determineWatermarkType()I
+    .locals 1
+
+    .line 891
+    invoke-static {}, Lcom/android/camera/CameraSettings;->isMagicMirrorWaterMarkOpen()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    .line 892
+    const/4 v0, 0x1
+
+    return v0
+
+    .line 893
+    :cond_0
+    invoke-static {}, Lcom/android/camera/CameraSettings;->isAgeGenderWaterMarkOpen()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    .line 894
+    const/4 v0, 0x2
+
+    return v0
+
+    .line 896
+    :cond_1
+    const/4 v0, 0x0
+
+    return v0
 .end method
 
 .method private drawFaceInfoText(Landroid/graphics/Canvas;Ljava/lang/String;II)V
     .locals 5
 
-    .line 817
+    .line 812
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mSplitFaceInfoPattern:Ljava/util/regex/Pattern;
 
     invoke-virtual {v0, p2}, Ljava/util/regex/Pattern;->matcher(Ljava/lang/CharSequence;)Ljava/util/regex/Matcher;
 
     move-result-object p2
 
-    .line 819
+    .line 814
     :goto_0
     invoke-virtual {p2}, Ljava/util/regex/Matcher;->find()Z
 
@@ -457,12 +492,12 @@
 
     if-eqz v0, :cond_1
 
-    .line 820
+    .line 815
     invoke-virtual {p2}, Ljava/util/regex/Matcher;->group()Ljava/lang/String;
 
     move-result-object v0
 
-    .line 821
+    .line 816
     const-string v1, "\\d+\\.?\\d*"
 
     invoke-virtual {v0, v1}, Ljava/lang/String;->matches(Ljava/lang/String;)Z
@@ -473,14 +508,14 @@
 
     if-eqz v1, :cond_0
 
-    .line 822
+    .line 817
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mFaceInfoNumberPaint:Landroid/graphics/Paint;
 
     invoke-virtual {v1, v0}, Landroid/graphics/Paint;->measureText(Ljava/lang/String;)F
 
     move-result v1
 
-    .line 823
+    .line 818
     int-to-float v3, p3
 
     div-float v2, v1, v2
@@ -495,7 +530,7 @@
 
     goto :goto_1
 
-    .line 825
+    .line 820
     :cond_0
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mFaceInfoTextPaint:Landroid/graphics/Paint;
 
@@ -503,7 +538,7 @@
 
     move-result v1
 
-    .line 826
+    .line 821
     int-to-float v3, p3
 
     div-float v2, v1, v2
@@ -516,7 +551,7 @@
 
     invoke-virtual {p1, v0, v3, v2, v4}, Landroid/graphics/Canvas;->drawText(Ljava/lang/String;FFLandroid/graphics/Paint;)V
 
-    .line 829
+    .line 824
     :goto_1
     int-to-float p3, p3
 
@@ -524,10 +559,10 @@
 
     float-to-int p3, p3
 
-    .line 830
+    .line 825
     goto :goto_0
 
-    .line 831
+    .line 826
     :cond_1
     return-void
 .end method
@@ -549,17 +584,17 @@
 
     move/from16 v6, p6
 
-    .line 771
+    .line 766
     iget-object v8, v0, Lcom/android/camera/ui/FaceView;->mSplitFaceInfoPattern:Ljava/util/regex/Pattern;
 
     invoke-virtual {v8, v5}, Ljava/util/regex/Pattern;->matcher(Ljava/lang/CharSequence;)Ljava/util/regex/Matcher;
 
     move-result-object v8
 
-    .line 772
+    .line 767
     nop
 
-    .line 773
+    .line 768
     const/4 v9, 0x0
 
     move v10, v9
@@ -571,12 +606,12 @@
 
     if-eqz v11, :cond_1
 
-    .line 774
+    .line 769
     invoke-virtual {v8}, Ljava/util/regex/Matcher;->group()Ljava/lang/String;
 
     move-result-object v11
 
-    .line 775
+    .line 770
     const-string v12, "\\d+\\.?\\d*"
 
     invoke-virtual {v11, v12}, Ljava/lang/String;->matches(Ljava/lang/String;)Z
@@ -585,7 +620,7 @@
 
     if-eqz v12, :cond_0
 
-    .line 776
+    .line 771
     iget-object v12, v0, Lcom/android/camera/ui/FaceView;->mFaceInfoNumberPaint:Landroid/graphics/Paint;
 
     invoke-virtual {v12, v11}, Landroid/graphics/Paint;->measureText(Ljava/lang/String;)F
@@ -596,7 +631,7 @@
 
     goto :goto_1
 
-    .line 778
+    .line 773
     :cond_0
     iget-object v12, v0, Lcom/android/camera/ui/FaceView;->mFaceInfoTextPaint:Landroid/graphics/Paint;
 
@@ -606,11 +641,11 @@
 
     add-float/2addr v10, v11
 
-    .line 780
+    .line 775
     :goto_1
     goto :goto_0
 
-    .line 783
+    .line 778
     :cond_1
     invoke-virtual/range {p3 .. p3}, Landroid/graphics/drawable/Drawable;->getIntrinsicWidth()I
 
@@ -632,7 +667,7 @@
 
     float-to-int v8, v8
 
-    .line 784
+    .line 779
     move/from16 v11, p7
 
     int-to-float v11, v11
@@ -651,10 +686,10 @@
 
     float-to-int v12, v12
 
-    .line 785
+    .line 780
     new-instance v13, Landroid/graphics/Rect;
 
-    .line 786
+    .line 781
     invoke-virtual/range {p2 .. p2}, Landroid/graphics/RectF;->centerX()F
 
     move-result v14
@@ -675,7 +710,7 @@
 
     sub-int v15, v15, p8
 
-    .line 788
+    .line 783
     invoke-virtual/range {p2 .. p2}, Landroid/graphics/RectF;->centerX()F
 
     move-result v12
@@ -692,22 +727,22 @@
 
     invoke-direct {v13, v14, v15, v12, v2}, Landroid/graphics/Rect;-><init>(IIII)V
 
-    .line 791
+    .line 786
     if-eqz v4, :cond_2
 
-    .line 792
+    .line 787
     invoke-virtual {v4, v13}, Landroid/graphics/drawable/Drawable;->setBounds(Landroid/graphics/Rect;)V
 
-    .line 793
+    .line 788
     invoke-virtual {v4, v1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
 
-    .line 796
+    .line 791
     :cond_2
     new-instance v2, Landroid/graphics/Rect;
 
     invoke-direct {v2}, Landroid/graphics/Rect;-><init>()V
 
-    .line 798
+    .line 793
     iget v4, v13, Landroid/graphics/Rect;->left:I
 
     add-int/2addr v4, v6
@@ -734,7 +769,7 @@
 
     add-int/2addr v8, v6
 
-    .line 801
+    .line 796
     invoke-virtual/range {p3 .. p3}, Landroid/graphics/drawable/Drawable;->getIntrinsicWidth()I
 
     move-result v6
@@ -753,7 +788,7 @@
 
     sub-float/2addr v6, v11
 
-    .line 802
+    .line 797
     invoke-virtual/range {p3 .. p3}, Landroid/graphics/drawable/Drawable;->getIntrinsicHeight()I
 
     move-result v11
@@ -764,35 +799,35 @@
 
     float-to-int v6, v6
 
-    .line 798
+    .line 793
     invoke-virtual {v2, v4, v7, v8, v6}, Landroid/graphics/Rect;->set(IIII)V
 
-    .line 804
+    .line 799
     invoke-virtual {v3, v2}, Landroid/graphics/drawable/Drawable;->setBounds(Landroid/graphics/Rect;)V
 
-    .line 805
+    .line 800
     invoke-virtual {v3, v1}, Landroid/graphics/drawable/Drawable;->draw(Landroid/graphics/Canvas;)V
 
-    .line 808
+    .line 803
     cmpl-float v3, v10, v9
 
     if-eqz v3, :cond_3
 
-    .line 809
+    .line 804
     iget-object v3, v0, Lcom/android/camera/ui/FaceView;->mFaceInfoTextPaint:Landroid/graphics/Paint;
 
     invoke-virtual {v3}, Landroid/graphics/Paint;->getFontMetricsInt()Landroid/graphics/Paint$FontMetricsInt;
 
     move-result-object v3
 
-    .line 810
+    .line 805
     iget v4, v2, Landroid/graphics/Rect;->right:I
 
     iget v6, v0, Lcom/android/camera/ui/FaceView;->mGap:I
 
     add-int/2addr v4, v6
 
-    .line 811
+    .line 806
     iget v6, v2, Landroid/graphics/Rect;->bottom:I
 
     iget v2, v2, Landroid/graphics/Rect;->top:I
@@ -809,10 +844,10 @@
 
     div-int/lit8 v6, v6, 0x2
 
-    .line 812
+    .line 807
     invoke-direct {v0, v1, v5, v4, v6}, Lcom/android/camera/ui/FaceView;->drawFaceInfoText(Landroid/graphics/Canvas;Ljava/lang/String;II)V
 
-    .line 814
+    .line 809
     :cond_3
     return-void
 .end method
@@ -820,7 +855,7 @@
 .method private drawFaceRect(Landroid/graphics/Canvas;Landroid/graphics/RectF;ILcom/android/camera2/CameraHardwareFace;)V
     .locals 2
 
-    .line 735
+    .line 730
     const/4 v0, 0x4
 
     const v1, 0x3c75c28f    # 0.015f
@@ -831,7 +866,7 @@
 
     goto :goto_2
 
-    .line 755
+    .line 750
     :pswitch_0
     invoke-direct {p0, p4}, Lcom/android/camera/ui/FaceView;->isValidAGInfo(Lcom/android/camera2/CameraHardwareFace;)Z
 
@@ -839,10 +874,10 @@
 
     if-nez p3, :cond_0
 
-    .line 756
+    .line 751
     return-void
 
-    .line 758
+    .line 753
     :cond_0
     iget p3, p4, Lcom/android/camera2/CameraHardwareFace;->gender:F
 
@@ -859,11 +894,11 @@
     :cond_1
     const/4 p3, 0x0
 
-    .line 759
+    .line 754
     :goto_0
     iget-object p4, p0, Lcom/android/camera/ui/FaceView;->mEffectRectPaint:Landroid/graphics/Paint;
 
-    .line 760
+    .line 755
     if-eqz p3, :cond_2
 
     const p3, -0x11957f
@@ -873,18 +908,18 @@
     :cond_2
     const p3, -0x90480c
 
-    .line 759
+    .line 754
     :goto_1
     invoke-virtual {p4, p3}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 762
+    .line 757
     invoke-virtual {p2}, Landroid/graphics/RectF;->width()F
 
     move-result p3
 
     mul-float/2addr p3, v1
 
-    .line 763
+    .line 758
     invoke-virtual {p2}, Landroid/graphics/RectF;->height()F
 
     move-result p4
@@ -893,61 +928,13 @@
 
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mEffectRectPaint:Landroid/graphics/Paint;
 
-    .line 762
+    .line 757
     invoke-virtual {p1, p2, p3, p4, v0}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
     goto :goto_2
-
-    .line 750
-    :pswitch_1
-    invoke-virtual {p2}, Landroid/graphics/RectF;->width()F
-
-    move-result p3
-
-    mul-float/2addr p3, v1
-
-    .line 751
-    invoke-virtual {p2}, Landroid/graphics/RectF;->height()F
-
-    move-result p4
-
-    mul-float/2addr p4, v1
-
-    iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mNormalRectPaint:Landroid/graphics/Paint;
-
-    .line 750
-    invoke-virtual {p1, p2, p3, p4, v0}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
-
-    .line 752
-    goto :goto_2
-
-    .line 737
-    :pswitch_2
-    return-void
-
-    .line 741
-    :cond_3
-    :pswitch_3
-    iget p3, p4, Lcom/android/camera2/CameraHardwareFace;->beautyscore:F
-
-    const/4 p4, 0x0
-
-    cmpg-float p3, p3, p4
-
-    if-gtz p3, :cond_4
-
-    .line 742
-    return-void
-
-    .line 744
-    :cond_4
-    iget-object p3, p0, Lcom/android/camera/ui/FaceView;->mEffectRectPaint:Landroid/graphics/Paint;
-
-    const/16 p4, -0x47c9
-
-    invoke-virtual {p3, p4}, Landroid/graphics/Paint;->setColor(I)V
 
     .line 745
+    :pswitch_1
     invoke-virtual {p2}, Landroid/graphics/RectF;->width()F
 
     move-result p3
@@ -961,15 +948,63 @@
 
     mul-float/2addr p4, v1
 
-    iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mEffectRectPaint:Landroid/graphics/Paint;
+    iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mNormalRectPaint:Landroid/graphics/Paint;
 
     .line 745
     invoke-virtual {p1, p2, p3, p4, v0}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
     .line 747
+    goto :goto_2
+
+    .line 732
+    :pswitch_2
+    return-void
+
+    .line 736
+    :cond_3
+    :pswitch_3
+    iget p3, p4, Lcom/android/camera2/CameraHardwareFace;->beautyscore:F
+
+    const/4 p4, 0x0
+
+    cmpg-float p3, p3, p4
+
+    if-gtz p3, :cond_4
+
+    .line 737
+    return-void
+
+    .line 739
+    :cond_4
+    iget-object p3, p0, Lcom/android/camera/ui/FaceView;->mEffectRectPaint:Landroid/graphics/Paint;
+
+    const/16 p4, -0x47c9
+
+    invoke-virtual {p3, p4}, Landroid/graphics/Paint;->setColor(I)V
+
+    .line 740
+    invoke-virtual {p2}, Landroid/graphics/RectF;->width()F
+
+    move-result p3
+
+    mul-float/2addr p3, v1
+
+    .line 741
+    invoke-virtual {p2}, Landroid/graphics/RectF;->height()F
+
+    move-result p4
+
+    mul-float/2addr p4, v1
+
+    iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mEffectRectPaint:Landroid/graphics/Paint;
+
+    .line 740
+    invoke-virtual {p1, p2, p3, p4, v0}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
+
+    .line 742
     nop
 
-    .line 766
+    .line 761
     :goto_2
     return-void
 
@@ -985,12 +1020,12 @@
 .method private getAgeInfo(Lcom/android/camera2/CameraHardwareFace;)Ljava/lang/String;
     .locals 4
 
-    .line 613
+    .line 612
     iget v0, p1, Lcom/android/camera2/CameraHardwareFace;->ageMale:F
 
     float-to-int v0, v0
 
-    .line 614
+    .line 613
     iget v1, p1, Lcom/android/camera2/CameraHardwareFace;->gender:F
 
     const v2, 0x3ecccccd    # 0.4f
@@ -999,12 +1034,12 @@
 
     if-gez v1, :cond_0
 
-    .line 615
+    .line 614
     iget p1, p1, Lcom/android/camera2/CameraHardwareFace;->ageFemale:F
 
     float-to-int v0, p1
 
-    .line 617
+    .line 616
     :cond_0
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->configuration:Landroid/content/res/Configuration;
 
@@ -1034,10 +1069,10 @@
 .method private getPopShowType([Lcom/android/camera2/CameraHardwareFace;)I
     .locals 7
 
-    .line 835
+    .line 830
     nop
 
-    .line 836
+    .line 831
     const/4 v0, 0x0
 
     const/4 v1, 0x1
@@ -1048,20 +1083,20 @@
 
     if-lez v2, :cond_6
 
-    .line 837
+    .line 832
     iget-boolean v2, p0, Lcom/android/camera/ui/FaceView;->mShowMagicMirror:Z
 
     if-eqz v2, :cond_5
 
-    .line 838
+    .line 833
     nop
 
-    .line 839
+    .line 834
     const/4 v2, -0x1
 
     iput v2, p0, Lcom/android/camera/ui/FaceView;->mWinnerIndex:I
 
-    .line 840
+    .line 835
     move v3, v0
 
     :goto_0
@@ -1071,10 +1106,10 @@
 
     if-ge v0, v4, :cond_2
 
-    .line 841
+    .line 836
     aget-object v4, p1, v0
 
-    .line 842
+    .line 837
     iget v5, v4, Lcom/android/camera2/CameraHardwareFace;->beautyscore:F
 
     const/4 v6, 0x0
@@ -1083,10 +1118,10 @@
 
     if-lez v5, :cond_1
 
-    .line 843
+    .line 838
     add-int/lit8 v3, v3, 0x1
 
-    .line 844
+    .line 839
     iget v5, p0, Lcom/android/camera/ui/FaceView;->mWinnerIndex:I
 
     if-eq v5, v2, :cond_0
@@ -1103,43 +1138,43 @@
 
     if-lez v4, :cond_1
 
-    .line 845
+    .line 840
     :cond_0
     iput v0, p0, Lcom/android/camera/ui/FaceView;->mWinnerIndex:I
 
-    .line 840
+    .line 835
     :cond_1
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 849
+    .line 844
     :cond_2
     if-le v3, v1, :cond_3
 
-    .line 850
+    .line 845
     const/4 p1, 0x2
 
-    .line 856
+    .line 851
     :goto_1
     move v0, p1
 
     goto :goto_2
 
-    .line 851
+    .line 846
     :cond_3
     if-lez v3, :cond_4
 
-    .line 852
+    .line 847
     const/4 p1, 0x4
 
     goto :goto_1
 
-    .line 854
+    .line 849
     :cond_4
     nop
 
-    .line 856
+    .line 851
     move v0, v2
 
     :goto_2
@@ -1150,10 +1185,10 @@
 
     if-eqz p1, :cond_6
 
-    .line 857
+    .line 852
     nop
 
-    .line 860
+    .line 855
     move v0, v1
 
     :cond_6
@@ -1164,7 +1199,7 @@
 .method private getScoreInfo(Lcom/android/camera2/CameraHardwareFace;)Ljava/lang/String;
     .locals 4
 
-    .line 621
+    .line 620
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->configuration:Landroid/content/res/Configuration;
 
     iget-object v0, v0, Landroid/content/res/Configuration;->locale:Ljava/util/Locale;
@@ -1230,7 +1265,7 @@
     iput-object v1, p0, Lcom/android/camera/ui/FaceView;->configuration:Landroid/content/res/Configuration;
 
     .line 205
-    const v1, 0x7f0b0141
+    const v1, 0x7f0b0148
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -1239,7 +1274,7 @@
     iput-object v1, p0, Lcom/android/camera/ui/FaceView;->mFaceAgeFormat:Ljava/lang/String;
 
     .line 206
-    const v1, 0x7f0b0142
+    const v1, 0x7f0b0149
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -1248,7 +1283,7 @@
     iput-object v1, p0, Lcom/android/camera/ui/FaceView;->mFaceScoreInfoFormat:Ljava/lang/String;
 
     .line 208
-    const v1, 0x7f020175
+    const v1, 0x7f020187
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1257,7 +1292,7 @@
     iput-object v1, p0, Lcom/android/camera/ui/FaceView;->mMaleAgeInfoPop:Landroid/graphics/drawable/Drawable;
 
     .line 209
-    const v1, 0x7f020035
+    const v1, 0x7f020040
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1266,7 +1301,7 @@
     iput-object v1, p0, Lcom/android/camera/ui/FaceView;->mFemaleAgeInfoPop:Landroid/graphics/drawable/Drawable;
 
     .line 210
-    const v1, 0x7f020137
+    const v1, 0x7f020146
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1275,7 +1310,7 @@
     iput-object v1, p0, Lcom/android/camera/ui/FaceView;->mSexMaleIc:Landroid/graphics/drawable/Drawable;
 
     .line 211
-    const v1, 0x7f020136
+    const v1, 0x7f020145
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1382,7 +1417,7 @@
 
     .line 228
     :cond_2
-    const v1, 0x7f020173
+    const v1, 0x7f020185
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1391,7 +1426,7 @@
     iput-object v1, p0, Lcom/android/camera/ui/FaceView;->mMagicMirrorInfoPop:Landroid/graphics/drawable/Drawable;
 
     .line 229
-    const v1, 0x7f0200b2
+    const v1, 0x7f0200bd
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1495,7 +1530,7 @@
 .method private isValidAGInfo(Lcom/android/camera2/CameraHardwareFace;)Z
     .locals 2
 
-    .line 865
+    .line 860
     iget v0, p1, Lcom/android/camera2/CameraHardwareFace;->prob:F
 
     const/high16 v1, 0x3f000000    # 0.5f
@@ -1543,22 +1578,22 @@
 .method private prepareMatrix()V
     .locals 10
 
-    .line 628
+    .line 624
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCamera2TranslateMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0}, Landroid/graphics/Matrix;->reset()V
 
-    .line 629
+    .line 625
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0}, Landroid/graphics/Matrix;->reset()V
 
-    .line 630
+    .line 626
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCanvasMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0}, Landroid/graphics/Matrix;->reset()V
 
-    .line 631
+    .line 627
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCamera2TranslateMatrix:Landroid/graphics/Matrix;
 
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mActiveArraySize:Landroid/graphics/Rect;
@@ -1567,19 +1602,19 @@
 
     invoke-static {v0, v1, v2}, Lcom/android/camera/Util;->scaleCamera2Matrix(Landroid/graphics/Matrix;Landroid/graphics/Rect;F)V
 
-    .line 632
+    .line 628
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCameraScreenNail:Lcom/android/camera/CameraScreenNail;
 
     invoke-virtual {v0}, Lcom/android/camera/CameraScreenNail;->getRenderHeight()I
 
     move-result v5
 
-    .line 633
+    .line 629
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCameraScreenNail:Lcom/android/camera/CameraScreenNail;
 
     invoke-virtual {v0}, Lcom/android/camera/CameraScreenNail;->getRenderWidth()I
 
-    .line 634
+    .line 630
     iget v0, p0, Lcom/android/camera/ui/FaceView;->mCameraDisplayOrientation:I
 
     const/16 v1, 0x5a
@@ -1594,7 +1629,7 @@
 
     goto :goto_0
 
-    .line 637
+    .line 633
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mActiveArraySize:Landroid/graphics/Rect;
 
@@ -1614,7 +1649,7 @@
 
     goto :goto_1
 
-    .line 635
+    .line 631
     :cond_1
     :goto_0
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mActiveArraySize:Landroid/graphics/Rect;
@@ -1633,7 +1668,7 @@
 
     div-int/2addr v0, v1
 
-    .line 639
+    .line 635
     :goto_1
     move v4, v0
 
@@ -1643,7 +1678,7 @@
 
     iget v3, p0, Lcom/android/camera/ui/FaceView;->mCameraDisplayOrientation:I
 
-    .line 641
+    .line 637
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->getWidth()I
 
     move-result v0
@@ -1658,7 +1693,7 @@
 
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mActiveArraySize:Landroid/graphics/Rect;
 
-    .line 642
+    .line 638
     invoke-virtual {v0}, Landroid/graphics/Rect;->width()I
 
     move-result v8
@@ -1669,15 +1704,15 @@
 
     move-result v9
 
-    .line 639
+    .line 635
     invoke-static/range {v1 .. v9}, Lcom/android/camera/Util;->prepareMatrix(Landroid/graphics/Matrix;ZIIIIIII)V
 
-    .line 643
+    .line 639
     iget-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mLightingOn:Z
 
     if-nez v0, :cond_2
 
-    .line 644
+    .line 640
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mMatrix:Landroid/graphics/Matrix;
 
     iget v1, p0, Lcom/android/camera/ui/FaceView;->mOrientation:I
@@ -1686,7 +1721,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Matrix;->postRotate(F)Z
 
-    .line 645
+    .line 641
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCanvasMatrix:Landroid/graphics/Matrix;
 
     iget v1, p0, Lcom/android/camera/ui/FaceView;->mOrientation:I
@@ -1695,7 +1730,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Matrix;->postRotate(F)Z
 
-    .line 648
+    .line 643
     :cond_2
     return-void
 .end method
@@ -1703,7 +1738,7 @@
 .method private setContentDescription(I)V
     .locals 2
 
-    .line 299
+    .line 298
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     new-instance v1, Lcom/android/camera/ui/FaceView$2;
@@ -1712,73 +1747,80 @@
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
-    .line 311
+    .line 310
     return-void
 .end method
 
 .method private setCurrentFaceInfos(Landroid/graphics/RectF;Ljava/lang/String;III)V
     .locals 1
 
-    .line 927
+    .line 935
     iget-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mIsUpdateFaceInfos:Z
 
     if-nez v0, :cond_0
 
-    .line 928
+    .line 936
     const-string p1, "FaceView"
 
-    const-string p2, "shutter status is true,no record current face infos(setCurrentFaceInfos)."
+    const-string p2, "setCurrentFaceInfos@2: updateInfo=false"
 
     invoke-static {p1, p2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 929
+    .line 937
     return-void
 
-    .line 931
+    .line 939
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     if-nez v0, :cond_1
 
-    .line 932
+    .line 940
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v0, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
-    .line 934
+    .line 942
     :cond_1
     new-instance v0, Lcom/android/camera/watermark/WaterMarkData;
 
     invoke-direct {v0}, Lcom/android/camera/watermark/WaterMarkData;-><init>()V
 
-    .line 935
+    .line 943
     invoke-virtual {v0, p1}, Lcom/android/camera/watermark/WaterMarkData;->setFaceRectF(Landroid/graphics/RectF;)V
 
-    .line 936
+    .line 944
     invoke-virtual {v0, p2}, Lcom/android/camera/watermark/WaterMarkData;->setInfo(Ljava/lang/String;)V
 
-    .line 937
+    .line 945
     invoke-virtual {v0, p3}, Lcom/android/camera/watermark/WaterMarkData;->setFaceViewWidth(I)V
 
-    .line 938
+    .line 946
     invoke-virtual {v0, p4}, Lcom/android/camera/watermark/WaterMarkData;->setFaceViewHeight(I)V
 
-    .line 939
+    .line 947
     invoke-virtual {v0, p5}, Lcom/android/camera/watermark/WaterMarkData;->setOrientation(I)V
 
-    .line 940
+    .line 948
+    invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->determineWatermarkType()I
+
+    move-result p1
+
+    invoke-virtual {v0, p1}, Lcom/android/camera/watermark/WaterMarkData;->setWatermarkType(I)V
+
+    .line 949
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     if-eqz p1, :cond_2
 
-    .line 941
+    .line 950
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     invoke-interface {p1, v0}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 943
+    .line 952
     :cond_2
     return-void
 .end method
@@ -1786,83 +1828,90 @@
 .method private setCurrentFaceInfos(Landroid/graphics/RectF;ZLjava/lang/String;III)V
     .locals 1
 
-    .line 903
+    .line 909
     iget-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mIsUpdateFaceInfos:Z
 
     if-nez v0, :cond_0
 
-    .line 904
+    .line 910
     const-string p1, "FaceView"
 
-    const-string p2, "shutter status is true,no record current face infos(setCurrentFaceInfos)."
+    const-string p2, "setCurrentFaceInfos@1: updateInfo=false"
 
     invoke-static {p1, p2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 905
+    .line 911
     return-void
 
-    .line 907
+    .line 913
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     if-nez v0, :cond_1
 
-    .line 908
+    .line 914
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v0, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
-    .line 910
+    .line 916
     :cond_1
     new-instance v0, Lcom/android/camera/watermark/WaterMarkData;
 
     invoke-direct {v0}, Lcom/android/camera/watermark/WaterMarkData;-><init>()V
 
-    .line 911
+    .line 917
     invoke-virtual {v0, p1}, Lcom/android/camera/watermark/WaterMarkData;->setFaceRectF(Landroid/graphics/RectF;)V
 
-    .line 912
+    .line 918
     invoke-virtual {v0, p2}, Lcom/android/camera/watermark/WaterMarkData;->setFemale(Z)V
 
-    .line 913
+    .line 919
     invoke-virtual {v0, p3}, Lcom/android/camera/watermark/WaterMarkData;->setInfo(Ljava/lang/String;)V
 
-    .line 914
+    .line 920
     invoke-virtual {v0, p4}, Lcom/android/camera/watermark/WaterMarkData;->setFaceViewWidth(I)V
 
-    .line 915
+    .line 921
     invoke-virtual {v0, p5}, Lcom/android/camera/watermark/WaterMarkData;->setFaceViewHeight(I)V
 
-    .line 916
+    .line 922
     invoke-virtual {v0, p6}, Lcom/android/camera/watermark/WaterMarkData;->setOrientation(I)V
 
-    .line 917
+    .line 923
+    invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->determineWatermarkType()I
+
+    move-result p1
+
+    invoke-virtual {v0, p1}, Lcom/android/camera/watermark/WaterMarkData;->setWatermarkType(I)V
+
+    .line 924
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     invoke-interface {p1, v0}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 918
+    .line 925
     return-void
 .end method
 
 .method private setToVisible()V
     .locals 1
 
-    .line 728
+    .line 723
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->getVisibility()I
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 729
+    .line 724
     const/4 v0, 0x0
 
     invoke-virtual {p0, v0}, Lcom/android/camera/ui/FaceView;->setVisibility(I)V
 
-    .line 731
+    .line 726
     :cond_0
     return-void
 .end method
@@ -1870,59 +1919,59 @@
 .method private showNormalFaceRectImmediately()V
     .locals 2
 
-    .line 315
+    .line 314
     const/4 v0, 0x1
 
     iput v0, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
-    .line 316
+    .line 315
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     invoke-virtual {v1, v0}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 317
+    .line 316
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x3
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->sendEmptyMessage(I)Z
 
-    .line 318
+    .line 317
     return-void
 .end method
 
 .method private updateFaceInfos()V
     .locals 2
 
-    .line 877
+    .line 872
     iget-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mIsUpdateFaceInfos:Z
 
     if-nez v0, :cond_0
 
-    .line 878
+    .line 873
     const-string v0, "FaceView"
 
-    const-string v1, "shutter status is true,no update face info(updateFaceInfos)."
+    const-string v1, "updateFaceInfos: false"
 
     invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 879
+    .line 874
     return-void
 
-    .line 881
+    .line 876
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
     if-nez v0, :cond_1
 
-    .line 882
+    .line 877
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v0, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
-    .line 884
+    .line 879
     :cond_1
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
@@ -1936,11 +1985,7 @@
 
     if-nez v0, :cond_3
 
-    .line 885
-    iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
-
-    if-eqz v0, :cond_2
-
+    .line 880
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->isEmpty()Z
@@ -1949,12 +1994,12 @@
 
     if-nez v0, :cond_2
 
-    .line 886
+    .line 881
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->clear()V
 
-    .line 888
+    .line 883
     :cond_2
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
@@ -1962,18 +2007,18 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
 
-    .line 890
+    .line 885
     :cond_3
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     if-eqz v0, :cond_4
 
-    .line 891
+    .line 886
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->clear()V
 
-    .line 893
+    .line 888
     :cond_4
     return-void
 .end method
@@ -1981,10 +2026,10 @@
 .method private updateLatestFaces()V
     .locals 6
 
-    .line 383
+    .line 382
     iget v0, p0, Lcom/android/camera/ui/FaceView;->mLatestFaceIndex:I
 
-    .line 384
+    .line 383
     const/4 v1, 0x0
 
     const/4 v2, 0x1
@@ -1993,19 +2038,19 @@
 
     if-lt v0, v3, :cond_0
 
-    .line 385
+    .line 384
     nop
 
-    .line 389
+    .line 388
     move v0, v1
 
     goto :goto_0
 
-    .line 387
+    .line 386
     :cond_0
     add-int/2addr v0, v2
 
-    .line 389
+    .line 388
     :goto_0
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->faceExists()Z
 
@@ -2013,7 +2058,7 @@
 
     if-nez v3, :cond_1
 
-    .line 390
+    .line 389
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     const/4 v2, 0x0
@@ -2022,13 +2067,13 @@
 
     goto :goto_2
 
-    .line 393
+    .line 392
     :cond_1
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v1, v3, v1
 
-    .line 394
+    .line 393
     :goto_1
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -2036,7 +2081,7 @@
 
     if-ge v2, v3, :cond_3
 
-    .line 395
+    .line 394
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v3, v3, v2
@@ -2067,28 +2112,28 @@
 
     if-le v3, v4, :cond_2
 
-    .line 397
+    .line 396
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v1, v1, v2
 
-    .line 394
+    .line 393
     :cond_2
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_1
 
-    .line 400
+    .line 399
     :cond_3
     iget-object v2, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aput-object v1, v2, v0
 
-    .line 402
+    .line 401
     :goto_2
     iput v0, p0, Lcom/android/camera/ui/FaceView;->mLatestFaceIndex:I
 
-    .line 403
+    .line 402
     return-void
 .end method
 
@@ -2097,50 +2142,50 @@
 .method public clear()V
     .locals 1
 
-    .line 544
+    .line 543
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
-    .line 545
+    .line 544
     const/4 v0, 0x1
 
     iput v0, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
-    .line 546
+    .line 545
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->clearPreviousFaces()V
 
-    .line 547
+    .line 546
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->postInvalidate()V
 
-    .line 548
+    .line 547
     return-void
 .end method
 
 .method public clearFaceFlags()V
     .locals 1
 
-    .line 551
+    .line 550
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mShowGenderAndAge:Z
 
-    .line 552
+    .line 551
     iput-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mShowMagicMirror:Z
 
-    .line 553
+    .line 552
     return-void
 .end method
 
 .method public clearPreviousFaces()V
     .locals 3
 
-    .line 569
+    .line 568
     const/4 v0, -0x1
 
     iput v0, p0, Lcom/android/camera/ui/FaceView;->mLatestFaceIndex:I
 
-    .line 571
+    .line 570
     const/4 v0, 0x0
 
     :goto_0
@@ -2150,19 +2195,19 @@
 
     if-ge v0, v1, :cond_0
 
-    .line 572
+    .line 571
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     const/4 v2, 0x0
 
     aput-object v2, v1, v0
 
-    .line 571
+    .line 570
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 574
+    .line 573
     :cond_0
     return-void
 .end method
@@ -2170,21 +2215,21 @@
 .method public faceExisted()Z
     .locals 4
 
-    .line 506
+    .line 505
     iget v0, p0, Lcom/android/camera/ui/FaceView;->mLatestFaceIndex:I
 
     const/4 v1, 0x0
 
     if-gez v0, :cond_0
 
-    .line 507
+    .line 506
     return v1
 
-    .line 509
+    .line 508
     :cond_0
     iget v0, p0, Lcom/android/camera/ui/FaceView;->mLatestFaceIndex:I
 
-    .line 510
+    .line 509
     move v2, v0
 
     move v0, v1
@@ -2194,17 +2239,17 @@
 
     if-ge v0, v3, :cond_3
 
-    .line 511
+    .line 510
     if-gez v2, :cond_1
 
-    .line 512
+    .line 511
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     array-length v3, v3
 
     add-int/2addr v2, v3
 
-    .line 514
+    .line 513
     :cond_1
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -2212,21 +2257,21 @@
 
     if-eqz v3, :cond_2
 
-    .line 515
+    .line 514
     const/4 v0, 0x1
 
     return v0
 
-    .line 517
+    .line 516
     :cond_2
     add-int/lit8 v2, v2, -0x1
 
-    .line 510
+    .line 509
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 519
+    .line 518
     :cond_3
     return v1
 .end method
@@ -2234,7 +2279,7 @@
 .method public faceExists()Z
     .locals 1
 
-    .line 501
+    .line 500
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     if-eqz v0, :cond_0
@@ -2259,24 +2304,24 @@
 .method public forceHideRect()V
     .locals 2
 
-    .line 339
+    .line 338
     iget v0, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
     const/4 v1, 0x4
 
     if-eq v0, v1, :cond_0
 
-    .line 340
+    .line 339
     iput v1, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
-    .line 341
+    .line 340
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x1
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 343
+    .line 342
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mNormalRectPaint:Landroid/graphics/Paint;
 
     invoke-virtual {v0}, Landroid/graphics/Paint;->getAlpha()I
@@ -2285,14 +2330,14 @@
 
     if-lez v0, :cond_0
 
-    .line 344
+    .line 343
     const/16 v0, 0x8
 
     const/16 v1, 0xc8
 
     invoke-virtual {p0, v0, v1}, Lcom/android/camera/ui/FaceView;->setFaceRectVisible(II)V
 
-    .line 347
+    .line 346
     :cond_0
     return-void
 .end method
@@ -2308,14 +2353,14 @@
         }
     .end annotation
 
-    .line 946
+    .line 955
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->getFaces()[Lcom/android/camera2/CameraHardwareFace;
 
     move-result-object v0
 
     iput-object v0, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
-    .line 947
+    .line 956
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     if-eqz v0, :cond_7
@@ -2336,7 +2381,7 @@
 
     goto/16 :goto_3
 
-    .line 950
+    .line 959
     :cond_0
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -2344,7 +2389,7 @@
 
     move-result v0
 
-    .line 952
+    .line 961
     const/4 v1, 0x0
 
     move v2, v1
@@ -2356,7 +2401,7 @@
 
     if-ge v2, v3, :cond_6
 
-    .line 953
+    .line 962
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mRect:Landroid/graphics/RectF;
 
     iget-object v4, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
@@ -2367,7 +2412,7 @@
 
     invoke-virtual {v3, v4}, Landroid/graphics/RectF;->set(Landroid/graphics/Rect;)V
 
-    .line 954
+    .line 963
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v3, v3, v2
@@ -2378,14 +2423,14 @@
 
     invoke-virtual {p0, v3, v4}, Lcom/android/camera/ui/FaceView;->transToViewRect(Landroid/graphics/Rect;Landroid/graphics/RectF;)V
 
-    .line 955
+    .line 964
     const/4 v3, 0x1
 
     if-eq v0, v3, :cond_1
 
     goto :goto_2
 
-    .line 957
+    .line 966
     :cond_1
     iget-object v4, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -2397,10 +2442,10 @@
 
     if-eqz v4, :cond_3
 
-    .line 958
+    .line 967
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->initFaceInfoStyle()V
 
-    .line 959
+    .line 968
     iget-object v4, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v4, v4, v2
@@ -2413,16 +2458,16 @@
 
     if-gez v4, :cond_2
 
-    .line 960
+    .line 969
     move v7, v3
 
     goto :goto_1
 
-    .line 959
+    .line 968
     :cond_2
     nop
 
-    .line 960
+    .line 969
     move v7, v1
 
     :goto_1
@@ -2434,7 +2479,7 @@
 
     move-result-object v8
 
-    .line 961
+    .line 970
     new-instance v6, Landroid/graphics/RectF;
 
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mRect:Landroid/graphics/RectF;
@@ -2455,6 +2500,7 @@
 
     invoke-direct {v6, v3, v4, v5, v9}, Landroid/graphics/RectF;-><init>(FFFF)V
 
+    .line 971
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->getWidth()I
 
     move-result v9
@@ -2465,14 +2511,15 @@
 
     iget v11, p0, Lcom/android/camera/ui/FaceView;->mOrientation:I
 
+    .line 970
     move-object v5, p0
 
     invoke-direct/range {v5 .. v11}, Lcom/android/camera/ui/FaceView;->setCurrentFaceInfos(Landroid/graphics/RectF;ZLjava/lang/String;III)V
 
-    .line 962
+    .line 972
     nop
 
-    .line 968
+    .line 978
     :cond_3
     :goto_2
     const/4 v3, 0x2
@@ -2483,7 +2530,7 @@
 
     if-ne v0, v3, :cond_5
 
-    .line 969
+    .line 979
     :cond_4
     new-instance v5, Landroid/graphics/RectF;
 
@@ -2505,7 +2552,7 @@
 
     invoke-direct {v5, v3, v4, v6, v7}, Landroid/graphics/RectF;-><init>(FFFF)V
 
-    .line 970
+    .line 980
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v3, v3, v2
@@ -2514,7 +2561,7 @@
 
     move-result-object v6
 
-    .line 971
+    .line 981
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->getWidth()I
 
     move-result v7
@@ -2529,22 +2576,22 @@
 
     invoke-direct/range {v4 .. v9}, Lcom/android/camera/ui/FaceView;->setCurrentFaceInfos(Landroid/graphics/RectF;Ljava/lang/String;III)V
 
-    .line 952
+    .line 961
     :cond_5
     add-int/lit8 v2, v2, 0x1
 
     goto/16 :goto_0
 
-    .line 974
+    .line 984
     :cond_6
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->updateFaceInfos()V
 
-    .line 975
+    .line 985
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
     return-object v0
 
-    .line 948
+    .line 957
     :cond_7
     :goto_3
     const/4 v0, 0x0
@@ -2555,7 +2602,7 @@
 .method public getFaces()[Lcom/android/camera2/CameraHardwareFace;
     .locals 1
 
-    .line 379
+    .line 378
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     return-object v0
@@ -2564,12 +2611,12 @@
 .method public getFocusRect()Landroid/graphics/RectF;
     .locals 14
 
-    .line 413
+    .line 412
     new-instance v0, Landroid/graphics/RectF;
 
     invoke-direct {v0}, Landroid/graphics/RectF;-><init>()V
 
-    .line 414
+    .line 413
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->getContext()Landroid/content/Context;
 
     move-result-object v1
@@ -2580,7 +2627,7 @@
 
     move-result-object v1
 
-    .line 415
+    .line 414
     if-eqz v1, :cond_0
 
     iget v2, p0, Lcom/android/camera/ui/FaceView;->mLatestFaceIndex:I
@@ -2593,17 +2640,17 @@
 
     if-ge v2, v3, :cond_0
 
-    .line 417
+    .line 416
     iget-object v2, p0, Lcom/android/camera/ui/FaceView;->mCamera2TranslateMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v2}, Landroid/graphics/Matrix;->reset()V
 
-    .line 418
+    .line 417
     iget-object v2, p0, Lcom/android/camera/ui/FaceView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v2}, Landroid/graphics/Matrix;->reset()V
 
-    .line 419
+    .line 418
     iget-object v2, p0, Lcom/android/camera/ui/FaceView;->mCamera2TranslateMatrix:Landroid/graphics/Matrix;
 
     iget-object v3, p0, Lcom/android/camera/ui/FaceView;->mActiveArraySize:Landroid/graphics/Rect;
@@ -2612,14 +2659,14 @@
 
     invoke-static {v2, v3, v4}, Lcom/android/camera/Util;->scaleCamera2Matrix(Landroid/graphics/Matrix;Landroid/graphics/Rect;F)V
 
-    .line 421
+    .line 420
     iget-object v5, p0, Lcom/android/camera/ui/FaceView;->mMatrix:Landroid/graphics/Matrix;
 
     iget-boolean v6, p0, Lcom/android/camera/ui/FaceView;->mMirror:Z
 
     iget v7, p0, Lcom/android/camera/ui/FaceView;->mCameraDisplayOrientation:I
 
-    .line 422
+    .line 421
     invoke-virtual {v1}, Lcom/android/camera/CameraScreenNail;->getRenderWidth()I
 
     move-result v8
@@ -2628,7 +2675,7 @@
 
     move-result v9
 
-    .line 423
+    .line 422
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->getWidth()I
 
     move-result v1
@@ -2643,7 +2690,7 @@
 
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mActiveArraySize:Landroid/graphics/Rect;
 
-    .line 424
+    .line 423
     invoke-virtual {v1}, Landroid/graphics/Rect;->width()I
 
     move-result v12
@@ -2654,10 +2701,10 @@
 
     move-result v13
 
-    .line 421
+    .line 420
     invoke-static/range {v5 .. v13}, Lcom/android/camera/Util;->prepareMatrix(Landroid/graphics/Matrix;ZIIIIIII)V
 
-    .line 425
+    .line 424
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     iget v2, p0, Lcom/android/camera/ui/FaceView;->mLatestFaceIndex:I
@@ -2668,7 +2715,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/RectF;->set(Landroid/graphics/Rect;)V
 
-    .line 427
+    .line 426
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mMatrix:Landroid/graphics/Matrix;
 
     iget v2, p0, Lcom/android/camera/ui/FaceView;->mOrientation:I
@@ -2677,20 +2724,20 @@
 
     invoke-virtual {v1, v2}, Landroid/graphics/Matrix;->postRotate(F)Z
 
-    .line 428
+    .line 427
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mCamera2TranslateMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v1, v0}, Landroid/graphics/Matrix;->mapRect(Landroid/graphics/RectF;)Z
 
-    .line 429
+    .line 428
     iget-object v1, p0, Lcom/android/camera/ui/FaceView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v1, v0}, Landroid/graphics/Matrix;->mapRect(Landroid/graphics/RectF;)Z
 
-    .line 430
+    .line 429
     return-object v0
 
-    .line 432
+    .line 431
     :cond_0
     const/4 v0, 0x0
 
@@ -2700,13 +2747,13 @@
 .method public isFaceStable()Z
     .locals 12
 
+    .line 436
+    nop
+
     .line 437
     nop
 
     .line 438
-    nop
-
-    .line 439
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     array-length v1, v0
@@ -2730,20 +2777,20 @@
 
     aget-object v9, v0, v3
 
-    .line 441
+    .line 440
     if-nez v9, :cond_0
 
-    .line 442
+    .line 441
     add-int/lit8 v4, v4, 0x1
 
     const/4 v9, 0x3
 
     if-lt v4, v9, :cond_1
 
-    .line 443
+    .line 442
     return v2
 
-    .line 448
+    .line 447
     :cond_0
     iget-object v10, v9, Lcom/android/camera2/CameraHardwareFace;->rect:Landroid/graphics/Rect;
 
@@ -2757,7 +2804,7 @@
 
     add-int/2addr v5, v10
 
-    .line 449
+    .line 448
     iget-object v10, v9, Lcom/android/camera2/CameraHardwareFace;->rect:Landroid/graphics/Rect;
 
     iget v10, v10, Landroid/graphics/Rect;->bottom:I
@@ -2770,27 +2817,27 @@
 
     add-int/2addr v6, v10
 
-    .line 450
+    .line 449
     iget-object v10, v9, Lcom/android/camera2/CameraHardwareFace;->rect:Landroid/graphics/Rect;
 
     iget v10, v10, Landroid/graphics/Rect;->left:I
 
     add-int/2addr v7, v10
 
-    .line 451
+    .line 450
     iget-object v9, v9, Lcom/android/camera2/CameraHardwareFace;->rect:Landroid/graphics/Rect;
 
     iget v9, v9, Landroid/graphics/Rect;->top:I
 
     add-int/2addr v8, v9
 
-    .line 439
+    .line 438
     :cond_1
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_0
 
-    .line 453
+    .line 452
     :cond_2
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mLatestFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -2798,29 +2845,29 @@
 
     sub-int/2addr v0, v4
 
-    .line 454
+    .line 453
     div-int/2addr v5, v0
 
-    .line 455
+    .line 454
     div-int/2addr v6, v0
 
-    .line 456
+    .line 455
     div-int/2addr v7, v0
 
-    .line 457
+    .line 456
     div-int/2addr v8, v0
 
-    .line 458
+    .line 457
     div-int/lit8 v0, v5, 0x3
 
     const/16 v1, 0x5a
 
     if-le v0, v1, :cond_3
 
-    .line 459
+    .line 458
     goto :goto_1
 
-    .line 461
+    .line 460
     :cond_3
     move v0, v1
 
@@ -2836,13 +2883,13 @@
 
     aget-object v9, v1, v4
 
-    .line 462
+    .line 461
     if-nez v9, :cond_4
 
-    .line 463
+    .line 462
     goto :goto_3
 
-    .line 465
+    .line 464
     :cond_4
     iget-object v10, v9, Lcom/android/camera2/CameraHardwareFace;->rect:Landroid/graphics/Rect;
 
@@ -2868,7 +2915,7 @@
 
     sub-int/2addr v10, v7
 
-    .line 466
+    .line 465
     invoke-static {v10}, Ljava/lang/Math;->abs(I)I
 
     move-result v10
@@ -2883,7 +2930,7 @@
 
     sub-int/2addr v9, v8
 
-    .line 467
+    .line 466
     invoke-static {v9}, Ljava/lang/Math;->abs(I)I
 
     move-result v9
@@ -2892,19 +2939,19 @@
 
     goto :goto_4
 
-    .line 461
+    .line 460
     :cond_5
     :goto_3
     add-int/lit8 v4, v4, 0x1
 
     goto :goto_2
 
-    .line 468
+    .line 467
     :cond_6
     :goto_4
     return v2
 
-    .line 472
+    .line 471
     :cond_7
     const/16 v0, 0x29e
 
@@ -2926,14 +2973,14 @@
     :goto_6
     iput-boolean v2, p0, Lcom/android/camera/ui/FaceView;->mIsBigEnoughRect:Z
 
-    .line 473
+    .line 472
     return v1
 .end method
 
 .method public isGroupCapture()Z
     .locals 2
 
-    .line 870
+    .line 865
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     const/4 v1, 0x1
@@ -2958,20 +3005,20 @@
 .method protected onDetachedFromWindow()V
     .locals 2
 
-    .line 407
+    .line 406
     invoke-super {p0}, Lcom/android/camera/ui/FrameView;->onDetachedFromWindow()V
 
-    .line 408
+    .line 407
     iget-object v0, p0, Lcom/android/camera/ui/FaceView;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeCallbacksAndMessages(Ljava/lang/Object;)V
 
-    .line 409
+    .line 408
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->cancelHideAnimator()V
 
-    .line 410
+    .line 409
     return-void
 .end method
 
@@ -2980,17 +3027,17 @@
 
     move-object v10, p0
 
-    .line 658
+    .line 653
     move-object/from16 v11, p1
 
     iget-boolean v0, v10, Lcom/android/camera/ui/FaceView;->mSkipDraw:Z
 
     if-eqz v0, :cond_0
 
-    .line 659
+    .line 654
     return-void
 
-    .line 661
+    .line 656
     :cond_0
     invoke-virtual {v10}, Lcom/android/camera/ui/FaceView;->getFaces()[Lcom/android/camera2/CameraHardwareFace;
 
@@ -2998,7 +3045,7 @@
 
     iput-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
-    .line 662
+    .line 657
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     if-eqz v0, :cond_c
@@ -3019,16 +3066,16 @@
 
     goto/16 :goto_9
 
-    .line 666
+    .line 661
     :cond_1
     invoke-virtual/range {p1 .. p1}, Landroid/graphics/Canvas;->save()I
 
-    .line 667
+    .line 662
     iget-boolean v0, v10, Lcom/android/camera/ui/FaceView;->mLightingOn:Z
 
     if-nez v0, :cond_2
 
-    .line 668
+    .line 663
     iget v0, v10, Lcom/android/camera/ui/FaceView;->mOrientation:I
 
     neg-int v0, v0
@@ -3037,7 +3084,7 @@
 
     invoke-virtual {v11, v0}, Landroid/graphics/Canvas;->rotate(F)V
 
-    .line 670
+    .line 665
     :cond_2
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -3045,7 +3092,7 @@
 
     move-result v12
 
-    .line 672
+    .line 667
     const/4 v13, 0x0
 
     move v14, v13
@@ -3057,7 +3104,7 @@
 
     if-ge v14, v0, :cond_b
 
-    .line 673
+    .line 668
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mRect:Landroid/graphics/RectF;
 
     iget-object v1, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
@@ -3068,7 +3115,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/RectF;->set(Landroid/graphics/Rect;)V
 
-    .line 682
+    .line 677
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v0, v0, v14
@@ -3079,7 +3126,7 @@
 
     invoke-virtual {v10, v0, v1}, Lcom/android/camera/ui/FaceView;->transToViewRect(Landroid/graphics/Rect;Landroid/graphics/RectF;)V
 
-    .line 684
+    .line 679
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mRect:Landroid/graphics/RectF;
 
     iget-object v1, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
@@ -3088,7 +3135,7 @@
 
     invoke-direct {v10, v11, v0, v12, v1}, Lcom/android/camera/ui/FaceView;->drawFaceRect(Landroid/graphics/Canvas;Landroid/graphics/RectF;ILcom/android/camera2/CameraHardwareFace;)V
 
-    .line 686
+    .line 681
     const/4 v0, 0x4
 
     const/4 v1, 0x0
@@ -3099,7 +3146,7 @@
 
     goto/16 :goto_8
 
-    .line 700
+    .line 695
     :pswitch_0
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -3111,14 +3158,14 @@
 
     if-gtz v0, :cond_3
 
-    .line 701
+    .line 696
     goto/16 :goto_8
 
-    .line 704
+    .line 699
     :cond_3
     invoke-direct {v10}, Lcom/android/camera/ui/FaceView;->initFaceInfoStyle()V
 
-    .line 705
+    .line 700
     iget-object v2, v10, Lcom/android/camera/ui/FaceView;->mRect:Landroid/graphics/RectF;
 
     iget-object v3, v10, Lcom/android/camera/ui/FaceView;->mBeautyScoreIc:Landroid/graphics/drawable/Drawable;
@@ -3129,7 +3176,7 @@
 
     aget-object v0, v0, v14
 
-    .line 706
+    .line 701
     invoke-direct {v10, v0}, Lcom/android/camera/ui/FaceView;->getScoreInfo(Lcom/android/camera2/CameraHardwareFace;)Ljava/lang/String;
 
     move-result-object v5
@@ -3142,17 +3189,17 @@
 
     iget v9, v10, Lcom/android/camera/ui/FaceView;->mPopBottomMargin:I
 
-    .line 705
+    .line 700
     move-object v0, v10
 
     move-object v1, v11
 
     invoke-direct/range {v0 .. v9}, Lcom/android/camera/ui/FaceView;->drawFacePopInfo(Landroid/graphics/Canvas;Landroid/graphics/RectF;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;IIII)V
 
-    .line 710
+    .line 705
     goto/16 :goto_8
 
-    .line 688
+    .line 683
     :pswitch_1
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -3164,10 +3211,10 @@
 
     if-eqz v0, :cond_a
 
-    .line 689
+    .line 684
     invoke-direct {v10}, Lcom/android/camera/ui/FaceView;->initFaceInfoStyle()V
 
-    .line 690
+    .line 685
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
     aget-object v0, v0, v14
@@ -3180,16 +3227,16 @@
 
     if-gez v0, :cond_4
 
-    .line 691
+    .line 686
     const/4 v0, 0x1
 
     goto :goto_1
 
-    .line 690
+    .line 685
     :cond_4
     nop
 
-    .line 691
+    .line 686
     move v0, v13
 
     :goto_1
@@ -3201,7 +3248,7 @@
 
     move-result-object v5
 
-    .line 692
+    .line 687
     iget-object v2, v10, Lcom/android/camera/ui/FaceView;->mRect:Landroid/graphics/RectF;
 
     if-eqz v0, :cond_5
@@ -3221,22 +3268,22 @@
     :goto_3
     if-eqz v0, :cond_6
 
-    .line 693
+    .line 688
     iget-object v1, v10, Lcom/android/camera/ui/FaceView;->mFemaleAgeInfoPop:Landroid/graphics/drawable/Drawable;
 
-    .line 694
+    .line 689
     :goto_4
     move-object v4, v1
 
     goto :goto_5
 
-    .line 693
+    .line 688
     :cond_6
     iget-object v1, v10, Lcom/android/camera/ui/FaceView;->mMaleAgeInfoPop:Landroid/graphics/drawable/Drawable;
 
     goto :goto_4
 
-    .line 694
+    .line 689
     :goto_5
     if-eqz v0, :cond_7
 
@@ -3259,17 +3306,17 @@
 
     iget v9, v10, Lcom/android/camera/ui/FaceView;->mPopBottomMargin:I
 
-    .line 692
+    .line 687
     move-object v0, v10
 
     move-object v1, v11
 
     invoke-direct/range {v0 .. v9}, Lcom/android/camera/ui/FaceView;->drawFacePopInfo(Landroid/graphics/Canvas;Landroid/graphics/RectF;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;IIII)V
 
-    .line 696
+    .line 691
     goto :goto_8
 
-    .line 713
+    .line 708
     :cond_8
     iget-object v0, v10, Lcom/android/camera/ui/FaceView;->mDrawingFaces:[Lcom/android/camera2/CameraHardwareFace;
 
@@ -3281,14 +3328,14 @@
 
     if-gtz v0, :cond_9
 
-    .line 714
+    .line 709
     goto :goto_8
 
-    .line 716
+    .line 711
     :cond_9
     invoke-direct {v10}, Lcom/android/camera/ui/FaceView;->initFaceInfoStyle()V
 
-    .line 717
+    .line 712
     iget-object v2, v10, Lcom/android/camera/ui/FaceView;->mRect:Landroid/graphics/RectF;
 
     iget-object v3, v10, Lcom/android/camera/ui/FaceView;->mBeautyScoreIc:Landroid/graphics/drawable/Drawable;
@@ -3299,7 +3346,7 @@
 
     aget-object v0, v0, v14
 
-    .line 718
+    .line 713
     invoke-direct {v10, v0}, Lcom/android/camera/ui/FaceView;->getScoreInfo(Lcom/android/camera2/CameraHardwareFace;)Ljava/lang/String;
 
     move-result-object v5
@@ -3312,28 +3359,28 @@
 
     iget v9, v10, Lcom/android/camera/ui/FaceView;->mPopBottomMargin:I
 
-    .line 717
+    .line 712
     move-object v0, v10
 
     move-object v1, v11
 
     invoke-direct/range {v0 .. v9}, Lcom/android/camera/ui/FaceView;->drawFacePopInfo(Landroid/graphics/Canvas;Landroid/graphics/RectF;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;IIII)V
 
-    .line 672
+    .line 667
     :cond_a
     :goto_8
     add-int/lit8 v14, v14, 0x1
 
     goto/16 :goto_0
 
-    .line 724
+    .line 719
     :cond_b
     invoke-virtual/range {p1 .. p1}, Landroid/graphics/Canvas;->restore()V
 
-    .line 725
+    .line 720
     return-void
 
-    .line 663
+    .line 658
     :cond_c
     :goto_9
     return-void
@@ -3350,30 +3397,30 @@
 .method public pause()V
     .locals 0
 
-    .line 557
+    .line 556
     invoke-super {p0}, Lcom/android/camera/ui/FrameView;->pause()V
 
-    .line 558
+    .line 557
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->clearPreviousFaces()V
 
-    .line 559
+    .line 558
     return-void
 .end method
 
 .method public reShowFaceRect()V
     .locals 2
 
-    .line 350
+    .line 349
     iget v0, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
     const/4 v1, 0x1
 
     if-eq v0, v1, :cond_0
 
-    .line 351
+    .line 350
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->showNormalFaceRectImmediately()V
 
-    .line 353
+    .line 352
     :cond_0
     return-void
 .end method
@@ -3381,27 +3428,27 @@
 .method public resume()V
     .locals 1
 
-    .line 564
+    .line 563
     invoke-super {p0}, Lcom/android/camera/ui/FrameView;->resume()V
 
-    .line 565
+    .line 564
     invoke-static {}, Lcom/android/camera/CameraSettings;->isCameraFaceDetectionAutoHidden()Z
 
     move-result v0
 
     iput-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mIsCameraFaceDetectionAutoHidden:Z
 
-    .line 566
+    .line 565
     return-void
 .end method
 
 .method public setCameraDisplayOrientation(I)V
     .locals 3
 
-    .line 478
+    .line 477
     iput p1, p0, Lcom/android/camera/ui/FaceView;->mCameraDisplayOrientation:I
 
-    .line 479
+    .line 478
     const-string v0, "FaceView"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -3420,20 +3467,20 @@
 
     invoke-static {v0, p1}, Lcom/android/camera/log/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 480
+    .line 479
     return-void
 .end method
 
 .method public setFaceRectVisible(II)V
     .locals 2
 
-    .line 358
+    .line 357
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->cancelHideAnimator()V
 
-    .line 359
+    .line 358
     if-nez p2, :cond_1
 
-    .line 360
+    .line 359
     iget-object p2, p0, Lcom/android/camera/ui/FaceView;->mNormalRectPaint:Landroid/graphics/Paint;
 
     if-nez p1, :cond_0
@@ -3448,10 +3495,10 @@
     :goto_0
     invoke-virtual {p2, p1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 361
+    .line 360
     return-void
 
-    .line 364
+    .line 363
     :cond_1
     const/4 p1, 0x2
 
@@ -3465,7 +3512,7 @@
 
     iput-object p1, p0, Lcom/android/camera/ui/FaceView;->mFaceRectHideAnimator:Landroid/animation/Animator;
 
-    .line 365
+    .line 364
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mFaceRectHideAnimator:Landroid/animation/Animator;
 
     new-instance v0, Lcom/android/camera/ui/FaceView$3;
@@ -3474,19 +3521,19 @@
 
     invoke-virtual {p1, v0}, Landroid/animation/Animator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
-    .line 374
+    .line 373
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mFaceRectHideAnimator:Landroid/animation/Animator;
 
     int-to-long v0, p2
 
     invoke-virtual {p1, v0, v1}, Landroid/animation/Animator;->setDuration(J)Landroid/animation/Animator;
 
-    .line 375
+    .line 374
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mFaceRectHideAnimator:Landroid/animation/Animator;
 
     invoke-virtual {p1}, Landroid/animation/Animator;->start()V
 
-    .line 376
+    .line 375
     return-void
 
     nop
@@ -3626,17 +3673,17 @@
 
     goto :goto_5
 
-    .line 274
+    .line 273
     :cond_6
     if-eqz v2, :cond_8
 
-    .line 275
+    .line 274
     if-lez v0, :cond_7
 
-    .line 276
+    .line 275
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->showNormalFaceRectImmediately()V
 
-    .line 278
+    .line 277
     :cond_7
     invoke-static {}, Lcom/android/camera/Util;->isAccessible()Z
 
@@ -3644,23 +3691,23 @@
 
     if-eqz p1, :cond_8
 
-    .line 279
+    .line 278
     invoke-direct {p0, v0}, Lcom/android/camera/ui/FaceView;->setContentDescription(I)V
 
-    .line 283
+    .line 282
     :cond_8
     iget-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mIsCameraFaceDetectionAutoHidden:Z
 
     if-eqz p1, :cond_a
 
-    .line 284
+    .line 283
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->isFaceStable()Z
 
     move-result p1
 
     if-eqz p1, :cond_9
 
-    .line 285
+    .line 284
     iget p1, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
     const/4 p2, 0x2
@@ -3673,21 +3720,21 @@
 
     if-eq p1, p2, :cond_a
 
-    .line 286
+    .line 285
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->attemptHideFaceRect()V
 
     goto :goto_4
 
-    .line 289
+    .line 288
     :cond_9
     iget p1, p0, Lcom/android/camera/ui/FaceView;->mRectState:I
 
     if-eq p1, v3, :cond_a
 
-    .line 290
+    .line 289
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->clearAttemptHideFaceRect()V
 
-    .line 295
+    .line 294
     :cond_a
     :goto_4
     return v3
@@ -3701,10 +3748,10 @@
 .method public setLightingOn(Z)V
     .locals 2
 
-    .line 496
+    .line 495
     iput-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mLightingOn:Z
 
-    .line 497
+    .line 496
     const-string p1, "FaceView"
 
     new-instance v0, Ljava/lang/StringBuilder;
@@ -3725,17 +3772,17 @@
 
     invoke-static {p1, v0}, Lcom/android/camera/log/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 498
+    .line 497
     return-void
 .end method
 
 .method public setMirror(Z)V
     .locals 3
 
-    .line 491
+    .line 490
     iput-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mMirror:Z
 
-    .line 492
+    .line 491
     const-string v0, "FaceView"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -3754,17 +3801,17 @@
 
     invoke-static {v0, p1}, Lcom/android/camera/log/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 493
+    .line 492
     return-void
 .end method
 
 .method public setOrientation(IZ)V
     .locals 0
 
-    .line 484
+    .line 483
     iput p1, p0, Lcom/android/camera/ui/FaceView;->mOrientation:I
 
-    .line 485
+    .line 484
     iget-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mPause:Z
 
     if-nez p1, :cond_0
@@ -3779,10 +3826,10 @@
 
     if-nez p1, :cond_0
 
-    .line 486
+    .line 485
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->invalidate()V
 
-    .line 488
+    .line 487
     :cond_0
     return-void
 .end method
@@ -3790,7 +3837,7 @@
 .method public setShowGenderAndAge(Z)V
     .locals 2
 
-    .line 577
+    .line 576
     iget-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mShowGenderAndAge:Z
 
     const/4 v1, 0x0
@@ -3803,27 +3850,27 @@
 
     goto :goto_0
 
-    .line 578
+    .line 577
     :cond_0
     move v0, v1
 
     :goto_0
     iput-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mShowGenderAndAge:Z
 
-    .line 579
+    .line 578
     if-eqz v0, :cond_1
 
-    .line 580
+    .line 579
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->showNormalFaceRectImmediately()V
 
-    .line 582
+    .line 581
     :cond_1
     if-eqz p1, :cond_2
 
-    .line 583
+    .line 582
     invoke-virtual {p0, v1}, Lcom/android/camera/ui/FaceView;->setShowMagicMirror(Z)V
 
-    .line 585
+    .line 584
     :cond_2
     return-void
 .end method
@@ -3831,7 +3878,7 @@
 .method public setShowMagicMirror(Z)V
     .locals 2
 
-    .line 588
+    .line 587
     iget-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mShowMagicMirror:Z
 
     const/4 v1, 0x0
@@ -3844,27 +3891,27 @@
 
     goto :goto_0
 
-    .line 589
+    .line 588
     :cond_0
     move v0, v1
 
     :goto_0
     iput-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mShowMagicMirror:Z
 
-    .line 590
+    .line 589
     if-eqz v0, :cond_1
 
-    .line 591
+    .line 590
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->showNormalFaceRectImmediately()V
 
-    .line 593
+    .line 592
     :cond_1
     if-eqz p1, :cond_2
 
-    .line 594
+    .line 593
     invoke-virtual {p0, v1}, Lcom/android/camera/ui/FaceView;->setShowGenderAndAge(Z)V
 
-    .line 596
+    .line 595
     :cond_2
     return-void
 .end method
@@ -3872,18 +3919,18 @@
 .method public setShutterStatus(Z)V
     .locals 2
 
-    .line 979
+    .line 989
     iget-boolean v0, p0, Lcom/android/camera/ui/FaceView;->mIsUpdateFaceInfos:Z
 
     if-eq v0, p1, :cond_2
 
-    .line 980
+    .line 990
     iput-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mIsUpdateFaceInfos:Z
 
-    .line 981
+    .line 991
     if-nez p1, :cond_2
 
-    .line 982
+    .line 992
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     if-eqz p1, :cond_0
@@ -3896,12 +3943,12 @@
 
     if-nez p1, :cond_0
 
-    .line 983
+    .line 993
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mCurrentWaterMarkDataInfos:Ljava/util/List;
 
     invoke-interface {p1}, Ljava/util/List;->clear()V
 
-    .line 985
+    .line 995
     :cond_0
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
@@ -3915,12 +3962,12 @@
 
     if-nez p1, :cond_1
 
-    .line 986
+    .line 996
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mWaterInfos:Ljava/util/List;
 
     invoke-interface {p1}, Ljava/util/List;->clear()V
 
-    .line 988
+    .line 998
     :cond_1
     const-string p1, "FaceView"
 
@@ -3928,7 +3975,7 @@
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v1, "reset shutter status,clear water infos."
+    const-string v1, "setShutterStatus: updateInfo="
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -3940,9 +3987,9 @@
 
     move-result-object v0
 
-    invoke-static {p1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {p1, v0}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 991
+    .line 1001
     :cond_2
     return-void
 .end method
@@ -3950,68 +3997,68 @@
 .method public setSkipDraw(Z)V
     .locals 0
 
-    .line 609
+    .line 608
     iput-boolean p1, p0, Lcom/android/camera/ui/FaceView;->mSkipDraw:Z
 
-    .line 610
+    .line 609
     return-void
 .end method
 
 .method public showFail()V
     .locals 0
 
-    .line 536
+    .line 535
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->setToVisible()V
 
-    .line 537
+    .line 536
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->invalidate()V
 
-    .line 538
+    .line 537
     return-void
 .end method
 
 .method public showStart()V
     .locals 0
 
-    .line 524
+    .line 523
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->setToVisible()V
 
-    .line 525
+    .line 524
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->invalidate()V
 
-    .line 526
+    .line 525
     return-void
 .end method
 
 .method public showSuccess()V
     .locals 0
 
-    .line 530
+    .line 529
     invoke-direct {p0}, Lcom/android/camera/ui/FaceView;->setToVisible()V
 
-    .line 531
+    .line 530
     invoke-virtual {p0}, Lcom/android/camera/ui/FaceView;->invalidate()V
 
-    .line 532
+    .line 531
     return-void
 .end method
 
 .method public transToViewRect(Landroid/graphics/Rect;Landroid/graphics/RectF;)V
     .locals 0
 
-    .line 651
+    .line 646
     invoke-virtual {p2, p1}, Landroid/graphics/RectF;->set(Landroid/graphics/Rect;)V
 
-    .line 652
+    .line 647
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mCamera2TranslateMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {p1, p2}, Landroid/graphics/Matrix;->mapRect(Landroid/graphics/RectF;)Z
 
-    .line 653
+    .line 648
     iget-object p1, p0, Lcom/android/camera/ui/FaceView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {p1, p2}, Landroid/graphics/Matrix;->mapRect(Landroid/graphics/RectF;)Z
 
-    .line 654
+    .line 649
     return-void
 .end method

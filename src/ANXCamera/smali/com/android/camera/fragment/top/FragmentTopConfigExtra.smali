@@ -54,9 +54,9 @@
     .line 296
     const/16 v3, 0xa0
 
-    const v4, 0x7f0b00ea
+    const v4, 0x7f0b00f0
 
-    const v5, 0x7f0b00eb
+    const v5, 0x7f0b00f1
 
     packed-switch p1, :pswitch_data_0
 
@@ -70,7 +70,7 @@
     move-result p1
 
     .line 409
-    const v0, 0x7f0b0121
+    const v0, 0x7f0b0127
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -163,7 +163,7 @@
     move-result p1
 
     .line 399
-    const v0, 0x7f0b0143
+    const v0, 0x7f0b014a
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -203,7 +203,7 @@
     move-result p1
 
     .line 389
-    const v0, 0x7f0b0188
+    const v0, 0x7f0b018f
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -243,7 +243,7 @@
     move-result p1
 
     .line 349
-    const v0, 0x7f0b01c5
+    const v0, 0x7f0b01cc
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -283,7 +283,7 @@
     move-result p1
 
     .line 359
-    const v0, 0x7f0b01c7
+    const v0, 0x7f0b01ce
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -323,7 +323,7 @@
     move-result p1
 
     .line 379
-    const v0, 0x7f0b0151
+    const v0, 0x7f0b0158
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -363,7 +363,7 @@
     move-result p1
 
     .line 369
-    const v0, 0x7f0b0152
+    const v0, 0x7f0b0159
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -403,7 +403,7 @@
     move-result p1
 
     .line 338
-    const v0, 0x7f0b01c8
+    const v0, 0x7f0b01cf
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -443,7 +443,7 @@
     move-result p1
 
     .line 328
-    const v0, 0x7f0b01c4
+    const v0, 0x7f0b01cb
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -483,7 +483,7 @@
     move-result p1
 
     .line 318
-    const v0, 0x7f0b01c3
+    const v0, 0x7f0b01ca
 
     invoke-virtual {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -545,7 +545,7 @@
 
     .line 312
     :cond_b
-    const p1, 0x7f0b01c6
+    const p1, 0x7f0b01cd
 
     invoke-virtual {p0, p1}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getString(I)Ljava/lang/String;
 
@@ -971,7 +971,7 @@
     .locals 1
 
     .line 100
-    const v0, 0x7f040030
+    const v0, 0x7f040031
 
     return v0
 .end method
@@ -980,7 +980,7 @@
     .locals 4
 
     .line 60
-    const v0, 0x7f0d00a1
+    const v0, 0x7f0d00ae
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -989,7 +989,7 @@
     iput-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mBackgroundView:Landroid/view/View;
 
     .line 61
-    const v0, 0x7f0d00a2
+    const v0, 0x7f0d00af
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1075,27 +1075,34 @@
 
     move-result v1
 
-    .line 75
+    .line 76
     :goto_0
-    invoke-virtual {p1}, Lcom/android/camera/data/data/config/SupportedConfigs;->getLength()I
+    const/4 v0, 0x1
+
+    invoke-static {v0, v1}, Ljava/lang/Math;->max(II)I
 
     move-result v0
 
-    int-to-float v0, v0
+    .line 77
+    invoke-virtual {p1}, Lcom/android/camera/data/data/config/SupportedConfigs;->getLength()I
 
-    int-to-float v2, v1
+    move-result v1
 
-    div-float/2addr v0, v2
+    int-to-float v1, v1
 
-    float-to-double v2, v0
+    int-to-float v2, v0
 
-    invoke-static {v2, v3}, Ljava/lang/Math;->ceil(D)D
+    div-float/2addr v1, v2
 
-    move-result-wide v2
+    float-to-double v1, v1
 
-    double-to-int v0, v2
+    invoke-static {v1, v2}, Ljava/lang/Math;->ceil(D)D
 
-    .line 76
+    move-result-wide v1
+
+    double-to-int v1, v1
+
+    .line 78
     invoke-virtual {p0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getResources()Landroid/content/res/Resources;
 
     move-result-object v2
@@ -1106,60 +1113,54 @@
 
     move-result v2
 
-    mul-int/2addr v2, v0
-
-    .line 78
-    iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mRecyclerView:Landroid/support/v7/widget/RecyclerView;
-
-    .line 79
-    invoke-virtual {v0}, Landroid/support/v7/widget/RecyclerView;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/view/ViewGroup$MarginLayoutParams;
+    mul-int/2addr v2, v1
 
     .line 80
-    iput v2, v0, Landroid/view/ViewGroup$MarginLayoutParams;->height:I
+    iget-object v1, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mRecyclerView:Landroid/support/v7/widget/RecyclerView;
+
+    .line 81
+    invoke-virtual {v1}, Landroid/support/v7/widget/RecyclerView;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/view/ViewGroup$MarginLayoutParams;
 
     .line 82
-    sget-boolean v0, Lcom/android/camera/Util;->isLongRatioScreen:Z
-
-    if-eqz v0, :cond_1
-
-    .line 83
-    iget v0, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mCurrentMode:I
-
-    invoke-direct {p0, v0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->adjustViewBackground(I)V
+    iput v2, v1, Landroid/view/ViewGroup$MarginLayoutParams;->height:I
 
     .line 84
-    iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mBackgroundView:Landroid/view/View;
+    sget-boolean v1, Lcom/android/camera/Util;->isLongRatioScreen:Z
+
+    const/4 v2, 0x0
+
+    if-eqz v1, :cond_1
 
     .line 85
-    invoke-virtual {v0}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
+    iget v1, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mCurrentMode:I
 
-    move-result-object v0
-
-    check-cast v0, Landroid/view/ViewGroup$MarginLayoutParams;
+    invoke-direct {p0, v1}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->adjustViewBackground(I)V
 
     .line 86
-    iget v2, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mDisplayRectTopMargin:I
+    iget-object v1, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mBackgroundView:Landroid/view/View;
 
-    iput v2, v0, Landroid/view/ViewGroup$MarginLayoutParams;->topMargin:I
+    iget v3, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mDisplayRectTopMargin:I
+
+    invoke-virtual {v1, v2, v3, v2, v2}, Landroid/view/View;->setPadding(IIII)V
 
     .line 89
     :cond_1
-    new-instance v0, Landroid/support/v7/widget/GridLayoutManager;
+    new-instance v1, Landroid/support/v7/widget/GridLayoutManager;
 
     invoke-virtual {p0}, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->getContext()Landroid/content/Context;
 
-    move-result-object v2
+    move-result-object v3
 
-    invoke-direct {v0, v2, v1}, Landroid/support/v7/widget/GridLayoutManager;-><init>(Landroid/content/Context;I)V
+    invoke-direct {v1, v3, v0}, Landroid/support/v7/widget/GridLayoutManager;-><init>(Landroid/content/Context;I)V
 
     .line 90
-    iget-object v1, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mRecyclerView:Landroid/support/v7/widget/RecyclerView;
+    iget-object v0, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mRecyclerView:Landroid/support/v7/widget/RecyclerView;
 
-    invoke-virtual {v1, v0}, Landroid/support/v7/widget/RecyclerView;->setLayoutManager(Landroid/support/v7/widget/RecyclerView$LayoutManager;)V
+    invoke-virtual {v0, v1}, Landroid/support/v7/widget/RecyclerView;->setLayoutManager(Landroid/support/v7/widget/RecyclerView$LayoutManager;)V
 
     .line 91
     new-instance v0, Lcom/android/camera/fragment/top/ExtraAdapter;
@@ -1185,9 +1186,7 @@
     .line 95
     iget-object p1, p0, Lcom/android/camera/fragment/top/FragmentTopConfigExtra;->mRecyclerView:Landroid/support/v7/widget/RecyclerView;
 
-    const/4 v0, 0x0
-
-    invoke-virtual {p1, v0}, Landroid/support/v7/widget/RecyclerView;->setFocusable(Z)V
+    invoke-virtual {p1, v2}, Landroid/support/v7/widget/RecyclerView;->setFocusable(Z)V
 
     .line 96
     return-void

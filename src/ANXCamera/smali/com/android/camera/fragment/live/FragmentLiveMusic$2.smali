@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/live/FragmentLiveMusic;)V
     .locals 0
 
-    .line 120
+    .line 199
     iput-object p1, p0, Lcom/android/camera/fragment/live/FragmentLiveMusic$2;->this$0:Lcom/android/camera/fragment/live/FragmentLiveMusic;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,12 +38,12 @@
 .method public onCompleted()V
     .locals 2
 
-    .line 123
+    .line 202
     iget-object v0, p0, Lcom/android/camera/fragment/live/FragmentLiveMusic$2;->this$0:Lcom/android/camera/fragment/live/FragmentLiveMusic;
 
     invoke-static {v0}, Lcom/android/camera/fragment/live/FragmentLiveMusic;->access$100(Lcom/android/camera/fragment/live/FragmentLiveMusic;)V
 
-    .line 124
+    .line 203
     iget-object v0, p0, Lcom/android/camera/fragment/live/FragmentLiveMusic$2;->this$0:Lcom/android/camera/fragment/live/FragmentLiveMusic;
 
     invoke-virtual {v0}, Lcom/android/camera/fragment/live/FragmentLiveMusic;->getFragmentManager()Landroid/support/v4/app/FragmentManager;
@@ -54,13 +54,13 @@
 
     invoke-static {v0, v1}, Lcom/android/camera/fragment/FragmentUtils;->removeFragmentByTag(Landroid/support/v4/app/FragmentManager;Ljava/lang/String;)Z
 
-    .line 125
+    .line 204
     return-void
 .end method
 
 .method public onFailed()V
     .locals 0
 
-    .line 129
+    .line 208
     return-void
 .end method

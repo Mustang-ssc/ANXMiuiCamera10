@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/android/camera/ActivityBase;)V
     .locals 0
 
-    .line 916
+    .line 926
     iput-object p1, p0, Lcom/android/camera/ActivityBase$9;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public run()V
     .locals 2
 
-    .line 919
+    .line 929
     iget-object v0, p0, Lcom/android/camera/ActivityBase$9;->this$0:Lcom/android/camera/ActivityBase;
 
     iget-object v0, v0, Lcom/android/camera/ActivityBase;->mGLView:Lcom/android/camera/ui/V6CameraGLSurfaceView;
@@ -47,7 +47,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/camera/ui/V6CameraGLSurfaceView;->setVisibility(I)V
 
-    .line 920
+    .line 930
     iget-object v0, p0, Lcom/android/camera/ActivityBase$9;->this$0:Lcom/android/camera/ActivityBase;
 
     iget-object v0, v0, Lcom/android/camera/ActivityBase;->mGLView:Lcom/android/camera/ui/V6CameraGLSurfaceView;
@@ -56,6 +56,6 @@
 
     invoke-virtual {v0, v1}, Lcom/android/camera/ui/V6CameraGLSurfaceView;->setVisibility(I)V
 
-    .line 921
+    .line 931
     return-void
 .end method

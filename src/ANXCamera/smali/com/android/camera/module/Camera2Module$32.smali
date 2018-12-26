@@ -27,7 +27,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;Z)V
     .locals 0
 
-    .line 5341
+    .line 5572
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$32;->this$0:Lcom/android/camera/module/Camera2Module;
 
     iput-boolean p2, p0, Lcom/android/camera/module/Camera2Module$32;->val$isOpenUltraWide:Z
@@ -40,44 +40,46 @@
 
 # virtual methods
 .method public run()V
-    .locals 5
+    .locals 4
 
-    .line 5344
+    .line 5575
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
 
-    const/16 v1, 0xac
+    const/16 v1, 0xaf
 
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
 
     move-result-object v0
 
-    check-cast v0, Lcom/android/camera/fragment/top/FragmentTopConfig;
+    check-cast v0, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;
 
-    .line 5345
+    .line 5576
     if-eqz v0, :cond_1
 
-    .line 5346
+    .line 5577
     iget-boolean v1, p0, Lcom/android/camera/module/Camera2Module$32;->val$isOpenUltraWide:Z
 
     if-eqz v1, :cond_0
 
-    const/4 v1, 0x0
+    .line 5578
+    const/16 v1, 0xe
+
+    const v2, 0x7f0b023f
+
+    const/4 v3, 0x5
+
+    invoke-interface {v0, v1, v2, v3}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->showTips(III)V
 
     goto :goto_0
 
+    .line 5580
     :cond_0
-    const/16 v1, 0x8
+    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->directlyHideTips()V
 
-    :goto_0
-    const v2, 0x7f0b0235
-
-    const-wide/16 v3, 0x7d0
-
-    invoke-virtual {v0, v1, v2, v3, v4}, Lcom/android/camera/fragment/top/FragmentTopConfig;->alertAiDetectTipHint(IIJ)V
-
-    .line 5348
+    .line 5583
     :cond_1
+    :goto_0
     return-void
 .end method

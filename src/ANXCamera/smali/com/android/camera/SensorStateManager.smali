@@ -247,21 +247,21 @@
     .line 72
     iput-wide v1, p0, Lcom/android/camera/SensorStateManager;->mGyroscopeTimeStamp:J
 
-    .line 313
+    .line 317
     new-instance v1, Lcom/android/camera/SensorStateManager$1;
 
     invoke-direct {v1, p0}, Lcom/android/camera/SensorStateManager$1;-><init>(Lcom/android/camera/SensorStateManager;)V
 
     iput-object v1, p0, Lcom/android/camera/SensorStateManager;->mGyroscopeListener:Landroid/hardware/SensorEventListener;
 
-    .line 354
+    .line 362
     new-instance v1, Lcom/android/camera/SensorStateManager$2;
 
     invoke-direct {v1, p0}, Lcom/android/camera/SensorStateManager$2;-><init>(Lcom/android/camera/SensorStateManager;)V
 
     iput-object v1, p0, Lcom/android/camera/SensorStateManager;->mLinearAccelerationListener:Landroid/hardware/SensorEventListener;
 
-    .line 433
+    .line 447
     new-instance v1, Lcom/android/camera/SensorStateManager$3;
 
     invoke-direct {v1, p0}, Lcom/android/camera/SensorStateManager$3;-><init>(Lcom/android/camera/SensorStateManager;)V
@@ -362,31 +362,24 @@
     return-void
 .end method
 
-.method static synthetic access$000(Lcom/android/camera/SensorStateManager;)J
+.method static synthetic access$000(Lcom/android/camera/SensorStateManager;)Lcom/android/camera/SensorStateManager$SensorStateListener;
+    .locals 0
+
+    .line 20
+    invoke-direct {p0}, Lcom/android/camera/SensorStateManager;->getSensorStateListener()Lcom/android/camera/SensorStateManager$SensorStateListener;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method static synthetic access$100(Lcom/android/camera/SensorStateManager;)J
     .locals 2
 
     .line 20
     iget-wide v0, p0, Lcom/android/camera/SensorStateManager;->mGyroscopeTimeStamp:J
 
     return-wide v0
-.end method
-
-.method static synthetic access$002(Lcom/android/camera/SensorStateManager;J)J
-    .locals 0
-
-    .line 20
-    iput-wide p1, p0, Lcom/android/camera/SensorStateManager;->mGyroscopeTimeStamp:J
-
-    return-wide p1
-.end method
-
-.method static synthetic access$100(Lcom/android/camera/SensorStateManager;)Lcom/android/camera/SensorStateManager$SensorStateListener;
-    .locals 0
-
-    .line 20
-    iget-object p0, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
-
-    return-object p0
 .end method
 
 .method static synthetic access$1000()I
@@ -396,6 +389,15 @@
     sget v0, Lcom/android/camera/SensorStateManager;->CAPTURE_POSTURE_DEGREE:I
 
     return v0
+.end method
+
+.method static synthetic access$102(Lcom/android/camera/SensorStateManager;J)J
+    .locals 0
+
+    .line 20
+    iput-wide p1, p0, Lcom/android/camera/SensorStateManager;->mGyroscopeTimeStamp:J
+
+    return-wide p1
 .end method
 
 .method static synthetic access$1100(Lcom/android/camera/SensorStateManager;I)V
@@ -591,25 +593,26 @@
 .method private changeCapturePosture(I)V
     .locals 1
 
-    .line 568
+    .line 594
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mCapturePosture:I
 
     if-eq v0, p1, :cond_0
 
-    .line 569
+    .line 595
     iput p1, p0, Lcom/android/camera/SensorStateManager;->mCapturePosture:I
 
-    .line 570
-    iget-object p1, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
+    .line 596
+    invoke-direct {p0}, Lcom/android/camera/SensorStateManager;->getSensorStateListener()Lcom/android/camera/SensorStateManager$SensorStateListener;
 
+    move-result-object p1
+
+    .line 597
     if-eqz p1, :cond_0
 
-    .line 571
-    iget-object p1, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
-
+    .line 598
     invoke-interface {p1}, Lcom/android/camera/SensorStateManager$SensorStateListener;->notifyDevicePostureChanged()V
 
-    .line 574
+    .line 601
     :cond_0
     return-void
 .end method
@@ -617,17 +620,23 @@
 .method private deviceBecomeStable()V
     .locals 1
 
-    .line 533
+    .line 550
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     if-eqz v0, :cond_0
 
-    .line 534
-    iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
+    .line 551
+    invoke-direct {p0}, Lcom/android/camera/SensorStateManager;->getSensorStateListener()Lcom/android/camera/SensorStateManager$SensorStateListener;
 
+    move-result-object v0
+
+    .line 552
+    if-eqz v0, :cond_0
+
+    .line 553
     invoke-interface {v0}, Lcom/android/camera/SensorStateManager$SensorStateListener;->onDeviceBecomeStable()V
 
-    .line 536
+    .line 556
     :cond_0
     return-void
 .end method
@@ -635,29 +644,42 @@
 .method private deviceBeginMoving()V
     .locals 1
 
-    .line 528
-    iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
+    .line 542
+    invoke-direct {p0}, Lcom/android/camera/SensorStateManager;->getSensorStateListener()Lcom/android/camera/SensorStateManager$SensorStateListener;
 
+    move-result-object v0
+
+    .line 543
+    if-eqz v0, :cond_0
+
+    .line 544
     invoke-interface {v0}, Lcom/android/camera/SensorStateManager$SensorStateListener;->onDeviceBeginMoving()V
 
-    .line 529
+    .line 546
+    :cond_0
     return-void
 .end method
 
 .method private deviceKeepMoving(D)V
     .locals 1
 
-    .line 544
+    .line 567
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     if-eqz v0, :cond_0
 
-    .line 545
-    iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
+    .line 568
+    invoke-direct {p0}, Lcom/android/camera/SensorStateManager;->getSensorStateListener()Lcom/android/camera/SensorStateManager$SensorStateListener;
 
+    move-result-object v0
+
+    .line 569
+    if-eqz v0, :cond_0
+
+    .line 570
     invoke-interface {v0, p1, p2}, Lcom/android/camera/SensorStateManager$SensorStateListener;->onDeviceKeepMoving(D)V
 
-    .line 547
+    .line 573
     :cond_0
     return-void
 .end method
@@ -665,68 +687,98 @@
 .method private deviceKeepStable()V
     .locals 1
 
-    .line 539
-    iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
+    .line 559
+    invoke-direct {p0}, Lcom/android/camera/SensorStateManager;->getSensorStateListener()Lcom/android/camera/SensorStateManager$SensorStateListener;
 
+    move-result-object v0
+
+    .line 560
+    if-eqz v0, :cond_0
+
+    .line 561
     invoke-interface {v0}, Lcom/android/camera/SensorStateManager$SensorStateListener;->onDeviceKeepStable()V
 
-    .line 540
+    .line 563
+    :cond_0
     return-void
 .end method
 
 .method private filterUnregisterSensor(I)I
     .locals 1
 
-    .line 156
+    .line 160
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mEdgeTouchEnabled:Z
 
     if-eqz v0, :cond_0
 
-    .line 157
+    .line 161
     and-int/lit8 p1, p1, -0x3
 
     and-int/lit8 p1, p1, -0x5
 
-    .line 159
+    .line 163
     :cond_0
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mRotationFlagEnabled:Z
 
     if-eqz v0, :cond_1
 
-    .line 160
+    .line 164
     and-int/lit8 p1, p1, -0x5
 
-    .line 162
+    .line 166
     :cond_1
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     if-eqz v0, :cond_2
 
-    .line 163
+    .line 167
     and-int/lit8 p1, p1, -0x2
 
     and-int/lit8 p1, p1, -0x3
 
-    .line 165
+    .line 169
     :cond_2
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mGradienterEnabled:Z
 
     if-eqz v0, :cond_3
 
-    .line 166
+    .line 170
     and-int/lit8 p1, p1, -0x9
 
     and-int/lit8 p1, p1, -0x5
 
-    .line 168
+    .line 172
     :cond_3
     return p1
+.end method
+
+.method private declared-synchronized getSensorStateListener()Lcom/android/camera/SensorStateManager$SensorStateListener;
+    .locals 1
+
+    monitor-enter p0
+
+    .line 119
+    :try_start_0
+    iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    monitor-exit p0
+
+    return-object v0
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
 .end method
 
 .method private isContains(II)Z
     .locals 0
 
-    .line 283
+    .line 287
     and-int/2addr p1, p2
 
     if-ne p1, p2, :cond_0
@@ -745,7 +797,7 @@
 .method private isPartialContains(II)Z
     .locals 0
 
-    .line 287
+    .line 291
     and-int/2addr p1, p2
 
     if-eqz p1, :cond_0
@@ -764,7 +816,7 @@
 .method private normalizeDegree(F)F
     .locals 2
 
-    .line 502
+    .line 516
     :goto_0
     const/high16 v0, 0x43b40000    # 360.0f
 
@@ -772,12 +824,12 @@
 
     if-ltz v1, :cond_0
 
-    .line 503
+    .line 517
     sub-float/2addr p1, v0
 
     goto :goto_0
 
-    .line 505
+    .line 519
     :cond_0
     :goto_1
     const/4 v1, 0x0
@@ -786,12 +838,12 @@
 
     if-gez v1, :cond_1
 
-    .line 506
+    .line 520
     add-float/2addr p1, v0
 
     goto :goto_1
 
-    .line 508
+    .line 522
     :cond_1
     return p1
 .end method
@@ -799,7 +851,7 @@
 .method private update(IZ)V
     .locals 1
 
-    .line 188
+    .line 192
     if-nez p2, :cond_0
 
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
@@ -810,12 +862,12 @@
 
     if-eqz v0, :cond_0
 
-    .line 189
+    .line 193
     invoke-virtual {p0, p1}, Lcom/android/camera/SensorStateManager;->unregister(I)V
 
     goto :goto_0
 
-    .line 190
+    .line 194
     :cond_0
     if-eqz p2, :cond_1
 
@@ -827,10 +879,10 @@
 
     if-nez p2, :cond_1
 
-    .line 191
+    .line 195
     invoke-virtual {p0, p1}, Lcom/android/camera/SensorStateManager;->register(I)V
 
-    .line 193
+    .line 197
     :cond_1
     :goto_0
     return-void
@@ -841,7 +893,7 @@
 .method public canDetectOrientation()Z
     .locals 1
 
-    .line 515
+    .line 529
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mOrientationSensor:Landroid/hardware/Sensor;
 
     if-eqz v0, :cond_0
@@ -860,7 +912,7 @@
 .method public getCapturePosture()I
     .locals 1
 
-    .line 524
+    .line 538
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mCapturePosture:I
 
     return v0
@@ -869,7 +921,7 @@
 .method public isDeviceLying()Z
     .locals 1
 
-    .line 519
+    .line 533
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mIsLying:Z
 
     return v0
@@ -878,17 +930,17 @@
 .method public isStable()Z
     .locals 10
 
-    .line 296
+    .line 300
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mAngleSpeedIndex:I
 
     const/4 v1, 0x1
 
     if-ltz v0, :cond_2
 
-    .line 297
+    .line 301
     const-wide/16 v2, 0x0
 
-    .line 298
+    .line 302
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mAngleSpeed:[D
 
     array-length v4, v0
@@ -904,15 +956,15 @@
 
     aget-wide v8, v0, v2
 
-    .line 299
+    .line 303
     add-double/2addr v6, v8
 
-    .line 298
+    .line 302
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 301
+    .line 305
     :cond_0
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mAngleSpeed:[D
 
@@ -922,7 +974,7 @@
 
     div-double/2addr v6, v2
 
-    .line 302
+    .line 306
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mAngleSpeed:[D
 
     iget v2, p0, Lcom/android/camera/SensorStateManager;->mAngleSpeedIndex:I
@@ -939,7 +991,7 @@
 
     aget-wide v2, v0, v2
 
-    .line 303
+    .line 307
     const-string v0, "SensorStateManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -972,7 +1024,7 @@
 
     invoke-static {v0, v4}, Lcom/android/camera/log/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 305
+    .line 309
     sget-wide v8, Lcom/android/camera/SensorStateManager;->GYROSCOPE_STABLE_THRESHOLD:D
 
     cmpg-double v0, v6, v8
@@ -993,7 +1045,7 @@
     :goto_1
     return v1
 
-    .line 307
+    .line 311
     :cond_2
     const-string v0, "SensorStateManager"
 
@@ -1023,39 +1075,39 @@
 
     invoke-static {v0, v2}, Lcom/android/camera/log/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 309
+    .line 313
     return v1
 .end method
 
 .method public onDestroy()V
     .locals 1
 
-    .line 577
+    .line 604
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorListenerThread:Landroid/os/HandlerThread;
 
     invoke-virtual {v0}, Landroid/os/HandlerThread;->quit()Z
 
-    .line 578
+    .line 605
     return-void
 .end method
 
 .method public register()V
     .locals 2
 
-    .line 196
+    .line 200
     nop
 
-    .line 197
+    .line 201
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     if-eqz v0, :cond_0
 
-    .line 198
+    .line 202
     const/4 v0, 0x3
 
     goto :goto_0
 
-    .line 200
+    .line 204
     :cond_0
     const/4 v0, 0x0
 
@@ -1064,43 +1116,43 @@
 
     if-eqz v1, :cond_1
 
-    .line 201
+    .line 205
     or-int/lit8 v0, v0, 0x2
 
     or-int/lit8 v0, v0, 0x4
 
-    .line 203
+    .line 207
     :cond_1
     iget-boolean v1, p0, Lcom/android/camera/SensorStateManager;->mGradienterEnabled:Z
 
     if-eqz v1, :cond_2
 
-    .line 204
+    .line 208
     or-int/lit8 v0, v0, 0x8
 
     or-int/lit8 v0, v0, 0x4
 
-    .line 206
+    .line 210
     :cond_2
     iget-boolean v1, p0, Lcom/android/camera/SensorStateManager;->mRotationFlagEnabled:Z
 
     if-eqz v1, :cond_3
 
-    .line 207
+    .line 211
     or-int/lit8 v0, v0, 0x4
 
-    .line 209
+    .line 213
     :cond_3
     invoke-virtual {p0, v0}, Lcom/android/camera/SensorStateManager;->register(I)V
 
-    .line 210
+    .line 214
     return-void
 .end method
 
 .method public register(I)V
     .locals 6
 
-    .line 213
+    .line 217
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     invoke-direct {p0, v0, p1}, Lcom/android/camera/SensorStateManager;->isContains(II)Z
@@ -1109,21 +1161,21 @@
 
     if-nez v0, :cond_5
 
-    .line 214
+    .line 218
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mThreadHandler:Landroid/os/Handler;
 
     if-nez v0, :cond_0
 
     const/16 v0, 0xc
 
-    .line 215
+    .line 219
     invoke-direct {p0, p1, v0}, Lcom/android/camera/SensorStateManager;->isPartialContains(II)Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 216
+    .line 220
     new-instance v0, Landroid/os/Handler;
 
     iget-object v1, p0, Lcom/android/camera/SensorStateManager;->mSensorListenerThread:Landroid/os/HandlerThread;
@@ -1136,7 +1188,7 @@
 
     iput-object v0, p0, Lcom/android/camera/SensorStateManager;->mThreadHandler:Landroid/os/Handler;
 
-    .line 219
+    .line 223
     :cond_0
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
@@ -1144,17 +1196,17 @@
 
     if-eqz v0, :cond_1
 
-    .line 220
+    .line 224
     or-int/lit8 p1, p1, 0x1
 
     or-int/2addr p1, v1
 
-    .line 221
+    .line 225
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mHandler:Landroid/os/Handler;
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 223
+    .line 227
     :cond_1
     invoke-direct {p0, p1, v1}, Lcom/android/camera/SensorStateManager;->isContains(II)Z
 
@@ -1170,7 +1222,7 @@
 
     if-nez v0, :cond_2
 
-    .line 224
+    .line 228
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v2, p0, Lcom/android/camera/SensorStateManager;->mGyroscopeListener:Landroid/hardware/SensorEventListener;
@@ -1179,14 +1231,14 @@
 
     invoke-virtual {v0, v2, v3, v1}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;I)Z
 
-    .line 225
+    .line 229
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     or-int/2addr v0, v1
 
     iput v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 227
+    .line 231
     :cond_2
     const/4 v0, 0x1
 
@@ -1204,7 +1256,7 @@
 
     if-nez v2, :cond_3
 
-    .line 228
+    .line 232
     iget-object v2, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v3, p0, Lcom/android/camera/SensorStateManager;->mLinearAccelerationListener:Landroid/hardware/SensorEventListener;
@@ -1213,14 +1265,14 @@
 
     invoke-virtual {v2, v3, v4, v1}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;I)Z
 
-    .line 229
+    .line 233
     iget v1, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     or-int/2addr v0, v1
 
     iput v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 231
+    .line 235
     :cond_3
     invoke-virtual {p0}, Lcom/android/camera/SensorStateManager;->canDetectOrientation()Z
 
@@ -1244,7 +1296,7 @@
 
     if-nez v1, :cond_4
 
-    .line 233
+    .line 237
     iget-object v1, p0, Lcom/android/camera/SensorStateManager;->mSensorListenerThread:Landroid/os/HandlerThread;
 
     if-eqz v1, :cond_4
@@ -1257,7 +1309,7 @@
 
     if-eqz v1, :cond_4
 
-    .line 234
+    .line 238
     iget-object v1, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v2, p0, Lcom/android/camera/SensorStateManager;->mOrientationSensorEventListener:Landroid/hardware/SensorEventListener;
@@ -1270,14 +1322,14 @@
 
     invoke-virtual {v1, v2, v3, v4, v5}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;)Z
 
-    .line 235
+    .line 239
     iget v1, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     or-int/2addr v0, v1
 
     iput v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 238
+    .line 242
     :cond_4
     const/16 v0, 0x8
 
@@ -1295,7 +1347,7 @@
 
     if-nez p1, :cond_5
 
-    .line 240
+    .line 244
     iget-object p1, p0, Lcom/android/camera/SensorStateManager;->mSensorListenerThread:Landroid/os/HandlerThread;
 
     if-eqz p1, :cond_5
@@ -1308,7 +1360,7 @@
 
     if-eqz p1, :cond_5
 
-    .line 241
+    .line 245
     iget-object p1, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v1, p0, Lcom/android/camera/SensorStateManager;->mAccelerometerSensorEventListenerImpl:Landroid/hardware/SensorEventListener;
@@ -1321,14 +1373,14 @@
 
     invoke-virtual {p1, v1, v2, v3, v4}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;)Z
 
-    .line 242
+    .line 246
     iget p1, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     or-int/2addr p1, v0
 
     iput p1, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 246
+    .line 250
     :cond_5
     return-void
 .end method
@@ -1336,65 +1388,65 @@
 .method public reset()V
     .locals 2
 
-    .line 291
+    .line 295
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x1
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 292
+    .line 296
     const-wide/16 v0, 0x0
 
     iput-wide v0, p0, Lcom/android/camera/SensorStateManager;->mAngleTotal:D
 
-    .line 293
+    .line 297
     return-void
 .end method
 
 .method public setEdgeTouchEnabled(Z)V
     .locals 1
 
-    .line 172
+    .line 176
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mEdgeTouchEnabled:Z
 
     if-eq v0, p1, :cond_2
 
-    .line 173
+    .line 177
     iput-boolean p1, p0, Lcom/android/camera/SensorStateManager;->mEdgeTouchEnabled:Z
 
-    .line 174
+    .line 178
     const/4 p1, 0x6
 
-    .line 175
+    .line 179
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mEdgeTouchEnabled:Z
 
     if-nez v0, :cond_1
 
-    .line 176
+    .line 180
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mGradienterEnabled:Z
 
     if-eqz v0, :cond_0
 
-    .line 177
+    .line 181
     const/4 p1, 0x2
 
-    .line 179
+    .line 183
     :cond_0
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     if-eqz v0, :cond_1
 
-    .line 180
+    .line 184
     and-int/lit8 p1, p1, -0x3
 
-    .line 183
+    .line 187
     :cond_1
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mEdgeTouchEnabled:Z
 
     invoke-direct {p0, p1, v0}, Lcom/android/camera/SensorStateManager;->update(IZ)V
 
-    .line 185
+    .line 189
     :cond_2
     return-void
 .end method
@@ -1402,51 +1454,51 @@
 .method public setFocusSensorEnabled(Z)V
     .locals 4
 
-    .line 119
+    .line 123
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     if-eq v0, p1, :cond_1
 
-    .line 120
+    .line 124
     iput-boolean p1, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
-    .line 121
+    .line 125
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mHandler:Landroid/os/Handler;
 
     const/4 v1, 0x2
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 122
+    .line 126
     const/4 v0, 0x3
 
-    .line 123
+    .line 127
     iget-boolean v2, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     if-nez v2, :cond_0
 
-    .line 124
+    .line 128
     invoke-direct {p0, v0}, Lcom/android/camera/SensorStateManager;->filterUnregisterSensor(I)I
 
     move-result v0
 
-    .line 126
+    .line 130
     :cond_0
     iget-object v2, p0, Lcom/android/camera/SensorStateManager;->mHandler:Landroid/os/Handler;
 
     iget-object v3, p0, Lcom/android/camera/SensorStateManager;->mHandler:Landroid/os/Handler;
 
-    .line 127
+    .line 131
     invoke-virtual {v3, v1, v0, p1}, Landroid/os/Handler;->obtainMessage(III)Landroid/os/Message;
 
     move-result-object p1
 
     const-wide/16 v0, 0x3e8
 
-    .line 126
+    .line 130
     invoke-virtual {v2, p1, v0, v1}, Landroid/os/Handler;->sendMessageDelayed(Landroid/os/Message;J)Z
 
-    .line 130
+    .line 134
     :cond_1
     return-void
 .end method
@@ -1454,34 +1506,34 @@
 .method public setGradienterEnabled(Z)V
     .locals 1
 
-    .line 133
+    .line 137
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mGradienterEnabled:Z
 
     if-eq v0, p1, :cond_1
 
-    .line 134
+    .line 138
     iput-boolean p1, p0, Lcom/android/camera/SensorStateManager;->mGradienterEnabled:Z
 
-    .line 135
+    .line 139
     const/16 p1, 0xc
 
-    .line 136
+    .line 140
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mGradienterEnabled:Z
 
     if-nez v0, :cond_0
 
-    .line 137
+    .line 141
     invoke-direct {p0, p1}, Lcom/android/camera/SensorStateManager;->filterUnregisterSensor(I)I
 
     move-result p1
 
-    .line 139
+    .line 143
     :cond_0
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mGradienterEnabled:Z
 
     invoke-direct {p0, p1, v0}, Lcom/android/camera/SensorStateManager;->update(IZ)V
 
-    .line 141
+    .line 145
     :cond_1
     return-void
 .end method
@@ -1489,14 +1541,14 @@
 .method public setRotationIndicatorEnabled(Z)V
     .locals 1
 
-    .line 144
-    invoke-static {}, Lcom/mi/config/b;->hc()Z
+    .line 148
+    invoke-static {}, Lcom/mi/config/b;->hf()Z
 
     move-result v0
 
     if-eqz v0, :cond_1
 
-    .line 145
+    .line 149
     invoke-virtual {p0}, Lcom/android/camera/SensorStateManager;->canDetectOrientation()Z
 
     move-result v0
@@ -1507,52 +1559,67 @@
 
     if-eq v0, p1, :cond_1
 
-    .line 146
+    .line 150
     iput-boolean p1, p0, Lcom/android/camera/SensorStateManager;->mRotationFlagEnabled:Z
 
-    .line 147
+    .line 151
     const/4 p1, 0x4
 
-    .line 148
+    .line 152
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mRotationFlagEnabled:Z
 
     if-nez v0, :cond_0
 
-    .line 149
+    .line 153
     invoke-direct {p0, p1}, Lcom/android/camera/SensorStateManager;->filterUnregisterSensor(I)I
 
     move-result p1
 
-    .line 151
+    .line 155
     :cond_0
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mRotationFlagEnabled:Z
 
     invoke-direct {p0, p1, v0}, Lcom/android/camera/SensorStateManager;->update(IZ)V
 
-    .line 153
+    .line 157
     :cond_1
     return-void
 .end method
 
-.method public setSensorStateListener(Lcom/android/camera/SensorStateManager$SensorStateListener;)V
+.method public declared-synchronized setSensorStateListener(Lcom/android/camera/SensorStateManager$SensorStateListener;)V
     .locals 0
 
+    monitor-enter p0
+
     .line 115
+    :try_start_0
     iput-object p1, p0, Lcom/android/camera/SensorStateManager;->mSensorStateListener:Lcom/android/camera/SensorStateManager$SensorStateListener;
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     .line 116
+    monitor-exit p0
+
     return-void
+
+    .line 114
+    :catchall_0
+    move-exception p1
+
+    monitor-exit p0
+
+    throw p1
 .end method
 
 .method public unregister(I)V
     .locals 2
 
-    .line 249
+    .line 253
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     if-eqz v0, :cond_6
 
-    .line 250
+    .line 254
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
     const/4 v1, 0x2
@@ -1563,7 +1630,7 @@
 
     if-ne p1, v0, :cond_2
 
-    .line 252
+    .line 256
     :cond_0
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mFocusSensorEnabled:Z
 
@@ -1577,27 +1644,27 @@
 
     if-eqz v0, :cond_1
 
-    .line 253
+    .line 257
     or-int/lit8 p1, p1, 0x1
 
-    .line 254
+    .line 258
     iget-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mEdgeTouchEnabled:Z
 
     if-nez v0, :cond_1
 
-    .line 255
+    .line 259
     or-int/lit8 p1, p1, 0x2
 
-    .line 258
+    .line 262
     :cond_1
     invoke-virtual {p0}, Lcom/android/camera/SensorStateManager;->reset()V
 
-    .line 259
+    .line 263
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mHandler:Landroid/os/Handler;
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeMessages(I)V
 
-    .line 261
+    .line 265
     :cond_2
     invoke-direct {p0, p1, v1}, Lcom/android/camera/SensorStateManager;->isContains(II)Z
 
@@ -1613,21 +1680,21 @@
 
     if-eqz v0, :cond_3
 
-    .line 262
+    .line 266
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v1, p0, Lcom/android/camera/SensorStateManager;->mGyroscopeListener:Landroid/hardware/SensorEventListener;
 
     invoke-virtual {v0, v1}, Landroid/hardware/SensorManager;->unregisterListener(Landroid/hardware/SensorEventListener;)V
 
-    .line 263
+    .line 267
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     and-int/lit8 v0, v0, -0x3
 
     iput v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 265
+    .line 269
     :cond_3
     const/4 v0, 0x1
 
@@ -1645,21 +1712,21 @@
 
     if-eqz v0, :cond_4
 
-    .line 266
+    .line 270
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v1, p0, Lcom/android/camera/SensorStateManager;->mLinearAccelerationListener:Landroid/hardware/SensorEventListener;
 
     invoke-virtual {v0, v1}, Landroid/hardware/SensorManager;->unregisterListener(Landroid/hardware/SensorEventListener;)V
 
-    .line 267
+    .line 271
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     and-int/lit8 v0, v0, -0x2
 
     iput v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 269
+    .line 273
     :cond_4
     const/4 v0, 0x4
 
@@ -1677,29 +1744,29 @@
 
     if-eqz v0, :cond_5
 
-    .line 270
+    .line 274
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v1, p0, Lcom/android/camera/SensorStateManager;->mOrientationSensorEventListener:Landroid/hardware/SensorEventListener;
 
     invoke-virtual {v0, v1}, Landroid/hardware/SensorManager;->unregisterListener(Landroid/hardware/SensorEventListener;)V
 
-    .line 271
+    .line 275
     iget v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     and-int/lit8 v0, v0, -0x5
 
     iput v0, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 272
+    .line 276
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/camera/SensorStateManager;->mIsLying:Z
 
-    .line 273
+    .line 277
     invoke-direct {p0, v0}, Lcom/android/camera/SensorStateManager;->changeCapturePosture(I)V
 
-    .line 275
+    .line 279
     :cond_5
     const/16 v0, 0x8
 
@@ -1717,21 +1784,21 @@
 
     if-eqz p1, :cond_6
 
-    .line 276
+    .line 280
     iget-object p1, p0, Lcom/android/camera/SensorStateManager;->mSensorManager:Landroid/hardware/SensorManager;
 
     iget-object v0, p0, Lcom/android/camera/SensorStateManager;->mAccelerometerSensorEventListenerImpl:Landroid/hardware/SensorEventListener;
 
     invoke-virtual {p1, v0}, Landroid/hardware/SensorManager;->unregisterListener(Landroid/hardware/SensorEventListener;)V
 
-    .line 277
+    .line 281
     iget p1, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
     and-int/lit8 p1, p1, -0x9
 
     iput p1, p0, Lcom/android/camera/SensorStateManager;->mSensorRegister:I
 
-    .line 280
+    .line 284
     :cond_6
     return-void
 .end method

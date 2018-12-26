@@ -30,7 +30,7 @@
 .method constructor <init>(Lcom/android/camera/ActivityBase;)V
     .locals 0
 
-    .line 351
+    .line 350
     iput-object p1, p0, Lcom/android/camera/ActivityBase$4;->this$0:Lcom/android/camera/ActivityBase;
 
     invoke-direct {p0}, Lio/reactivex/Single;-><init>()V
@@ -52,12 +52,12 @@
         }
     .end annotation
 
-    .line 354
+    .line 353
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 356
+    .line 355
     const-string v1, "cat /dev/cpuset/camera-daemon/cpus"
 
     const/4 v2, 0x0
@@ -66,38 +66,38 @@
 
     move-result-object v1
 
-    .line 357
+    .line 356
     if-nez v1, :cond_0
 
-    .line 358
+    .line 357
     return-void
 
-    .line 360
+    .line 359
     :cond_0
     const-string v3, "cpus"
 
     invoke-virtual {v0, v3, v1}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 362
+    .line 361
     const-string v1, "cat $(dirname $(grep -nir \"xo_therm\" /sys/class/thermal/thermal_zone*/type))/temp"
 
     invoke-static {v1, v2}, Lcom/android/camera/Util;->execCommand(Ljava/lang/String;Z)Ljava/lang/String;
 
     move-result-object v1
 
-    .line 363
+    .line 362
     if-nez v1, :cond_1
 
-    .line 364
+    .line 363
     return-void
 
-    .line 366
+    .line 365
     :cond_1
     const-string v3, "temperature"
 
     invoke-virtual {v0, v3, v1}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 368
+    .line 367
     const-string v1, "cat /proc/meminfo|grep -E \'MemFree|MemAvailable\'"
 
     const/4 v3, 0x1
@@ -106,13 +106,13 @@
 
     move-result-object v1
 
-    .line 369
+    .line 368
     if-nez v1, :cond_2
 
-    .line 370
+    .line 369
     return-void
 
-    .line 372
+    .line 371
     :cond_2
     const-string v4, "\r\n"
 
@@ -120,17 +120,17 @@
 
     move-result-object v1
 
-    .line 373
+    .line 372
     array-length v4, v1
 
     const/4 v5, 0x2
 
     if-eq v4, v5, :cond_3
 
-    .line 374
+    .line 373
     return-void
 
-    .line 376
+    .line 375
     :cond_3
     array-length v4, v1
 
@@ -141,14 +141,14 @@
 
     aget-object v6, v1, v5
 
-    .line 377
+    .line 376
     const-string v7, ":"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
 
     move-result-object v6
 
-    .line 378
+    .line 377
     aget-object v7, v6, v2
 
     aget-object v6, v6, v3
@@ -163,15 +163,15 @@
 
     invoke-virtual {v0, v7, v6}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 376
+    .line 375
     add-int/lit8 v5, v5, 0x1
 
     goto :goto_0
 
-    .line 380
+    .line 379
     :cond_4
     invoke-interface {p1, v0}, Lio/reactivex/SingleObserver;->onSuccess(Ljava/lang/Object;)V
 
-    .line 381
+    .line 380
     return-void
 .end method

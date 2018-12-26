@@ -261,210 +261,227 @@
 .method private adjustViewBackground(Landroid/view/View;I)V
     .locals 0
 
-    .line 769
+    .line 775
     const p2, 0x7f0a0049
 
     invoke-virtual {p1, p2}, Landroid/view/View;->setBackgroundResource(I)V
 
-    .line 770
+    .line 776
     return-void
 .end method
 
 .method private alphaOutZoomButtonAndSlideView()V
-    .locals 4
+    .locals 3
 
-    .line 671
+    .line 670
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     invoke-virtual {v0}, Landroid/view/ViewGroup;->getVisibility()I
 
     move-result v0
 
-    const/4 v1, 0x0
-
     if-nez v0, :cond_0
 
-    .line 672
+    .line 671
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mIsHiding:Z
 
-    .line 673
+    .line 672
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
+
+    const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;->setEnable(Z)V
 
-    .line 674
+    .line 673
     new-instance v0, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;
 
-    iget-object v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
+    iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
-    iget v3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
+    iget v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
 
-    invoke-direct {v0, v2, v3}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;-><init>(Landroid/view/View;I)V
+    invoke-direct {v0, v1, v2}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;-><init>(Landroid/view/View;I)V
 
-    new-instance v2, Landroid/view/animation/OvershootInterpolator;
+    new-instance v1, Landroid/view/animation/OvershootInterpolator;
 
-    invoke-direct {v2}, Landroid/view/animation/OvershootInterpolator;-><init>()V
+    invoke-direct {v1}, Landroid/view/animation/OvershootInterpolator;-><init>()V
 
-    .line 675
-    invoke-virtual {v0, v2}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
+    .line 674
+    invoke-virtual {v0, v1}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object v0
 
-    .line 674
+    .line 673
     invoke-static {v0}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object v0
 
-    new-instance v2, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$7;
+    new-instance v1, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$7;
 
-    invoke-direct {v2, p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$7;-><init>(Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;)V
+    invoke-direct {v1, p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$7;-><init>(Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;)V
 
-    .line 675
-    invoke-virtual {v0, v2}, Lio/reactivex/Completable;->subscribe(Lio/reactivex/functions/Action;)Lio/reactivex/disposables/Disposable;
+    .line 674
+    invoke-virtual {v0, v1}, Lio/reactivex/Completable;->subscribe(Lio/reactivex/functions/Action;)Lio/reactivex/disposables/Disposable;
 
-    .line 686
+    .line 685
     const/4 v0, -0x1
 
     iput v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentState:I
 
-    .line 687
+    .line 686
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
-    const/4 v2, 0x0
+    const/4 v1, 0x0
 
-    invoke-static {v0, v2}, Landroid/support/v4/view/ViewCompat;->setTranslationY(Landroid/view/View;F)V
+    invoke-static {v0, v1}, Landroid/support/v4/view/ViewCompat;->setTranslationY(Landroid/view/View;F)V
 
-    .line 688
+    .line 687
     new-instance v0, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;
 
-    iget-object v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
+    iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
-    iget v3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
+    iget v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
 
-    invoke-direct {v0, v2, v3}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;-><init>(Landroid/view/View;I)V
+    invoke-direct {v0, v1, v2}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;-><init>(Landroid/view/View;I)V
 
-    new-instance v2, Landroid/view/animation/OvershootInterpolator;
+    new-instance v1, Landroid/view/animation/OvershootInterpolator;
 
-    invoke-direct {v2}, Landroid/view/animation/OvershootInterpolator;-><init>()V
+    invoke-direct {v1}, Landroid/view/animation/OvershootInterpolator;-><init>()V
 
-    .line 689
-    invoke-virtual {v0, v2}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
+    .line 688
+    invoke-virtual {v0, v1}, Lcom/android/camera/animation/type/TranslateYAlphaOutOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object v0
 
-    .line 688
+    .line 687
     invoke-static {v0}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object v0
 
-    .line 689
+    .line 688
     invoke-virtual {v0}, Lio/reactivex/Completable;->subscribe()Lio/reactivex/disposables/Disposable;
 
     goto :goto_0
 
-    .line 691
+    .line 690
     :cond_0
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->hideZoomButton()V
 
-    .line 693
+    .line 692
     :goto_0
-    invoke-direct {p0, v1}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->notifyTipsMargin(I)V
+    invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->notifyTipsMargin()V
 
-    .line 694
+    .line 693
     return-void
 .end method
 
 .method private hideSlideView()V
-    .locals 4
+    .locals 3
 
-    .line 697
+    .line 696
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mIsHiding:Z
 
-    .line 698
+    .line 697
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;->setEnable(Z)V
 
-    .line 699
+    .line 698
     new-instance v0, Lcom/android/camera/animation/type/TranslateYOnSubscribe;
 
-    iget-object v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
+    iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
-    iget v3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
+    iget v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
 
-    invoke-direct {v0, v2, v3}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;-><init>(Landroid/view/View;I)V
+    invoke-direct {v0, v1, v2}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;-><init>(Landroid/view/View;I)V
 
-    new-instance v2, Landroid/view/animation/OvershootInterpolator;
+    new-instance v1, Landroid/view/animation/OvershootInterpolator;
 
-    invoke-direct {v2}, Landroid/view/animation/OvershootInterpolator;-><init>()V
+    invoke-direct {v1}, Landroid/view/animation/OvershootInterpolator;-><init>()V
 
-    .line 700
-    invoke-virtual {v0, v2}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
+    .line 699
+    invoke-virtual {v0, v1}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object v0
 
-    .line 699
+    .line 698
     invoke-static {v0}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object v0
 
-    new-instance v2, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$8;
+    new-instance v1, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$8;
 
-    invoke-direct {v2, p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$8;-><init>(Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;)V
+    invoke-direct {v1, p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust$8;-><init>(Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;)V
 
-    .line 700
-    invoke-virtual {v0, v2}, Lio/reactivex/Completable;->subscribe(Lio/reactivex/functions/Action;)Lio/reactivex/disposables/Disposable;
+    .line 699
+    invoke-virtual {v0, v1}, Lio/reactivex/Completable;->subscribe(Lio/reactivex/functions/Action;)Lio/reactivex/disposables/Disposable;
 
-    .line 710
+    .line 709
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
-    const/4 v2, 0x0
+    const/4 v1, 0x0
 
-    invoke-static {v0, v2}, Landroid/support/v4/view/ViewCompat;->setTranslationY(Landroid/view/View;F)V
+    invoke-static {v0, v1}, Landroid/support/v4/view/ViewCompat;->setTranslationY(Landroid/view/View;F)V
 
-    .line 711
+    .line 710
     new-instance v0, Lcom/android/camera/animation/type/TranslateYOnSubscribe;
 
-    iget-object v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
+    iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
-    iget v3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
+    iget v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
 
-    invoke-direct {v0, v2, v3}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;-><init>(Landroid/view/View;I)V
+    invoke-direct {v0, v1, v2}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;-><init>(Landroid/view/View;I)V
 
-    new-instance v2, Landroid/view/animation/OvershootInterpolator;
+    new-instance v1, Landroid/view/animation/OvershootInterpolator;
 
-    invoke-direct {v2}, Landroid/view/animation/OvershootInterpolator;-><init>()V
+    invoke-direct {v1}, Landroid/view/animation/OvershootInterpolator;-><init>()V
 
-    .line 712
-    invoke-virtual {v0, v2}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
+    .line 711
+    invoke-virtual {v0, v1}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object v0
 
-    .line 711
+    .line 710
     invoke-static {v0}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object v0
 
-    .line 712
+    .line 711
     invoke-virtual {v0}, Lio/reactivex/Completable;->subscribe()Lio/reactivex/disposables/Disposable;
 
-    .line 714
-    invoke-direct {p0, v1}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->notifyTipsMargin(I)V
+    .line 712
+    invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
-    .line 715
+    move-result-object v0
+
+    const/16 v1, 0xaf
+
+    invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;
+
+    .line 713
+    if-eqz v0, :cond_0
+
+    .line 714
+    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->reInitTipImage()V
+
+    .line 716
+    :cond_0
     return-void
 .end method
 
 .method private initSlideZoomView(Lcom/android/camera/data/data/ComponentData;)V
     .locals 3
 
-    .line 645
+    .line 644
     new-instance v0, Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
 
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->getContext()Landroid/content/Context;
@@ -477,28 +494,28 @@
 
     iput-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
 
-    .line 646
+    .line 645
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideView:Lcom/android/camera/ui/HorizontalSlideView;
 
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
 
     invoke-virtual {p1, v0}, Lcom/android/camera/ui/HorizontalSlideView;->setOnPositionSelectListener(Lcom/android/camera/ui/HorizontalSlideView$OnPositionSelectListener;)V
 
-    .line 647
+    .line 646
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideView:Lcom/android/camera/ui/HorizontalSlideView;
 
     const/4 v0, 0x0
 
     invoke-virtual {p1, v0}, Lcom/android/camera/ui/HorizontalSlideView;->setJustifyEnabled(Z)V
 
-    .line 648
+    .line 647
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideView:Lcom/android/camera/ui/HorizontalSlideView;
 
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
 
     invoke-virtual {p1, v0}, Lcom/android/camera/ui/HorizontalSlideView;->setDrawAdapter(Lcom/android/camera/ui/HorizontalSlideView$HorizontalDrawAdapter;)V
 
-    .line 650
+    .line 649
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
 
     invoke-static {}, Lcom/android/camera/CameraSettings;->readZoom()F
@@ -509,7 +526,7 @@
 
     move-result p1
 
-    .line 651
+    .line 650
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideView:Lcom/android/camera/ui/HorizontalSlideView;
 
     iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
@@ -526,11 +543,11 @@
 
     invoke-virtual {v0, p1}, Lcom/android/camera/ui/HorizontalSlideView;->setSelection(F)V
 
-    .line 652
+    .line 651
     return-void
 .end method
 
-.method private notifyTipsMargin(I)V
+.method private notifyTipsMargin()V
     .locals 2
 
     .line 719
@@ -538,7 +555,6 @@
 
     move-result-object v0
 
-    .line 720
     const/16 v1, 0xaf
 
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
@@ -547,24 +563,41 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;
 
-    .line 721
-    const/4 v1, 0x1
+    .line 720
+    if-eqz v0, :cond_0
 
-    invoke-interface {v0, p1, v1}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->updateTipBottomMargin(IZ)V
+    .line 721
+    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->directHideTipImage()V
 
     .line 722
+    invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->directlyHideTips()V
+
+    .line 724
+    invoke-static {}, Lcom/android/camera/Util;->UI_DEBUG()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    .line 725
+    const/4 v1, 0x0
+
+    invoke-interface {v0, v1}, Lcom/android/camera/protocol/ModeProtocol$BottomPopupTips;->directShowOrHideLeftTipImage(Z)V
+
+    .line 728
+    :cond_0
     return-void
 .end method
 
 .method private notifyZoom2X(Z)V
     .locals 2
 
-    .line 585
+    .line 584
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
 
-    .line 586
+    .line 585
     const/16 v1, 0xae
 
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
@@ -573,7 +606,7 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;
 
-    .line 587
+    .line 586
     if-eqz v0, :cond_1
 
     iget-boolean v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mIsZoomAnimationEnabled:Z
@@ -582,11 +615,11 @@
 
     if-eqz p1, :cond_1
 
-    .line 588
+    .line 587
     :cond_0
     invoke-interface {v0, p1}, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;->onDualZoomHappened(Z)V
 
-    .line 590
+    .line 589
     :cond_1
     return-void
 .end method
@@ -594,12 +627,12 @@
 .method private notifyZooming(Z)V
     .locals 2
 
-    .line 594
+    .line 593
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
 
-    .line 595
+    .line 594
     const/16 v1, 0xae
 
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
@@ -608,13 +641,13 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;
 
-    .line 596
+    .line 595
     if-eqz v0, :cond_0
 
-    .line 597
+    .line 596
     invoke-interface {v0, p1}, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;->onDualLensZooming(Z)V
 
-    .line 599
+    .line 598
     :cond_0
     return-void
 .end method
@@ -622,12 +655,12 @@
 .method private requestZoomRatio(FZ)V
     .locals 2
 
-    .line 735
+    .line 741
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
 
-    .line 736
+    .line 742
     const/16 v1, 0xae
 
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
@@ -636,13 +669,13 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;
 
-    .line 737
+    .line 743
     if-eqz v0, :cond_0
 
-    .line 738
+    .line 744
     invoke-interface {v0, p1, p2}, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;->onDualZoomValueChanged(FZ)V
 
-    .line 740
+    .line 746
     :cond_0
     return-void
 .end method
@@ -810,7 +843,7 @@
     .line 342
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
-    const v1, 0x7f0b00f2
+    const v1, 0x7f0b00f8
 
     const/4 v3, 0x1
 
@@ -863,24 +896,24 @@
 .method private showSlideView()V
     .locals 3
 
-    .line 655
+    .line 654
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mIsHiding:Z
 
-    .line 656
+    .line 655
     iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlidingAdapter:Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;
 
     const/4 v2, 0x1
 
     invoke-virtual {v1, v2}, Lcom/android/camera/fragment/manually/adapter/ExtraSlideZoomAdapter;->setEnable(Z)V
 
-    .line 657
+    .line 656
     iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     invoke-virtual {v1, v0}, Landroid/view/ViewGroup;->setVisibility(I)V
 
-    .line 658
+    .line 657
     iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     iget v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
@@ -889,14 +922,14 @@
 
     invoke-static {v1, v2}, Landroid/support/v4/view/ViewCompat;->setTranslationY(Landroid/view/View;F)V
 
-    .line 659
+    .line 658
     iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     const/high16 v2, 0x3f800000    # 1.0f
 
     invoke-static {v1, v2}, Landroid/support/v4/view/ViewCompat;->setAlpha(Landroid/view/View;F)V
 
-    .line 660
+    .line 659
     new-instance v1, Lcom/android/camera/animation/type/TranslateYOnSubscribe;
 
     iget-object v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
@@ -907,20 +940,20 @@
 
     invoke-direct {v2}, Landroid/view/animation/DecelerateInterpolator;-><init>()V
 
-    .line 661
+    .line 660
     invoke-virtual {v1, v2}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object v1
 
-    .line 660
+    .line 659
     invoke-static {v1}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object v1
 
-    .line 661
+    .line 660
     invoke-virtual {v1}, Lio/reactivex/Completable;->subscribe()Lio/reactivex/disposables/Disposable;
 
-    .line 663
+    .line 662
     iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     iget v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
@@ -929,7 +962,7 @@
 
     invoke-static {v1, v2}, Landroid/support/v4/view/ViewCompat;->setTranslationY(Landroid/view/View;F)V
 
-    .line 664
+    .line 663
     new-instance v1, Lcom/android/camera/animation/type/TranslateYOnSubscribe;
 
     iget-object v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
@@ -940,32 +973,30 @@
 
     invoke-direct {v0}, Lmiui/view/animation/BackEaseOutInterpolator;-><init>()V
 
-    .line 665
+    .line 664
     invoke-virtual {v1, v0}, Lcom/android/camera/animation/type/TranslateYOnSubscribe;->setInterpolator(Landroid/view/animation/Interpolator;)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object v0
 
-    .line 664
+    .line 663
     invoke-static {v0}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object v0
 
-    .line 665
+    .line 664
     invoke-virtual {v0}, Lio/reactivex/Completable;->subscribe()Lio/reactivex/disposables/Disposable;
 
+    .line 666
+    invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->notifyTipsMargin()V
+
     .line 667
-    iget v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
-
-    invoke-direct {p0, v0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->notifyTipsMargin(I)V
-
-    .line 668
     return-void
 .end method
 
 .method private toggle()V
     .locals 3
 
-    .line 604
+    .line 603
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemConfig()Lcom/android/camera/data/data/config/DataItemConfig;
 
     move-result-object v0
@@ -974,12 +1005,12 @@
 
     move-result-object v0
 
-    .line 606
+    .line 605
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v1
 
-    .line 607
+    .line 606
     const/16 v2, 0xae
 
     invoke-virtual {v1, v2}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
@@ -988,18 +1019,18 @@
 
     check-cast v1, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;
 
-    .line 608
+    .line 607
     if-eqz v1, :cond_0
 
-    .line 609
+    .line 608
     iget v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
     invoke-interface {v1, v0, v2}, Lcom/android/camera/protocol/ModeProtocol$ManuallyValueChanged;->onDualLensSwitch(Lcom/android/camera/data/data/config/ComponentManuallyDualLens;I)V
 
-    .line 610
+    .line 609
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->updateZoomValue()V
 
-    .line 613
+    .line 612
     :cond_0
     iget v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
@@ -1007,10 +1038,10 @@
 
     move-result-object v0
 
-    .line 614
+    .line 613
     iget v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
-    .line 615
+    .line 614
     const-string v2, "wide"
 
     invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -1019,7 +1050,7 @@
 
     if-eqz v0, :cond_1
 
-    .line 616
+    .line 615
     const-string v0, "1x"
 
     goto :goto_0
@@ -1027,11 +1058,11 @@
     :cond_1
     const-string v0, "2x"
 
-    .line 614
+    .line 613
     :goto_0
     invoke-static {v1, v0}, Lcom/android/camera/statistic/CameraStatUtil;->trackDualZoomChanged(ILjava/lang/String;)V
 
-    .line 617
+    .line 616
     return-void
 .end method
 
@@ -1040,7 +1071,7 @@
 .method public getFragmentInto()I
     .locals 1
 
-    .line 426
+    .line 425
     const/16 v0, 0xff4
 
     return v0
@@ -1049,8 +1080,8 @@
 .method protected getLayoutResourceId()I
     .locals 1
 
-    .line 421
-    const v0, 0x7f040015
+    .line 420
+    const v0, 0x7f040016
 
     return v0
 .end method
@@ -1121,7 +1152,7 @@
     iput v1, v0, Landroid/view/ViewGroup$MarginLayoutParams;->bottomMargin:I
 
     .line 147
-    const v0, 0x7f0d0045
+    const v0, 0x7f0d004c
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1132,7 +1163,7 @@
     iput-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualParentLayout:Landroid/view/ViewGroup;
 
     .line 149
-    const v0, 0x7f0d0046
+    const v0, 0x7f0d004d
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1143,7 +1174,7 @@
     iput-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     .line 150
-    const v0, 0x7f0d0047
+    const v0, 0x7f0d004e
 
     invoke-virtual {p1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1157,7 +1188,7 @@
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     .line 152
-    const v0, 0x7f0d0048
+    const v0, 0x7f0d004f
 
     invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
 
@@ -1417,7 +1448,7 @@
 
     move-result-object v1
 
-    const v2, 0x7f0900bf
+    const v2, 0x7f0900c3
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -1497,10 +1528,10 @@
 .method public notifyAfterFrameAvailable(I)V
     .locals 2
 
-    .line 764
+    .line 770
     invoke-super {p0, p1}, Lcom/android/camera/fragment/BaseFragment;->notifyAfterFrameAvailable(I)V
 
-    .line 765
+    .line 771
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
     const/4 v0, 0x0
@@ -1509,24 +1540,24 @@
 
     invoke-virtual {p0, p1, v0, v1}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->provideAnimateElement(ILjava/util/List;Z)V
 
-    .line 766
+    .line 772
     return-void
 .end method
 
 .method public notifyDataChanged(II)V
     .locals 0
 
-    .line 753
+    .line 759
     invoke-super {p0, p1, p2}, Lcom/android/camera/fragment/BaseFragment;->notifyDataChanged(II)V
 
-    .line 754
+    .line 760
     const/4 p2, 0x3
 
     if-eq p1, p2, :cond_0
 
     goto :goto_0
 
-    .line 756
+    .line 762
     :cond_0
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
@@ -1534,7 +1565,7 @@
 
     invoke-direct {p0, p1, p2}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->adjustViewBackground(Landroid/view/View;I)V
 
-    .line 760
+    .line 766
     :goto_0
     return-void
 .end method
@@ -1542,7 +1573,7 @@
 .method public onBackEvent(I)Z
     .locals 3
 
-    .line 516
+    .line 515
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualParentLayout:Landroid/view/ViewGroup;
 
     invoke-virtual {v0}, Landroid/view/ViewGroup;->getVisibility()I
@@ -1553,19 +1584,19 @@
 
     if-eqz v0, :cond_0
 
-    .line 517
+    .line 516
     return v1
 
-    .line 520
+    .line 519
     :cond_0
     iget-boolean v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mIsHiding:Z
 
     if-eqz v0, :cond_1
 
-    .line 521
+    .line 520
     return v1
 
-    .line 525
+    .line 524
     :cond_1
     const/4 v0, 0x3
 
@@ -1579,16 +1610,16 @@
 
     if-ne p1, v0, :cond_2
 
-    .line 526
+    .line 525
     move p1, v2
 
     goto :goto_0
 
-    .line 525
+    .line 524
     :cond_2
     nop
 
-    .line 526
+    .line 525
     move p1, v1
 
     :goto_0
@@ -1602,23 +1633,23 @@
 
     if-eqz v0, :cond_3
 
-    .line 527
+    .line 526
     return v1
 
-    .line 530
+    .line 529
     :cond_3
     if-eqz p1, :cond_4
 
-    .line 531
+    .line 530
     invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->alphaOutZoomButtonAndSlideView()V
 
     goto :goto_1
 
-    .line 533
+    .line 532
     :cond_4
     invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->hideSlideView()V
 
-    .line 536
+    .line 535
     :goto_1
     return v2
 .end method
@@ -1626,17 +1657,17 @@
 .method public onClick(Landroid/view/View;)V
     .locals 4
 
-    .line 543
+    .line 542
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->isEnableClick()Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 544
+    .line 543
     return-void
 
-    .line 547
+    .line 546
     :cond_0
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
@@ -1644,14 +1675,14 @@
 
     const/16 v1, 0xa1
 
-    .line 548
+    .line 547
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
 
     move-result-object v0
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$CameraAction;
 
-    .line 549
+    .line 548
     if-eqz v0, :cond_1
 
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$CameraAction;->isDoingAction()Z
@@ -1660,22 +1691,22 @@
 
     if-eqz v0, :cond_1
 
-    .line 550
+    .line 549
     return-void
 
-    .line 553
+    .line 552
     :cond_1
     invoke-virtual {p1}, Landroid/view/View;->getId()I
 
     move-result p1
 
-    const v0, 0x7f0d0046
+    const v0, 0x7f0d004d
 
     if-eq p1, v0, :cond_2
 
     goto/16 :goto_1
 
-    .line 555
+    .line 554
     :cond_2
     invoke-static {}, Lcom/android/camera/CameraSettings;->isSwitchCameraZoomMode()Z
 
@@ -1683,12 +1714,12 @@
 
     if-eqz p1, :cond_3
 
-    .line 556
+    .line 555
     invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->toggle()V
 
     goto :goto_0
 
-    .line 558
+    .line 557
     :cond_3
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRatio:F
 
@@ -1706,17 +1737,17 @@
 
     if-nez p1, :cond_4
 
-    .line 559
+    .line 558
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
     const-string v3, "2x"
 
     invoke-static {p1, v3}, Lcom/android/camera/statistic/CameraStatUtil;->trackDualZoomChanged(ILjava/lang/String;)V
 
-    .line 560
+    .line 559
     iput-boolean v2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mIsZoomTo2X:Z
 
-    .line 561
+    .line 560
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRequestAnimator:Landroid/animation/ObjectAnimator;
 
     new-array v0, v0, [F
@@ -1733,14 +1764,14 @@
 
     invoke-virtual {p1, v0}, Landroid/animation/ObjectAnimator;->setFloatValues([F)V
 
-    .line 562
+    .line 561
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRequestAnimator:Landroid/animation/ObjectAnimator;
 
     invoke-virtual {p1}, Landroid/animation/ObjectAnimator;->start()V
 
     goto :goto_0
 
-    .line 565
+    .line 564
     :cond_4
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRatio:F
 
@@ -1752,17 +1783,17 @@
 
     if-gtz p1, :cond_5
 
-    .line 566
+    .line 565
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
     const-string v3, "1x"
 
     invoke-static {p1, v3}, Lcom/android/camera/statistic/CameraStatUtil;->trackDualZoomChanged(ILjava/lang/String;)V
 
-    .line 567
+    .line 566
     iput-boolean v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mIsZoomTo2X:Z
 
-    .line 568
+    .line 567
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRequestAnimator:Landroid/animation/ObjectAnimator;
 
     new-array v0, v0, [F
@@ -1779,14 +1810,14 @@
 
     invoke-virtual {p1, v0}, Landroid/animation/ObjectAnimator;->setFloatValues([F)V
 
-    .line 569
+    .line 568
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRequestAnimator:Landroid/animation/ObjectAnimator;
 
     invoke-virtual {p1}, Landroid/animation/ObjectAnimator;->start()V
 
     goto :goto_0
 
-    .line 571
+    .line 570
     :cond_5
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
@@ -1794,32 +1825,32 @@
 
     invoke-static {p1, v0}, Lcom/android/camera/statistic/CameraStatUtil;->trackDualZoomChanged(ILjava/lang/String;)V
 
-    .line 572
+    .line 571
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRatioTele:I
 
     int-to-float p1, p1
 
     invoke-direct {p0, p1, v2}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->requestZoomRatio(FZ)V
 
-    .line 573
+    .line 572
     iget p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomRatioWide:I
 
     int-to-float p1, p1
 
     invoke-direct {p0, p1, v1}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->requestZoomRatio(FZ)V
 
-    .line 577
+    .line 576
     :goto_0
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomInOutAnimator:Landroid/animation/AnimatorSet;
 
     invoke-virtual {p1}, Landroid/animation/AnimatorSet;->start()V
 
-    .line 578
+    .line 577
     const/4 p1, 0x5
 
     invoke-virtual {p0, p1}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->onBackEvent(I)Z
 
-    .line 581
+    .line 580
     :goto_1
     return-void
 .end method
@@ -1827,7 +1858,7 @@
 .method public onLongClick(Landroid/view/View;)Z
     .locals 3
 
-    .line 621
+    .line 620
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->isEnableClick()Z
 
     move-result v0
@@ -1836,10 +1867,10 @@
 
     if-nez v0, :cond_0
 
-    .line 622
+    .line 621
     return v1
 
-    .line 625
+    .line 624
     :cond_0
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
@@ -1847,14 +1878,14 @@
 
     const/16 v2, 0xa1
 
-    .line 626
+    .line 625
     invoke-virtual {v0, v2}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
 
     move-result-object v0
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$CameraAction;
 
-    .line 627
+    .line 626
     if-eqz v0, :cond_1
 
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$CameraAction;->isDoingAction()Z
@@ -1863,62 +1894,62 @@
 
     if-eqz v0, :cond_1
 
-    .line 628
+    .line 627
     return v1
 
-    .line 631
+    .line 630
     :cond_1
     invoke-virtual {p1}, Landroid/view/View;->getId()I
 
     move-result p1
 
-    const v0, 0x7f0d0046
+    const v0, 0x7f0d004d
 
     if-eq p1, v0, :cond_2
 
-    .line 641
+    .line 640
     return v1
 
-    .line 633
+    .line 632
     :cond_2
     new-instance p1, Lcom/android/camera/data/data/config/ComponentManuallyDualZoom;
 
-    .line 634
+    .line 633
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemRunning()Lcom/android/camera/data/data/runing/DataItemRunning;
 
     move-result-object v0
 
     invoke-direct {p1, v0}, Lcom/android/camera/data/data/config/ComponentManuallyDualZoom;-><init>(Lcom/android/camera/data/data/runing/DataItemRunning;)V
 
-    .line 635
+    .line 634
     invoke-direct {p0, p1}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->initSlideZoomView(Lcom/android/camera/data/data/ComponentData;)V
 
-    .line 636
+    .line 635
     invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->showSlideView()V
 
-    .line 637
+    .line 636
     const/4 p1, 0x1
 
     iput-boolean p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mPassTouchFromZoomButtonToSlide:Z
 
-    .line 638
+    .line 637
     return p1
 .end method
 
 .method public onManuallyDataChanged(Lcom/android/camera/data/data/ComponentData;Ljava/lang/String;Ljava/lang/String;Z)V
     .locals 0
 
-    .line 727
+    .line 733
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->isInModeChanging()Z
 
     move-result p1
 
     if-eqz p1, :cond_0
 
-    .line 728
+    .line 734
     return-void
 
-    .line 730
+    .line 736
     :cond_0
     invoke-static {p3}, Ljava/lang/Float;->valueOf(Ljava/lang/String;)Ljava/lang/Float;
 
@@ -1932,7 +1963,7 @@
 
     invoke-direct {p0, p1, p2}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->requestZoomRatio(FZ)V
 
-    .line 731
+    .line 737
     return-void
 .end method
 
@@ -1947,16 +1978,16 @@
         }
     .end annotation
 
-    .line 432
+    .line 431
     iget v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
 
-    .line 433
+    .line 432
     invoke-super {p0, p1, p2, p3}, Lcom/android/camera/fragment/BaseFragment;->provideAnimateElement(ILjava/util/List;Z)V
 
-    .line 435
+    .line 434
     nop
 
-    .line 436
+    .line 435
     const/16 p3, 0xa3
 
     const/4 v1, -0x1
@@ -1971,16 +2002,16 @@
 
     packed-switch p1, :pswitch_data_0
 
-    .line 450
+    .line 449
     move p3, v1
 
     goto :goto_1
 
-    .line 445
+    .line 444
     :pswitch_0
     nop
 
-    .line 446
+    .line 445
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     const/4 v3, 0x0
@@ -1989,12 +2020,12 @@
 
     goto :goto_0
 
-    .line 440
+    .line 439
     :cond_0
     :pswitch_1
     nop
 
-    .line 441
+    .line 440
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     iget v3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDegree:I
@@ -2003,46 +2034,42 @@
 
     invoke-static {p3, v3}, Landroid/support/v4/view/ViewCompat;->setRotation(Landroid/view/View;F)V
 
-    .line 442
+    .line 441
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     invoke-virtual {p3, p0}, Landroid/widget/TextView;->setOnLongClickListener(Landroid/view/View$OnLongClickListener;)V
 
-    .line 443
+    .line 442
     nop
 
-    .line 450
+    .line 449
     :goto_0
     move p3, v2
 
     :goto_1
-    invoke-static {}, Lcom/mi/config/b;->fu()Z
+    iget v3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentMode:I
+
+    invoke-static {v3}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen(I)Z
 
     move-result v3
 
     if-eqz v3, :cond_1
 
-    invoke-static {}, Lcom/android/camera/CameraSettings;->isUltraWideConfigOpen()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_1
-
-    .line 451
+    .line 450
     nop
 
-    .line 453
+    .line 452
     move p3, v1
 
     :cond_1
     if-ne p3, v2, :cond_2
 
-    .line 454
+    .line 453
     const/4 v3, 0x4
 
     invoke-virtual {p0, v3}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->onBackEvent(I)Z
 
-    .line 456
+    .line 455
     invoke-static {}, Lcom/android/camera/data/DataRepository;->dataItemGlobal()Lcom/android/camera/data/data/global/DataItemGlobal;
 
     move-result-object v3
@@ -2053,10 +2080,10 @@
 
     if-ne v3, v2, :cond_2
 
-    .line 458
+    .line 457
     nop
 
-    .line 462
+    .line 461
     move p3, v1
 
     :cond_2
@@ -2064,21 +2091,21 @@
 
     if-ne v3, p3, :cond_4
 
-    .line 463
+    .line 462
     if-ne p3, v2, :cond_3
 
-    .line 464
+    .line 463
     invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->resetZoomIcon()V
 
-    .line 466
+    .line 465
     :cond_3
     return-void
 
-    .line 468
+    .line 467
     :cond_4
     iput p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentState:I
 
-    .line 470
+    .line 469
     const/16 v3, 0xa5
 
     const/16 v4, 0x50
@@ -2089,7 +2116,7 @@
 
     goto/16 :goto_4
 
-    .line 472
+    .line 471
     :cond_5
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualParentLayout:Landroid/view/ViewGroup;
 
@@ -2099,18 +2126,18 @@
 
     if-eqz p3, :cond_6
 
-    .line 473
+    .line 472
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualParentLayout:Landroid/view/ViewGroup;
 
     invoke-static {p3, v4}, Lcom/android/camera/animation/type/SlideInOnSubscribe;->directSetResult(Landroid/view/View;I)V
 
-    .line 475
+    .line 474
     :cond_6
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     invoke-static {p3, v4}, Lcom/android/camera/animation/type/SlideOutOnSubscribe;->directSetResult(Landroid/view/View;I)V
 
-    .line 476
+    .line 475
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     iget v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
@@ -2119,10 +2146,10 @@
 
     invoke-static {p3, v1}, Landroid/support/v4/view/ViewCompat;->setTranslationY(Landroid/view/View;F)V
 
-    .line 477
+    .line 476
     invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->resetZoomIcon()V
 
-    .line 478
+    .line 477
     if-eqz p2, :cond_9
 
     const/16 p3, 0xa7
@@ -2133,11 +2160,11 @@
 
     goto :goto_2
 
-    .line 483
+    .line 482
     :cond_7
     if-ne v0, p3, :cond_8
 
-    .line 484
+    .line 483
     new-instance p1, Lcom/android/camera/animation/type/AlphaInOnSubscribe;
 
     iget-object p3, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
@@ -2146,12 +2173,12 @@
 
     const/16 p3, 0x96
 
-    .line 485
+    .line 484
     invoke-virtual {p1, p3}, Lcom/android/camera/animation/type/AlphaInOnSubscribe;->setStartDelayTime(I)Lcom/android/camera/animation/type/BaseOnSubScribe;
 
     move-result-object p1
 
-    .line 484
+    .line 483
     invoke-static {p1}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object p1
@@ -2160,7 +2187,7 @@
 
     goto :goto_4
 
-    .line 487
+    .line 486
     :cond_8
     new-instance p1, Lcom/android/camera/animation/type/AlphaInOnSubscribe;
 
@@ -2168,18 +2195,18 @@
 
     invoke-direct {p1, p3}, Lcom/android/camera/animation/type/AlphaInOnSubscribe;-><init>(Landroid/view/View;)V
 
-    .line 488
+    .line 487
     invoke-static {p1}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object p1
 
-    .line 487
+    .line 486
     invoke-interface {p2, p1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 491
+    .line 490
     goto :goto_4
 
-    .line 481
+    .line 480
     :cond_9
     :goto_2
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
@@ -2188,7 +2215,7 @@
 
     goto :goto_4
 
-    .line 494
+    .line 493
     :cond_a
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
@@ -2198,10 +2225,10 @@
 
     if-nez p1, :cond_c
 
-    .line 495
+    .line 494
     if-nez p2, :cond_b
 
-    .line 496
+    .line 495
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     const/16 p2, 0x8
@@ -2210,7 +2237,7 @@
 
     goto :goto_4
 
-    .line 498
+    .line 497
     :cond_b
     new-instance p1, Lcom/android/camera/animation/type/SlideOutOnSubscribe;
 
@@ -2218,17 +2245,17 @@
 
     invoke-direct {p1, p3, v4}, Lcom/android/camera/animation/type/SlideOutOnSubscribe;-><init>(Landroid/view/View;I)V
 
-    .line 499
+    .line 498
     invoke-static {p1}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object p1
 
-    .line 498
+    .line 497
     invoke-interface {p2, p1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     goto :goto_4
 
-    .line 503
+    .line 502
     :cond_c
     if-eqz p2, :cond_e
 
@@ -2236,7 +2263,7 @@
 
     goto :goto_3
 
-    .line 506
+    .line 505
     :cond_d
     new-instance p1, Lcom/android/camera/animation/type/AlphaOutOnSubscribe;
 
@@ -2244,24 +2271,24 @@
 
     invoke-direct {p1, p3}, Lcom/android/camera/animation/type/AlphaOutOnSubscribe;-><init>(Landroid/view/View;)V
 
-    .line 507
+    .line 506
     invoke-static {p1}, Lio/reactivex/Completable;->create(Lio/reactivex/CompletableOnSubscribe;)Lio/reactivex/Completable;
 
     move-result-object p1
 
-    .line 506
+    .line 505
     invoke-interface {p2, p1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     goto :goto_4
 
-    .line 504
+    .line 503
     :cond_e
     :goto_3
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     invoke-static {p1}, Lcom/android/camera/animation/type/AlphaOutOnSubscribe;->directSetResult(Landroid/view/View;)V
 
-    .line 512
+    .line 511
     :goto_4
     return-void
 
@@ -2283,10 +2310,10 @@
         }
     .end annotation
 
-    .line 744
+    .line 750
     invoke-super {p0, p1, p2}, Lcom/android/camera/fragment/BaseFragment;->provideRotateItem(Ljava/util/List;I)V
 
-    .line 745
+    .line 751
     iget-object p2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     invoke-virtual {p2}, Landroid/widget/TextView;->getVisibility()I
@@ -2295,12 +2322,12 @@
 
     if-nez p2, :cond_0
 
-    .line 746
+    .line 752
     iget-object p2, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     invoke-interface {p1, p2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 748
+    .line 754
     :cond_0
     return-void
 .end method
@@ -2308,10 +2335,10 @@
 .method protected register(Lcom/android/camera/protocol/ModeProtocol$ModeCoordinator;)V
     .locals 1
 
-    .line 395
+    .line 396
     invoke-super {p0, p1}, Lcom/android/camera/fragment/BaseFragment;->register(Lcom/android/camera/protocol/ModeProtocol$ModeCoordinator;)V
 
-    .line 397
+    .line 398
     const/16 v0, 0xb6
 
     invoke-interface {p1, v0, p0}, Lcom/android/camera/protocol/ModeProtocol$ModeCoordinator;->attachProtocol(ILcom/android/camera/protocol/ModeProtocol$BaseProtocol;)V
@@ -2339,12 +2366,12 @@
 .method public setSnapNumValue(I)V
     .locals 4
 
-    .line 799
+    .line 805
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSnapStyle:Landroid/text/style/TextAppearanceSpan;
 
     if-nez v0, :cond_0
 
-    .line 800
+    .line 806
     new-instance v0, Landroid/text/style/TextAppearanceSpan;
 
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->getContext()Landroid/content/Context;
@@ -2357,13 +2384,13 @@
 
     iput-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSnapStyle:Landroid/text/style/TextAppearanceSpan;
 
-    .line 802
+    .line 808
     :cond_0
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mStringBuilder:Landroid/text/SpannableStringBuilder;
 
     invoke-virtual {v0}, Landroid/text/SpannableStringBuilder;->clear()V
 
-    .line 803
+    .line 809
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mStringBuilder:Landroid/text/SpannableStringBuilder;
 
     const-string v1, "%02d"
@@ -2390,36 +2417,36 @@
 
     invoke-static {v0, p1, v1, v2}, Lcom/android/camera/Util;->appendInApi26(Landroid/text/SpannableStringBuilder;Ljava/lang/CharSequence;Ljava/lang/Object;I)Landroid/text/SpannableStringBuilder;
 
-    .line 804
+    .line 810
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mStringBuilder:Landroid/text/SpannableStringBuilder;
 
     invoke-virtual {p1, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 805
+    .line 811
     return-void
 .end method
 
 .method public setSnapNumVisible(ZZ)V
     .locals 1
 
-    .line 774
+    .line 780
     iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     if-nez v0, :cond_0
 
-    .line 775
+    .line 781
     return-void
 
-    .line 777
+    .line 783
     :cond_0
     if-eqz p1, :cond_3
 
-    .line 778
+    .line 784
     if-eqz p2, :cond_2
 
-    .line 779
+    .line 785
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mHorizontalSlideLayout:Landroid/view/ViewGroup;
 
     invoke-virtual {p1}, Landroid/view/ViewGroup;->getVisibility()I
@@ -2428,10 +2455,10 @@
 
     if-nez p1, :cond_1
 
-    .line 780
+    .line 786
     invoke-direct {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->hideSlideView()V
 
-    .line 782
+    .line 788
     :cond_1
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomInAnimator:Landroid/animation/AnimatorSet;
 
@@ -2439,7 +2466,7 @@
 
     goto :goto_0
 
-    .line 784
+    .line 790
     :cond_2
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
@@ -2449,7 +2476,7 @@
 
     invoke-static {p1, p2}, Landroid/support/v4/view/ViewCompat;->setRotation(Landroid/view/View;F)V
 
-    .line 785
+    .line 791
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
     const/4 p2, 0x0
@@ -2458,21 +2485,21 @@
 
     goto :goto_0
 
-    .line 788
+    .line 794
     :cond_3
     if-eqz p2, :cond_4
 
-    .line 789
+    .line 795
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mZoomOutAnimator:Landroid/animation/AnimatorSet;
 
     invoke-virtual {p1}, Landroid/animation/AnimatorSet;->start()V
 
-    .line 790
+    .line 796
     invoke-virtual {p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->updateZoomValue()V
 
     goto :goto_0
 
-    .line 792
+    .line 798
     :cond_4
     iget-object p1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
 
@@ -2480,7 +2507,7 @@
 
     invoke-virtual {p1, p2}, Landroid/widget/TextView;->setVisibility(I)V
 
-    .line 795
+    .line 801
     :goto_0
     return-void
 .end method
@@ -2503,6 +2530,15 @@
     iput v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mCurrentState:I
 
     .line 390
+    iget-object v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
+
+    iget v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDegree:I
+
+    int-to-float v1, v1
+
+    invoke-static {v0, v1}, Landroid/support/v4/view/ViewCompat;->setRotation(Landroid/view/View;F)V
+
+    .line 391
     new-instance v0, Lcom/android/camera/animation/type/AlphaInOnSubscribe;
 
     iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
@@ -2515,7 +2551,7 @@
 
     invoke-virtual {v0}, Lio/reactivex/Completable;->subscribe()Lio/reactivex/disposables/Disposable;
 
-    .line 391
+    .line 392
     return-void
 .end method
 
@@ -2537,22 +2573,22 @@
 
     invoke-interface {p1, v0, p0}, Lcom/android/camera/protocol/ModeProtocol$ModeCoordinator;->detachProtocol(ILcom/android/camera/protocol/ModeProtocol$BaseProtocol;)V
 
-    .line 412
+    .line 411
     invoke-virtual {p0, p1, p0}, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->unRegisterBackStack(Lcom/android/camera/protocol/ModeProtocol$ModeCoordinator;Lcom/android/camera/protocol/ModeProtocol$HandleBackTrace;)V
 
-    .line 414
+    .line 413
     invoke-static {}, Lcom/mi/config/b;->isSupportedOpticalZoom()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 415
+    .line 414
     const/16 v0, 0xb8
 
     invoke-interface {p1, v0, p0}, Lcom/android/camera/protocol/ModeProtocol$ModeCoordinator;->detachProtocol(ILcom/android/camera/protocol/ModeProtocol$BaseProtocol;)V
 
-    .line 417
+    .line 416
     :cond_0
     return-void
 .end method
@@ -2678,6 +2714,14 @@
 
     .line 369
     iget v0, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mSlideLayoutHeight:I
+
+    iget-object v1, p0, Lcom/android/camera/fragment/dual/FragmentDualCameraAdjust;->mDualZoomButton:Landroid/widget/TextView;
+
+    invoke-virtual {v1}, Landroid/widget/TextView;->getHeight()I
+
+    move-result v1
+
+    add-int/2addr v0, v1
 
     return v0
 

@@ -36,7 +36,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;)V
     .locals 0
 
-    .line 1173
+    .line 1150
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$8;->this$0:Lcom/android/camera/module/Camera2Module;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -65,7 +65,7 @@
         }
     .end annotation
 
-    .line 1176
+    .line 1153
     invoke-static {p1}, Lio/reactivex/Observable;->just(Ljava/lang/Object;)Lio/reactivex/Observable;
 
     move-result-object v0
@@ -93,7 +93,7 @@
         }
     .end annotation
 
-    .line 1173
+    .line 1150
     check-cast p1, Ljava/lang/Integer;
 
     invoke-virtual {p0, p1}, Lcom/android/camera/module/Camera2Module$8;->apply(Ljava/lang/Integer;)Lio/reactivex/ObservableSource;

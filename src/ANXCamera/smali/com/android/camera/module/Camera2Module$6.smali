@@ -27,7 +27,7 @@
 .method constructor <init>(Lcom/android/camera/module/Camera2Module;Z)V
     .locals 0
 
-    .line 829
+    .line 800
     iput-object p1, p0, Lcom/android/camera/module/Camera2Module$6;->this$0:Lcom/android/camera/module/Camera2Module;
 
     iput-boolean p2, p0, Lcom/android/camera/module/Camera2Module$6;->val$isInHdr:Z
@@ -42,12 +42,12 @@
 .method public run()V
     .locals 3
 
-    .line 832
+    .line 803
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
 
-    .line 833
+    .line 804
     const/16 v1, 0xac
 
     invoke-virtual {v0, v1}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getAttachProtocol(I)Lcom/android/camera/protocol/ModeProtocol$BaseProtocol;
@@ -56,7 +56,7 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$TopAlert;
 
-    .line 834
+    .line 805
     iget-boolean v1, p0, Lcom/android/camera/module/Camera2Module$6;->val$isInHdr:Z
 
     const/4 v2, 0x0
@@ -73,6 +73,6 @@
     :goto_0
     invoke-interface {v0, v1, v2, v2}, Lcom/android/camera/protocol/ModeProtocol$TopAlert;->alertHDR(IZZ)V
 
-    .line 835
+    .line 806
     return-void
 .end method

@@ -73,7 +73,7 @@
 
     move-result-object v0
 
-    invoke-interface {p2, v0}, Lcom/bumptech/glide/request/a/k$a;->m(Landroid/content/Context;)Landroid/view/animation/Animation;
+    invoke-interface {p2, v0}, Lcom/bumptech/glide/request/a/k$a;->l(Landroid/content/Context;)Landroid/view/animation/Animation;
 
     move-result-object p2
 

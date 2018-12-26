@@ -1,4 +1,4 @@
-.class public Lcom/xiaomi/camera/base/CameraDeviceUtil;
+.class public final Lcom/xiaomi/camera/base/CameraDeviceUtil;
 .super Ljava/lang/Object;
 .source "CameraDeviceUtil.java"
 
@@ -82,7 +82,7 @@
 
     move-result-object v2
 
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v1, v2}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 100
     new-instance v1, Lcom/xiaomi/protocol/ICustomCaptureResult;
@@ -150,7 +150,7 @@
 
     move-result-object v0
 
-    invoke-static {p0, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {p0, v0}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -166,7 +166,7 @@
 
     const-string v1, "getCustomCaptureResult: getCustomCaptureResult"
 
-    invoke-static {v0, v1, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v0, v1, p0}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     .line 115
     const/4 p0, 0x0
@@ -319,7 +319,7 @@
 
     const-string v0, "prepareCalibrationDataForAlgo: call reflect method failed!"
 
-    invoke-static {p1, v0, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {p1, v0, p0}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     .line 78
     new-instance p0, Ljava/lang/RuntimeException;
@@ -339,7 +339,7 @@
 
     const-string v0, "prepareCalibrationDataForAlgo: get getCameraCharacteristics failed!"
 
-    invoke-static {p1, v0, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {p1, v0, p0}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     .line 56
     return-void

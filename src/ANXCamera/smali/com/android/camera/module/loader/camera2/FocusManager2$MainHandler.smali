@@ -22,13 +22,13 @@
 .method public constructor <init>(Lcom/android/camera/module/loader/camera2/FocusManager2;Landroid/os/Looper;)V
     .locals 0
 
-    .line 130
+    .line 132
     iput-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
-    .line 131
+    .line 133
     invoke-direct {p0, p2}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
 
-    .line 132
+    .line 134
     return-void
 .end method
 
@@ -37,14 +37,14 @@
 .method public handleMessage(Landroid/os/Message;)V
     .locals 2
 
-    .line 136
+    .line 138
     iget v0, p1, Landroid/os/Message;->what:I
 
     packed-switch v0, :pswitch_data_0
 
     goto :goto_0
 
-    .line 148
+    .line 150
     :pswitch_0
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
@@ -58,13 +58,13 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$MainContentProtocol;
 
-    .line 151
+    .line 153
     if-eqz v0, :cond_0
 
-    .line 152
+    .line 154
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$MainContentProtocol;->reShowFaceRect()V
 
-    .line 156
+    .line 158
     :cond_0
     iget p1, p1, Landroid/os/Message;->what:I
 
@@ -74,26 +74,26 @@
 
     iget-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
-    .line 157
+    .line 159
     invoke-virtual {p1}, Lcom/android/camera/module/loader/camera2/FocusManager2;->isFocusingSnapOnFinish()Z
 
     move-result p1
 
     if-eqz p1, :cond_2
 
-    .line 158
+    .line 160
     iget-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
     const/4 v0, 0x4
 
     invoke-static {p1, v0}, Lcom/android/camera/module/loader/camera2/FocusManager2;->access$000(Lcom/android/camera/module/loader/camera2/FocusManager2;I)V
 
-    .line 159
+    .line 161
     iget-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
     invoke-static {p1, v0}, Lcom/android/camera/module/loader/camera2/FocusManager2;->access$100(Lcom/android/camera/module/loader/camera2/FocusManager2;I)V
 
-    .line 160
+    .line 162
     iget-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
     invoke-static {p1}, Lcom/android/camera/module/loader/camera2/FocusManager2;->access$200(Lcom/android/camera/module/loader/camera2/FocusManager2;)Z
@@ -102,14 +102,14 @@
 
     if-eqz p1, :cond_1
 
-    .line 161
+    .line 163
     iget-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
     invoke-static {p1}, Lcom/android/camera/module/loader/camera2/FocusManager2;->access$300(Lcom/android/camera/module/loader/camera2/FocusManager2;)V
 
     goto :goto_0
 
-    .line 163
+    .line 165
     :cond_1
     iget-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
@@ -117,16 +117,16 @@
 
     goto :goto_0
 
-    .line 166
+    .line 168
     :cond_2
     iget-object p1, p0, Lcom/android/camera/module/loader/camera2/FocusManager2$MainHandler;->this$0:Lcom/android/camera/module/loader/camera2/FocusManager2;
 
     invoke-virtual {p1}, Lcom/android/camera/module/loader/camera2/FocusManager2;->cancelFocus()V
 
-    .line 170
+    .line 172
     nop
 
-    .line 174
+    .line 176
     :goto_0
     return-void
 

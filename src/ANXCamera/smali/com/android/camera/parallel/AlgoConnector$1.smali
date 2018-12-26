@@ -39,7 +39,9 @@
     .locals 3
 
     .line 24
-    const-string v0, "AlgoConnector"
+    invoke-static {}, Lcom/android/camera/parallel/AlgoConnector;->access$000()Ljava/lang/String;
+
+    move-result-object v0
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -55,7 +57,7 @@
 
     move-result-object p1
 
-    invoke-static {v0, p1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, p1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 25
     iget-object p1, p0, Lcom/android/camera/parallel/AlgoConnector$1;->this$0:Lcom/android/camera/parallel/AlgoConnector;
@@ -72,11 +74,13 @@
     .locals 1
 
     .line 30
-    const-string p1, "AlgoConnector"
+    invoke-static {}, Lcom/android/camera/parallel/AlgoConnector;->access$000()Ljava/lang/String;
 
-    const-string v0, "onServiceDisconnected: "
+    move-result-object p1
 
-    invoke-static {p1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    const-string v0, "onServiceDisconnected"
+
+    invoke-static {p1, v0}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 31
     iget-object p1, p0, Lcom/android/camera/parallel/AlgoConnector$1;->this$0:Lcom/android/camera/parallel/AlgoConnector;

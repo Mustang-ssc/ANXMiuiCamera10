@@ -313,7 +313,7 @@
 
     move-result-object p1
 
-    const v0, 0x7f0d0014
+    const v0, 0x7f0d0016
 
     invoke-static {p1, v0, p2, p3}, Lcom/android/camera/fragment/FragmentUtils;->addFragmentWithTag(Landroid/support/v4/app/FragmentManager;ILandroid/support/v4/app/Fragment;Ljava/lang/String;)V
 
@@ -340,7 +340,7 @@
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/mi/config/a;->fl()Z
+    invoke-virtual {v0}, Lcom/mi/config/a;->fm()Z
 
     move-result v0
 
@@ -430,7 +430,7 @@
     .line 399
     if-eqz p1, :cond_2
 
-    const v0, 0x7f0d00e1
+    const v0, 0x7f0d00ef
 
     invoke-interface {p1, v0}, Lcom/android/camera/protocol/ModeProtocol$BaseDelegate;->getActiveFragment(I)I
 
@@ -485,6 +485,12 @@
 
     .line 212
     if-eqz v0, :cond_1
+
+    invoke-static {}, Lcom/android/camera/CameraSettings;->isFrontCamera()Z
+
+    move-result v1
+
+    if-nez v1, :cond_1
 
     .line 213
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$DualController;->showZoomButton()V
@@ -632,7 +638,7 @@
     iput-boolean v0, p0, Lcom/android/camera/fragment/FragmentBeauty;->mRemoveFragmentBeauty:Z
 
     .line 90
-    const v1, 0x7f0d0014
+    const v1, 0x7f0d0016
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -641,7 +647,7 @@
     iput-object v1, p0, Lcom/android/camera/fragment/FragmentBeauty;->mBeautyExtraView:Landroid/view/View;
 
     .line 91
-    const v1, 0x7f0d0013
+    const v1, 0x7f0d0015
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

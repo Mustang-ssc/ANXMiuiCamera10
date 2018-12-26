@@ -99,7 +99,7 @@
 
     move-result-object v1
 
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 302
     iget-object v0, p0, Lcom/android/camera/fragment/FragmentBeauty$BeautyPagerAdapter;->mFragmentList:Ljava/util/List;
@@ -114,7 +114,7 @@
     if-nez p1, :cond_2
 
     .line 305
-    invoke-static {}, Lcom/mi/config/b;->hp()Z
+    invoke-static {}, Lcom/mi/config/b;->hr()Z
 
     move-result v0
 
@@ -129,7 +129,7 @@
 
     .line 307
     :cond_0
-    invoke-static {}, Lcom/mi/config/b;->hA()Z
+    invoke-static {}, Lcom/mi/config/b;->hC()Z
 
     move-result v0
 
@@ -147,7 +147,7 @@
 
     const-string v1, "beauty pager get fragment item is null!"
 
-    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 312
     :cond_2

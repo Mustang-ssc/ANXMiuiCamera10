@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/camera/fragment/FragmentFullScreen;->startConcatVideo()V
+    value = Lcom/android/camera/fragment/FragmentFullScreen;->startConcatVideoIfNeed()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -36,7 +36,7 @@
 .method constructor <init>(Lcom/android/camera/fragment/FragmentFullScreen;)V
     .locals 0
 
-    .line 210
+    .line 248
     iput-object p1, p0, Lcom/android/camera/fragment/FragmentFullScreen$2;->this$0:Lcom/android/camera/fragment/FragmentFullScreen;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -65,7 +65,7 @@
         }
     .end annotation
 
-    .line 214
+    .line 252
     invoke-static {}, Lcom/android/camera/protocol/ModeCoordinatorImpl;->getInstance()Lcom/android/camera/protocol/ModeCoordinatorImpl;
 
     move-result-object v0
@@ -78,16 +78,16 @@
 
     check-cast v0, Lcom/android/camera/protocol/ModeProtocol$LiveConfigChanges;
 
-    .line 215
+    .line 253
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$LiveConfigChanges;->onRecordConcat()V
 
-    .line 216
+    .line 254
     invoke-interface {v0}, Lcom/android/camera/protocol/ModeProtocol$LiveConfigChanges;->getConcatResult()Landroid/util/Pair;
 
     move-result-object v0
 
     invoke-interface {p1, v0}, Lio/reactivex/SingleEmitter;->onSuccess(Ljava/lang/Object;)V
 
-    .line 217
+    .line 255
     return-void
 .end method

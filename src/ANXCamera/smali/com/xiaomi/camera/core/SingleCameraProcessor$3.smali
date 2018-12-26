@@ -3,7 +3,7 @@
 .source "SingleCameraProcessor.java"
 
 # interfaces
-.implements Lcom/xiaomi/engine/TaskSession$FrameCallback;
+.implements Lcom/xiaomi/engine/FrameData$FrameStatusCallback;
 
 
 # annotations
@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/xiaomi/camera/core/SingleCameraProcessor;)V
     .locals 0
 
-    .line 150
+    .line 102
     iput-object p1, p0, Lcom/xiaomi/camera/core/SingleCameraProcessor$3;->this$0:Lcom/xiaomi/camera/core/SingleCameraProcessor;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -35,40 +35,45 @@
 
 
 # virtual methods
-.method public onFrameProcessed(ILjava/lang/String;Ljava/lang/Object;)V
-    .locals 2
+.method public onFrameImageClosed(Landroid/media/Image;)V
+    .locals 3
 
-    .line 153
+    .line 105
     invoke-static {}, Lcom/xiaomi/camera/core/SingleCameraProcessor;->access$000()Ljava/lang/String;
 
-    move-result-object p3
+    move-result-object v0
 
-    new-instance v0, Ljava/lang/StringBuilder;
+    new-instance v1, Ljava/lang/StringBuilder;
 
-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v1, "onFrameProcessed: ["
+    const-string v2, "onFrameImageClosed: "
 
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    const-string p1, "]:{"
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v1
 
-    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-static {v0, v1}, Lcom/android/camera/log/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    const-string p1, "}"
+    .line 106
+    iget-object v0, p0, Lcom/xiaomi/camera/core/SingleCameraProcessor$3;->this$0:Lcom/xiaomi/camera/core/SingleCameraProcessor;
 
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iget-object v0, v0, Lcom/xiaomi/camera/core/SingleCameraProcessor;->mImageProcessorStatusCallback:Lcom/xiaomi/camera/core/ImageProcessor$ImageProcessorStatusCallback;
 
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    if-eqz v0, :cond_0
 
-    move-result-object p1
+    .line 107
+    iget-object v0, p0, Lcom/xiaomi/camera/core/SingleCameraProcessor$3;->this$0:Lcom/xiaomi/camera/core/SingleCameraProcessor;
 
-    invoke-static {p3, p1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    iget-object v0, v0, Lcom/xiaomi/camera/core/SingleCameraProcessor;->mImageProcessorStatusCallback:Lcom/xiaomi/camera/core/ImageProcessor$ImageProcessorStatusCallback;
 
-    .line 155
+    invoke-interface {v0, p1}, Lcom/xiaomi/camera/core/ImageProcessor$ImageProcessorStatusCallback;->onOriginalImageClosed(Landroid/media/Image;)V
+
+    .line 109
+    :cond_0
     return-void
 .end method

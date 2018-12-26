@@ -299,7 +299,7 @@
     move-result v0
 
     .line 107
-    invoke-static {}, Lcom/mi/config/b;->fO()Z
+    invoke-static {}, Lcom/mi/config/b;->fR()Z
 
     move-result v2
 
@@ -399,7 +399,7 @@
 
     move-result-object v0
 
-    const v1, 0x7f0b015b
+    const v1, 0x7f0b0162
 
     invoke-virtual {v0, v1, v2}, Lcom/android/camera/ui/RotateTextToast;->show(II)V
 
@@ -507,7 +507,7 @@
     .line 41
     iget-object v0, p0, Lcom/android/camera/ui/ScreenHint;->mActivity:Landroid/app/Activity;
 
-    const v2, 0x7f0b00c1
+    const v2, 0x7f0b00c7
 
     invoke-virtual {v0, v2}, Landroid/app/Activity;->getString(I)Ljava/lang/String;
 
@@ -519,7 +519,7 @@
     :cond_3
     iget-object v0, p0, Lcom/android/camera/ui/ScreenHint;->mActivity:Landroid/app/Activity;
 
-    const v2, 0x7f0b00c2
+    const v2, 0x7f0b00c8
 
     invoke-virtual {v0, v2}, Landroid/app/Activity;->getString(I)Ljava/lang/String;
 

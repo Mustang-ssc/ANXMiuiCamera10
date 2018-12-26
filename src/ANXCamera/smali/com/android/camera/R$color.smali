@@ -21,7 +21,7 @@
 
 .field public static final beauty_panel_full_screen_bg:I = 0x7f0a0065
 
-.field public static final beauty_tab_selector_color:I = 0x7f0a0070
+.field public static final beauty_tab_selector_color:I = 0x7f0a0071
 
 .field public static final beautycamera_beauty_advanced_item_backgroud_normal:I = 0x7f0a0059
 
@@ -71,9 +71,11 @@
 
 .field public static final detail_input_bg:I = 0x7f0a0002
 
+.field public static final disable_status:I = 0x7f0a006d
+
 .field public static final effect_divider_color:I = 0x7f0a0047
 
-.field public static final effect_item_text_color:I = 0x7f0a0071
+.field public static final effect_item_text_color:I = 0x7f0a0072
 
 .field public static final feedback_content_text:I = 0x7f0a0003
 
@@ -81,15 +83,15 @@
 
 .field public static final feedback_user_content_text:I = 0x7f0a0005
 
-.field public static final front_camera_hint_popup_background_color:I = 0x7f0a006d
+.field public static final front_camera_hint_popup_background_color:I = 0x7f0a006e
 
-.field public static final front_camera_hint_text_place_color:I = 0x7f0a006f
+.field public static final front_camera_hint_text_place_color:I = 0x7f0a0070
 
-.field public static final front_camera_hint_text_rotate_color:I = 0x7f0a006e
+.field public static final front_camera_hint_text_rotate_color:I = 0x7f0a006f
 
 .field public static final fullscreen_background:I = 0x7f0a0049
 
-.field public static final grid_setting_item_text_color:I = 0x7f0a0072
+.field public static final grid_setting_item_text_color:I = 0x7f0a0073
 
 .field public static final half_black:I = 0x7f0a0006
 
@@ -229,13 +231,13 @@
 
 .field public static final sticker_download_bg:I = 0x7f0a0061
 
-.field public static final sticker_item_text_color:I = 0x7f0a0073
+.field public static final sticker_item_text_color:I = 0x7f0a0074
 
 .field public static final sticker_iv_bg:I = 0x7f0a0062
 
 .field public static final submit_feedback_fragment_bg:I = 0x7f0a003d
 
-.field public static final text_item_text_color:I = 0x7f0a0074
+.field public static final text_item_text_color:I = 0x7f0a0075
 
 .field public static final transparent:I = 0x7f0a0040
 
@@ -249,14 +251,14 @@
 
 .field public static final zoom_popup_line_color_default:I = 0x7f0a004e
 
-.field public static final zoom_popup_text_item_text_color:I = 0x7f0a0075
+.field public static final zoom_popup_text_item_text_color:I = 0x7f0a0076
 
 
 # direct methods
 .method public constructor <init>()V
     .locals 0
 
-    .line 373
+    .line 382
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
