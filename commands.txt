@@ -15,36 +15,36 @@ J:\ROOT\GitHub\ANXMiuiCamera>java  -jar .\tools\apktool.jar if -p .\tools\RROFra
 
 
 Decompile
-java  -jar .\tools\apktool.jar d -p .\tools\MiuiFrameworks -f -o .\src\ANXCamera .\orig\MiuiCamera.apk
+java  -jar .\tools\apktool.jar d -p .\tools\MiuiFrameworks -f -o .\src\ANXCamera-polaris .\orig\MiuiCam-polaris-8.12.20.apk
 
 
 Recompile
-java  -jar .\tools\apktool.jar b -p .\tools\MiuiFrameworks -o .\out\ANXCamera-Unsigned.apk .\src\ANXCamera
+java  -jar .\tools\apktool.jar b -p .\tools\MiuiFrameworks -o .\out\ANXCamera-polaris-Unsigned.apk .\src\ANXCamera-polaris
 
 
 Sign
-java  -jar .\tools\SignApk.jar .\tools\testkey.x509.pem .\tools\testkey.pk8 .\out\ANXCamera-Unsigned.apk .\out\ANXCamera.apk
+java  -jar .\tools\SignApk.jar .\tools\testkey.x509.pem .\tools\testkey.pk8 .\out\ANXCamera-polaris-Unsigned.apk .\out\ANXCamera-polaris.apk
 
 
 Jadx
-.\tools\jadx\bin\jadx -d .\src\ANXCamera -r .\out\ANXCamera.apk
+.\tools\jadx\bin\jadx -d .\src\ANXCamera-polaris -r .\out\ANXCamera-polaris.apk
 
 
 Install
-adb install -g .\out\ANXCamera.apk
+adb install -g .\out\ANXCamera-polaris.apk
 adb shell pm grant com.android.camera android.permission.PACKAGE_USAGE_STATS
 
 Reinstall
 adb uninstall com.aeonax.camera
-adb install -g .\out\ANXCamera.apk
+adb install -g .\out\ANXCamera-polaris.apk
 adb shell pm grant com.android.camera android.permission.PACKAGE_USAGE_STATS
 
 Logcat
 adb logcat -s System.err
 
 Copy apk 
-xcopy /s .\out\ANXCamera.apk .\src\ANXCameraMagisk\system\priv-app\ANXCamera
+xcopy /s .\out\ANXCamera-polaris.apk .\src\ANXCamera-polaris\system\priv-app\ANXCamera-polaris
 
 Magisk
-& "C:\Program Files\7-Zip\7z.exe" a -tzip .\out\ANXCameraMagisk.zip .\src\ANXCameraMagisk\*
-adb push .\out\ANXCameraMagisk.zip  /sdcard/zips
+& "C:\Program Files\7-Zip\7z.exe" a -tzip .\out\ANXCameraMagisk-polaris.zip .\src\ANXCamera-polaris\*
+adb push .\out\ANXCamera-polaris.zip  /sdcard/zips
