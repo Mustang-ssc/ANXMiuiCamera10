@@ -2904,13 +2904,8 @@
     .line 874
     invoke-direct {p0}, Lcom/android/camera/BasePreferenceActivity;->resetTimeOutFlag()V
 
-<<<<<<< HEAD
     .line 875
-    invoke-super {p0}, Lmiui/preference/PreferenceActivity;->onBackPressed()V
-=======
-    .line 861
     invoke-super {p0}, Landroid/preference/PreferenceActivity;->onBackPressed()V
->>>>>>> 794fa5d... miui.preference.PreferenceActivity->android.preference.PreferenceActivity
 
     .line 876
     return-void
@@ -3385,13 +3380,8 @@
 .method protected onRestart()V
     .locals 1
 
-<<<<<<< HEAD
     .line 839
-    invoke-super {p0}, Lmiui/preference/PreferenceActivity;->onRestart()V
-=======
-    .line 829
     invoke-super {p0}, Landroid/preference/PreferenceActivity;->onRestart()V
->>>>>>> 794fa5d... miui.preference.PreferenceActivity->android.preference.PreferenceActivity
 
     .line 840
     iget-boolean v0, p0, Lcom/android/camera/BasePreferenceActivity;->mGoToActivity:Z
