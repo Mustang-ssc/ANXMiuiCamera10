@@ -57,12 +57,13 @@ public class FragmentTopConfigExtra extends BaseFragment implements OnClickListe
         if (supportedExtraConfigs.getLength() <= 4) {
             i = supportedExtraConfigs.getLength();
         }
-        ((MarginLayoutParams) this.mRecyclerView.getLayoutParams()).height = getResources().getDimensionPixelSize(R.dimen.config_item_height) * ((int) Math.ceil((double) (((float) supportedExtraConfigs.getLength()) / ((float) i))));
+        int max = Math.max(1, i);
+        ((MarginLayoutParams) this.mRecyclerView.getLayoutParams()).height = getResources().getDimensionPixelSize(R.dimen.config_item_height) * ((int) Math.ceil((double) (((float) supportedExtraConfigs.getLength()) / ((float) max))));
         if (Util.isLongRatioScreen) {
             adjustViewBackground(this.mCurrentMode);
-            ((MarginLayoutParams) this.mBackgroundView.getLayoutParams()).topMargin = this.mDisplayRectTopMargin;
+            this.mBackgroundView.setPadding(0, this.mDisplayRectTopMargin, 0, 0);
         }
-        this.mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), i));
+        this.mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), max));
         this.mExtraAdapter = new ExtraAdapter(supportedExtraConfigs, this);
         this.mExtraAdapter.setNewDegree(this.mDegree);
         this.mRecyclerView.setAdapter(this.mExtraAdapter);
@@ -327,7 +328,7 @@ public class FragmentTopConfigExtra extends BaseFragment implements OnClickListe
                 }
             case 240:
                 isSwitchOn = CameraSettings.isDualCameraWaterMarkOpen();
-                stringBuilder.append(getString(R.string.pref_dualcamera_watermark_title));
+                stringBuilder.append(getString(R.string.pref_camera_device_watermark_title));
                 if (!isSwitchOn) {
                     stringBuilder.append(getString(R.string.accessibility_closed));
                     break;

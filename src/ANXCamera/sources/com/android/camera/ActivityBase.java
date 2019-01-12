@@ -51,6 +51,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 public abstract class ActivityBase extends FragmentActivity implements AppController, SurfaceStateListener {
     public static final int MSG_CAMERA_OPEN_EXCEPTION = 10;
@@ -112,13 +113,7 @@ public abstract class ActivityBase extends FragmentActivity implements AppContro
                 int i = message.what;
                 if (i == 10) {
                     i = message.arg1;
-                    String str = ActivityBase.TAG;
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append("msg = ");
-                    stringBuilder.append(message);
-                    stringBuilder.append(", exception = ");
-                    stringBuilder.append(i);
-                    Log.d(str, stringBuilder.toString());
+                    Log.d(ActivityBase.TAG, String.format(Locale.ENGLISH, "msg = %s , exception = 0x%x", new Object[]{message, Integer.valueOf(i)}));
                     switch (i) {
                         case 226:
                         case 228:
@@ -501,11 +496,15 @@ public abstract class ActivityBase extends FragmentActivity implements AppContro
                 }
 
                 public void onSurfaceTextureUpdated(DrawExtTexAttribute drawExtTexAttribute) {
-                    ActivityBase.this.mCurrentModule.onSurfaceTextureUpdated(drawExtTexAttribute);
+                    if (ActivityBase.this.mCurrentModule != null) {
+                        ActivityBase.this.mCurrentModule.onSurfaceTextureUpdated(drawExtTexAttribute);
+                    }
                 }
 
                 public void onSurfaceTextureReleased() {
-                    ActivityBase.this.mCurrentModule.onSurfaceTextureReleased();
+                    if (ActivityBase.this.mCurrentModule != null) {
+                        ActivityBase.this.mCurrentModule.onSurfaceTextureReleased();
+                    }
                 }
 
                 public void onPreviewTextureCopied() {
@@ -612,7 +611,14 @@ public abstract class ActivityBase extends FragmentActivity implements AppContro
         return this.mThumbnailUpdater;
     }
 
-    public void addSecureUri(Uri uri) {
+    public void onNewUriArrived(Uri uri, String str) {
+        if (this.mCurrentModule != null) {
+            this.mCurrentModule.onNewUriArrived(uri, str);
+        }
+        addSecureUriIfNecessary(uri);
+    }
+
+    private void addSecureUriIfNecessary(Uri uri) {
         if (this.mSecureUriList != null) {
             if (this.mSecureUriList.size() == 100) {
                 this.mSecureUriList.remove(0);
@@ -669,8 +675,8 @@ public abstract class ActivityBase extends FragmentActivity implements AppContro
                         Intent intent = new Intent(Util.REVIEW_ACTION, uri);
                         intent.setPackage(Util.REVIEW_ACTIVITY_PACKAGE);
                         intent.putExtra(Util.KEY_REVIEW_FROM_MIUICAMERA, true);
-                        if (b.fU()) {
-                            if (!b.hF()) {
+                        if (b.fX()) {
+                            if (!b.hH()) {
                                 intent.putExtra(Util.KEY_CAMERA_BRIGHTNESS, this.mCameraBrightness.getCurrentBrightness());
                             } else if (this.mCameraBrightness.getCurrentBrightnessManual() != -1) {
                                 intent.putExtra(Util.KEY_CAMERA_BRIGHTNESS_MANUAL, this.mCameraBrightness.getCurrentBrightnessManual());
@@ -768,53 +774,27 @@ public abstract class ActivityBase extends FragmentActivity implements AppContro
     /* JADX WARNING: Missing block: B:20:0x0034, code:
             return false;
      */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     public synchronized boolean hasSurface() {
-        /*
-        r3 = this;
-        monitor-enter(r3);
-        r0 = r3.mCurrentSurfaceState;	 Catch:{ all -> 0x0035 }
-        r1 = 2;
-        r2 = 0;
-        if (r0 == r1) goto L_0x001f;
-    L_0x0007:
-        r1 = 4;
-        if (r0 == r1) goto L_0x000b;
-    L_0x000a:
-        goto L_0x0033;
-    L_0x000b:
-        r0 = r3.getCameraScreenNail();	 Catch:{ all -> 0x0035 }
-        r0 = r0.getSurfaceTexture();	 Catch:{ all -> 0x0035 }
-        if (r0 != 0) goto L_0x001c;
-    L_0x0015:
-        r0 = r3.mGLView;	 Catch:{ all -> 0x0035 }
-        r0.onResume();	 Catch:{ all -> 0x0035 }
-        monitor-exit(r3);
-        return r2;
-    L_0x001c:
-        r0 = 1;
-        monitor-exit(r3);
-        return r0;
-    L_0x001f:
-        r0 = com.android.camera.Util.sIsFullScreenNavBarHidden;	 Catch:{ all -> 0x0035 }
-        if (r0 == 0) goto L_0x002e;
-    L_0x0023:
-        r0 = r3.mHandler;	 Catch:{ all -> 0x0035 }
-        r1 = new com.android.camera.ActivityBase$9;	 Catch:{ all -> 0x0035 }
-        r1.<init>();	 Catch:{ all -> 0x0035 }
-        r0.post(r1);	 Catch:{ all -> 0x0035 }
-        goto L_0x0033;
-    L_0x002e:
-        r0 = r3.mGLView;	 Catch:{ all -> 0x0035 }
-        r0.onResume();	 Catch:{ all -> 0x0035 }
-    L_0x0033:
-        monitor-exit(r3);
-        return r2;
-    L_0x0035:
-        r0 = move-exception;
-        monitor-exit(r3);
-        throw r0;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.ActivityBase.hasSurface():boolean");
+        int i = this.mCurrentSurfaceState;
+        if (i != 2) {
+            if (i == 4) {
+                if (getCameraScreenNail().getSurfaceTexture() != null) {
+                    return true;
+                }
+                this.mGLView.onResume();
+                return false;
+            }
+        } else if (Util.sIsFullScreenNavBarHidden) {
+            this.mHandler.post(new Runnable() {
+                public void run() {
+                    ActivityBase.this.mGLView.setVisibility(4);
+                    ActivityBase.this.mGLView.setVisibility(0);
+                }
+            });
+        } else {
+            this.mGLView.onResume();
+        }
     }
 
     public synchronized void updateSurfaceState(int i) {

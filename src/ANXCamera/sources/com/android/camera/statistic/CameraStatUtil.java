@@ -1017,7 +1017,7 @@ public class CameraStatUtil {
     public static void trackBeautyInfo(int i, String str, BeautyValues beautyValues) {
         Map hashMap = new HashMap();
         hashMap.put(CameraStat.PARAM_CAMERA_ID, str);
-        if (b.hA()) {
+        if (b.hC()) {
             for (Type type : BeautyParameters.getInstance().getAdjustableTypes()) {
                 String str2 = (String) sBeautyTypeToName.get(type.ordinal());
                 if (str2 != null) {
@@ -1030,7 +1030,7 @@ public class CameraStatUtil {
             hashMap.put(CameraStat.PARAM_BEAUTY_SKIN_COLOR, faceBeautyRatioToName(beautyValues.mBeautySkinColor));
             hashMap.put(CameraStat.PARAM_BEAUTY_SKIN_SMOOTH, faceBeautyRatioToName(beautyValues.mBeautySkinSmooth));
         }
-        if (b.hp()) {
+        if (b.hr()) {
             Object obj;
             str = CameraStat.PARAM_BEAUTY_LEVEL;
             if (CameraSettings.isAdvancedBeautyOn()) {

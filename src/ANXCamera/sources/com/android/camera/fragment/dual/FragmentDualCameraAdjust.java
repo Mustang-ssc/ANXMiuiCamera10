@@ -284,7 +284,7 @@ public class FragmentDualCameraAdjust extends BaseFragment implements OnClickLis
             return 0;
         }
         if (this.mHorizontalSlideLayout.getVisibility() == 0) {
-            return this.mSlideLayoutHeight;
+            return this.mSlideLayoutHeight + this.mDualZoomButton.getHeight();
         }
         return this.mDualZoomButton.getHeight();
     }
@@ -299,6 +299,7 @@ public class FragmentDualCameraAdjust extends BaseFragment implements OnClickLis
     public void showZoomButton() {
         if (this.mCurrentState != 1) {
             this.mCurrentState = 1;
+            ViewCompat.setRotation(this.mDualZoomButton, (float) this.mDegree);
             Completable.create(new AlphaInOnSubscribe(this.mDualZoomButton)).subscribe();
         }
     }
@@ -349,7 +350,7 @@ public class FragmentDualCameraAdjust extends BaseFragment implements OnClickLis
         ViewCompat.setRotation(this.mDualZoomButton, (float) this.mDegree);
         this.mDualZoomButton.setOnLongClickListener(this);
         i2 = 1;
-        if (b.fu() && CameraSettings.isUltraWideConfigOpen()) {
+        if (CameraSettings.isUltraWideConfigOpen(this.mCurrentMode)) {
             i2 = -1;
         }
         if (i2 == 1) {
@@ -495,7 +496,7 @@ public class FragmentDualCameraAdjust extends BaseFragment implements OnClickLis
         Completable.create(new TranslateYOnSubscribe(this.mHorizontalSlideLayout, 0).setInterpolator(new DecelerateInterpolator())).subscribe();
         ViewCompat.setTranslationY(this.mDualZoomButton, (float) this.mSlideLayoutHeight);
         Completable.create(new TranslateYOnSubscribe(this.mDualZoomButton, 0).setInterpolator(new BackEaseOutInterpolator())).subscribe();
-        notifyTipsMargin(this.mSlideLayoutHeight);
+        notifyTipsMargin();
     }
 
     private void alphaOutZoomButtonAndSlideView() {
@@ -514,7 +515,7 @@ public class FragmentDualCameraAdjust extends BaseFragment implements OnClickLis
         } else {
             hideZoomButton();
         }
-        notifyTipsMargin(0);
+        notifyTipsMargin();
     }
 
     private void hideSlideView() {
@@ -528,11 +529,21 @@ public class FragmentDualCameraAdjust extends BaseFragment implements OnClickLis
         });
         ViewCompat.setTranslationY(this.mDualZoomButton, 0.0f);
         Completable.create(new TranslateYOnSubscribe(this.mDualZoomButton, this.mSlideLayoutHeight).setInterpolator(new OvershootInterpolator())).subscribe();
-        notifyTipsMargin(0);
+        BottomPopupTips bottomPopupTips = (BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175);
+        if (bottomPopupTips != null) {
+            bottomPopupTips.reInitTipImage();
+        }
     }
 
-    private void notifyTipsMargin(int i) {
-        ((BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175)).updateTipBottomMargin(i, true);
+    private void notifyTipsMargin() {
+        BottomPopupTips bottomPopupTips = (BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175);
+        if (bottomPopupTips != null) {
+            bottomPopupTips.directHideTipImage();
+            bottomPopupTips.directlyHideTips();
+            if (Util.UI_DEBUG()) {
+                bottomPopupTips.directShowOrHideLeftTipImage(false);
+            }
+        }
     }
 
     public void onManuallyDataChanged(ComponentData componentData, String str, String str2, boolean z) {

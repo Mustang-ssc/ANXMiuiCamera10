@@ -51,7 +51,8 @@ public class SensorStateManager {
         private float[] firstFilter = new float[3];
 
         public void onSensorChanged(SensorEvent sensorEvent) {
-            if (SensorStateManager.this.mSensorStateListener != null) {
+            SensorStateListener access$000 = SensorStateManager.this.getSensorStateListener();
+            if (access$000 != null) {
                 this.firstFilter[0] = (this.firstFilter[0] * firstAlpha) + (sensorEvent.values[0] * 0.19999999f);
                 this.firstFilter[1] = (this.firstFilter[1] * firstAlpha) + (sensorEvent.values[1] * 0.19999999f);
                 this.firstFilter[2] = (firstAlpha * this.firstFilter[2]) + (0.19999999f * sensorEvent.values[2]);
@@ -92,9 +93,7 @@ public class SensorStateManager {
                     stringBuilder2.append(" mIsLying=");
                     stringBuilder2.append(SensorStateManager.this.mIsLying);
                     Log.v(str2, stringBuilder2.toString());
-                    if (SensorStateManager.this.mSensorStateListener != null) {
-                        SensorStateManager.this.mSensorStateListener.onDeviceOrientationChanged(SensorStateManager.this.mOrientation, SensorStateManager.this.mIsLying);
-                    }
+                    access$000.onDeviceOrientationChanged(SensorStateManager.this.mOrientation, SensorStateManager.this.mIsLying);
                 }
             }
         }
@@ -125,25 +124,28 @@ public class SensorStateManager {
     private final Sensor mGyroscope;
     private SensorEventListener mGyroscopeListener = new SensorEventListener() {
         public void onSensorChanged(SensorEvent sensorEvent) {
-            long abs = Math.abs(sensorEvent.timestamp - SensorStateManager.this.mGyroscopeTimeStamp);
-            if (SensorStateManager.this.mSensorStateListener != null && SensorStateManager.this.mSensorStateListener.isWorking() && abs >= SensorStateManager.EVENT_PROCESS_INTERVAL) {
-                if (SensorStateManager.this.mGyroscopeTimeStamp == 0 || abs > SensorStateManager.EVENT_TIME_OUT) {
+            SensorStateListener access$000 = SensorStateManager.this.getSensorStateListener();
+            if (access$000 != null && access$000.isWorking()) {
+                long abs = Math.abs(sensorEvent.timestamp - SensorStateManager.this.mGyroscopeTimeStamp);
+                if (abs >= SensorStateManager.EVENT_PROCESS_INTERVAL) {
+                    if (SensorStateManager.this.mGyroscopeTimeStamp == 0 || abs > SensorStateManager.EVENT_TIME_OUT) {
+                        SensorStateManager.this.mGyroscopeTimeStamp = sensorEvent.timestamp;
+                        return;
+                    }
+                    float f = ((float) abs) * SensorStateManager.NS2S;
+                    double sqrt = Math.sqrt((double) (((sensorEvent.values[0] * sensorEvent.values[0]) + (sensorEvent.values[1] * sensorEvent.values[1])) + (sensorEvent.values[2] * sensorEvent.values[2])));
                     SensorStateManager.this.mGyroscopeTimeStamp = sensorEvent.timestamp;
-                    return;
-                }
-                float f = ((float) abs) * SensorStateManager.NS2S;
-                double sqrt = Math.sqrt((double) (((sensorEvent.values[0] * sensorEvent.values[0]) + (sensorEvent.values[1] * sensorEvent.values[1])) + (sensorEvent.values[2] * sensorEvent.values[2])));
-                SensorStateManager.this.mGyroscopeTimeStamp = sensorEvent.timestamp;
-                if (SensorStateManager.GYROSCOPE_MOVING_THRESHOLD < sqrt) {
-                    SensorStateManager.this.deviceBeginMoving();
-                }
-                SensorStateManager.this.mAngleSpeedIndex = SensorStateManager.access$404(SensorStateManager.this) % SensorStateManager.this.mAngleSpeed.length;
-                SensorStateManager.this.mAngleSpeed[SensorStateManager.this.mAngleSpeedIndex] = sqrt;
-                if (sqrt >= SensorStateManager.GYROSCOPE_IGNORE_THRESHOLD) {
-                    SensorStateManager.access$618(SensorStateManager.this, sqrt * ((double) f));
-                    if (SensorStateManager.this.mAngleTotal > SensorStateManager.GYROSCOPE_FOCUS_THRESHOLD) {
-                        SensorStateManager.this.mAngleTotal = 0.0d;
-                        SensorStateManager.this.deviceKeepMoving(10000.0d);
+                    if (SensorStateManager.GYROSCOPE_MOVING_THRESHOLD < sqrt) {
+                        SensorStateManager.this.deviceBeginMoving();
+                    }
+                    SensorStateManager.this.mAngleSpeedIndex = SensorStateManager.access$404(SensorStateManager.this) % SensorStateManager.this.mAngleSpeed.length;
+                    SensorStateManager.this.mAngleSpeed[SensorStateManager.this.mAngleSpeedIndex] = sqrt;
+                    if (sqrt >= SensorStateManager.GYROSCOPE_IGNORE_THRESHOLD) {
+                        SensorStateManager.access$618(SensorStateManager.this, sqrt * ((double) f));
+                        if (SensorStateManager.this.mAngleTotal > SensorStateManager.GYROSCOPE_FOCUS_THRESHOLD) {
+                            SensorStateManager.this.mAngleTotal = 0.0d;
+                            SensorStateManager.this.deviceKeepMoving(10000.0d);
+                        }
                     }
                 }
             }
@@ -157,16 +159,19 @@ public class SensorStateManager {
     private boolean mIsLying = false;
     private SensorEventListener mLinearAccelerationListener = new SensorEventListener() {
         public void onSensorChanged(SensorEvent sensorEvent) {
-            long abs = Math.abs(sensorEvent.timestamp - SensorStateManager.this.mAccelerometerTimeStamp);
-            if (SensorStateManager.this.mSensorStateListener != null && SensorStateManager.this.mSensorStateListener.isWorking() && abs >= SensorStateManager.EVENT_PROCESS_INTERVAL) {
-                if (SensorStateManager.this.mAccelerometerTimeStamp == 0 || abs > SensorStateManager.EVENT_TIME_OUT) {
+            SensorStateListener access$000 = SensorStateManager.this.getSensorStateListener();
+            if (access$000 != null && access$000.isWorking()) {
+                long abs = Math.abs(sensorEvent.timestamp - SensorStateManager.this.mAccelerometerTimeStamp);
+                if (abs >= SensorStateManager.EVENT_PROCESS_INTERVAL) {
+                    if (SensorStateManager.this.mAccelerometerTimeStamp == 0 || abs > SensorStateManager.EVENT_TIME_OUT) {
+                        SensorStateManager.this.mAccelerometerTimeStamp = sensorEvent.timestamp;
+                        return;
+                    }
+                    double sqrt = Math.sqrt((double) (((sensorEvent.values[0] * sensorEvent.values[0]) + (sensorEvent.values[1] * sensorEvent.values[1])) + (sensorEvent.values[2] * sensorEvent.values[2])));
                     SensorStateManager.this.mAccelerometerTimeStamp = sensorEvent.timestamp;
-                    return;
-                }
-                double sqrt = Math.sqrt((double) (((sensorEvent.values[0] * sensorEvent.values[0]) + (sensorEvent.values[1] * sensorEvent.values[1])) + (sensorEvent.values[2] * sensorEvent.values[2])));
-                SensorStateManager.this.mAccelerometerTimeStamp = sensorEvent.timestamp;
-                if (sqrt > SensorStateManager.ACCELEROMETER_GAP_TOLERANCE) {
-                    SensorStateManager.this.deviceKeepMoving(sqrt);
+                    if (sqrt > SensorStateManager.ACCELEROMETER_GAP_TOLERANCE) {
+                        SensorStateManager.this.deviceKeepMoving(sqrt);
+                    }
                 }
             }
         }
@@ -216,7 +221,8 @@ public class SensorStateManager {
         }
 
         public void onSensorChanged(SensorEvent sensorEvent) {
-            if (SensorStateManager.this.mSensorStateListener != null) {
+            SensorStateListener access$000 = SensorStateManager.this.getSensorStateListener();
+            if (access$000 != null) {
                 int i;
                 float f = -1.0f;
                 int i2 = 1;
@@ -261,9 +267,7 @@ public class SensorStateManager {
                     stringBuilder.append(" mIsLying=");
                     stringBuilder.append(SensorStateManager.this.mIsLying);
                     Log.v(str, stringBuilder.toString());
-                    if (SensorStateManager.this.mSensorStateListener != null) {
-                        SensorStateManager.this.mSensorStateListener.onDeviceOrientationChanged(SensorStateManager.this.mOrientation, SensorStateManager.this.mIsLying);
-                    }
+                    access$000.onDeviceOrientationChanged(SensorStateManager.this.mOrientation, SensorStateManager.this.mIsLying);
                 }
             }
         }
@@ -320,8 +324,12 @@ public class SensorStateManager {
         this.mSensorListenerThread.start();
     }
 
-    public void setSensorStateListener(SensorStateListener sensorStateListener) {
+    public synchronized void setSensorStateListener(SensorStateListener sensorStateListener) {
         this.mSensorStateListener = sensorStateListener;
+    }
+
+    private synchronized SensorStateListener getSensorStateListener() {
+        return this.mSensorStateListener;
     }
 
     public void setFocusSensorEnabled(boolean z) {
@@ -348,7 +356,7 @@ public class SensorStateManager {
     }
 
     public void setRotationIndicatorEnabled(boolean z) {
-        if (b.hc() && canDetectOrientation() && this.mRotationFlagEnabled != z) {
+        if (b.hf() && canDetectOrientation() && this.mRotationFlagEnabled != z) {
             this.mRotationFlagEnabled = z;
             int i = 4;
             if (!this.mRotationFlagEnabled) {
@@ -548,30 +556,43 @@ public class SensorStateManager {
     }
 
     private void deviceBeginMoving() {
-        this.mSensorStateListener.onDeviceBeginMoving();
+        SensorStateListener sensorStateListener = getSensorStateListener();
+        if (sensorStateListener != null) {
+            sensorStateListener.onDeviceBeginMoving();
+        }
     }
 
     private void deviceBecomeStable() {
         if (this.mFocusSensorEnabled) {
-            this.mSensorStateListener.onDeviceBecomeStable();
+            SensorStateListener sensorStateListener = getSensorStateListener();
+            if (sensorStateListener != null) {
+                sensorStateListener.onDeviceBecomeStable();
+            }
         }
     }
 
     private void deviceKeepStable() {
-        this.mSensorStateListener.onDeviceKeepStable();
+        SensorStateListener sensorStateListener = getSensorStateListener();
+        if (sensorStateListener != null) {
+            sensorStateListener.onDeviceKeepStable();
+        }
     }
 
     private void deviceKeepMoving(double d) {
         if (this.mFocusSensorEnabled) {
-            this.mSensorStateListener.onDeviceKeepMoving(d);
+            SensorStateListener sensorStateListener = getSensorStateListener();
+            if (sensorStateListener != null) {
+                sensorStateListener.onDeviceKeepMoving(d);
+            }
         }
     }
 
     private void changeCapturePosture(int i) {
         if (this.mCapturePosture != i) {
             this.mCapturePosture = i;
-            if (this.mSensorStateListener != null) {
-                this.mSensorStateListener.notifyDevicePostureChanged();
+            SensorStateListener sensorStateListener = getSensorStateListener();
+            if (sensorStateListener != null) {
+                sensorStateListener.notifyDevicePostureChanged();
             }
         }
     }

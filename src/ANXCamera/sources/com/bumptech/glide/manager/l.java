@@ -67,7 +67,7 @@ public class l implements Callback {
     }
 
     @NonNull
-    private i i(@NonNull Context context) {
+    private i h(@NonNull Context context) {
         if (this.mx == null) {
             synchronized (this) {
                 if (this.mx == null) {
@@ -79,7 +79,7 @@ public class l implements Callback {
     }
 
     @NonNull
-    public i j(@NonNull Context context) {
+    public i i(@NonNull Context context) {
         if (context != null) {
             if (k.eH() && !(context instanceof Application)) {
                 if (context instanceof FragmentActivity) {
@@ -89,10 +89,10 @@ public class l implements Callback {
                     return c((Activity) context);
                 }
                 if (context instanceof ContextWrapper) {
-                    return j(((ContextWrapper) context).getBaseContext());
+                    return i(((ContextWrapper) context).getBaseContext());
                 }
             }
-            return i(context);
+            return h(context);
         }
         throw new IllegalArgumentException("You cannot start a load on a null Context");
     }
@@ -100,7 +100,7 @@ public class l implements Callback {
     @NonNull
     public i b(@NonNull FragmentActivity fragmentActivity) {
         if (k.eI()) {
-            return j(fragmentActivity.getApplicationContext());
+            return i(fragmentActivity.getApplicationContext());
         }
         d((Activity) fragmentActivity);
         return a((Context) fragmentActivity, fragmentActivity.getSupportFragmentManager(), null, f(fragmentActivity));
@@ -110,7 +110,7 @@ public class l implements Callback {
     public i b(@NonNull android.support.v4.app.Fragment fragment) {
         com.bumptech.glide.util.i.a(fragment.getActivity(), "You cannot start a load on a fragment before it is attached or after it is destroyed");
         if (k.eI()) {
-            return j(fragment.getActivity().getApplicationContext());
+            return i(fragment.getActivity().getApplicationContext());
         }
         return a(fragment.getActivity(), fragment.getChildFragmentManager(), fragment, fragment.isVisible());
     }
@@ -118,7 +118,7 @@ public class l implements Callback {
     @NonNull
     public i c(@NonNull Activity activity) {
         if (k.eI()) {
-            return j(activity.getApplicationContext());
+            return i(activity.getApplicationContext());
         }
         d(activity);
         return a((Context) activity, activity.getFragmentManager(), null, f(activity));
@@ -127,21 +127,21 @@ public class l implements Callback {
     @NonNull
     public i c(@NonNull View view) {
         if (k.eI()) {
-            return j(view.getContext().getApplicationContext());
+            return i(view.getContext().getApplicationContext());
         }
         com.bumptech.glide.util.i.checkNotNull(view);
         com.bumptech.glide.util.i.a(view.getContext(), "Unable to obtain a request manager for a view without a Context");
-        Activity k = k(view.getContext());
-        if (k == null) {
-            return j(view.getContext().getApplicationContext());
+        Activity j = j(view.getContext());
+        if (j == null) {
+            return i(view.getContext().getApplicationContext());
         }
-        if (k instanceof FragmentActivity) {
-            android.support.v4.app.Fragment a = a(view, (FragmentActivity) k);
-            return a != null ? b(a) : c(k);
+        if (j instanceof FragmentActivity) {
+            android.support.v4.app.Fragment a = a(view, (FragmentActivity) j);
+            return a != null ? b(a) : c(j);
         }
-        Fragment a2 = a(view, k);
+        Fragment a2 = a(view, j);
         if (a2 == null) {
-            return c(k);
+            return c(j);
         }
         return d(a2);
     }
@@ -235,12 +235,12 @@ public class l implements Callback {
     }
 
     @Nullable
-    private Activity k(@NonNull Context context) {
+    private Activity j(@NonNull Context context) {
         if (context instanceof Activity) {
             return (Activity) context;
         }
         if (context instanceof ContextWrapper) {
-            return k(((ContextWrapper) context).getBaseContext());
+            return j(((ContextWrapper) context).getBaseContext());
         }
         return null;
     }
@@ -259,7 +259,7 @@ public class l implements Callback {
         if (fragment.getActivity() == null) {
             throw new IllegalArgumentException("You cannot start a load on a fragment before it is attached");
         } else if (k.eI() || VERSION.SDK_INT < 17) {
-            return j(fragment.getActivity().getApplicationContext());
+            return i(fragment.getActivity().getApplicationContext());
         } else {
             return a(fragment.getActivity(), fragment.getChildFragmentManager(), fragment, fragment.isVisible());
         }

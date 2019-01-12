@@ -7,6 +7,8 @@ import android.graphics.Paint.FontMetricsInt;
 import android.os.Build.VERSION;
 import android.text.TextPaint;
 import com.android.camera.CameraAppImpl;
+import com.android.camera.CameraSettings;
+import com.android.camera.R;
 import com.android.camera.Util;
 import com.android.camera.lib.compatibility.util.CompatibilityUtils;
 import com.android.camera.log.Log;
@@ -63,8 +65,9 @@ public class CustomTextWaterMark {
     }
 
     public static CustomTextWaterMark newInstance(Bitmap bitmap, float f, float f2, String str) {
-        TextPaint defaultPaint = getDefaultPaint(70.0f, -1, 1);
-        TextPaint defaultPaint2 = getDefaultPaint(77.0f, -1, 2);
+        float resourceFloat = CameraSettings.getResourceFloat(R.dimen.custom_watermark_text_size_ratio, 1.0f);
+        TextPaint defaultPaint = getDefaultPaint((float) ((int) (70.0f * resourceFloat)), -1, 1);
+        TextPaint defaultPaint2 = getDefaultPaint((float) ((int) (77.0f * resourceFloat)), -1, 2);
         return new CustomTextWaterMark(bitmap, f, f2, str, defaultPaint, defaultPaint2, defaultPaint2.getFontMetricsInt());
     }
 

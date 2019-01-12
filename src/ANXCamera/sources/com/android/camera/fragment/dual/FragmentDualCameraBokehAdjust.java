@@ -37,6 +37,7 @@ import com.android.camera.data.data.config.ComponentManuallyDualZoom;
 import com.android.camera.fragment.BaseFragment;
 import com.android.camera.fragment.manually.ManuallyListener;
 import com.android.camera.fragment.manually.adapter.ExtraSlideFNumberAdapter;
+import com.android.camera.log.Log;
 import com.android.camera.protocol.ModeCoordinatorImpl;
 import com.android.camera.protocol.ModeProtocol.ActionProcessing;
 import com.android.camera.protocol.ModeProtocol.BokehFNumberController;
@@ -45,6 +46,7 @@ import com.android.camera.protocol.ModeProtocol.CameraAction;
 import com.android.camera.protocol.ModeProtocol.ConfigChanges;
 import com.android.camera.protocol.ModeProtocol.HandleBackTrace;
 import com.android.camera.protocol.ModeProtocol.ManuallyValueChanged;
+import com.android.camera.protocol.ModeProtocol.MiBeautyProtocol;
 import com.android.camera.protocol.ModeProtocol.ModeCoordinator;
 import com.android.camera.ui.HorizontalSlideView;
 import io.reactivex.Completable;
@@ -57,6 +59,7 @@ import miui.view.animation.QuadraticEaseOutInterpolator;
 public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnClickListener, ManuallyListener, BokehFNumberController, HandleBackTrace {
     public static final int FRAGMENT_INFO = 4091;
     private static final int HIDE_POPUP = 1;
+    public static final String TAG = "BokehAdjust";
     private Drawable fDrawable;
     private ImageSpan fImageSpan;
     private int mBokehFButtonHeight;
@@ -167,7 +170,7 @@ public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnCli
 
     private void sendHideMessage() {
         this.mHandler.removeMessages(1);
-        this.mHandler.sendEmptyMessageDelayed(1, 5000);
+        this.mHandler.sendEmptyMessageDelayed(1, 10000);
     }
 
     private void resetFNumber() {
@@ -224,7 +227,9 @@ public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnCli
     }
 
     public void showFNumberPanel() {
-        hideSlideView();
+        if (this.mCurrentState != -1) {
+            hideSlideView();
+        }
     }
 
     protected void register(ModeCoordinator modeCoordinator) {
@@ -249,47 +254,50 @@ public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnCli
     }
 
     public void provideAnimateElement(int i, List<Completable> list, boolean z) {
-        int i2 = this.mCurrentMode;
         super.provideAnimateElement(i, list, z);
-        if (i != 171) {
-            i = -1;
-        } else {
-            this.mDualBokehFButton.setRotation((float) this.mDegree);
-            this.mImageIndicator.setRotation((float) this.mDegree);
-            i = 1;
-        }
-        if (this.mCurrentState == i) {
-            if (1 == this.mCurrentState && isVisible(this.mDualParentLayout)) {
-                hideSlideView();
+        if (DataRepository.dataItemGlobal().isNormalIntent()) {
+            if (i != 171) {
+                i = -1;
+            } else {
+                this.mDualBokehFButton.setRotation((float) this.mDegree);
+                this.mImageIndicator.setRotation((float) this.mDegree);
+                i = 1;
+            }
+            if (this.mCurrentState == i) {
+                if (1 == this.mCurrentState && isVisible(this.mDualParentLayout)) {
+                    hideSlideView();
+                }
+                return;
+            }
+            this.mCurrentState = i;
+            if (i == -1) {
+                if (isVisible(this.mDualParentLayout)) {
+                    if (list == null) {
+                        this.mDualParentLayout.setVisibility(8);
+                    } else {
+                        list.add(Completable.create(new AlphaOutOnSubscribe(this.mDualParentLayout).targetGone()));
+                    }
+                }
+                this.mShowImageIndicator = false;
+            } else if (i == 1) {
+                AlphaInOnSubscribe.directSetResult(this.mDualParentLayout);
+                if (this.mHorizontalSlideLayout.getVisibility() == 0) {
+                    this.mHorizontalSlideLayout.setVisibility(4);
+                }
+                this.mDualBokehFButton.setVisibility(4);
+                this.mImageIndicator.setTranslationY(this.mHorizontalSlideLayout.getVisibility() != 8 ? (float) this.mSlideLayoutHeight : 0.0f);
+                resetFNumber();
+                if (!isVisible(this.mImageIndicator)) {
+                    if (list == null) {
+                        AlphaInOnSubscribe.directSetResult(this.mImageIndicator);
+                    } else {
+                        list.add(Completable.create(new AlphaInOnSubscribe(this.mImageIndicator)));
+                    }
+                }
             }
             return;
         }
-        this.mCurrentState = i;
-        if (i == -1) {
-            if (isVisible(this.mDualParentLayout)) {
-                if (list == null) {
-                    this.mDualParentLayout.setVisibility(8);
-                } else {
-                    list.add(Completable.create(new AlphaOutOnSubscribe(this.mDualParentLayout).targetGone()));
-                }
-            }
-            this.mShowImageIndicator = false;
-        } else if (i == 1) {
-            AlphaInOnSubscribe.directSetResult(this.mDualParentLayout);
-            if (this.mHorizontalSlideLayout.getVisibility() == 0) {
-                this.mHorizontalSlideLayout.setVisibility(4);
-            }
-            this.mDualBokehFButton.setVisibility(4);
-            this.mImageIndicator.setTranslationY(this.mHorizontalSlideLayout.getVisibility() != 8 ? (float) this.mSlideLayoutHeight : 0.0f);
-            resetFNumber();
-            if (!isVisible(this.mImageIndicator)) {
-                if (list == null) {
-                    AlphaInOnSubscribe.directSetResult(this.mImageIndicator);
-                } else {
-                    list.add(Completable.create(new AlphaInOnSubscribe(this.mImageIndicator)));
-                }
-            }
-        }
+        this.mCurrentState = -1;
     }
 
     private boolean isVisible(View view) {
@@ -297,7 +305,7 @@ public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnCli
     }
 
     public boolean onBackEvent(int i) {
-        if (this.mShowImageIndicator || this.mCurrentMode != 171 || !isVisible(this.mDualParentLayout)) {
+        if (this.mShowImageIndicator || this.mCurrentMode != 171 || !isVisible(this.mDualParentLayout) || i == 3) {
             return false;
         }
         hideSlideView();
@@ -309,19 +317,20 @@ public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnCli
             CameraAction cameraAction = (CameraAction) ModeCoordinatorImpl.getInstance().getAttachProtocol(161);
             if (cameraAction == null || !cameraAction.isDoingAction()) {
                 switch (view.getId()) {
-                    case R.id.dual_camera_bokeh_button /*2131558473*/:
+                    case R.id.dual_camera_bokeh_button /*2131558480*/:
                         if (this.mDualBokehFButton.getAlpha() != 0.0f) {
                             hideSlideView();
                             break;
                         }
                         break;
-                    case R.id.dual_camera_bokeh_indicator /*2131558474*/:
+                    case R.id.dual_camera_bokeh_indicator /*2131558481*/:
                         if (this.mImageIndicator.getAlpha() == 0.0f) {
                             hideSlideView();
                             break;
                         }
                         initSlideFNumberView(new ComponentManuallyDualZoom(DataRepository.dataItemRunning()));
                         showSlideView();
+                        sendHideMessage();
                         ActionProcessing actionProcessing = (ActionProcessing) ModeCoordinatorImpl.getInstance().getAttachProtocol(162);
                         ConfigChanges configChanges = (ConfigChanges) ModeCoordinatorImpl.getInstance().getAttachProtocol(164);
                         if (!(actionProcessing == null || !actionProcessing.isShowFilterView() || configChanges == null)) {
@@ -342,22 +351,29 @@ public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnCli
     }
 
     private void showSlideView() {
-        this.mSlidingAdapter.setEnable(true);
-        AlphaInOnSubscribe.directSetResult(this.mDualParentLayout);
-        this.mHorizontalSlideLayout.setVisibility(0);
-        this.mHorizontalSlideLayout.setTranslationY((float) this.mSlideLayoutHeight);
-        Completable.create(new TranslateYAlphaInOnSubscribe(this.mHorizontalSlideLayout, 0).setInterpolator(new DecelerateInterpolator())).subscribe();
-        this.mDualBokehFButton.setTranslationY((float) (this.mSlideLayoutHeight + this.mBokehFButtonHeight));
-        Completable.create(new TranslateYAlphaInOnSubscribe(this.mDualBokehFButton, this.mSlideLayoutHeight).setInterpolator(new BackEaseOutInterpolator())).subscribe();
-        notifyTipsMargin(this.mSlideLayoutHeight);
-        BottomPopupTips bottomPopupTips = (BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175);
-        if (bottomPopupTips != null) {
-            bottomPopupTips.directHideTipImage();
-            bottomPopupTips.directShowOrHideLeftTipImage(false);
+        MiBeautyProtocol miBeautyProtocol = (MiBeautyProtocol) ModeCoordinatorImpl.getInstance().getAttachProtocol(194);
+        if (miBeautyProtocol == null || !miBeautyProtocol.isBeautyPanelShow()) {
+            this.mSlidingAdapter.setEnable(true);
+            AlphaInOnSubscribe.directSetResult(this.mDualParentLayout);
+            this.mHorizontalSlideLayout.setVisibility(0);
+            this.mHorizontalSlideLayout.setTranslationY((float) this.mSlideLayoutHeight);
+            Completable.create(new TranslateYAlphaInOnSubscribe(this.mHorizontalSlideLayout, 0).setInterpolator(new DecelerateInterpolator())).subscribe();
+            this.mDualBokehFButton.setTranslationY((float) (this.mSlideLayoutHeight + this.mBokehFButtonHeight));
+            Completable.create(new TranslateYAlphaInOnSubscribe(this.mDualBokehFButton, this.mSlideLayoutHeight).setInterpolator(new BackEaseOutInterpolator())).subscribe();
+            notifyTipsMargin(this.mSlideLayoutHeight);
+            BottomPopupTips bottomPopupTips = (BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175);
+            if (bottomPopupTips != null) {
+                bottomPopupTips.directHideTipImage();
+                if (Util.UI_DEBUG()) {
+                    bottomPopupTips.directShowOrHideLeftTipImage(false);
+                }
+            }
+            this.mImageIndicator.setTranslationY((float) this.mSlideLayoutHeight);
+            Completable.create(new TranslateYAlphaOutOnSubscribe(this.mImageIndicator, 0).setInterpolator(new BackEaseOutInterpolator())).subscribe();
+            this.mShowImageIndicator = false;
+            return;
         }
-        this.mImageIndicator.setTranslationY((float) this.mSlideLayoutHeight);
-        Completable.create(new TranslateYAlphaOutOnSubscribe(this.mImageIndicator, 0).setInterpolator(new BackEaseOutInterpolator())).subscribe();
-        this.mShowImageIndicator = false;
+        Log.v(TAG, "beauty panel shown. do not show the slide view.");
     }
 
     private void hideSlideView() {
@@ -404,11 +420,20 @@ public class FragmentDualCameraBokehAdjust extends BaseFragment implements OnCli
     }
 
     private void requestFNumber(String str) {
-        ManuallyValueChanged manuallyValueChanged = (ManuallyValueChanged) ModeCoordinatorImpl.getInstance().getAttachProtocol(174);
-        if (manuallyValueChanged != null) {
-            manuallyValueChanged.onBokehFNumberValueChanged(str);
+        CameraAction cameraAction = (CameraAction) ModeCoordinatorImpl.getInstance().getAttachProtocol(161);
+        if (cameraAction == null || !cameraAction.isDoingAction()) {
+            ManuallyValueChanged manuallyValueChanged = (ManuallyValueChanged) ModeCoordinatorImpl.getInstance().getAttachProtocol(174);
+            if (manuallyValueChanged != null) {
+                manuallyValueChanged.onBokehFNumberValueChanged(str);
+            }
+            setFNumberText();
+            return;
         }
-        setFNumberText();
+        String str2 = TAG;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("new f number is ignored: ");
+        stringBuilder.append(str);
+        Log.d(str2, stringBuilder.toString());
     }
 
     public void provideRotateItem(List<View> list, int i) {

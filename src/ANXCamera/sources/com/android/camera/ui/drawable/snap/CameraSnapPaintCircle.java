@@ -82,8 +82,10 @@ public class CameraSnapPaintCircle extends CameraPaintBase {
             canvas.drawArc(this.mArcRectF, -90.0f + (this.isClockwise ? 0.0f : this.timeAngle), Math.max(0.0f, this.isClockwise ? this.timeAngle : 360.0f - this.timeAngle), false, this.mPaint);
             this.mPaint.setColor(this.mCurrentColor);
             this.mOffsetPaint.setStrokeWidth(this.mCurrentStrokeWidth * 2.0f);
-            drawOffset(canvas, 0.0f);
-            drawOffset(canvas, this.timeAngle);
+            if (this.timeAngle != 0.0f) {
+                drawOffset(canvas, 0.0f);
+                drawOffset(canvas, this.timeAngle);
+            }
             if (this.mSegmentRatios != null) {
                 for (Float floatValue : this.mSegmentRatios) {
                     drawOffset(canvas, floatValue.floatValue());
@@ -138,5 +140,9 @@ public class CameraSnapPaintCircle extends CameraPaintBase {
             return 0;
         }
         return ((Long) this.mSegmentTimes.get(this.mSegmentTimes.size() - 1)).longValue();
+    }
+
+    public boolean hasSegments() {
+        return (this.mSegmentRatios == null || this.mSegmentRatios.isEmpty()) ? false : true;
     }
 }

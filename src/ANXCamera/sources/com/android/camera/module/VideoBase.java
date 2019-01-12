@@ -129,7 +129,7 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
         }
 
         public boolean isWorking() {
-            return VideoBase.this.mPreviewing;
+            return VideoBase.this.isAlive() && VideoBase.this.mPreviewing;
         }
 
         public void onDeviceKeepMoving(double d) {
@@ -576,7 +576,7 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
     }
 
     public boolean shouldReleaseLater() {
-        return isVideoRecording() || isSelectingCapturedVideo();
+        return this.mInStartingFocusRecording || isVideoRecording() || isSelectingCapturedResult();
     }
 
     public void notifyError() {
@@ -589,6 +589,10 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
         }
     }
 
+    public void onHostStopAndNotifyActionStop() {
+        stopVideoRecording(true, true);
+    }
+
     public void stopVideoRecording(boolean z, boolean z2) {
     }
 
@@ -596,7 +600,7 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
     }
 
     protected void updateRecordingTime() {
-        if (isThermalThreshold() && "1".equals(CameraSettings.getFlashMode(this.mModuleIndex))) {
+        if (isThermalThreshold() && !"0".equals(CameraSettings.getFlashMode(this.mModuleIndex))) {
             ThermalDetector.getInstance().onThermalNotification();
         }
     }
@@ -740,7 +744,7 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
 
     @OnClickAttr
     public void onReviewCancelClicked() {
-        if (isSelectingCapturedVideo()) {
+        if (isSelectingCapturedResult()) {
             deleteCurrentVideo();
             hideAlert();
             return;
@@ -749,7 +753,7 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
         doReturnToCaller(false);
     }
 
-    public boolean isSelectingCapturedVideo() {
+    public boolean isSelectingCapturedResult() {
         if (isCaptureIntent() && ((BaseDelegate) ModeCoordinatorImpl.getInstance().getAttachProtocol(160)).getActiveFragment(R.id.bottom_action) == 4083) {
             return true;
         }
@@ -832,12 +836,12 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
         StringBuilder stringBuilder5;
         if (z) {
             stringBuilder5 = new StringBuilder();
-            stringBuilder5.append(Storage.CAMERA_TEMP_DIRECTORY);
+            stringBuilder5.append(Storage.generatePrimaryTempFile());
             stringBuilder5.append('/');
             stringBuilder5.append(format);
             stringBuilder = stringBuilder5.toString();
             stringBuilder2 = new StringBuilder();
-            stringBuilder2.append(Storage.CAMERA_TEMP_DIRECTORY);
+            stringBuilder2.append(Storage.generatePrimaryTempFile());
             stringBuilder2.append(File.separator);
             stringBuilder2.append(Storage.AVOID_SCAN_FILE_NAME);
             Util.createFile(new File(stringBuilder2.toString()));
@@ -1271,36 +1275,12 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
     /* JADX WARNING: Missing block: B:12:0x0020, code:
             return;
      */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     public void startFaceDetection() {
-        /*
-        r1 = this;
-        r0 = r1.mFaceDetectionEnabled;
-        if (r0 == 0) goto L_0x0020;
-    L_0x0004:
-        r0 = r1.mFaceDetectionStarted;
-        if (r0 != 0) goto L_0x0020;
-    L_0x0008:
-        r0 = r1.isAlive();
-        if (r0 != 0) goto L_0x000f;
-    L_0x000e:
-        goto L_0x0020;
-    L_0x000f:
-        r0 = r1.mMaxFaceCount;
-        if (r0 <= 0) goto L_0x001f;
-    L_0x0013:
-        r0 = r1.mCamera2Device;
-        if (r0 == 0) goto L_0x001f;
-    L_0x0017:
-        r0 = 1;
-        r1.mFaceDetectionStarted = r0;
-        r0 = r1.mCamera2Device;
-        r0.startFaceDetection();
-    L_0x001f:
-        return;
-    L_0x0020:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.VideoBase.startFaceDetection():void");
+        if (this.mFaceDetectionEnabled && !this.mFaceDetectionStarted && isAlive() && this.mMaxFaceCount > 0 && this.mCamera2Device != null) {
+            this.mFaceDetectionStarted = true;
+            this.mCamera2Device.startFaceDetection();
+        }
     }
 
     public void stopFaceDetection(boolean z) {
@@ -1330,9 +1310,9 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
         return false;
     }
 
-    public void onCameraMetaData(CaptureResult captureResult) {
+    public void onPreviewMetaDataUpdate(CaptureResult captureResult) {
         if (captureResult != null) {
-            super.onCameraMetaData(captureResult);
+            super.onPreviewMetaDataUpdate(captureResult);
             if (this.mMetaDataFlowableEmitter != null) {
                 this.mMetaDataFlowableEmitter.onNext(captureResult);
             }
@@ -1346,10 +1326,8 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
         updatePreferenceTrampoline(3);
     }
 
-    public void playSound(int i) {
-        if (!isNeedMute()) {
-            playCameraSound(i);
-        }
+    public void playFocusSound(int i) {
+        playCameraSound(i);
     }
 
     public boolean isShowAeAfLockIndicator() {
@@ -1472,7 +1450,7 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
             }
             this.mBeautyValues.mBeautyLevel = CameraSettings.getFaceBeautyCloseValue();
             if (!DataRepository.dataItemConfig().getComponentConfigBeauty().isClosed(this.mModuleIndex)) {
-                CameraSettings.initBeautyValues(this.mBeautyValues, b.hp());
+                CameraSettings.initBeautyValues(this.mBeautyValues, b.hr());
             }
             if (!BeautyConstant.LEVEL_CLOSE.equals(this.mBeautyValues.mBeautyLevel)) {
                 this.mCamera2Device.setBeautyValues(this.mBeautyValues);
@@ -1503,8 +1481,11 @@ public abstract class VideoBase extends BaseModule implements Listener, CameraAc
     }
 
     public boolean isThermalThreshold() {
-        long uptimeMillis = (SystemClock.uptimeMillis() - this.mRecordingStartTime) / 60000;
         boolean z = false;
+        if (!this.mMediaRecorderRecording) {
+            return false;
+        }
+        long uptimeMillis = (SystemClock.uptimeMillis() - this.mRecordingStartTime) / 60000;
         if (isFrontCamera()) {
             if (uptimeMillis >= 10) {
                 z = true;

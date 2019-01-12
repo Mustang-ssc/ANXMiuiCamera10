@@ -1,6 +1,6 @@
 .class public final Lmiui/R;
 .super Ljava/lang/Object;
-.source "SourceFile"
+.source "R.java"
 
 
 # annotations

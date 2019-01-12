@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.params.MeteringRectangle;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.support.annotation.CallSuper;
@@ -28,6 +29,7 @@ import com.android.camera.JpegEncodingQualityMappings;
 import com.android.camera.MutexModeManager;
 import com.android.camera.MutexModeManager.MutexCallBack;
 import com.android.camera.R;
+import com.android.camera.ThermalDetector;
 import com.android.camera.Util;
 import com.android.camera.constant.AutoFocus;
 import com.android.camera.constant.GlobalConstant;
@@ -142,7 +144,6 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
     protected CameraSize mPreviewSize;
     private boolean mRestoring;
     protected SettingsOverrider mSettingsOverrider = new SettingsOverrider();
-    protected CameraSize mSubPictureSize;
     protected long mSurfaceCreatedTimestamp;
     protected int mTriggerMode = 10;
     protected int mUIStyle = -1;
@@ -159,10 +160,6 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
     }
 
     protected abstract int getOperatingMode();
-
-    public abstract void onPreviewLayoutChanged(Rect rect);
-
-    public abstract void onPreviewSizeChanged(int i, int i2);
 
     protected abstract void openSettingActivity();
 
@@ -246,7 +243,7 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
                 BaseModule.this.mUpdateWorkThreadEmitter = observableEmitter;
             }
         }).observeOn(GlobalConstant.sCameraSetupScheduler).subscribe((Consumer) this);
-        if (DataRepository.dataItemFeature().fD() && CameraSettings.isLensDirtyDetectEnabled()) {
+        if (DataRepository.dataItemFeature().fF() && CameraSettings.isLensDirtyDetectEnabled()) {
             this.mLensDirtyDetectDisposable = Completable.complete().delay(15000, TimeUnit.MILLISECONDS, GlobalConstant.sCameraSetupScheduler).doOnComplete(new ActionUpdateLensDirtyDetect(this, true)).subscribe();
         }
         setCreated(true);
@@ -270,6 +267,7 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
 
     @CallSuper
     public void onDestroy() {
+        this.mActivity.getSensorStateManager().setSensorStateListener(null);
         setCreated(false);
         Log.d(TAG, "onDestroy");
     }
@@ -406,7 +404,7 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
         return false;
     }
 
-    public boolean isSelectingCapturedVideo() {
+    public boolean isSelectingCapturedResult() {
         return false;
     }
 
@@ -469,7 +467,7 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
     }
 
     protected static String getColorEffectKey() {
-        if (b.fI()) {
+        if (b.fL()) {
             return "pref_camera_shader_coloreffect_key";
         }
         return CameraSettings.KEY_COLOR_EFFECT;
@@ -688,32 +686,14 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
         return this.mMutexModePicker;
     }
 
-    /* JADX WARNING: Missing block: B:8:0x0019, code:
+    /* JADX WARNING: Missing block: B:12:0x0021, code:
             return;
      */
-    protected void playCameraSound(int r2) {
-        /*
-        r1 = this;
-        r0 = r1.mActivity;
-        if (r0 == 0) goto L_0x0019;
-    L_0x0004:
-        r0 = r1.mActivity;
-        r0 = r0.isActivityPaused();
-        if (r0 == 0) goto L_0x000d;
-    L_0x000c:
-        goto L_0x0019;
-    L_0x000d:
-        r0 = com.android.camera.CameraSettings.isCameraSoundOpen();
-        if (r0 == 0) goto L_0x0018;
-    L_0x0013:
-        r0 = r1.mActivity;
-        r0.playCameraSound(r2);
-    L_0x0018:
-        return;
-    L_0x0019:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.BaseModule.playCameraSound(int):void");
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+    protected final void playCameraSound(int i) {
+        if (this.mActivity != null && !this.mActivity.isActivityPaused() && !isNeedMute() && CameraSettings.isCameraSoundOpen()) {
+            this.mActivity.playCameraSound(i);
+        }
     }
 
     public static int getPreferencesLocalId(int i, int i2) {
@@ -814,7 +794,7 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
             return false;
         }
         z = this.mZoomValue == 1.0f || f == 1.0f;
-        if (!CameraSettings.isUltraWideConfigOpen()) {
+        if (!CameraSettings.isUltraWideConfigOpen(getModuleIndex())) {
             setZoomValue(f);
         } else if (f < ULTRA_WIDE_ZOOM_MAX) {
             setZoomValue(f);
@@ -865,8 +845,8 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
         }
     }
 
-    public boolean isNeedMute() {
-        return CameraSettings.isCameraSoundOpen() ^ 1;
+    protected boolean isNeedMute() {
+        return false;
     }
 
     public boolean isShowCaptureButton() {
@@ -955,9 +935,9 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
         updateLensDirtyDetect(false);
     }
 
-    public void onCameraMetaData(CaptureResult captureResult) {
+    public void onPreviewMetaDataUpdate(CaptureResult captureResult) {
         boolean z = false;
-        if (DataRepository.dataItemFeature().fD() && CaptureResultParser.isLensDirtyDetected(captureResult) && CameraSettings.isLensDirtyDetectEnabled()) {
+        if (DataRepository.dataItemFeature().fF() && CaptureResultParser.isLensDirtyDetected(captureResult) && CameraSettings.isLensDirtyDetectEnabled()) {
             if (CameraSettings.shouldShowLensDirtyDetectHint()) {
                 this.mActivity.showLensDirtyDetectedHint();
             }
@@ -1146,6 +1126,12 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
         this.mUIStyle = i;
     }
 
+    public void onPreviewLayoutChanged(Rect rect) {
+    }
+
+    public void onPreviewSizeChanged(int i, int i2) {
+    }
+
     protected int getCameraState() {
         return this.mCameraState;
     }
@@ -1160,7 +1146,9 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
     }
 
     public void updateLensDirtyDetect(boolean z) {
-        if (!z || (!isDoingAction() && !isPanoramaDoing())) {
+        if (this.mCamera2Device == null) {
+            Log.e(TAG, "updateLensDirtyDetect: mCamera2Device is null...");
+        } else if (!z || (!isDoingAction() && !isPanoramaDoing())) {
             this.mCamera2Device.setLensDirtyDetect(CameraSettings.isLensDirtyDetectEnabled());
             if (z) {
                 this.mCamera2Device.resumePreview();
@@ -1190,7 +1178,7 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
             stringBuilder.append(str);
             Log.d(str2, stringBuilder.toString());
             int parseInt = Util.parseInt(str, 0);
-            if (isFrontCamera() && this.mActivity.isScreenSlideOff()) {
+            if (ThermalDetector.getInstance().thermalConstrained() || (isFrontCamera() && this.mActivity.isScreenSlideOff())) {
                 parseInt = 0;
             }
             this.mCamera2Device.setOptimizedFlash(CameraSettings.isOptimizedFlashEnable());
@@ -1258,6 +1246,7 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
         return isCreated() && !isDeparted();
     }
 
+    @CallSuper
     public void onBroadcastReceived(Context context, Intent intent) {
         if (this.mActivity != null && !this.mActivity.isFinishing() && intent != null) {
             String action = intent.getAction();
@@ -1281,6 +1270,12 @@ public abstract class BaseModule implements MutexCallBack, Module, EvChangedProt
                 this.mActivity.getThumbnailUpdater().getLastThumbnail();
             }
         }
+    }
+
+    public void onHostStopAndNotifyActionStop() {
+    }
+
+    public void onNewUriArrived(Uri uri, String str) {
     }
 
     public boolean isDeviceAlive() {

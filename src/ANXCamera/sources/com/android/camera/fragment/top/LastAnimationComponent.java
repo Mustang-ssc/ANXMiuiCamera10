@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+import com.android.camera.R;
 import com.android.camera.animation.type.AlphaInOnSubscribe;
 import com.android.camera.animation.type.TranslateXOnSubscribe;
+import com.android.camera.data.data.config.TopConfigItem;
 import com.ss.android.vesdk.VEResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +47,18 @@ public class LastAnimationComponent {
         if (this.mHidedViews != null) {
             for (View view : this.mHidedViews) {
                 if (z) {
+                    float f = 1.0f;
+                    Object tag = view.getTag(R.id.tag_config_view_state_desc);
+                    if (tag == null || !(tag instanceof TopConfigItem)) {
+                        view.setEnabled(true);
+                    } else if (((TopConfigItem) tag).enable) {
+                        view.setEnabled(true);
+                    } else {
+                        view.setEnabled(false);
+                        f = 0.6f;
+                    }
                     ViewCompat.setAlpha(view, 0.0f);
-                    ViewCompat.animate(view).setStartDelay(0).setDuration(280).alpha(1.0f).translationX(0.0f).setInterpolator(this.mQuartEaseOut).start();
-                    view.setEnabled(true);
+                    ViewCompat.animate(view).setStartDelay(0).setDuration(280).alpha(f).translationX(0.0f).setInterpolator(this.mQuartEaseOut).start();
                 } else {
                     ViewCompat.setTranslationX(view, 0.0f);
                     AlphaInOnSubscribe.directSetResult(view);

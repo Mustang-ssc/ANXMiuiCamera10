@@ -31,6 +31,12 @@
 
 .field public static final FLAG_SUPPORT_STANDARD_MODE:I = 0x4
 
+.field public static final GAME_MODE:Ljava/lang/String; = "screen_game_mode"
+
+.field public static final GAME_MODE_DISABLE_EYECARE:I = 0x1
+
+.field public static final GAME_MODE_ENABLE_HDR:I = 0x2
+
 .field public static final MONOCHROME_MODE_DEFAULT:I = 0x2
 
 .field public static final MONOCHROME_MODE_GLOBAL:I = 0x1
@@ -122,7 +128,7 @@
 .method static constructor <clinit>()V
     .registers 3
 
-    .line 6629
+    .line 6645
     const-string/jumbo v0, "screen_effect_supported"
 
     const/4 v1, 0x0
@@ -133,36 +139,36 @@
 
     sput v0, Landroid/provider/MiuiSettings$ScreenEffect;->SCREEN_EFFECT_SUPPORTED:I
 
-    .line 6659
+    .line 6675
     invoke-static {}, Landroid/provider/MiuiSettings$ScreenEffect;->getDefaultScreenOptimizeMode()I
 
     move-result v0
 
     sput v0, Landroid/provider/MiuiSettings$ScreenEffect;->DEFAULT_SCREEN_OPTIMIZE_MODE:I
 
-    .line 6661
+    .line 6677
     const-string/jumbo v0, "support_screen_paper_mode"
 
-    .line 6662
+    .line 6678
     invoke-static {v0, v1}, Lmiui/util/FeatureParser;->getBoolean(Ljava/lang/String;Z)Z
 
     move-result v0
 
     sput-boolean v0, Landroid/provider/MiuiSettings$ScreenEffect;->isScreenPaperModeSupported:Z
 
-    .line 6673
+    .line 6689
     invoke-static {}, Landroid/provider/MiuiSettings$ScreenEffect;->getDefaultSaturation()I
 
     move-result v0
 
     sput v0, Landroid/provider/MiuiSettings$ScreenEffect;->DEFAULT_SCREEN_SATURATION:I
 
-    .line 6697
+    .line 6713
     const-string/jumbo v0, "sys.paper_mode_max_level"
 
     const-string/jumbo v1, "paper_mode_max_level"
 
-    .line 6698
+    .line 6714
     const/high16 v2, 0x41000000    # 8.0f
 
     invoke-static {v1, v2}, Lmiui/util/FeatureParser;->getFloat(Ljava/lang/String;F)Ljava/lang/Float;
@@ -177,14 +183,14 @@
 
     move-result v1
 
-    .line 6697
+    .line 6713
     invoke-static {v0, v1}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
 
     move-result v0
 
     sput v0, Landroid/provider/MiuiSettings$ScreenEffect;->PAPER_MODE_MAX_LEVEL:I
 
-    .line 6700
+    .line 6716
     const-string/jumbo v0, "sys.paper_mode_default_level"
 
     sget v1, Landroid/provider/MiuiSettings$ScreenEffect;->PAPER_MODE_MAX_LEVEL:I
@@ -205,7 +211,7 @@
 .method public constructor <init>()V
     .registers 1
 
-    .line 6609
+    .line 6625
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -214,10 +220,10 @@
 .method private static getDefaultSaturation()I
     .registers 3
 
-    .line 6676
+    .line 6692
     const/16 v0, 0xa
 
-    .line 6677
+    .line 6693
     .local v0, "defaultSaturation":I
     const-string v1, "is_hongmi"
 
@@ -229,10 +235,10 @@
 
     if-eqz v1, :cond_d
 
-    .line 6678
+    .line 6694
     const/16 v0, 0xb
 
-    .line 6680
+    .line 6696
     :cond_d
     const-string v1, "display_ce"
 
@@ -246,7 +252,7 @@
 .method private static getDefaultScreenOptimizeMode()I
     .registers 2
 
-    .line 6665
+    .line 6681
     sget v0, Landroid/provider/MiuiSettings$ScreenEffect;->SCREEN_EFFECT_SUPPORTED:I
 
     const/4 v1, 0x1
@@ -255,12 +261,12 @@
 
     if-nez v0, :cond_8
 
-    .line 6666
+    .line 6682
     const/4 v1, 0x2
 
     nop
 
-    .line 6665
+    .line 6681
     :cond_8
     return v1
 .end method
@@ -282,28 +288,28 @@
         }
     .end annotation
 
-    .line 6714
+    .line 6730
     nop
 
-    .line 6715
+    .line 6731
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
 
-    .line 6714
+    .line 6730
     const/4 v1, -0x2
 
     invoke-static {v0, p1, v1}, Landroid/provider/Settings$System;->getStringForUser(Landroid/content/ContentResolver;Ljava/lang/String;I)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 6717
+    .line 6733
     .local v0, "packageList":Ljava/lang/String;
     new-instance v1, Ljava/util/HashMap;
 
     invoke-direct {v1}, Ljava/util/HashMap;-><init>()V
 
-    .line 6718
+    .line 6734
     .local v1, "pkg2PaperMode":Ljava/util/HashMap;, "Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/Boolean;>;"
     invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
@@ -311,18 +317,18 @@
 
     if-nez v2, :cond_3e
 
-    .line 6719
+    .line 6735
     const-string v2, ","
 
     invoke-virtual {v0, v2}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
 
     move-result-object v2
 
-    .line 6720
+    .line 6736
     .local v2, "packageArr":[Ljava/lang/String;
     if-eqz v2, :cond_3e
 
-    .line 6721
+    .line 6737
     const/4 v3, 0x0
 
     move v4, v3
@@ -333,10 +339,10 @@
 
     if-ge v4, v5, :cond_3e
 
-    .line 6722
+    .line 6738
     aget-object v5, v2, v4
 
-    .line 6723
+    .line 6739
     .local v5, "pair":Ljava/lang/String;
     const/16 v6, 0x3d
 
@@ -344,13 +350,13 @@
 
     move-result v6
 
-    .line 6724
+    .line 6740
     .local v6, "equalIndex":I
     invoke-virtual {v5, v3, v6}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
     move-result-object v7
 
-    .line 6725
+    .line 6741
     .local v7, "pairKey":Ljava/lang/String;
     add-int/lit8 v8, v6, 0x1
 
@@ -358,7 +364,7 @@
 
     move-result-object v8
 
-    .line 6726
+    .line 6742
     .local v8, "pairValue":Ljava/lang/String;
     invoke-static {v8}, Ljava/lang/Boolean;->valueOf(Ljava/lang/String;)Ljava/lang/Boolean;
 
@@ -366,7 +372,7 @@
 
     invoke-virtual {v1, v7, v9}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 6721
+    .line 6737
     .end local v5    # "pair":Ljava/lang/String;
     .end local v6    # "equalIndex":I
     .end local v7    # "pairKey":Ljava/lang/String;
@@ -375,7 +381,7 @@
 
     goto :goto_1f
 
-    .line 6730
+    .line 6746
     .end local v2    # "packageArr":[Ljava/lang/String;
     .end local v4    # "i":I
     :cond_3e
@@ -388,12 +394,12 @@
     .param p1, "startTime"    # I
     .param p2, "endTime"    # I
 
-    .line 6774
+    .line 6790
     invoke-static {}, Ljava/util/Calendar;->getInstance()Ljava/util/Calendar;
 
     move-result-object v0
 
-    .line 6775
+    .line 6791
     .local v0, "calendar":Ljava/util/Calendar;
     const/16 v1, 0xb
 
@@ -401,7 +407,7 @@
 
     move-result v1
 
-    .line 6776
+    .line 6792
     .local v1, "hour":I
     const/16 v2, 0xc
 
@@ -409,55 +415,55 @@
 
     move-result v2
 
-    .line 6777
+    .line 6793
     .local v2, "minute":I
     mul-int/lit8 v3, v1, 0x3c
 
     add-int/2addr v3, v2
 
-    .line 6778
+    .line 6794
     .local v3, "now":I
     const/4 v4, 0x0
 
-    .line 6780
+    .line 6796
     .local v4, "isIn":Z
     if-le p1, p2, :cond_1e
 
-    .line 6782
+    .line 6798
     if-lt v3, p2, :cond_1c
 
     if-ge v3, p1, :cond_1c
 
-    .line 6784
+    .line 6800
     const/4 v4, 0x0
 
     goto :goto_27
 
-    .line 6787
+    .line 6803
     :cond_1c
     const/4 v4, 0x1
 
     goto :goto_27
 
-    .line 6789
+    .line 6805
     :cond_1e
     if-ge p1, p2, :cond_27
 
-    .line 6790
+    .line 6806
     if-lt v3, p1, :cond_26
 
     if-ge v3, p2, :cond_26
 
-    .line 6792
+    .line 6808
     const/4 v4, 0x1
 
     goto :goto_27
 
-    .line 6795
+    .line 6811
     :cond_26
     const/4 v4, 0x0
 
-    .line 6800
+    .line 6816
     :cond_27
     :goto_27
     return v4
@@ -466,7 +472,7 @@
 .method public static isScreenPaperMode()Z
     .registers 1
 
-    .line 6615
+    .line 6631
     invoke-static {}, Lmiui/hareware/display/DisplayFeatureManager;->getInstance()Lmiui/hareware/display/DisplayFeatureManager;
 
     move-result-object v0
@@ -505,7 +511,7 @@
         }
     .end annotation
 
-    .line 6734
+    .line 6750
     .local p1, "pkg2PaperMode":Ljava/util/HashMap;, "Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/Boolean;>;"
     if-eqz p1, :cond_51
 
@@ -517,13 +523,13 @@
 
     goto :goto_51
 
-    .line 6738
+    .line 6754
     :cond_9
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
-    .line 6739
+    .line 6755
     .local v0, "buffer":Ljava/lang/StringBuilder;
     invoke-virtual {p1}, Ljava/util/HashMap;->entrySet()Ljava/util/Set;
 
@@ -533,7 +539,7 @@
 
     move-result-object v1
 
-    .line 6740
+    .line 6756
     .local v1, "it":Ljava/util/Iterator;, "Ljava/util/Iterator<Ljava/util/Map$Entry<Ljava/lang/String;Ljava/lang/Boolean;>;>;"
     :goto_16
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
@@ -542,14 +548,14 @@
 
     if-eqz v2, :cond_45
 
-    .line 6741
+    .line 6757
     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v2
 
     check-cast v2, Ljava/util/Map$Entry;
 
-    .line 6742
+    .line 6758
     .local v2, "entry":Ljava/util/Map$Entry;, "Ljava/util/Map$Entry<Ljava/lang/String;Ljava/lang/Boolean;>;"
     invoke-interface {v2}, Ljava/util/Map$Entry;->getKey()Ljava/lang/Object;
 
@@ -557,63 +563,63 @@
 
     check-cast v3, Ljava/lang/String;
 
-    .line 6743
+    .line 6759
     .local v3, "key":Ljava/lang/String;
     invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 6745
+    .line 6761
     const/16 v4, 0x3d
 
     invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 6746
+    .line 6762
     invoke-interface {v2}, Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;
 
     move-result-object v4
 
     check-cast v4, Ljava/lang/Boolean;
 
-    .line 6747
+    .line 6763
     .local v4, "value":Ljava/lang/Boolean;
     invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    .line 6749
+    .line 6765
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v5
 
     if-eqz v5, :cond_44
 
-    .line 6750
+    .line 6766
     const-string v5, ","
 
     invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 6752
+    .line 6768
     .end local v2    # "entry":Ljava/util/Map$Entry;, "Ljava/util/Map$Entry<Ljava/lang/String;Ljava/lang/Boolean;>;"
     .end local v3    # "key":Ljava/lang/String;
     .end local v4    # "value":Ljava/lang/Boolean;
     :cond_44
     goto :goto_16
 
-    .line 6753
+    .line 6769
     :cond_45
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v2
 
-    .line 6754
+    .line 6770
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v3
 
-    .line 6753
+    .line 6769
     invoke-static {v2, p2, v3}, Landroid/provider/Settings$System;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 6755
+    .line 6771
     return-void
 
-    .line 6735
+    .line 6751
     .end local v0    # "buffer":Ljava/lang/StringBuilder;
     .end local v1    # "it":Ljava/util/Iterator;, "Ljava/util/Iterator<Ljava/util/Map$Entry<Ljava/lang/String;Ljava/lang/Boolean;>;>;"
     :cond_51
@@ -625,10 +631,10 @@
     .registers 3
     .param p0, "isScreenPaperMode"    # Z
 
-    .line 6620
+    .line 6636
     if-eqz p0, :cond_13
 
-    .line 6621
+    .line 6637
     const-string/jumbo v0, "persist.sys.eyecare_cache"
 
     sget v1, Landroid/provider/MiuiSettings$ScreenEffect;->DEFAULT_PAPER_MODE_LEVEL:I
@@ -637,7 +643,7 @@
 
     move-result v0
 
-    .line 6623
+    .line 6639
     .local v0, "level":I
     invoke-static {}, Lmiui/hareware/display/DisplayFeatureManager;->getInstance()Lmiui/hareware/display/DisplayFeatureManager;
 
@@ -645,11 +651,11 @@
 
     invoke-virtual {v1, v0}, Lmiui/hareware/display/DisplayFeatureManager;->setEyeCare(I)V
 
-    .line 6624
+    .line 6640
     .end local v0    # "level":I
     goto :goto_1b
 
-    .line 6625
+    .line 6641
     :cond_13
     invoke-static {}, Lmiui/hareware/display/DisplayFeatureManager;->getInstance()Lmiui/hareware/display/DisplayFeatureManager;
 
@@ -659,7 +665,7 @@
 
     invoke-virtual {v0, v1}, Lmiui/hareware/display/DisplayFeatureManager;->setEyeCare(I)V
 
-    .line 6627
+    .line 6643
     :goto_1b
     return-void
 .end method

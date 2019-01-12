@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraCaptureSession;
@@ -21,6 +22,7 @@ import android.os.SystemClock;
 import android.provider.MiuiSettings.ScreenEffect;
 import android.text.TextUtils;
 import android.util.Range;
+import android.util.Size;
 import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.View;
@@ -56,14 +58,14 @@ import com.android.camera.data.data.runing.DataItemRunning;
 import com.android.camera.db.DbRepository;
 import com.android.camera.db.element.SaveTask;
 import com.android.camera.effect.EffectController;
+import com.android.camera.effect.FaceAnalyzeInfo;
 import com.android.camera.effect.FilterInfo;
 import com.android.camera.effect.draw_mode.DrawExtTexAttribute;
+import com.android.camera.effect.renders.DualWatermarkParam;
 import com.android.camera.effect.renders.SnapshotEffectRender;
 import com.android.camera.fragment.beauty.BeautyParameters;
 import com.android.camera.fragment.beauty.BeautyValues;
 import com.android.camera.fragment.top.FragmentTopAlert;
-import com.android.camera.fragment.top.FragmentTopConfig;
-import com.android.camera.groupshot.GroupShot;
 import com.android.camera.log.Log;
 import com.android.camera.module.loader.FunctionParseAiScene;
 import com.android.camera.module.loader.FunctionParseAsdFace;
@@ -85,11 +87,12 @@ import com.android.camera.protocol.ModeProtocol.BottomPopupTips;
 import com.android.camera.protocol.ModeProtocol.CameraAction;
 import com.android.camera.protocol.ModeProtocol.CameraModuleSpecial;
 import com.android.camera.protocol.ModeProtocol.ConfigChanges;
-import com.android.camera.protocol.ModeProtocol.DualController;
 import com.android.camera.protocol.ModeProtocol.FaceBeautyProtocol;
 import com.android.camera.protocol.ModeProtocol.FilterProtocol;
 import com.android.camera.protocol.ModeProtocol.FullScreenProtocol;
+import com.android.camera.protocol.ModeProtocol.MainContentProtocol;
 import com.android.camera.protocol.ModeProtocol.OnFaceBeautyChangedProtocol;
+import com.android.camera.protocol.ModeProtocol.RecordState;
 import com.android.camera.protocol.ModeProtocol.SnapShotIndicator;
 import com.android.camera.protocol.ModeProtocol.TopAlert;
 import com.android.camera.protocol.ModeProtocol.TopConfigProtocol;
@@ -99,6 +102,7 @@ import com.android.camera.statistic.ScenarioTrackUtil;
 import com.android.camera.storage.Storage;
 import com.android.camera.ui.ObjectView.ObjectViewListener;
 import com.android.camera.ui.RotateTextToast;
+import com.android.camera2.Camera2Proxy;
 import com.android.camera2.Camera2Proxy.CameraMetaDataCallback;
 import com.android.camera2.Camera2Proxy.CameraPreviewCallback;
 import com.android.camera2.Camera2Proxy.FaceDetectionCallback;
@@ -115,9 +119,11 @@ import com.google.android.apps.photos.api.PhotosOemApi;
 import com.google.lens.sdk.LensApi;
 import com.google.lens.sdk.LensApi.LensAvailabilityCallback;
 import com.mi.config.b;
-import com.ss.android.ttve.common.TEDefine;
+import com.xiaomi.camera.base.Constants;
 import com.xiaomi.camera.base.PerformanceTracker;
 import com.xiaomi.camera.core.ParallelTaskData;
+import com.xiaomi.camera.core.ParallelTaskDataParameter;
+import com.xiaomi.camera.core.ParallelTaskDataParameter.Builder;
 import com.xiaomi.camera.core.PictureInfo;
 import com.xiaomi.camera.liveshot.CircularMediaRecorder;
 import com.xiaomi.engine.BufferFormat;
@@ -142,6 +148,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -150,13 +157,11 @@ import java.util.concurrent.TimeUnit;
 public class Camera2Module extends BaseModule implements Listener, CameraAction, CameraModuleSpecial, FaceBeautyProtocol, FilterProtocol, OnFaceBeautyChangedProtocol, TopConfigProtocol, ObjectViewListener, CameraMetaDataCallback, CameraPreviewCallback, FaceDetectionCallback, FocusCallback, HDRCheckerCallback, PictureCallback, ScreenLightCallback, UltraWideCheckCallback {
     private static final int BURST_SHOOTING_DELAY = 0;
     private static final long CAPTURE_DURATION_THRESHOLD = 8000;
-    private static final int GROUP_SHOT_GAP = 100;
     private static final int REQUEST_CROP = 1000;
     private static final String TAG = Camera2Module.class.getSimpleName();
     private static boolean mIsBeautyFrontOn = false;
     private static final String sTempCropFilename = "crop-temp";
     private volatile boolean isDetectedInHDR;
-    private boolean isMicrophoneEnabled = true;
     private volatile boolean isResetFromMutex = false;
     private boolean isSilhouette;
     private boolean m3ALocked;
@@ -181,22 +186,23 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     private int mCurrentAsdScene = -1;
     private int mCurrentDetectedScene;
     private SnapshotEffectRender mEffectProcessor;
+    private boolean mEnableParallelSession;
     private boolean mEnabledPreviewThumbnail;
     private boolean mFaceDetectionEnabled;
     private boolean mFaceDetectionStarted;
     private FocusManager2 mFocusManager;
     private FunctionParseAiScene mFunctionParseAiScene;
-    private int mGroupFaceNum = 10;
-    private GroupShot mGroupShot;
     private MainHandler mHandler;
     private boolean mHasAiSceneFilterEffect;
     private boolean mHdrCheckEnabled;
+    private boolean mIsCurrentTaskIsParallel;
     private boolean mIsGenderAgeOn;
     private boolean mIsGradienterOn;
     private boolean mIsImageCaptureIntent;
     private boolean mIsLensServiceBound = false;
     private boolean mIsMagicMirrorOn;
-    private boolean mIsParallelProcess;
+    private boolean mIsMicrophoneEnabled = true;
+    private boolean mIsMoonMode;
     private boolean mIsPortraitLightingOn;
     private boolean mIsSaveCaptureImage;
     private int mJpegRotation;
@@ -215,7 +221,6 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     private boolean mNeedAutoFocus;
     private long mOnResumeTime;
     private int mOperatingMode;
-    private String mParallelProcessingFilePath;
     private boolean mPendingMultiCapture;
     private boolean mQuickCapture;
     private int mReceivedJpegCallbackNum = 0;
@@ -226,7 +231,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         }
 
         public boolean isWorking() {
-            return Camera2Module.this.getCameraState() != 0;
+            return Camera2Module.this.isAlive() && Camera2Module.this.getCameraState() != 0;
         }
 
         public void onDeviceKeepMoving(double d) {
@@ -262,6 +267,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     private ServiceStatusListener mServiceStatusListener;
     private int mShootOrientation;
     private float mShootRotation;
+    private boolean mShouldDoMFNR;
     private long mShutterCallbackTime;
     private long mShutterLag;
     private Disposable mSuperNightDisposable;
@@ -313,13 +319,8 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
         public void onPictureTaken(byte[] bArr) {
             if (!Camera2Module.this.mPaused && bArr != null && Camera2Module.this.mReceivedJpegCallbackNum < Camera2Module.this.mTotalJpegCallbackNum && Camera2Module.this.mMultiSnapStatus) {
-                if (this.mSavedJpegCallbackNum == 1 && !Camera2Module.this.mMultiSnapStopRequest) {
-                    if (!Camera2Module.this.is3ALocked()) {
-                        Camera2Module.this.mFocusManager.onShutter();
-                    }
-                    if (!Camera2Module.this.mMutexModePicker.isUbiFocus()) {
-                        Camera2Module.this.mActivity.getImageSaver().updateImage(getBurstShotTitle(), this.mPressDownTitle);
-                    }
+                if (!(this.mSavedJpegCallbackNum != 1 || Camera2Module.this.mMultiSnapStopRequest || Camera2Module.this.mMutexModePicker.isUbiFocus())) {
+                    Camera2Module.this.mActivity.getImageSaver().updateImage(getBurstShotTitle(), this.mPressDownTitle);
                 }
                 boolean z = false;
                 int i;
@@ -336,13 +337,13 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                     }
                     return;
                 }
-                Camera2Module.access$504(Camera2Module.this);
+                Camera2Module.access$604(Camera2Module.this);
                 if (Camera2Module.this.mActivity.getImageSaver().isSaveQueueFull()) {
-                    String access$1500 = Camera2Module.TAG;
+                    String access$1300 = Camera2Module.TAG;
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("CaptureBurst queue full and drop ");
                     stringBuilder.append(Camera2Module.this.mReceivedJpegCallbackNum);
-                    Log.e(access$1500, stringBuilder.toString());
+                    Log.e(access$1300, stringBuilder.toString());
                     this.mDropped = true;
                     if (Camera2Module.this.mReceivedJpegCallbackNum >= Camera2Module.this.mTotalJpegCallbackNum) {
                         Camera2Module.this.mActivity.getThumbnailUpdater().getLastThumbnailUncached();
@@ -352,7 +353,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                     int height;
                     this.mSavedJpegCallbackNum++;
                     if (!Camera2Module.this.mMutexModePicker.isUbiFocus()) {
-                        Camera2Module.this.playSound(4);
+                        Camera2Module.this.playCameraSound(4);
                     }
                     Camera2Module.this.mBurstEmitter.onNext(Integer.valueOf(this.mSavedJpegCallbackNum));
                     boolean z2 = Camera2Module.this.mMutexModePicker.isUbiFocus() && Camera2Module.this.mReceivedJpegCallbackNum <= Camera2Module.this.mTotalJpegCallbackNum;
@@ -383,6 +384,180 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                     Camera2Module.this.stopMultiSnap();
                 }
             }
+        }
+
+        public void onPictureTakenFinished(boolean z) {
+            Camera2Module.this.stopMultiSnap();
+            Camera2Module.this.mBurstEmitter.onComplete();
+        }
+    }
+
+    private final class JpegRepeatingCaptureCallback extends PictureCallbackWrapper {
+        String mBurstShotTitle;
+        private boolean mDropped;
+        ParallelTaskDataParameter mParallelParameter;
+        String mPressDownTitle;
+
+        private JpegRepeatingCaptureCallback() {
+            this.mParallelParameter = null;
+        }
+
+        /* synthetic */ JpegRepeatingCaptureCallback(Camera2Module camera2Module, AnonymousClass1 anonymousClass1) {
+            this();
+        }
+
+        private String getBurstShotTitle() {
+            String stringBuilder;
+            if (Camera2Module.this.mUpdateImageTitle && this.mBurstShotTitle != null && Camera2Module.this.mReceivedJpegCallbackNum == 1) {
+                this.mPressDownTitle = this.mBurstShotTitle;
+                this.mBurstShotTitle = null;
+            }
+            if (this.mBurstShotTitle == null) {
+                long currentTimeMillis = System.currentTimeMillis();
+                this.mBurstShotTitle = Util.createJpegName(currentTimeMillis);
+                if (this.mBurstShotTitle.length() != 19) {
+                    this.mBurstShotTitle = Util.createJpegName(currentTimeMillis + 1000);
+                }
+            }
+            StringBuilder stringBuilder2 = new StringBuilder();
+            stringBuilder2.append(this.mBurstShotTitle);
+            if (Camera2Module.this.mMutexModePicker.isUbiFocus()) {
+                StringBuilder stringBuilder3 = new StringBuilder();
+                stringBuilder3.append(Storage.UBIFOCUS_SUFFIX);
+                stringBuilder3.append(Camera2Module.this.mReceivedJpegCallbackNum - 1);
+                stringBuilder = stringBuilder3.toString();
+            } else {
+                StringBuilder stringBuilder4 = new StringBuilder();
+                stringBuilder4.append("_BURST");
+                stringBuilder4.append(Camera2Module.this.mReceivedJpegCallbackNum);
+                stringBuilder = stringBuilder4.toString();
+            }
+            stringBuilder2.append(stringBuilder);
+            return stringBuilder2.toString();
+        }
+
+        /* JADX WARNING: Removed duplicated region for block: B:35:0x00aa  */
+        /* JADX WARNING: Removed duplicated region for block: B:34:0x00a5  */
+        /* JADX WARNING: Removed duplicated region for block: B:39:0x00f3  */
+        /* JADX WARNING: Removed duplicated region for block: B:38:0x00f1  */
+        /* JADX WARNING: Removed duplicated region for block: B:49:0x0141  */
+        /* JADX WARNING: Removed duplicated region for block: B:48:0x0135  */
+        /* JADX WARNING: Removed duplicated region for block: B:53:0x0151  */
+        /* JADX WARNING: Removed duplicated region for block: B:52:0x014c  */
+        /* Code decompiled incorrectly, please refer to instructions dump. */
+        public ParallelTaskData onCaptureStart(ParallelTaskData parallelTaskData, CameraSize cameraSize) {
+            if (!Camera2Module.this.mIsCurrentTaskIsParallel || Camera2Module.this.mPaused || Camera2Module.this.mReceivedJpegCallbackNum >= Camera2Module.this.mTotalJpegCallbackNum || !Camera2Module.this.mMultiSnapStatus) {
+                return null;
+            }
+            boolean z = true;
+            if (Camera2Module.this.mReceivedJpegCallbackNum == 1 && !Camera2Module.this.mMultiSnapStopRequest) {
+                if (!Camera2Module.this.is3ALocked()) {
+                    Camera2Module.this.mFocusManager.onShutter();
+                }
+                if (!Camera2Module.this.mMutexModePicker.isUbiFocus()) {
+                    Camera2Module.this.mActivity.getImageSaver().updateImage(getBurstShotTitle(), this.mPressDownTitle);
+                }
+            }
+            if (tryCheckNeedStop()) {
+                Log.d(Camera2Module.TAG, "onMultiSnapCaptureStart: need stop multi capture, return null");
+                return null;
+            }
+            if (this.mParallelParameter == null) {
+                List arrayList;
+                Size toSizeObject;
+                Builder jpegRotation;
+                float access$2200;
+                if (CameraSettings.isAgeGenderAndMagicMirrorWaterOpen()) {
+                    Collection faceWaterMarkInfos = ((MainContentProtocol) ModeCoordinatorImpl.getInstance().getAttachProtocol(166)).getFaceWaterMarkInfos();
+                    if (!(faceWaterMarkInfos == null || faceWaterMarkInfos.isEmpty())) {
+                        arrayList = new ArrayList(faceWaterMarkInfos);
+                        if (Camera2Module.this.mOutPutSize != null) {
+                            toSizeObject = cameraSize.toSizeObject();
+                        } else {
+                            toSizeObject = Camera2Module.this.mOutPutSize.toSizeObject();
+                        }
+                        jpegRotation = new Builder(Camera2Module.this.mPreviewSize.toSizeObject(), cameraSize.toSizeObject(), toSizeObject).setHasDualWaterMark(CameraSettings.isDualCameraWaterMarkOpen()).setMirror(Camera2Module.this.isFrontMirror()).setLightingPattern(CameraSettings.getPortraitLightingPattern()).setFilterId(EffectController.getInstance().getEffectForSaving(false)).setOrientation(-1 != Camera2Module.this.mOrientation ? 0 : Camera2Module.this.mOrientation).setJpegRotation(Camera2Module.this.mJpegRotation);
+                        access$2200 = (CameraSettings.isGradienterOn() || Camera2Module.this.mShootRotation != -1.0f) ? Camera2Module.this.mShootRotation : 0.0f;
+                        this.mParallelParameter = jpegRotation.setShootRotation(access$2200).setShootOrientation(Camera2Module.this.mShootOrientation).setLocation(Camera2Module.this.mLocation == null ? new Location(Camera2Module.this.mLocation) : null).setTimeWaterMarkString(CameraSettings.isTimeWaterMarkOpen() ? Util.getTimeWatermark() : null).setFaceWaterMarkList(arrayList).setAgeGenderAndMagicMirrorWater(CameraSettings.isAgeGenderAndMagicMirrorWaterOpen()).setFrontCamera(Camera2Module.this.isFrontCamera()).setBokehFrontCamera(Camera2Module.this.isBokehFrontCamera()).setAlgorithmName(Camera2Module.this.mAlgorithmName).setPictureInfo(Camera2Module.this.getPictureInfo()).setSuffix(Camera2Module.this.getSuffix()).setGradienterOn(Camera2Module.this.mIsGradienterOn).setTiltShiftMode(Camera2Module.getTiltShiftMode()).setSaveGroupshotPrimitive(false).setDualWatermarkParam(Camera2Module.this.getDualWaterMarkParam()).build();
+                    }
+                }
+                arrayList = null;
+                if (Camera2Module.this.mOutPutSize != null) {
+                }
+                if (-1 != Camera2Module.this.mOrientation) {
+                }
+                jpegRotation = new Builder(Camera2Module.this.mPreviewSize.toSizeObject(), cameraSize.toSizeObject(), toSizeObject).setHasDualWaterMark(CameraSettings.isDualCameraWaterMarkOpen()).setMirror(Camera2Module.this.isFrontMirror()).setLightingPattern(CameraSettings.getPortraitLightingPattern()).setFilterId(EffectController.getInstance().getEffectForSaving(false)).setOrientation(-1 != Camera2Module.this.mOrientation ? 0 : Camera2Module.this.mOrientation).setJpegRotation(Camera2Module.this.mJpegRotation);
+                if (CameraSettings.isGradienterOn()) {
+                }
+                if (Camera2Module.this.mLocation == null) {
+                }
+                if (CameraSettings.isTimeWaterMarkOpen()) {
+                }
+                this.mParallelParameter = jpegRotation.setShootRotation(access$2200).setShootOrientation(Camera2Module.this.mShootOrientation).setLocation(Camera2Module.this.mLocation == null ? new Location(Camera2Module.this.mLocation) : null).setTimeWaterMarkString(CameraSettings.isTimeWaterMarkOpen() ? Util.getTimeWatermark() : null).setFaceWaterMarkList(arrayList).setAgeGenderAndMagicMirrorWater(CameraSettings.isAgeGenderAndMagicMirrorWaterOpen()).setFrontCamera(Camera2Module.this.isFrontCamera()).setBokehFrontCamera(Camera2Module.this.isBokehFrontCamera()).setAlgorithmName(Camera2Module.this.mAlgorithmName).setPictureInfo(Camera2Module.this.getPictureInfo()).setSuffix(Camera2Module.this.getSuffix()).setGradienterOn(Camera2Module.this.mIsGradienterOn).setTiltShiftMode(Camera2Module.getTiltShiftMode()).setSaveGroupshotPrimitive(false).setDualWatermarkParam(Camera2Module.this.getDualWaterMarkParam()).build();
+            }
+            parallelTaskData.fillParameter(this.mParallelParameter);
+            if (Camera2Module.this.mActivity.getImageSaver().isSaveQueueFull()) {
+                String access$1300 = Camera2Module.TAG;
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("onCaptureStart queue full and drop ");
+                stringBuilder.append(Camera2Module.this.mReceivedJpegCallbackNum);
+                Log.e(access$1300, stringBuilder.toString());
+                this.mDropped = true;
+                if (Camera2Module.this.mReceivedJpegCallbackNum >= Camera2Module.this.mTotalJpegCallbackNum) {
+                    Camera2Module.this.mActivity.getThumbnailUpdater().getLastThumbnailUncached();
+                }
+            } else {
+                Camera2Module.access$604(Camera2Module.this);
+                if (!Camera2Module.this.mMutexModePicker.isUbiFocus()) {
+                    Camera2Module.this.playCameraSound(4);
+                }
+                String access$13002 = Camera2Module.TAG;
+                StringBuilder stringBuilder2 = new StringBuilder();
+                stringBuilder2.append("onCaptureStart: mReceivedJpegCallbackNum = ");
+                stringBuilder2.append(Camera2Module.this.mReceivedJpegCallbackNum);
+                Log.d(access$13002, stringBuilder2.toString());
+                Camera2Module.this.mBurstEmitter.onNext(Integer.valueOf(Camera2Module.this.mReceivedJpegCallbackNum));
+                if (!Camera2Module.this.mMutexModePicker.isUbiFocus() && Camera2Module.this.mReceivedJpegCallbackNum <= Camera2Module.this.mTotalJpegCallbackNum) {
+                    access$13002 = Storage.generateFilepath(getBurstShotTitle());
+                    String access$13003 = Camera2Module.TAG;
+                    StringBuilder stringBuilder3 = new StringBuilder();
+                    stringBuilder3.append("onCaptureStart: savePath = ");
+                    stringBuilder3.append(access$13002);
+                    Log.d(access$13003, stringBuilder3.toString());
+                    parallelTaskData.setSavePath(access$13002);
+                    if (!(Camera2Module.this.mReceivedJpegCallbackNum == Camera2Module.this.mTotalJpegCallbackNum || Camera2Module.this.mMultiSnapStopRequest || this.mDropped)) {
+                        z = false;
+                    }
+                    parallelTaskData.setNeedThumbnail(z);
+                    Camera2Module.this.beginParallelProcess(parallelTaskData, false);
+                    this.mDropped = false;
+                    if (Camera2Module.this.mReceivedJpegCallbackNum >= Camera2Module.this.mTotalJpegCallbackNum || Camera2Module.this.mMultiSnapStopRequest || this.mDropped) {
+                        Camera2Module.this.stopMultiSnap();
+                    }
+                    return parallelTaskData;
+                }
+            }
+            parallelTaskData = null;
+            Camera2Module.this.stopMultiSnap();
+            return parallelTaskData;
+        }
+
+        private boolean tryCheckNeedStop() {
+            boolean z = false;
+            if (!Storage.isLowStorageAtLastPoint()) {
+                return false;
+            }
+            if (!Camera2Module.this.mMutexModePicker.isUbiFocus() && Camera2Module.this.mMultiSnapStatus) {
+                Camera2Module.this.trackGeneralInfo(Camera2Module.this.mReceivedJpegCallbackNum, true);
+                Camera2Module camera2Module = Camera2Module.this;
+                int access$600 = Camera2Module.this.mReceivedJpegCallbackNum;
+                if (Camera2Module.this.mLocation != null) {
+                    z = true;
+                }
+                camera2Module.trackPictureTaken(access$600, true, z, Camera2Module.this.getCurrentAiSceneName());
+                Camera2Module.this.stopMultiSnap();
+            }
+            return true;
         }
 
         public void onPictureTakenFinished(boolean z) {
@@ -485,7 +660,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         }
     }
 
-    static /* synthetic */ int access$504(Camera2Module camera2Module) {
+    static /* synthetic */ int access$604(Camera2Module camera2Module) {
         int i = camera2Module.mReceivedJpegCallbackNum + 1;
         camera2Module.mReceivedJpegCallbackNum = i;
         return i;
@@ -498,11 +673,14 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         ModeCoordinatorImpl.getInstance().attachProtocol(165, this);
         ModeCoordinatorImpl.getInstance().attachProtocol(193, this);
         ModeCoordinatorImpl.getInstance().attachProtocol(195, this);
-        if (b.hp()) {
+        if (b.hr()) {
             ModeCoordinatorImpl.getInstance().attachProtocol(185, this);
         }
         ModeCoordinatorImpl.getInstance().attachProtocol(199, this);
         getActivity().getImplFactory().initAdditional(getActivity(), 164, 174);
+        if (getModuleIndex() == 173) {
+            getActivity().getImplFactory().initAdditional(getActivity(), 212);
+        }
     }
 
     public void unRegisterProtocol() {
@@ -512,7 +690,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         ModeCoordinatorImpl.getInstance().detachProtocol(165, this);
         ModeCoordinatorImpl.getInstance().detachProtocol(193, this);
         ModeCoordinatorImpl.getInstance().detachProtocol(195, this);
-        if (b.hp()) {
+        if (b.hr()) {
             ModeCoordinatorImpl.getInstance().detachProtocol(185, this);
         }
         ModeCoordinatorImpl.getInstance().detachProtocol(199, this);
@@ -520,14 +698,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     public boolean scanQRCodeEnabled() {
-        boolean z = false;
-        if (this.mIsParallelProcess) {
-            return false;
-        }
-        if (!(!CameraSettings.isScanQRCode(this.mActivity) || this.mModuleIndex != 163 || this.mIsImageCaptureIntent || !CameraSettings.isBackCamera() || this.mMultiSnapStatus || CameraSettings.isStereoModeOn() || CameraSettings.isPortraitModeBackOn())) {
-            z = true;
-        }
-        return z;
+        return (!CameraSettings.isScanQRCode(this.mActivity) || this.mModuleIndex != 163 || this.mIsImageCaptureIntent || !CameraSettings.isBackCamera() || this.mMultiSnapStatus || CameraSettings.isStereoModeOn() || CameraSettings.isPortraitModeBackOn()) ? false : true;
     }
 
     public void startFocus() {
@@ -609,19 +780,24 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                 }
             });
             this.mBurstNextDelayTime = 0;
-            this.mCamera2Device.setShotType(3);
-            this.mCamera2Device.captureBurstPictures(this.mTotalJpegCallbackNum, new JpegQuickPictureCallback(LocationManager.instance().getCurrentLocation()), this.mActivity.getImageSaver());
+            if (isParallelSessionEnable()) {
+                this.mCamera2Device.setShotType(8);
+                this.mCamera2Device.captureBurstPictures(this.mTotalJpegCallbackNum, new JpegRepeatingCaptureCallback(this, null), this.mActivity.getImageSaver());
+            } else {
+                this.mCamera2Device.setShotType(3);
+                this.mCamera2Device.captureBurstPictures(this.mTotalJpegCallbackNum, new JpegQuickPictureCallback(LocationManager.instance().getCurrentLocation()), this.mActivity.getImageSaver());
+            }
             return true;
         }
     }
 
     private void stopMultiSnap() {
+        Log.d(TAG, "stopMultiSnap: start");
         this.mHandler.removeMessages(49);
         if (this.mMultiSnapStatus) {
             int i;
             this.mLastCaptureTime = System.currentTimeMillis();
             this.mMultiSnapStatus = false;
-            Log.e(TAG, "burst: stopMultiSnap | ");
             this.mCamera2Device.captureAbortBurst();
             boolean z = true;
             if (this.mMutexModePicker.isUbiFocus()) {
@@ -667,39 +843,6 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         }
     }
 
-    public int getGroupShotNum() {
-        if (Util.isMemoryRich(this.mActivity)) {
-            return getGroupShotMaxImage();
-        }
-        return 1;
-    }
-
-    public int getGroupShotMaxImage() {
-        CameraHardwareFace[] faces = this.mMainProtocol.getFaces();
-        return Util.clamp((faces != null ? faces.length : 0) + 1, 2, 4);
-    }
-
-    public void initGroupShot(int i) {
-        if (this.mGroupShot == null || this.mGroupShot.isUsed()) {
-            this.mGroupShot = new GroupShot();
-        }
-        if (this.mOrientation % 180 == 0 && b.hh()) {
-            this.mGroupShot.initialize(i, this.mGroupFaceNum, this.mPictureSize.getHeight(), this.mPictureSize.getWidth(), this.mPreviewSize.height, this.mPreviewSize.width);
-            return;
-        }
-        this.mGroupShot.initialize(i, this.mGroupFaceNum, this.mPictureSize.getWidth(), this.mPictureSize.getHeight(), this.mPreviewSize.width, this.mPreviewSize.height);
-    }
-
-    private void prepareGroupShot() {
-        this.mTotalJpegCallbackNum = getGroupShotNum();
-        initGroupShot(this.mTotalJpegCallbackNum);
-        if (this.mGroupShot != null) {
-            this.mGroupShot.attach_start(1);
-        } else {
-            this.mTotalJpegCallbackNum = 1;
-        }
-    }
-
     public CircularMediaRecorder getCircularMediaRecorder() {
         CircularMediaRecorder circularMediaRecorder;
         synchronized (this.mCircularMediaRecorderStateLock) {
@@ -711,7 +854,8 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     public void startLiveShot() {
         synchronized (this.mCircularMediaRecorderStateLock) {
             if (this.mCircularMediaRecorder == null) {
-                this.mCircularMediaRecorder = new CircularMediaRecorder(this.mVideoSize.width, this.mVideoSize.height, getActivity().getGLView().getEGLContext14(), this.isMicrophoneEnabled);
+                this.mCircularMediaRecorder = new CircularMediaRecorder(this.mVideoSize.width, this.mVideoSize.height, getActivity().getGLView().getEGLContext14(), this.mIsMicrophoneEnabled);
+                this.mCircularMediaRecorder.setFpsReduction(15.0f);
             }
             this.mCircularMediaRecorder.setOrientationHint(this.mOrientationCompensation);
             this.mCircularMediaRecorder.start();
@@ -731,7 +875,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private void updateLiveShot() {
-        if (!DataRepository.dataItemFeature().fy() || this.mModuleIndex != 163) {
+        if (!DataRepository.dataItemFeature().fA() || this.mModuleIndex != 163) {
             return;
         }
         if (CameraSettings.isLiveShotOn()) {
@@ -769,7 +913,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         String componentValue = DataRepository.dataItemConfig().getComponentHdr().getComponentValue(this.mModuleIndex);
         if (this.mCameraCapabilities.isSupportedQcfa() && mIsBeautyFrontOn != isFaceBeautyOn && ((this.mModuleIndex != 171 || !isBokehFrontCamera()) && ((isFaceBeautyOn && this.mOperatingMode == 32775) || (!isFaceBeautyOn && componentValue.equals("off") && this.mOperatingMode == 32773)))) {
             restartModule();
-        } else if (b.hw()) {
+        } else if (b.hy()) {
             updatePreferenceInWorkThread(13, 34, 42);
         } else {
             updatePreferenceInWorkThread(13);
@@ -802,7 +946,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private void updateBokeh() {
-        boolean z = isFrontCamera() && !isBokehFrontCamera() && ModuleManager.isPortraitModule() && b.hb();
+        boolean z = isFrontCamera() && !isBokehFrontCamera() && ModuleManager.isPortraitModule() && b.he();
         this.mCamera2Device.setBokeh(z);
     }
 
@@ -881,7 +1025,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
     public void onFaceBeautySwitched(boolean z) {
         CameraSettings.setFaceBeautySwitch(z ? CameraSettings.KEY_FACE_BEAUTY_ADVANCED : "pref_camera_face_beauty_key");
-        if (b.hp()) {
+        if (b.hr()) {
             onBeautyChanged();
         }
     }
@@ -893,51 +1037,19 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     /* JADX WARNING: Missing block: B:16:0x0034, code:
             return;
      */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     public void startFaceDetection() {
-        /*
-        r2 = this;
-        r0 = r2.mFaceDetectionEnabled;
-        if (r0 == 0) goto L_0x0034;
-    L_0x0004:
-        r0 = r2.mFaceDetectionStarted;
-        if (r0 != 0) goto L_0x0034;
-    L_0x0008:
-        r0 = r2.mActivity;
-        if (r0 == 0) goto L_0x0034;
-    L_0x000c:
-        r0 = r2.mActivity;
-        r0 = r0.isActivityPaused();
-        if (r0 != 0) goto L_0x0034;
-    L_0x0014:
-        r0 = r2.isAlive();
-        if (r0 != 0) goto L_0x001b;
-    L_0x001a:
-        goto L_0x0034;
-    L_0x001b:
-        r0 = r2.mMaxFaceCount;
-        if (r0 <= 0) goto L_0x0033;
-    L_0x001f:
-        r0 = r2.mCamera2Device;
-        if (r0 == 0) goto L_0x0033;
-    L_0x0023:
-        r0 = 1;
-        r2.mFaceDetectionStarted = r0;
-        r1 = r2.mMainProtocol;
-        r1.setActiveIndicator(r0);
-        r1 = r2.mCamera2Device;
-        r1.startFaceDetection();
-        r2.updateFaceView(r0, r0);
-    L_0x0033:
-        return;
-    L_0x0034:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.startFaceDetection():void");
+        if (!(!this.mFaceDetectionEnabled || this.mFaceDetectionStarted || this.mActivity == null || this.mActivity.isActivityPaused() || !isAlive() || this.mMaxFaceCount <= 0 || this.mCamera2Device == null)) {
+            this.mFaceDetectionStarted = true;
+            this.mMainProtocol.setActiveIndicator(1);
+            this.mCamera2Device.startFaceDetection();
+            updateFaceView(true, true);
+        }
     }
 
     public void stopFaceDetection(boolean z) {
         if (this.mFaceDetectionEnabled && this.mFaceDetectionStarted) {
-            if (!(b.fZ() && (getCameraState() == 3 || getCameraState() == 0))) {
+            if (!(b.gd() && (getCameraState() == 3 || getCameraState() == 0))) {
                 this.mCamera2Device.stopFaceDetection();
             }
             this.mFaceDetectionStarted = false;
@@ -949,65 +1061,17 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     /* JADX WARNING: Missing block: B:22:0x0054, code:
             return;
      */
-    public void onFaceDetected(com.android.camera2.CameraHardwareFace[] r4, com.android.camera.effect.FaceAnalyzeInfo r5) {
-        /*
-        r3 = this;
-        r5 = r3.isAlive();
-        if (r5 == 0) goto L_0x0054;
-    L_0x0006:
-        r5 = r3.mActivity;
-        r5 = r5.getCameraScreenNail();
-        r5 = r5.getFrameAvailableFlag();
-        if (r5 != 0) goto L_0x0013;
-    L_0x0012:
-        goto L_0x0054;
-    L_0x0013:
-        if (r4 != 0) goto L_0x0016;
-    L_0x0015:
-        return;
-    L_0x0016:
-        r5 = com.mi.config.b.gg();
-        if (r5 == 0) goto L_0x003a;
-    L_0x001c:
-        r5 = r4.length;
-        if (r5 <= 0) goto L_0x003a;
-    L_0x001f:
-        r5 = 0;
-        r5 = r4[r5];
-        r5 = r5.faceType;
-        r0 = 64206; // 0xface float:8.9972E-41 double:3.1722E-319;
-        if (r5 != r0) goto L_0x003a;
-    L_0x0029:
-        r5 = r3.mObjectTrackingStarted;
-        if (r5 == 0) goto L_0x0053;
-    L_0x002d:
-        r5 = r3.mMainProtocol;
-        r0 = 3;
-        r1 = r3.getActiveArraySize();
-        r2 = r3.mZoomValue;
-        r5.setFaces(r0, r4, r1, r2);
-        goto L_0x0053;
-    L_0x003a:
-        r5 = r3.mMainProtocol;
-        r0 = 1;
-        r1 = r3.getActiveArraySize();
-        r2 = r3.mZoomValue;
-        r5 = r5.setFaces(r0, r4, r1, r2);
-        if (r5 != 0) goto L_0x004a;
-    L_0x0049:
-        return;
-    L_0x004a:
-        r5 = r3.mIsPortraitLightingOn;
-        if (r5 == 0) goto L_0x0053;
-    L_0x004e:
-        r5 = r3.mMainProtocol;
-        r5.lightingDetectFace(r4);
-    L_0x0053:
-        return;
-    L_0x0054:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.onFaceDetected(com.android.camera2.CameraHardwareFace[], com.android.camera.effect.FaceAnalyzeInfo):void");
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+    public void onFaceDetected(CameraHardwareFace[] cameraHardwareFaceArr, FaceAnalyzeInfo faceAnalyzeInfo) {
+        if (isAlive() && this.mActivity.getCameraScreenNail().getFrameAvailableFlag() && cameraHardwareFaceArr != null) {
+            if (b.gj() && cameraHardwareFaceArr.length > 0 && cameraHardwareFaceArr[0].faceType == CameraHardwareFace.CAMERA_META_DATA_T2T) {
+                if (this.mObjectTrackingStarted) {
+                    this.mMainProtocol.setFaces(3, cameraHardwareFaceArr, getActiveArraySize(), this.mZoomValue);
+                }
+            } else if (this.mMainProtocol.setFaces(1, cameraHardwareFaceArr, getActiveArraySize(), this.mZoomValue) && this.mIsPortraitLightingOn) {
+                this.mMainProtocol.lightingDetectFace(cameraHardwareFaceArr);
+            }
+        }
     }
 
     public boolean isFaceDetectStarted() {
@@ -1045,10 +1109,12 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         updatePreferenceTrampoline(3);
     }
 
-    public void playSound(int i) {
-        if (!CameraSettings.isLiveShotOn()) {
-            playCameraSound(i);
-        }
+    public void playFocusSound(int i) {
+        playCameraSound(i);
+    }
+
+    public boolean isNeedMute() {
+        return CameraSettings.isLiveShotOn();
     }
 
     public void startObjectTracking() {
@@ -1084,46 +1150,19 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     /* JADX WARNING: Missing block: B:17:0x0037, code:
             return false;
      */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     private boolean checkShutterCondition() {
-        /*
-        r2 = this;
-        r0 = r2.isDoingAction();
-        r1 = 0;
-        if (r0 != 0) goto L_0x0037;
-    L_0x0007:
-        r0 = r2.isIgnoreTouchEvent();
-        if (r0 == 0) goto L_0x000e;
-    L_0x000d:
-        goto L_0x0037;
-    L_0x000e:
-        r0 = com.android.camera.storage.Storage.isLowStorageAtLastPoint();
-        if (r0 == 0) goto L_0x0015;
-    L_0x0014:
-        return r1;
-    L_0x0015:
-        r0 = r2.isFrontCamera();
-        if (r0 == 0) goto L_0x0024;
-    L_0x001b:
-        r0 = r2.mActivity;
-        r0 = r0.isScreenSlideOff();
-        if (r0 == 0) goto L_0x0024;
-    L_0x0023:
-        return r1;
-    L_0x0024:
-        r0 = com.android.camera.protocol.ModeCoordinatorImpl.getInstance();
-        r1 = 171; // 0xab float:2.4E-43 double:8.45E-322;
-        r0 = r0.getAttachProtocol(r1);
-        r0 = (com.android.camera.protocol.ModeProtocol.BackStack) r0;
-        if (r0 == 0) goto L_0x0035;
-    L_0x0032:
-        r0.handleBackStackFromShutter();
-    L_0x0035:
-        r0 = 1;
-        return r0;
-    L_0x0037:
-        return r1;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.checkShutterCondition():boolean");
+        if (isDoingAction() || isIgnoreTouchEvent() || Storage.isLowStorageAtLastPoint()) {
+            return false;
+        }
+        if (isFrontCamera() && this.mActivity.isScreenSlideOff()) {
+            return false;
+        }
+        BackStack backStack = (BackStack) ModeCoordinatorImpl.getInstance().getAttachProtocol(171);
+        if (backStack != null) {
+            backStack.handleBackStackFromShutter();
+        }
+        return true;
     }
 
     public void onShutterButtonClick(int i) {
@@ -1156,6 +1195,13 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         this.mLastCaptureTime = this.mCaptureStartTime;
         setCameraState(3);
         this.mJpegRotation = Util.getJpegRotation(this.mBogusCameraId, this.mOrientation);
+        String str = TAG;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("prepareNormalCapture: mOrientation = ");
+        stringBuilder.append(this.mOrientation);
+        stringBuilder.append(", mJpegRotation = ");
+        stringBuilder.append(this.mJpegRotation);
+        Log.d(str, stringBuilder.toString());
         this.mCamera2Device.setJpegRotation(this.mJpegRotation);
         Location currentLocation = LocationManager.instance().getCurrentLocation();
         this.mCamera2Device.setGpsLocation(currentLocation);
@@ -1163,12 +1209,12 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         updateFrontMirror();
         updateBeauty();
         updateShotDetermine();
-        if (this.mIsParallelProcess) {
-            StringBuilder stringBuilder = new StringBuilder();
+        if (this.mIsCurrentTaskIsParallel) {
+            Camera2Proxy camera2Proxy = this.mCamera2Device;
+            stringBuilder = new StringBuilder();
             stringBuilder.append(Util.createJpegName(System.currentTimeMillis()));
             stringBuilder.append(getSuffix());
-            this.mParallelProcessingFilePath = Storage.generateFilepath(stringBuilder.toString());
-            this.mCamera2Device.setShotSavePath(this.mParallelProcessingFilePath);
+            camera2Proxy.setShotSavePath(Storage.generateFilepath(stringBuilder.toString()));
         }
         setWaterMark();
         setPictureOrientation();
@@ -1182,20 +1228,19 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
     private void startNormalCapture(int i) {
         prepareNormalCapture();
-        if (CameraSettings.isGroupShotOn()) {
-            prepareGroupShot();
-            this.mCamera2Device.captureGroupShotPictures(this, this.mActivity.getImageSaver(), this.mTotalJpegCallbackNum, this.mGroupShot);
+        if (!CameraSettings.isGroupShotOn() || isParallelSessionEnable()) {
+            long j;
+            MainHandler mainHandler = this.mHandler;
+            if (this.mModuleIndex == 173) {
+                j = 16000;
+            } else {
+                j = CAPTURE_DURATION_THRESHOLD;
+            }
+            mainHandler.sendEmptyMessageDelayed(50, j);
+            this.mCamera2Device.takePicture(this, this.mActivity.getImageSaver());
             return;
         }
-        long j;
-        MainHandler mainHandler = this.mHandler;
-        if (this.mModuleIndex == 173) {
-            j = 16000;
-        } else {
-            j = CAPTURE_DURATION_THRESHOLD;
-        }
-        mainHandler.sendEmptyMessageDelayed(50, j);
-        this.mCamera2Device.takePicture(this, this.mActivity.getImageSaver());
+        this.mCamera2Device.captureGroupShotPictures(this, this.mActivity.getImageSaver(), this.mTotalJpegCallbackNum, this.mActivity);
     }
 
     private void prepareMultiCapture() {
@@ -1206,40 +1251,52 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         CameraCapabilities cameraCapabilities = this.mCameraCapabilities;
         this.mTotalJpegCallbackNum = CameraCapabilities.getBurstShootCount();
         this.mHandler.removeMessages(49);
+        if (!is3ALocked()) {
+            this.mFocusManager.onShutter();
+        }
     }
 
     private void prepareSuperNight() {
         if (this.mModuleIndex == 173) {
-            ((ActionProcessing) ModeCoordinatorImpl.getInstance().getAttachProtocol(162)).processingStart();
-            this.mSuperNightDisposable = Observable.just(Integer.valueOf(300), Integer.valueOf(7000)).flatMap(new Function<Integer, ObservableSource<Integer>>() {
+            RecordState recordState = (RecordState) ModeCoordinatorImpl.getInstance().getAttachProtocol(212);
+            recordState.onPrepare();
+            recordState.onStart();
+            this.mSuperNightDisposable = Observable.just(Integer.valueOf(300), Integer.valueOf(2000)).flatMap(new Function<Integer, ObservableSource<Integer>>() {
                 public ObservableSource<Integer> apply(Integer num) throws Exception {
                     return Observable.just(num).delaySubscription((long) num.intValue(), TimeUnit.MILLISECONDS);
                 }
             }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Integer>() {
                 public void accept(Integer num) throws Exception {
                     if (Camera2Module.this.isAlive()) {
-                        BottomPopupTips bottomPopupTips = (BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175);
                         int intValue = num.intValue();
-                        if (intValue != 300) {
-                            if (intValue == 2000) {
-                                Camera2Module.this.animateCapture();
-                                Camera2Module.this.playSound(0);
-                                ((ActionProcessing) ModeCoordinatorImpl.getInstance().getAttachProtocol(162)).processingPostAction();
-                                DualController dualController = (DualController) ModeCoordinatorImpl.getInstance().getAttachProtocol(182);
-                                if (dualController != null) {
-                                    dualController.showZoomButton();
-                                }
-                                if (bottomPopupTips != null) {
-                                    bottomPopupTips.hideTipImage();
-                                }
+                        if (intValue == 300) {
+                            BottomPopupTips bottomPopupTips = (BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175);
+                            if (bottomPopupTips != null) {
+                                bottomPopupTips.showTips(11, R.string.super_night_toast, 4);
                             }
-                        } else if (bottomPopupTips != null) {
-                            bottomPopupTips.showTips(11, R.string.super_night_toast, 4);
+                        } else if (intValue == 2000) {
+                            Camera2Module.this.animateCapture();
+                            Camera2Module.this.playCameraSound(0);
+                            RecordState recordState = (RecordState) ModeCoordinatorImpl.getInstance().getAttachProtocol(212);
+                            if (recordState != null) {
+                                recordState.onPostSavingStart();
+                            }
                         }
                     }
                 }
             });
         }
+    }
+
+    private DualWatermarkParam getDualWaterMarkParam() {
+        return new DualWatermarkParam(CameraSettings.isDualCameraWaterMarkOpen(), CameraSettings.getDualCameraWaterMarkFilePathVendor(), CameraSettings.getResourceFloat(R.dimen.dualcamera_watermark_size_ratio, 0.0f), CameraSettings.getResourceFloat(R.dimen.dualcamera_watermark_padding_x_ratio, 0.0f), CameraSettings.getResourceFloat(R.dimen.dualcamera_watermark_padding_y_ratio, 0.0f));
+    }
+
+    private static String getTiltShiftMode() {
+        if (CameraSettings.isTiltShiftOn()) {
+            return DataRepository.dataItemRunning().getComponentRunningTiltValue().getComponentValue(160);
+        }
+        return null;
     }
 
     private void animateCapture() {
@@ -1273,14 +1330,14 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         if (backStack != null) {
             backStack.handleBackStackFromShutter();
         }
-        if (!CameraSettings.isBurstShootingEnable() || !ModuleManager.isCameraModule() || this.mIsImageCaptureIntent || CameraSettings.isGroupShotOn() || CameraSettings.isGradienterOn() || CameraSettings.isTiltShiftOn() || DataRepository.dataItemRunning().isSwitchOn("pref_camera_hand_night_key") || CameraSettings.isStereoModeOn() || CameraSettings.isPortraitModeBackOn() || !isBackCamera() || this.mMultiSnapStatus || this.mHandler.hasMessages(24) || this.mPendingMultiCapture) {
+        if (!CameraSettings.isBurstShootingEnable() || !ModuleManager.isCameraModule() || this.mIsImageCaptureIntent || CameraSettings.isGroupShotOn() || CameraSettings.isGradienterOn() || CameraSettings.isTiltShiftOn() || DataRepository.dataItemRunning().isSwitchOn("pref_camera_hand_night_key") || CameraSettings.isStereoModeOn() || CameraSettings.isPortraitModeBackOn() || !isBackCamera() || this.mMultiSnapStatus || this.mHandler.hasMessages(24) || this.mPendingMultiCapture || isUltraWideBackCamera()) {
             this.mLongPressedAutoFocus = true;
             this.mMainProtocol.setFocusViewType(false);
             this.mFocusManager.requestAutoFocus();
             this.mActivity.getScreenHint().updateHint();
             return false;
         }
-        if (b.gu()) {
+        if (b.gx()) {
             this.mUpdateImageTitle = true;
         }
         this.mPendingMultiCapture = true;
@@ -1289,9 +1346,10 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     public void onShutterButtonLongClickCancel(boolean z) {
+        Log.d(TAG, "onShutterButtonLongClickCancel: start");
         this.mPendingMultiCapture = false;
         if (this.mMultiSnapStatus) {
-            this.mHandler.sendEmptyMessageDelayed(49, 7000);
+            this.mHandler.sendEmptyMessageDelayed(49, FragmentTopAlert.HINT_DELAY_TIME);
         }
         this.mMultiSnapStopRequest = true;
         if (!this.mLongPressedAutoFocus) {
@@ -1337,7 +1395,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             Observable.interval(1, TimeUnit.SECONDS).take((long) i).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Long>() {
                 public void onSubscribe(Disposable disposable) {
                     Camera2Module.this.mCountdownDisposable = disposable;
-                    Camera2Module.this.playSound(7);
+                    Camera2Module.this.playCameraSound(7);
                     TopAlert topAlert = (TopAlert) ModeCoordinatorImpl.getInstance().getAttachProtocol(172);
                     if (topAlert != null) {
                         topAlert.hideAlert();
@@ -1349,7 +1407,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                 public void onNext(Long l) {
                     int intValue = i - (l.intValue() + 1);
                     if (intValue > 0) {
-                        Camera2Module.this.playSound(5);
+                        Camera2Module.this.playCameraSound(5);
                         Camera2Module.this.mMainProtocol.showDelayNumber(intValue);
                     }
                 }
@@ -1393,7 +1451,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
     public void onReviewCancelClicked() {
         this.mKeepBitmapTexture = false;
-        if (isSelectingCapturedImage()) {
+        if (isSelectingCapturedResult()) {
             this.mActivity.getCameraScreenNail().releaseBitmapIfNeeded();
             hidePostCaptureAlert();
             return;
@@ -1402,7 +1460,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         this.mActivity.finish();
     }
 
-    private boolean isSelectingCapturedImage() {
+    public boolean isSelectingCapturedResult() {
         boolean z = false;
         if (!this.mIsImageCaptureIntent) {
             return false;
@@ -1468,7 +1526,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         super.onResume();
         this.mHandler.removeMessages(50);
         this.mMainProtocol.initEffectCropView();
-        if (!isSelectingCapturedImage()) {
+        if (!isSelectingCapturedResult()) {
             this.mKeepBitmapTexture = false;
             this.mActivity.getCameraScreenNail().releaseBitmapIfNeeded();
         }
@@ -1505,7 +1563,6 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         resetGradienter();
         tryRemoveCountDownMessage();
         this.mActivity.getSensorStateManager().reset();
-        this.mActivity.getSensorStateManager().setSensorStateListener(null);
         resetScreenOn();
         closeCamera();
         releaseEffectProcessor();
@@ -1517,11 +1574,11 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                     try {
                         Camera2Module.this.mLensApi.onPause();
                     } catch (Exception e) {
-                        String access$1500 = Camera2Module.TAG;
+                        String access$1300 = Camera2Module.TAG;
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.append("Unknown error when pause LensAPI->");
                         stringBuilder.append(e.getMessage());
-                        Log.d(access$1500, stringBuilder.toString());
+                        Log.d(access$1300, stringBuilder.toString());
                     }
                     Log.d(Camera2Module.TAG, "Unbind Lens service: X");
                 }
@@ -1561,6 +1618,17 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
     public boolean shouldReleaseLater() {
         return !this.mIsImageCaptureIntent && getCameraState() == 3 && !this.mMultiSnapStatus && ((this.mHandler == null || !(this.mHandler.hasMessages(48) || this.mHandler.hasMessages(49))) && !this.mFocusManager.isFocusing() && (this.mModuleIndex != 167 || getManualValue(CameraSettings.KEY_QC_EXPOSURETIME, getString(R.string.pref_camera_exposuretime_default)).equals(getString(R.string.pref_camera_exposuretime_default))));
+    }
+
+    public void onHostStopAndNotifyActionStop() {
+        super.onHostStopAndNotifyActionStop();
+        if (this.mSuperNightDisposable != null && !this.mSuperNightDisposable.isDisposed()) {
+            this.mSuperNightDisposable.dispose();
+            RecordState recordState = (RecordState) ModeCoordinatorImpl.getInstance().getAttachProtocol(212);
+            if (recordState != null) {
+                recordState.onPostSavingFinish();
+            }
+        }
     }
 
     private void doLaterReleaseIfNeed() {
@@ -1678,13 +1746,25 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             this.mCamera2Device.setMetaDataCallback(this);
             this.mCamera2Device.setScreenLightCallback(this);
             this.mCamera2Device.setErrorCallback(this.mErrorCallback);
+            String str = TAG;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("startPreview: ");
+            stringBuilder.append(this.mPictureSize);
+            Log.d(str, stringBuilder.toString());
             this.mCamera2Device.setPictureSize(this.mPictureSize);
-            if (this.mIsParallelProcess) {
+            if (this.mEnableParallelSession) {
                 if (isFrontCamera()) {
-                    this.mCamera2Device.setSubPictureSize(this.mSubPictureSize);
+                    this.mCamera2Device.setSubPictureSize(getFrontSubPictureSize(35));
                 } else {
                     this.mCamera2Device.setSubPictureSize(this.mPictureSize);
                 }
+            }
+            if (this.mEnableParallelSession && isEnableQcfa()) {
+                Log.d(TAG, "[QCFA] startPreview: set qcfa enable");
+                this.mCamera2Device.setQcfaEnable(true);
+            } else {
+                Log.d(TAG, "[QCFA] startPreview: set qcfa disable");
+                this.mCamera2Device.setQcfaEnable(false);
             }
             Surface surface = new Surface(this.mActivity.getCameraScreenNail().getSurfaceTexture());
             this.mSurfaceCreatedTimestamp = this.mActivity.getCameraScreenNail().getSurfaceCreatedTimestamp();
@@ -1692,8 +1772,8 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             if (scanQRCodeEnabled) {
                 QRCodeManager.getInstance().init();
             }
-            this.mCamera2Device.startPreviewSession(surface, scanQRCodeEnabled, isNeedRawStream(), getOperatingMode(), this, QRCodeManager.getInstance().getHandler());
-            if (this.mIsParallelProcess) {
+            this.mCamera2Device.startPreviewSession(surface, scanQRCodeEnabled, isNeedRawStream(), getOperatingMode(), this.mEnableParallelSession, this, QRCodeManager.getInstance().getHandler());
+            if (this.mEnableParallelSession) {
                 configParallelSession();
             }
         }
@@ -1706,24 +1786,24 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         } else {
             graphDescriptorBean = new GraphDescriptorBean(0, 1, true, isFrontCamera());
         }
+        String str = TAG;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[QCFA] configParallelSession: mPictureSize = ");
+        stringBuilder.append(this.mPictureSize);
+        Log.d(str, stringBuilder.toString());
+        str = TAG;
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("[QCFA] configParallelSession: mOutPutSize = ");
+        stringBuilder.append(this.mOutPutSize);
+        Log.d(str, stringBuilder.toString());
         AlgoConnector.getInstance().getLocalBinder().configCaptureSession(new BufferFormat(this.mPictureSize.width, this.mPictureSize.height, 35, graphDescriptorBean));
         AlgoConnector.getInstance().getLocalBinder().setImageSaver(this.mActivity.getImageSaver());
+        AlgoConnector.getInstance().getLocalBinder().setJpegOutputSize(this.mOutPutSize.width, this.mOutPutSize.height);
     }
 
     private boolean isNeedRawStream() {
         if (ModuleManager.isManualModule() && CameraSettings.isEnableDNG()) {
             for (CameraSize cameraSize : this.mCameraCapabilities.getSupportedOutputSize(37)) {
-                String str = TAG;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                stringBuilder.append(cameraSize.width);
-                stringBuilder.append("x");
-                stringBuilder.append(cameraSize.height);
-                stringBuilder.append(" ");
-                stringBuilder.append(this.mPictureSize.width);
-                stringBuilder.append("x");
-                stringBuilder.append(this.mPictureSize.height);
-                Log.d(str, stringBuilder.toString());
                 if (cameraSize.width == this.mPictureSize.width && cameraSize.height == this.mPictureSize.height) {
                     return true;
                 }
@@ -1732,68 +1812,100 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         return false;
     }
 
+    private boolean isEnableQcfa() {
+        return this.mCameraCapabilities.isSupportedQcfa() && isFrontCamera() && (getModuleIndex() == 163 || getModuleIndex() == 165);
+    }
+
+    /* JADX WARNING: Missing block: B:49:0x00d4, code:
+            if (com.android.camera.CameraSettings.isSupportedUltraPixelPhotography(r7.mCameraCapabilities) != false) goto L_0x00d7;
+     */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     protected int getOperatingMode() {
-        int i;
-        if (this.mIsParallelProcess) {
-            if (isPortraitMode()) {
-                i = 36864;
-            } else {
-                i = CameraCapabilities.SESSION_OPERATION_MODE_ALGO_UP_SINGLE;
-            }
-            return i;
-        }
-        String str;
-        StringBuilder stringBuilder;
-        i = getModuleIndex();
-        int i2 = 32775;
-        if (isFrontCamera()) {
-            mIsBeautyFrontOn = BeautyParameters.isFaceBeautyOn();
-            if (i == 171 && DataRepository.dataItemFeature().eY()) {
-                if (!isBokehFrontCamera()) {
-                    i2 = 33009;
-                    this.mOperatingMode = i2;
+        if (!isParallelSessionEnable()) {
+            String str;
+            StringBuilder stringBuilder;
+            int i = 32769;
+            if (isFrontCamera()) {
+                mIsBeautyFrontOn = BeautyParameters.isFaceBeautyOn();
+                if (isPortraitMode() && DataRepository.dataItemFeature().eZ()) {
+                    if (!isBokehFrontCamera()) {
+                        i = 33009;
+                        this.mOperatingMode = i;
+                        str = TAG;
+                        stringBuilder = new StringBuilder();
+                        stringBuilder.append("getOperatingMode: ");
+                        stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i)}));
+                        Log.d(str, stringBuilder.toString());
+                        return i;
+                    }
+                } else if (!(isPortraitMode() && isBokehFrontCamera())) {
+                    if (!(this.mCameraCapabilities.isSupportedQcfa() && !mIsBeautyFrontOn && "off".equals(DataRepository.dataItemConfig().getComponentHdr().getComponentValue(this.mModuleIndex)))) {
+                        i = 32773;
+                        this.mOperatingMode = i;
+                        str = TAG;
+                        stringBuilder = new StringBuilder();
+                        stringBuilder.append("getOperatingMode: ");
+                        stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i)}));
+                        Log.d(str, stringBuilder.toString());
+                        return i;
+                    }
+                    i = 32775;
+                    this.mOperatingMode = i;
                     str = TAG;
                     stringBuilder = new StringBuilder();
                     stringBuilder.append("getOperatingMode: ");
-                    stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i2)}));
+                    stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i)}));
                     Log.d(str, stringBuilder.toString());
-                    return i2;
+                    return i;
                 }
-            } else if (!(i == 171 && isBokehFrontCamera())) {
-                if (!(this.mCameraCapabilities.isSupportedQcfa() && !mIsBeautyFrontOn && "off".equals(DataRepository.dataItemConfig().getComponentHdr().getComponentValue(this.mModuleIndex)))) {
-                    i2 = 32773;
+            }
+            int moduleIndex = getModuleIndex();
+            if (moduleIndex != 163) {
+                if (moduleIndex == 167) {
+                    if (!(CameraSettings.isUltraPixelPhotographyOn() && CameraSettings.isSupportedUltraPixelPhotography(this.mCameraCapabilities))) {
+                        i = 32771;
+                    }
+                    i = 32775;
+                } else if (moduleIndex != 171) {
+                    if (moduleIndex == 173) {
+                        i = CameraCapabilities.SESSION_OPERATION_MODE_SUPER_NIGHT;
+                    }
                 }
-                this.mOperatingMode = i2;
+                this.mOperatingMode = i;
                 str = TAG;
                 stringBuilder = new StringBuilder();
                 stringBuilder.append("getOperatingMode: ");
-                stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i2)}));
+                stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i)}));
                 Log.d(str, stringBuilder.toString());
-                return i2;
+                return i;
             }
-        }
-        if (i != 167) {
-            if (i != 171) {
-                i2 = i != 173 ? 32769 : CameraCapabilities.SESSION_OPERATION_MODE_SUPER_NIGHT;
+            if (CameraSettings.isMeunUltraPixelPhotographyOn()) {
             }
-        } else if (!(CameraSettings.isUltraPixelPhotographyOn() && this.mCameraCapabilities.isUltraPixelPhotographySupported())) {
-            i2 = 32771;
+            this.mOperatingMode = i;
+            str = TAG;
+            stringBuilder = new StringBuilder();
+            stringBuilder.append("getOperatingMode: ");
+            stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i)}));
+            Log.d(str, stringBuilder.toString());
+            return i;
+            i = 32770;
+            this.mOperatingMode = i;
+            str = TAG;
+            stringBuilder = new StringBuilder();
+            stringBuilder.append("getOperatingMode: ");
+            stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i)}));
+            Log.d(str, stringBuilder.toString());
+            return i;
+        } else if (isEnableQcfa()) {
+            Log.d(TAG, "getOperatingMode: SESSION_OPERATION_MODE_ALGO_UP_QCFA");
+            return CameraCapabilities.SESSION_OPERATION_MODE_ALGO_UP_QCFA;
+        } else if (171 == getModuleIndex()) {
+            Log.d(TAG, "getOperatingMode: SESSION_OPERATION_MODE_ALGO_UP");
+            return 36864;
+        } else {
+            Log.d(TAG, "getOperatingMode: SESSION_OPERATION_MODE_ALGO_UP_SAT");
+            return CameraCapabilities.SESSION_OPERATION_MODE_ALGO_UP_SAT;
         }
-        this.mOperatingMode = i2;
-        str = TAG;
-        stringBuilder = new StringBuilder();
-        stringBuilder.append("getOperatingMode: ");
-        stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i2)}));
-        Log.d(str, stringBuilder.toString());
-        return i2;
-        i2 = 32770;
-        this.mOperatingMode = i2;
-        str = TAG;
-        stringBuilder = new StringBuilder();
-        stringBuilder.append("getOperatingMode: ");
-        stringBuilder.append(String.format("operatingMode = 0x%x", new Object[]{Integer.valueOf(i2)}));
-        Log.d(str, stringBuilder.toString());
-        return i2;
     }
 
     public void onPreviewSessionSuccess(CameraCaptureSession cameraCaptureSession) {
@@ -1887,7 +1999,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
     private boolean isParallelQueueFull() {
         boolean z = false;
-        if (!this.mIsParallelProcess) {
+        if (!this.mIsCurrentTaskIsParallel) {
             return false;
         }
         if (this.mActivity.getImageSaver().isSaveQueueFull()) {
@@ -1903,33 +2015,31 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         return z;
     }
 
-    private void beginParallelProcess(ParallelTaskData parallelTaskData) {
+    private void beginParallelProcess(ParallelTaskData parallelTaskData, boolean z) {
+        String str = TAG;
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("algo begin: ");
         stringBuilder.append(parallelTaskData.getSavePath());
         stringBuilder.append(" | ");
         stringBuilder.append(Thread.currentThread().getName());
-        Log.e("algo begin:", stringBuilder.toString());
-        SaveTask saveTask = (SaveTask) DbRepository.dbItemSaveTask().generateItem(System.currentTimeMillis());
-        saveTask.setPath(parallelTaskData.getSavePath());
-        DbRepository.dbItemSaveTask().endItemAndInsert(saveTask, 0);
-        AlgoConnector.getInstance().getLocalBinder().onCaptureStart(parallelTaskData);
+        Log.i(str, stringBuilder.toString());
+        if (z) {
+            SaveTask saveTask = (SaveTask) DbRepository.dbItemSaveTask().generateItem(System.currentTimeMillis());
+            saveTask.setPath(parallelTaskData.getSavePath());
+            DbRepository.dbItemSaveTask().endItemAndInsert(saveTask, 0);
+        }
         if (this.mServiceStatusListener == null) {
             this.mServiceStatusListener = new ServiceStatusListener() {
                 public void onImagePostProcessStart(ParallelTaskData parallelTaskData) {
-                    Camera2Module.this.onPictureTakenFinished(true);
+                    if (!Camera2Module.this.mMultiSnapStatus) {
+                        Camera2Module.this.onPictureTakenFinished(true);
+                    }
                     PerformanceTracker.trackPictureCapture(1);
-                    String access$1500 = Camera2Module.TAG;
+                    String access$1300 = Camera2Module.TAG;
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("onImagePostProcessStart: ");
                     stringBuilder.append(parallelTaskData);
-                    Log.d(access$1500, stringBuilder.toString());
-                    if (parallelTaskData != null) {
-                        Camera2Module.this.mActivity.getImageSaver().addUsedMemory(parallelTaskData.getProcessUsedMemorySize());
-                        stringBuilder = new StringBuilder();
-                        stringBuilder.append(parallelTaskData.getTimeStamp());
-                        stringBuilder.append(" | ");
-                        Log.e("algo start:", stringBuilder.toString());
-                    }
+                    Log.d(access$1300, stringBuilder.toString());
                 }
             };
             AlgoConnector.getInstance().setServiceStatusListener(this.mServiceStatusListener);
@@ -1941,7 +2051,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         if (!isAlive()) {
             return false;
         }
-        if (this.mIsParallelProcess) {
+        if (this.mIsCurrentTaskIsParallel) {
             return true;
         }
         if (this.mIsPortraitLightingOn) {
@@ -1950,13 +2060,16 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         if (CameraSettings.isLiveShotOn()) {
             return true;
         }
-        if (CameraSettings.isGradienterOn() || CameraSettings.isGroupShotOn()) {
+        if (CameraSettings.isGradienterOn()) {
             return false;
         }
         if (CameraSettings.isPortraitModeBackOn()) {
             return true;
         }
         if (this.mModuleIndex == 167 || this.mModuleIndex == 173 || CameraSettings.showGenderAge() || CameraSettings.isMagicMirrorOn()) {
+            return false;
+        }
+        if (this.mCameraCapabilities != null && CameraSettings.isSupportedUltraPixelPhotography(this.mCameraCapabilities) && CameraSettings.isMeunUltraPixelPhotographyOn()) {
             return false;
         }
         if (this.mCamera2Device != null && this.mCamera2Device.isNeedPreviewThumbnail()) {
@@ -1966,14 +2079,13 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     public void onPreviewPixelsRead(byte[] bArr, int i, int i2) {
-        byte[] bitmapData;
+        Object bitmapData;
         animateCapture();
-        int i3 = 0;
-        playSound(0);
+        playCameraSound(0);
         Bitmap createBitmap = Bitmap.createBitmap(i, i2, Config.ARGB_8888);
         createBitmap.copyPixelsFromBuffer(ByteBuffer.wrap(bArr));
         boolean z = isFrontCamera() && !isFrontMirror();
-        if (this.mIsParallelProcess) {
+        if (this.mIsCurrentTaskIsParallel) {
             if (z) {
                 createBitmap = Util.flipBitmap(createBitmap);
                 z = false;
@@ -1982,25 +2094,35 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         } else {
             bitmapData = null;
         }
-        int i4 = this.mShootOrientation - this.mDisplayRotation;
-        if (!(isFrontCamera() && b.hk() && i4 % 180 == 0)) {
-            i3 = i4;
+        int i3 = this.mShootOrientation - this.mDisplayRotation;
+        if (isFrontCamera() && b.hn() && i3 % 180 == 0) {
+            i3 = 0;
         }
-        if (isAlive()) {
+        if (isAlive() && isDeviceAlive()) {
+            String shotSavePath = this.mCamera2Device.getShotSavePath();
             Thumbnail createThumbnail = Thumbnail.createThumbnail(null, createBitmap, i3, z);
             createThumbnail.startWaitingForUri();
             this.mActivity.getThumbnailUpdater().setThumbnail(createThumbnail, true, true);
-            if (bitmapData != null && this.mIsParallelProcess) {
-                ParallelTaskData parallelTaskData = new ParallelTaskData(System.currentTimeMillis(), -1, this.mParallelProcessingFilePath);
-                parallelTaskData.fillJpegData(bitmapData, 1);
+            String str = TAG;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("onPreviewPixelsRead: ");
+            stringBuilder.append(bitmapData);
+            stringBuilder.append("--");
+            stringBuilder.append(this.mIsCurrentTaskIsParallel);
+            Log.d(str, stringBuilder.toString());
+            if (bitmapData != null && this.mIsCurrentTaskIsParallel) {
+                ParallelTaskData parallelTaskData = new ParallelTaskData(System.currentTimeMillis(), -1, shotSavePath);
+                parallelTaskData.fillJpegData(bitmapData, 0);
                 this.mActivity.getImageSaver().onParallelProcessFinish(parallelTaskData);
             }
         }
     }
 
     public void onSurfaceTextureUpdated(DrawExtTexAttribute drawExtTexAttribute) {
-        if (this.mCircularMediaRecorder != null) {
-            this.mCircularMediaRecorder.onSurfaceTextureUpdated(drawExtTexAttribute);
+        synchronized (this.mCircularMediaRecorderStateLock) {
+            if (this.mCircularMediaRecorder != null) {
+                this.mCircularMediaRecorder.onSurfaceTextureUpdated(drawExtTexAttribute);
+            }
         }
     }
 
@@ -2014,11 +2136,11 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
     private void updateAlgorithmName() {
         String str;
-        if (b.hC()) {
+        if (b.hE()) {
             str = null;
         } else if (this.mCamera2Device.isBokehEnabled()) {
             str = Util.ALGORITHM_NAME_SOFT_PORTRAIT;
-        } else if (this.mModuleIndex == 171) {
+        } else if (isPortraitMode()) {
             str = "portrait";
         } else {
             str = this.mMutexModePicker.getAlgorithmName();
@@ -2026,149 +2148,97 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         this.mAlgorithmName = str;
     }
 
-    /* JADX WARNING: Removed duplicated region for block: B:14:0x0070  */
-    /* JADX WARNING: Removed duplicated region for block: B:13:0x006e  */
-    /* JADX WARNING: Removed duplicated region for block: B:23:0x0092  */
-    /* JADX WARNING: Removed duplicated region for block: B:29:0x00ad  */
-    /* JADX WARNING: Removed duplicated region for block: B:27:0x00a6  */
-    /* JADX WARNING: Removed duplicated region for block: B:34:0x00bf  */
-    /* JADX WARNING: Removed duplicated region for block: B:32:0x00b8  */
-    /* JADX WARNING: Removed duplicated region for block: B:37:0x00e8  */
-    public com.xiaomi.camera.core.ParallelTaskData onCaptureStart(long r31, int r33, java.lang.String r34) {
-        /*
-        r30 = this;
-        r0 = r30;
-        r1 = com.android.camera.CameraSettings.isLiveShotOn();
-        if (r1 == 0) goto L_0x000b;
-    L_0x0008:
-        r30.startLiveShotAnimation();
-    L_0x000b:
-        r30.onShutter();
-        r1 = com.android.camera.CameraSettings.isAgeGenderAndMagicMirrorWaterOpen();
-        r2 = 0;
-        if (r1 == 0) goto L_0x0036;
-    L_0x0016:
-        r1 = com.android.camera.protocol.ModeCoordinatorImpl.getInstance();
-        r3 = 166; // 0xa6 float:2.33E-43 double:8.2E-322;
-        r1 = r1.getAttachProtocol(r3);
-        r1 = (com.android.camera.protocol.ModeProtocol.MainContentProtocol) r1;
-        r1 = r1.getFaceWaterMarkInfos();
-        if (r1 == 0) goto L_0x0036;
-    L_0x0028:
-        r3 = r1.isEmpty();
-        if (r3 != 0) goto L_0x0036;
-    L_0x002e:
-        r3 = new java.util.ArrayList;
-        r3.<init>(r1);
-        r19 = r3;
-        goto L_0x0038;
-    L_0x0036:
-        r19 = r2;
-    L_0x0038:
-        r1 = new com.xiaomi.camera.core.ParallelTaskData;
-        r3 = r31;
-        r5 = r33;
-        r6 = r34;
-        r1.<init>(r3, r5, r6);
-        r5 = com.android.camera.CameraSettings.isDualCameraWaterMarkOpen();
-        r6 = r30.isFrontMirror();
-        r7 = com.android.camera.CameraSettings.getPortraitLightingPattern();
-        r3 = r0.mPreviewSize;
-        r8 = r3.width;
-        r3 = r0.mPreviewSize;
-        r9 = r3.height;
-        r3 = r0.mPictureSize;
-        r10 = r3.width;
-        r3 = r0.mPictureSize;
-        r11 = r3.height;
-        r3 = com.android.camera.effect.EffectController.getInstance();
-        r4 = 0;
-        r12 = r3.getEffectForSaving(r4);
-        r3 = -1;
-        r13 = r0.mOrientation;
-        if (r3 != r13) goto L_0x0070;
-    L_0x006e:
-        r13 = r4;
-        goto L_0x0073;
-    L_0x0070:
-        r3 = r0.mOrientation;
-        r13 = r3;
-    L_0x0073:
-        r14 = r0.mJpegRotation;
-        r3 = com.android.camera.CameraSettings.isGradienterOn();
-        if (r3 == 0) goto L_0x0085;
-    L_0x007b:
-        r3 = r0.mShootRotation;
-        r4 = -1082130432; // 0xffffffffbf800000 float:-1.0 double:NaN;
-        r3 = (r3 > r4 ? 1 : (r3 == r4 ? 0 : -1));
-        if (r3 != 0) goto L_0x0085;
-    L_0x0083:
-        r3 = 0;
-        goto L_0x0087;
-    L_0x0085:
-        r3 = r0.mShootRotation;
-    L_0x0087:
-        r15 = r3;
-        r3 = r0.mShootOrientation;
-        r4 = r0.mLocation;
-        r16 = com.android.camera.CameraSettings.isTimeWaterMarkOpen();
-        if (r16 == 0) goto L_0x0099;
-    L_0x0092:
-        r2 = com.android.camera.Util.getTimeWatermark();
-    L_0x0096:
-        r18 = r2;
-        goto L_0x009a;
-    L_0x0099:
-        goto L_0x0096;
-    L_0x009a:
-        r20 = com.android.camera.CameraSettings.isAgeGenderAndMagicMirrorWaterOpen();
-        r21 = r30.isFrontCamera();
-        r2 = r0.mOutPutSize;
-        if (r2 != 0) goto L_0x00ad;
-    L_0x00a6:
-        r2 = r0.mPictureSize;
-        r2 = r2.width;
-    L_0x00aa:
-        r22 = r2;
-        goto L_0x00b4;
-    L_0x00ad:
-        r2 = r0.mOutPutSize;
-        r2 = r2.getWidth();
-        goto L_0x00aa;
-    L_0x00b4:
-        r2 = r0.mOutPutSize;
-        if (r2 != 0) goto L_0x00bf;
-    L_0x00b8:
-        r2 = r0.mPictureSize;
-        r2 = r2.height;
-    L_0x00bc:
-        r23 = r2;
-        goto L_0x00c6;
-    L_0x00bf:
-        r2 = r0.mOutPutSize;
-        r2 = r2.getHeight();
-        goto L_0x00bc;
-    L_0x00c6:
-        r24 = r30.isBokehFrontCamera();
-        r2 = r0.mAlgorithmName;
-        r26 = r30.getPictureInfo();
-        r27 = r30.getSuffix();
-        r29 = r4;
-        r4 = r0.mEnabledPreviewThumbnail;
-        r28 = r4 ^ 1;
-        r17 = r29;
-        r4 = r1;
-        r16 = r3;
-        r25 = r2;
-        r4.fillParameter(r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28);
-        r2 = r0.mIsParallelProcess;
-        if (r2 == 0) goto L_0x00eb;
-    L_0x00e8:
-        r0.beginParallelProcess(r1);
-    L_0x00eb:
-        return r1;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.onCaptureStart(long, int, java.lang.String):com.xiaomi.camera.core.ParallelTaskData");
+    /* JADX WARNING: Removed duplicated region for block: B:14:0x005e  */
+    /* JADX WARNING: Removed duplicated region for block: B:13:0x0059  */
+    /* JADX WARNING: Removed duplicated region for block: B:17:0x009e  */
+    /* JADX WARNING: Removed duplicated region for block: B:26:0x00d2  */
+    /* JADX WARNING: Removed duplicated region for block: B:29:0x0155  */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+    public ParallelTaskData onCaptureStart(ParallelTaskData parallelTaskData, CameraSize cameraSize) {
+        List arrayList;
+        String str;
+        StringBuilder stringBuilder;
+        Size toSizeObject;
+        int i;
+        Builder filterId;
+        float f;
+        String str2;
+        StringBuilder stringBuilder2;
+        if (CameraSettings.isLiveShotOn()) {
+            startLiveShotAnimation();
+        }
+        onShutter();
+        String str3 = null;
+        if (CameraSettings.isAgeGenderAndMagicMirrorWaterOpen()) {
+            Collection faceWaterMarkInfos = ((MainContentProtocol) ModeCoordinatorImpl.getInstance().getAttachProtocol(166)).getFaceWaterMarkInfos();
+            if (!(faceWaterMarkInfos == null || faceWaterMarkInfos.isEmpty())) {
+                arrayList = new ArrayList(faceWaterMarkInfos);
+                str = TAG;
+                stringBuilder = new StringBuilder();
+                stringBuilder.append("onCaptureStart: ");
+                stringBuilder.append(cameraSize.width);
+                stringBuilder.append("x");
+                stringBuilder.append(cameraSize.height);
+                Log.d(str, stringBuilder.toString());
+                if (this.mOutPutSize != null) {
+                    toSizeObject = cameraSize.toSizeObject();
+                } else {
+                    toSizeObject = this.mOutPutSize.toSizeObject();
+                }
+                i = 0;
+                filterId = new Builder(this.mPreviewSize.toSizeObject(), cameraSize.toSizeObject(), toSizeObject).setHasDualWaterMark(CameraSettings.isDualCameraWaterMarkOpen()).setMirror(isFrontMirror()).setLightingPattern(CameraSettings.getPortraitLightingPattern()).setFilterId(EffectController.getInstance().getEffectForSaving(false));
+                if (-1 != this.mOrientation) {
+                    i = this.mOrientation;
+                }
+                filterId = filterId.setOrientation(i).setJpegRotation(this.mJpegRotation);
+                f = (CameraSettings.isGradienterOn() || this.mShootRotation != -1.0f) ? this.mShootRotation : 0.0f;
+                filterId = filterId.setShootRotation(f).setShootOrientation(this.mShootOrientation).setLocation(this.mLocation);
+                if (CameraSettings.isTimeWaterMarkOpen()) {
+                    str3 = Util.getTimeWatermark();
+                }
+                parallelTaskData.fillParameter(filterId.setTimeWaterMarkString(str3).setFaceWaterMarkList(arrayList).setAgeGenderAndMagicMirrorWater(CameraSettings.isAgeGenderAndMagicMirrorWaterOpen()).setFrontCamera(isFrontCamera()).setBokehFrontCamera(isBokehFrontCamera()).setAlgorithmName(this.mAlgorithmName).setPictureInfo(getPictureInfo()).setSuffix(getSuffix()).setGradienterOn(this.mIsGradienterOn).setTiltShiftMode(getTiltShiftMode()).setSaveGroupshotPrimitive(CameraSettings.isSaveGroushotPrimitiveOn()).setDualWatermarkParam(getDualWaterMarkParam()).build());
+                parallelTaskData.setNeedThumbnail(this.mEnabledPreviewThumbnail ^ true);
+                str2 = TAG;
+                stringBuilder2 = new StringBuilder();
+                stringBuilder2.append("onCaptureStart: ");
+                stringBuilder2.append(this.mIsCurrentTaskIsParallel);
+                Log.d(str2, stringBuilder2.toString());
+                if (this.mIsCurrentTaskIsParallel) {
+                    beginParallelProcess(parallelTaskData, true);
+                }
+                return parallelTaskData;
+            }
+        }
+        arrayList = null;
+        str = TAG;
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("onCaptureStart: ");
+        stringBuilder.append(cameraSize.width);
+        stringBuilder.append("x");
+        stringBuilder.append(cameraSize.height);
+        Log.d(str, stringBuilder.toString());
+        if (this.mOutPutSize != null) {
+        }
+        i = 0;
+        filterId = new Builder(this.mPreviewSize.toSizeObject(), cameraSize.toSizeObject(), toSizeObject).setHasDualWaterMark(CameraSettings.isDualCameraWaterMarkOpen()).setMirror(isFrontMirror()).setLightingPattern(CameraSettings.getPortraitLightingPattern()).setFilterId(EffectController.getInstance().getEffectForSaving(false));
+        if (-1 != this.mOrientation) {
+        }
+        filterId = filterId.setOrientation(i).setJpegRotation(this.mJpegRotation);
+        if (CameraSettings.isGradienterOn()) {
+        }
+        filterId = filterId.setShootRotation(f).setShootOrientation(this.mShootOrientation).setLocation(this.mLocation);
+        if (CameraSettings.isTimeWaterMarkOpen()) {
+        }
+        parallelTaskData.fillParameter(filterId.setTimeWaterMarkString(str3).setFaceWaterMarkList(arrayList).setAgeGenderAndMagicMirrorWater(CameraSettings.isAgeGenderAndMagicMirrorWaterOpen()).setFrontCamera(isFrontCamera()).setBokehFrontCamera(isBokehFrontCamera()).setAlgorithmName(this.mAlgorithmName).setPictureInfo(getPictureInfo()).setSuffix(getSuffix()).setGradienterOn(this.mIsGradienterOn).setTiltShiftMode(getTiltShiftMode()).setSaveGroupshotPrimitive(CameraSettings.isSaveGroushotPrimitiveOn()).setDualWatermarkParam(getDualWaterMarkParam()).build());
+        parallelTaskData.setNeedThumbnail(this.mEnabledPreviewThumbnail ^ true);
+        str2 = TAG;
+        stringBuilder2 = new StringBuilder();
+        stringBuilder2.append("onCaptureStart: ");
+        stringBuilder2.append(this.mIsCurrentTaskIsParallel);
+        Log.d(str2, stringBuilder2.toString());
+        if (this.mIsCurrentTaskIsParallel) {
+        }
+        return parallelTaskData;
     }
 
     private void onShutter() {
@@ -2188,7 +2258,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                 } else if (this.mModuleIndex != 173) {
                     updateThumbProgress(false);
                     animateCapture();
-                    playSound(0);
+                    playCameraSound(0);
                 }
             }
         }
@@ -2226,7 +2296,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                 this.mFocusManager.cancelLongPressedAutoFocus();
             }
         }
-        if (!isKeptBitmapTexture()) {
+        if (!(isKeptBitmapTexture() || this.mMultiSnapStatus)) {
             setCameraState(1);
             enableCameraControls(true);
         }
@@ -2242,7 +2312,10 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             }
             this.mHandler.post(new Runnable() {
                 public void run() {
-                    ((ActionProcessing) ModeCoordinatorImpl.getInstance().getAttachProtocol(162)).processingFinish();
+                    RecordState recordState = (RecordState) ModeCoordinatorImpl.getInstance().getAttachProtocol(212);
+                    if (recordState != null) {
+                        recordState.onPostSavingFinish();
+                    }
                 }
             });
         }
@@ -2404,14 +2477,14 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         initializeFocusManager();
         updatePreferenceTrampoline(UpdateConstant.CAMERA_TYPES_INIT);
         setPreviewFrameLayoutAspectRatio();
-        if (this.mIsParallelProcess && isPortraitMode()) {
+        if (this.mEnableParallelSession && isPortraitMode()) {
             Util.saveCameraCalibrationToFile(this.mCameraCapabilities.getCameraCalibrationData(), isFrontCamera());
         }
         if (!isKeptBitmapTexture()) {
             startPreview();
         }
         initMetaParser();
-        if (b.gn()) {
+        if (b.gq()) {
             initAiSceneParser();
         }
         this.mOnResumeTime = SystemClock.uptimeMillis();
@@ -2593,117 +2666,132 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         }
     }
 
-    /* JADX WARNING: Removed duplicated region for block: B:31:0x0066  */
-    /* JADX WARNING: Removed duplicated region for block: B:31:0x0066  */
+    /* JADX WARNING: Removed duplicated region for block: B:16:0x0036  */
+    /* JADX WARNING: Removed duplicated region for block: B:13:0x0030  */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     private void updateShotDetermine() {
-        /*
-        r5 = this;
-        r0 = r5.mIsImageCaptureIntent;
-        r1 = 1;
-        r2 = 0;
-        if (r0 == 0) goto L_0x0009;
-    L_0x0006:
-        r0 = -2;
-    L_0x0007:
-        r2 = r0;
-        goto L_0x005b;
-    L_0x0009:
-        r0 = com.android.camera.CameraSettings.isCameraParallelProcessEnable();
-        r3 = r5.mModuleIndex;
-        r4 = 163; // 0xa3 float:2.28E-43 double:8.05E-322;
-        if (r3 == r4) goto L_0x0049;
-    L_0x0013:
-        r4 = 165; // 0xa5 float:2.31E-43 double:8.15E-322;
-        if (r3 == r4) goto L_0x0049;
-    L_0x0017:
-        r4 = 171; // 0xab float:2.4E-43 double:8.45E-322;
-        if (r3 == r4) goto L_0x001c;
-    L_0x001b:
-        return;
-    L_0x001c:
-        r3 = r5.isBackCamera();
-        if (r3 == 0) goto L_0x0038;
-    L_0x0022:
-        r3 = com.mi.config.b.hv();
-        if (r3 != 0) goto L_0x0035;
-    L_0x0028:
-        r3 = com.android.camera.data.DataRepository.dataItemFeature();
-        r3 = r3.eX();
-        if (r3 == 0) goto L_0x0033;
-    L_0x0032:
-        goto L_0x0035;
-    L_0x0033:
-        r3 = r2;
-        goto L_0x0040;
-        r3 = r1;
-        goto L_0x0040;
-    L_0x0038:
-        r3 = com.android.camera.data.DataRepository.dataItemFeature();
-        r3 = r3.eY();
-    L_0x0040:
-        if (r3 == 0) goto L_0x0048;
-    L_0x0042:
-        if (r0 == 0) goto L_0x0046;
-    L_0x0044:
-        r0 = 6;
-        goto L_0x0007;
-    L_0x0046:
-        r0 = 2;
-        goto L_0x0007;
-    L_0x0048:
-        goto L_0x005b;
-    L_0x0049:
-        r0 = com.android.camera.CameraSettings.isLiveShotOn();
-        if (r0 == 0) goto L_0x0052;
-        r2 = r1;
-        goto L_0x005b;
-    L_0x0052:
-        r0 = com.android.camera.CameraSettings.isGroupShotOn();
-        if (r0 == 0) goto L_0x0059;
-    L_0x0058:
-        goto L_0x005b;
-    L_0x005b:
-        r0 = r5.mCamera2Device;
-        r0.setShotType(r2);
-        r0 = com.xiaomi.camera.core.ShotConstant.isParallelEnabled(r2);
-        if (r0 == 0) goto L_0x0068;
-    L_0x0066:
-        r5.mIsParallelProcess = r1;
-    L_0x0068:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.updateShotDetermine():void");
+        boolean eZ;
+        int isLiveShotOn;
+        String str;
+        StringBuilder stringBuilder;
+        boolean z = false;
+        if (this.mModuleIndex == 171) {
+            if (!isBackCamera()) {
+                eZ = DataRepository.dataItemFeature().eZ();
+            } else if (b.hx() || DataRepository.dataItemFeature().eY()) {
+                eZ = true;
+            }
+            if (this.mIsImageCaptureIntent) {
+                this.mEnableParallelSession = false;
+                int i = this.mModuleIndex;
+                if (i == 163 || i == 165) {
+                    this.mEnableParallelSession = isParallelSessionEnable();
+                    isLiveShotOn = !this.mEnableParallelSession ? CameraSettings.isLiveShotOn() : shouldDoMultiFrameCapture() ? 7 : 5;
+                } else if (i == 171) {
+                    this.mEnableParallelSession = isParallelSessionEnable();
+                    if (this.mEnableParallelSession) {
+                        isLiveShotOn = eZ ? 6 : 5;
+                    } else {
+                        if (eZ) {
+                            z = true;
+                        }
+                        isLiveShotOn = z;
+                    }
+                } else {
+                    return;
+                }
+            }
+            isLiveShotOn = eZ ? -3 : -2;
+            str = TAG;
+            stringBuilder = new StringBuilder();
+            stringBuilder.append("enableParallel=");
+            stringBuilder.append(this.mEnableParallelSession);
+            stringBuilder.append(" shotType=");
+            stringBuilder.append(isLiveShotOn);
+            Log.d(str, stringBuilder.toString());
+            this.mCamera2Device.setShotType(isLiveShotOn);
+            this.mIsCurrentTaskIsParallel = Constants.isParallelEnabled(isLiveShotOn);
+        }
+        eZ = false;
+        if (this.mIsImageCaptureIntent) {
+        }
+        str = TAG;
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("enableParallel=");
+        stringBuilder.append(this.mEnableParallelSession);
+        stringBuilder.append(" shotType=");
+        stringBuilder.append(isLiveShotOn);
+        Log.d(str, stringBuilder.toString());
+        this.mCamera2Device.setShotType(isLiveShotOn);
+        this.mIsCurrentTaskIsParallel = Constants.isParallelEnabled(isLiveShotOn);
+    }
+
+    private boolean isParallelSessionEnable() {
+        return (!CameraSettings.isCameraParallelProcessEnable() || getModuleIndex() == 173 || getModuleIndex() == 167 || this.mIsImageCaptureIntent) ? false : true;
+    }
+
+    private boolean shouldDoMultiFrameCapture() {
+        boolean z = this.mMutexModePicker.isHdr() || this.mShouldDoMFNR || this.mMutexModePicker.isSuperResolution() || CameraSettings.isGroupShotOn();
+        String str = TAG;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("shouldDoMultiFrameCapture: ");
+        stringBuilder.append(z);
+        Log.d(str, stringBuilder.toString());
+        return z;
     }
 
     private void updatePictureAndPreviewSize() {
-        int i = this.mIsParallelProcess ? 35 : 256;
-        CameraSize bestPictureSize = getBestPictureSize(this.mCameraCapabilities.getSupportedOutputSize(i));
-        CameraSize optimalPreviewSize = Util.getOptimalPreviewSize(this.mModuleIndex, this.mBogusCameraId, this.mCameraCapabilities.getSupportedOutputSize(SurfaceTexture.class), (double) CameraSettings.getPreviewAspectRatio(bestPictureSize.width, bestPictureSize.height));
+        CameraSize bestPictureSize = getBestPictureSize(this.mCameraCapabilities.getSupportedOutputSize(this.mEnableParallelSession ? 35 : 256));
         this.mPictureSize = bestPictureSize;
-        this.mPreviewSize = optimalPreviewSize;
-        if (!optimalPreviewSize.equals(this.mCamera2Device.getPreviewSize())) {
-            this.mCamera2Device.setPreviewSize(optimalPreviewSize);
-        }
+        this.mPreviewSize = Util.getOptimalPreviewSize(this.mModuleIndex, this.mBogusCameraId, this.mCameraCapabilities.getSupportedOutputSize(SurfaceTexture.class), (double) CameraSettings.getPreviewAspectRatio(bestPictureSize.width, bestPictureSize.height));
+        this.mCamera2Device.setPreviewSize(this.mPreviewSize);
         this.mCamera2Device.setPreviewFormat(35);
-        if (this.mIsParallelProcess) {
-            int auxFrontCameraId = Camera2DataContainer.getInstance().getAuxFrontCameraId();
-            if (auxFrontCameraId > 0) {
-                CameraCapabilities capabilities = Camera2DataContainer.getInstance().getCapabilities(auxFrontCameraId);
-                if (capabilities != null) {
-                    this.mSubPictureSize = PictureSizeManager.getBestPictureSize(capabilities.getSupportedOutputSize(i));
-                    String str = TAG;
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append("subSize: ");
-                    stringBuilder.append(this.mSubPictureSize == null ? TEDefine.FACE_BEAUTY_NULL : this.mSubPictureSize);
-                    Log.d(str, stringBuilder.toString());
+        if (this.mEnableParallelSession) {
+            List supportedOutputSize = this.mCameraCapabilities.getSupportedOutputSize(256);
+            if (this.mModuleIndex == 165) {
+                this.mOutPutSize = PictureSizeManager.getBestSquareSize(supportedOutputSize);
+                if (this.mOutPutSize.getWidth() == 0) {
+                    int i = bestPictureSize.width > bestPictureSize.height ? bestPictureSize.height : bestPictureSize.width;
+                    throw new RuntimeException(String.format(Locale.ENGLISH, "size %dx%d is not supported!", new Object[]{Integer.valueOf(i), Integer.valueOf(i)}));
                 }
             }
-            this.mOutPutSize = PictureSizeManager.getBestPictureSize(this.mCameraCapabilities.getSupportedOutputSize(256));
+            this.mOutPutSize = PictureSizeManager.getBestPictureSize(supportedOutputSize);
+            String str = TAG;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("outputSize: ");
+            stringBuilder.append(this.mOutPutSize);
+            Log.v(str, stringBuilder.toString());
         }
         Log.d(TAG, String.format(Locale.ENGLISH, "updateSize: %dx%d %dx%d", new Object[]{Integer.valueOf(bestPictureSize.width), Integer.valueOf(bestPictureSize.height), Integer.valueOf(this.mPreviewSize.width), Integer.valueOf(this.mPreviewSize.height)}));
         updateCameraScreenNailSize(this.mPreviewSize.width, this.mPreviewSize.height);
         checkDisplayOrientation();
         setVideoSize(this.mPreviewSize.width, this.mPreviewSize.height);
+    }
+
+    private CameraSize getFrontSubPictureSize(int i) {
+        CameraSize bestPictureSize;
+        String str;
+        StringBuilder stringBuilder;
+        int auxFrontCameraId = Camera2DataContainer.getInstance().getAuxFrontCameraId();
+        if (auxFrontCameraId > 0) {
+            CameraCapabilities capabilities = Camera2DataContainer.getInstance().getCapabilities(auxFrontCameraId);
+            if (capabilities != null) {
+                bestPictureSize = PictureSizeManager.getBestPictureSize(capabilities.getSupportedOutputSize(i));
+                str = TAG;
+                stringBuilder = new StringBuilder();
+                stringBuilder.append("subSize: ");
+                stringBuilder.append(bestPictureSize);
+                Log.d(str, stringBuilder.toString());
+                return bestPictureSize;
+            }
+        }
+        bestPictureSize = null;
+        str = TAG;
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("subSize: ");
+        stringBuilder.append(bestPictureSize);
+        Log.d(str, stringBuilder.toString());
+        return bestPictureSize;
     }
 
     private void updateFilter() {
@@ -2731,11 +2819,11 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         stringBuilder.append("setAiSceneEffect: ");
         stringBuilder.append(i);
         Log.d(str, stringBuilder.toString());
-        if (DataRepository.dataItemFeature().ff() && CameraSettings.isBackCamera() && i == 25) {
+        if (DataRepository.dataItemFeature().fg() && CameraSettings.isBackCamera() && i == 25) {
             Log.d(TAG, "supportAi30: AI 3.0 back camera in HUMAN SCENE not apply filter!");
             return;
         }
-        if (CameraSettings.isFrontCamera() || this.mModuleIndex == 171) {
+        if (CameraSettings.isFrontCamera() || isPortraitMode()) {
             if (i != 0) {
                 Log.d(TAG, "setAiSceneEffect: front camera or portrait mode nonsupport!");
                 return;
@@ -2857,7 +2945,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private void updateEyeLight() {
-        if (isFrontCamera() && DataRepository.dataItemFeature().fq()) {
+        if (isFrontCamera() && DataRepository.dataItemFeature().fs()) {
             String eyeLightType = isFaceBeautyOn(this.mBeautyValues) ? CameraSettings.getEyeLightType() : EyeLightConstant.OFF;
             final TopAlert topAlert = (TopAlert) ModeCoordinatorImpl.getInstance().getAttachProtocol(172);
             if (topAlert != null) {
@@ -2956,10 +3044,10 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             boolean isFaceExists = CameraSettings.isPortraitModeBackOn() ? CameraSettings.isCameraPortraitWithFaceBeauty() ? this.mMainProtocol.isFaceExists(1) : false : true;
             boolean isClosed = DataRepository.dataItemConfig().getComponentConfigBeauty().isClosed(this.mModuleIndex);
             if (isFaceExists && !isClosed) {
-                CameraSettings.initBeautyValues(this.mBeautyValues, b.hp());
+                CameraSettings.initBeautyValues(this.mBeautyValues, b.hr());
                 if (this.mCurrentAiScene == 25 && BeautyConstant.LEVEL_CLOSE.equals(this.mBeautyValues.mBeautyLevel)) {
                     this.mBeautyValues.mBeautyLevel = BeautyConstant.LEVEL_LOW;
-                    android.util.Log.d(TAG, String.format(Locale.ENGLISH, "Human scene mode detected, auto set beauty level from %s to %s", new Object[]{BeautyConstant.LEVEL_CLOSE, this.mBeautyValues.mBeautyLevel}));
+                    Log.d(TAG, String.format(Locale.ENGLISH, "Human scene mode detected, auto set beauty level from %s to %s", new Object[]{BeautyConstant.LEVEL_CLOSE, this.mBeautyValues.mBeautyLevel}));
                 }
             }
             String str = TAG;
@@ -2973,14 +3061,23 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private void updateFocusMode() {
-        String focusMode = this.mFocusManager.setFocusMode(CameraSettings.getFocusMode());
+        String focusMode;
+        if (this.mIsMoonMode) {
+            focusMode = this.mFocusManager.setFocusMode("manual");
+        } else {
+            focusMode = this.mFocusManager.setFocusMode(CameraSettings.getFocusMode());
+        }
         setFocusMode(focusMode);
         if (CameraSettings.isFocusModeSwitching() && isBackCamera()) {
             CameraSettings.setFocusModeSwitching(false);
             this.mFocusManager.resetFocusStateIfNeeded();
         }
         if (focusMode.equals("manual")) {
-            this.mCamera2Device.setFocusDistance((this.mCameraCapabilities.getMinimumFocusDistance() * ((float) CameraSettings.getFocusPosition())) / 1000.0f);
+            float minimumFocusDistance = (this.mCameraCapabilities.getMinimumFocusDistance() * ((float) CameraSettings.getFocusPosition())) / 1000.0f;
+            if (this.mIsMoonMode) {
+                minimumFocusDistance = 0.0f;
+            }
+            this.mCamera2Device.setFocusDistance(minimumFocusDistance);
         }
     }
 
@@ -3010,89 +3107,49 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     /* JADX WARNING: Removed duplicated region for block: B:22:0x0058  */
     /* JADX WARNING: Removed duplicated region for block: B:29:0x0067  */
     /* JADX WARNING: Removed duplicated region for block: B:32:0x0071  */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     private void updateFace() {
-        /*
-        r6 = this;
-        r0 = r6.mMultiSnapStatus;
-        r1 = 0;
-        r2 = 1;
-        if (r0 != 0) goto L_0x0051;
-    L_0x0007:
-        r0 = r6.mMutexModePicker;
-        r0 = r0.isUbiFocus();
-        if (r0 == 0) goto L_0x0010;
-    L_0x000f:
-        goto L_0x0051;
-    L_0x0010:
-        r0 = com.android.camera.CameraSettings.isMagicMirrorOn();
-        if (r0 != 0) goto L_0x004d;
-    L_0x0016:
-        r0 = com.android.camera.CameraSettings.isPortraitModeBackOn();
-        if (r0 != 0) goto L_0x004d;
-    L_0x001c:
-        r0 = com.android.camera.CameraSettings.isGroupShotOn();
-        if (r0 != 0) goto L_0x004d;
-    L_0x0022:
-        r0 = com.android.camera.CameraSettings.showGenderAge();
-        if (r0 == 0) goto L_0x0029;
-    L_0x0028:
-        goto L_0x004d;
-    L_0x0029:
-        r0 = com.android.camera.data.DataRepository.dataItemGlobal();
-        r3 = "pref_camera_facedetection_key";
-        r4 = r6.getResources();
-        r5 = 2131689478; // 0x7f0f0006 float:1.9007973E38 double:1.0531945387E-314;
-        r4 = r4.getBoolean(r5);
-        r0 = r0.getBoolean(r3, r4);
-        r3 = com.android.camera.CameraSettings.isGradienterOn();
-        if (r3 != 0) goto L_0x004a;
-    L_0x0044:
-        r3 = com.android.camera.CameraSettings.isTiltShiftOn();
-        if (r3 == 0) goto L_0x0053;
-        r3 = r1;
-        goto L_0x0054;
-        r0 = r2;
-        r3 = r0;
-        goto L_0x0054;
-        r0 = r1;
-    L_0x0053:
-        r3 = r2;
-    L_0x0054:
-        r4 = r6.mMainProtocol;
-        if (r4 == 0) goto L_0x0065;
-    L_0x0058:
-        r4 = r6.mMainProtocol;
-        if (r0 == 0) goto L_0x0061;
-    L_0x005c:
-        if (r3 != 0) goto L_0x005f;
-    L_0x005e:
-        goto L_0x0061;
-    L_0x005f:
-        r3 = r1;
-        goto L_0x0062;
-    L_0x0061:
-        r3 = r2;
-    L_0x0062:
-        r4.setSkipDrawFace(r3);
-    L_0x0065:
-        if (r0 == 0) goto L_0x0071;
-    L_0x0067:
-        r0 = r6.mFaceDetectionEnabled;
-        if (r0 != 0) goto L_0x007a;
-    L_0x006b:
-        r6.mFaceDetectionEnabled = r2;
-        r6.startFaceDetection();
-        goto L_0x007a;
-    L_0x0071:
-        r0 = r6.mFaceDetectionEnabled;
-        if (r0 == 0) goto L_0x007a;
-    L_0x0075:
-        r6.stopFaceDetection(r2);
-        r6.mFaceDetectionEnabled = r1;
-    L_0x007a:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.updateFace():void");
+        boolean z;
+        boolean z2;
+        if (this.mMultiSnapStatus || this.mMutexModePicker.isUbiFocus()) {
+            z = false;
+        } else if (CameraSettings.isMagicMirrorOn() || CameraSettings.isPortraitModeBackOn() || CameraSettings.isGroupShotOn() || CameraSettings.showGenderAge()) {
+            z = true;
+            z2 = z;
+            if (this.mMainProtocol != null) {
+                MainContentProtocol mainContentProtocol = this.mMainProtocol;
+                z2 = (z && z2) ? false : true;
+                mainContentProtocol.setSkipDrawFace(z2);
+            }
+            if (z) {
+                if (!this.mFaceDetectionEnabled) {
+                    this.mFaceDetectionEnabled = true;
+                    startFaceDetection();
+                    return;
+                }
+                return;
+            } else if (this.mFaceDetectionEnabled) {
+                stopFaceDetection(true);
+                this.mFaceDetectionEnabled = false;
+                return;
+            } else {
+                return;
+            }
+        } else {
+            z = DataRepository.dataItemGlobal().getBoolean(CameraSettings.KEY_FACE_DETECTION, getResources().getBoolean(R.bool.pref_camera_facedetection_default));
+            if (CameraSettings.isGradienterOn() || CameraSettings.isTiltShiftOn()) {
+                z2 = false;
+                if (this.mMainProtocol != null) {
+                }
+                if (z) {
+                }
+            }
+        }
+        z2 = true;
+        if (this.mMainProtocol != null) {
+        }
+        if (z) {
+        }
     }
 
     private void updateJpegQuality() {
@@ -3118,7 +3175,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private void updateMfnr(boolean z) {
-        if (this.mModuleIndex == 167 || ((b.qT && !isDualCamera()) || !this.mMutexModePicker.isNormal() || !z || ((isFrontCamera() && !(b.hw() && this.mOperatingMode == 32773)) || !(DataRepository.dataItemFeature().eT() || this.mZoomValue == 1.0f || isUltraWideBackCamera())))) {
+        if (this.mModuleIndex == 167 || ((b.qT && !isDualCamera()) || !this.mMutexModePicker.isNormal() || CameraSettings.isGroupShotOn() || !z || ((isFrontCamera() && !(b.hy() && this.mOperatingMode == 32773)) || !(DataRepository.dataItemFeature().eU() || this.mZoomValue == 1.0f || isUltraWideBackCamera())))) {
             z = false;
         } else {
             z = true;
@@ -3138,7 +3195,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
 
     private boolean isUseSwMfnr() {
         boolean isMfnrSatEnable = CameraSettings.isMfnrSatEnable();
-        boolean eV = DataRepository.dataItemFeature().eV();
+        boolean eW = DataRepository.dataItemFeature().eW();
         boolean z = false;
         if (CameraSettings.isGroupShotOn()) {
             Log.d(TAG, "GroupShot is on");
@@ -3149,22 +3206,22 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         } else if (!isMfnrSatEnable) {
             Log.d(TAG, "Mfnr not enabled");
             return false;
-        } else if (!eV) {
+        } else if (!eW) {
             Log.d(TAG, "SwMfnr is not supported");
             return false;
         } else if (!this.mMutexModePicker.isNormal()) {
             Log.d(TAG, "Mutex mode is not normal");
             return false;
-        } else if (DataRepository.dataItemFeature().eW() && this.mModuleIndex != 167) {
+        } else if (DataRepository.dataItemFeature().eX() && this.mModuleIndex != 167) {
             return true;
         } else {
-            if (isFrontCamera() && !isDualFrontCamera() && b.hw() && (this.mOperatingMode == 32773 || Util.UI_DEBUG())) {
+            if (isFrontCamera() && !isDualFrontCamera() && b.hy() && (this.mOperatingMode == 32773 || Util.UI_DEBUG())) {
                 z = true;
             }
             String str = TAG;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("isUseSwMfnr: supportSwMfnr = ");
-            stringBuilder.append(eV);
+            stringBuilder.append(eW);
             stringBuilder.append(", isFrontCamera = ");
             stringBuilder.append(isFrontCamera());
             stringBuilder.append(", isMfnrEnabled = ");
@@ -3238,7 +3295,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             stringBuilder.append("iso = ");
             stringBuilder.append(manualValue2);
             Log.d(str, stringBuilder.toString());
-            if (b.hD()) {
+            if (b.hF()) {
                 equals = getString(R.string.pref_camera_exposuretime_default).equals(manualValue);
             } else if (getString(R.string.pref_camera_iso_default).equals(manualValue2) || getString(R.string.pref_camera_exposuretime_default).equals(manualValue)) {
                 equals = true;
@@ -3271,7 +3328,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private boolean shouldApplyNormalWideLDC() {
-        if ((this.mModuleIndex == 163 || this.mModuleIndex == 165 || this.mModuleIndex == 167) && this.mActualCameraId != Camera2DataContainer.getInstance().getUltraWideCameraId()) {
+        if (CameraSettings.shouldNormalWideLDCBeVisibleInMode(this.mModuleIndex) && this.mActualCameraId == Camera2DataContainer.getInstance().getMainBackCameraId()) {
             return CameraSettings.isNormalWideLDCEnabled();
         }
         return false;
@@ -3282,7 +3339,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private boolean shouldApplyUltraWideLDC() {
-        if ((this.mModuleIndex == 163 || this.mModuleIndex == 165 || this.mModuleIndex == 167) && this.mActualCameraId == Camera2DataContainer.getInstance().getUltraWideCameraId()) {
+        if (CameraSettings.shouldUltraWideLDCBeVisibleInMode(this.mModuleIndex) && this.mActualCameraId == Camera2DataContainer.getInstance().getUltraWideCameraId()) {
             return CameraSettings.isUltraWideLDCEnabled();
         }
         return false;
@@ -3389,7 +3446,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     private void setWaterMark() {
-        if (this.mMultiSnapStatus || this.mModuleIndex == 165 || CameraSettings.isGradienterOn() || CameraSettings.getShaderEffect() != FilterInfo.FILTER_ID_NONE || this.mHasAiSceneFilterEffect || CameraSettings.isTiltShiftOn() || DataRepository.dataItemFeature().fc()) {
+        if (this.mMultiSnapStatus || this.mModuleIndex == 165 || CameraSettings.isGradienterOn() || CameraSettings.getShaderEffect() != FilterInfo.FILTER_ID_NONE || this.mHasAiSceneFilterEffect || CameraSettings.isTiltShiftOn() || DataRepository.dataItemFeature().fd()) {
             this.mCamera2Device.setDualCamWaterMarkEnable(false);
             this.mCamera2Device.setTimeWaterMarkEnable(false);
             return;
@@ -3454,143 +3511,45 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         }
     }
 
-    /* JADX WARNING: Missing block: B:46:0x00f7, code:
+    /* JADX WARNING: Missing block: B:48:0x00ff, code:
             return;
      */
-    public void onSingleTapUp(int r4, int r5) {
-        /*
-        r3 = this;
-        r0 = TAG;
-        r1 = new java.lang.StringBuilder;
-        r1.<init>();
-        r2 = "onSingleTapUp mPaused: ";
-        r1.append(r2);
-        r2 = r3.mPaused;
-        r1.append(r2);
-        r2 = "; mCamera2Device: ";
-        r1.append(r2);
-        r2 = r3.mCamera2Device;
-        r1.append(r2);
-        r2 = "; isInCountDown: ";
-        r1.append(r2);
-        r2 = r3.isInCountDown();
-        r1.append(r2);
-        r2 = "; getCameraState: ";
-        r1.append(r2);
-        r2 = r3.getCameraState();
-        r1.append(r2);
-        r2 = "; mMultiSnapStatus: ";
-        r1.append(r2);
-        r2 = r3.mMultiSnapStatus;
-        r1.append(r2);
-        r2 = "; Camera2Module: ";
-        r1.append(r2);
-        r1.append(r3);
-        r1 = r1.toString();
-        com.android.camera.log.Log.v(r0, r1);
-        r0 = r3.mPaused;
-        if (r0 != 0) goto L_0x00f7;
-    L_0x0050:
-        r0 = r3.mCamera2Device;
-        if (r0 == 0) goto L_0x00f7;
-    L_0x0054:
-        r0 = r3.mCamera2Device;
-        r0 = r0.isSessionReady();
-        if (r0 == 0) goto L_0x00f7;
-    L_0x005c:
-        r0 = r3.isInTapableRect(r4, r5);
-        if (r0 == 0) goto L_0x00f7;
-    L_0x0062:
-        r0 = r3.getCameraState();
-        r1 = 3;
-        if (r0 == r1) goto L_0x00f7;
-    L_0x0069:
-        r0 = r3.getCameraState();
-        r1 = 4;
-        if (r0 == r1) goto L_0x00f7;
-    L_0x0070:
-        r0 = r3.getCameraState();
-        if (r0 == 0) goto L_0x00f7;
-    L_0x0076:
-        r0 = r3.isInCountDown();
-        if (r0 != 0) goto L_0x00f7;
-    L_0x007c:
-        r0 = r3.mMultiSnapStatus;
-        if (r0 == 0) goto L_0x0082;
-    L_0x0080:
-        goto L_0x00f7;
-    L_0x0082:
-        r0 = r3.isFrameAvailable();
-        if (r0 != 0) goto L_0x0089;
-    L_0x0088:
-        return;
-    L_0x0089:
-        r0 = r3.isFrontCamera();
-        if (r0 == 0) goto L_0x0098;
-    L_0x008f:
-        r0 = r3.mActivity;
-        r0 = r0.isScreenSlideOff();
-        if (r0 == 0) goto L_0x0098;
-    L_0x0097:
-        return;
-    L_0x0098:
-        r0 = com.android.camera.protocol.ModeCoordinatorImpl.getInstance();
-        r1 = 171; // 0xab float:2.4E-43 double:8.45E-322;
-        r0 = r0.getAttachProtocol(r1);
-        r0 = (com.android.camera.protocol.ModeProtocol.BackStack) r0;
-        r0 = r0.handleBackStackFromTapDown(r4, r5);
-        if (r0 == 0) goto L_0x00ab;
-    L_0x00aa:
-        return;
-    L_0x00ab:
-        r3.tryRemoveCountDownMessage();
-        r0 = r3.mFocusAreaSupported;
-        if (r0 != 0) goto L_0x00b7;
-    L_0x00b2:
-        r0 = r3.mMeteringAreaSupported;
-        if (r0 != 0) goto L_0x00b7;
-    L_0x00b6:
-        return;
-    L_0x00b7:
-        r0 = r3.mMutexModePicker;
-        r0 = r0.isUbiFocus();
-        if (r0 == 0) goto L_0x00c0;
-    L_0x00bf:
-        return;
-    L_0x00c0:
-        r0 = r3.mObjectTrackingStarted;
-        r1 = 1;
-        if (r0 == 0) goto L_0x00c8;
-    L_0x00c5:
-        r3.stopObjectTracking(r1);
-    L_0x00c8:
-        r0 = r3.mMainProtocol;
-        r0.setFocusViewType(r1);
-        r0 = new android.graphics.Point;
-        r0.<init>(r4, r5);
-        r3.mapTapCoordinate(r0);
-        r3.unlockAEAF();
-        r4 = 2;
-        r3.setCameraState(r4);
-        r4 = r3.mFocusManager;
-        r5 = r0.x;
-        r0 = r0.y;
-        r4.onSingleTapUp(r5, r0);
-        r4 = r3.mFocusAreaSupported;
-        if (r4 != 0) goto L_0x00f6;
-    L_0x00e9:
-        r4 = r3.mMeteringAreaSupported;
-        if (r4 == 0) goto L_0x00f6;
-    L_0x00ed:
-        r4 = r3.mActivity;
-        r4 = r4.getSensorStateManager();
-        r4.reset();
-    L_0x00f6:
-        return;
-    L_0x00f7:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.onSingleTapUp(int, int):void");
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+    public void onSingleTapUp(int i, int i2) {
+        String str = TAG;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("onSingleTapUp mPaused: ");
+        stringBuilder.append(this.mPaused);
+        stringBuilder.append("; mCamera2Device: ");
+        stringBuilder.append(this.mCamera2Device);
+        stringBuilder.append("; isInCountDown: ");
+        stringBuilder.append(isInCountDown());
+        stringBuilder.append("; getCameraState: ");
+        stringBuilder.append(getCameraState());
+        stringBuilder.append("; mMultiSnapStatus: ");
+        stringBuilder.append(this.mMultiSnapStatus);
+        stringBuilder.append("; Camera2Module: ");
+        stringBuilder.append(this);
+        Log.v(str, stringBuilder.toString());
+        if (!this.mPaused && this.mCamera2Device != null && this.mCamera2Device.isSessionReady() && this.mCamera2Device.isPreviewReady() && isInTapableRect(i, i2) && getCameraState() != 3 && getCameraState() != 4 && getCameraState() != 0 && !isInCountDown() && !this.mMultiSnapStatus && isFrameAvailable()) {
+            if ((!isFrontCamera() || !this.mActivity.isScreenSlideOff()) && !((BackStack) ModeCoordinatorImpl.getInstance().getAttachProtocol(171)).handleBackStackFromTapDown(i, i2)) {
+                tryRemoveCountDownMessage();
+                if ((this.mFocusAreaSupported || this.mMeteringAreaSupported) && !this.mMutexModePicker.isUbiFocus()) {
+                    if (this.mObjectTrackingStarted) {
+                        stopObjectTracking(true);
+                    }
+                    this.mMainProtocol.setFocusViewType(true);
+                    Point point = new Point(i, i2);
+                    mapTapCoordinate(point);
+                    unlockAEAF();
+                    setCameraState(2);
+                    this.mFocusManager.onSingleTapUp(point.x, point.y);
+                    if (!this.mFocusAreaSupported && this.mMeteringAreaSupported) {
+                        this.mActivity.getSensorStateManager().reset();
+                    }
+                }
+            }
+        }
     }
 
     private void unlockAEAF() {
@@ -3768,13 +3727,13 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     protected int getMutexHdrMode(String str) {
         if ("normal".equals(str)) {
             int i;
-            if (!b.fZ() || b.gl()) {
+            if (!b.gd() || b.go()) {
                 i = 1;
             } else {
                 i = 5;
             }
             return i;
-        } else if (b.gd() && ComponentConfigHdr.HDR_VALUE_LIVE.equals(str)) {
+        } else if (b.gg() && ComponentConfigHdr.HDR_VALUE_LIVE.equals(str)) {
             return 2;
         } else {
             return 0;
@@ -3894,9 +3853,24 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         this.mHandler.sendEmptyMessage(10);
     }
 
-    public void onCameraMetaData(CaptureResult captureResult) {
+    public void onPreviewMetaDataUpdate(CaptureResult captureResult) {
         if (captureResult != null) {
-            super.onCameraMetaData(captureResult);
+            super.onPreviewMetaDataUpdate(captureResult);
+            boolean z = false;
+            if (171 == getModuleIndex()) {
+                this.mShouldDoMFNR = false;
+            } else {
+                Integer num = (Integer) captureResult.get(CaptureResult.SENSOR_SENSITIVITY);
+                String str = TAG;
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("onPreviewMetaDataUpdate: ISO=");
+                stringBuilder.append(num);
+                Log.c(str, stringBuilder.toString());
+                if (num != null && num.intValue() >= 800 && isFrontCamera()) {
+                    z = true;
+                }
+                this.mShouldDoMFNR = z;
+            }
             if (this.mMetaDataFlowableEmitter != null) {
                 this.mMetaDataFlowableEmitter.onNext(captureResult);
             }
@@ -4102,7 +4076,6 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                                                     this.mCurrentAiScene = i;
                                                     break;
                                                 case 35:
-                                                    this.mCurrentAiScene = i;
                                                     if (showMoonMode()) {
                                                         topAlert.setAiSceneImageLevel(i);
                                                         this.mCamera2Device.setASD(true);
@@ -4181,8 +4154,8 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             if (topAlert != null) {
                 topAlert.alertMoonModeSelector(i2);
             }
-            resetEvValue();
             setFocusMode(this.mFocusManager.setFocusMode(CameraSettings.getFocusMode()));
+            this.mCamera2Device.setASDScebe(-35);
         }
     }
 
@@ -4192,10 +4165,12 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
             return false;
         }
         topAlert.alertMoonModeSelector(0);
+        updateMoonNight();
         return true;
     }
 
     public void updateMoonNight() {
+        this.mIsMoonMode = false;
         checkCloseMoonMode(10, 0);
         ((ConfigChanges) ModeCoordinatorImpl.getInstance().getAttachProtocol(164)).closeMutexElement(SupportedConfigFactory.CLOSE_BY_AI, 193);
         setFlashMode("0");
@@ -4207,58 +4182,24 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     }
 
     public void updateMoon() {
-        Range exposureCompensationRange = this.mCamera2Device.getCapabilities().getExposureCompensationRange();
-        int i = -24;
-        if (-24 < ((Integer) exposureCompensationRange.getLower()).intValue()) {
-            i = ((Integer) exposureCompensationRange.getLower()).intValue();
-        }
-        this.mCamera2Device.setExposureCompensation(i);
-        this.mCamera2Device.setAWBLock(true);
-        String focusMode = this.mFocusManager.setFocusMode("manual");
-        setFocusMode(focusMode);
-        if (focusMode.equals("manual")) {
-            this.mCamera2Device.setFocusDistance(0.0f);
-        }
+        this.mIsMoonMode = true;
+        updateFocusMode();
         this.mCurrentAiScene = 35;
+        this.mCamera2Device.setASDScebe(35);
         resumePreviewInWorkThread();
     }
 
     /* JADX WARNING: Missing block: B:11:0x002a, code:
             return false;
      */
-    private boolean shouldChangeAiScene(int r7) {
-        /*
-        r6 = this;
-        r0 = r6.isDoingAction();
-        r1 = 0;
-        if (r0 != 0) goto L_0x002a;
-    L_0x0007:
-        r0 = r6.isAlive();
-        if (r0 != 0) goto L_0x000e;
-    L_0x000d:
-        goto L_0x002a;
-    L_0x000e:
-        r0 = r6.mCurrentDetectedScene;
-        if (r0 == r7) goto L_0x0029;
-    L_0x0012:
-        r2 = java.lang.System.currentTimeMillis();
-        r4 = r6.mLastChangeSceneTime;
-        r2 = r2 - r4;
-        r4 = 300; // 0x12c float:4.2E-43 double:1.48E-321;
-        r0 = (r2 > r4 ? 1 : (r2 == r4 ? 0 : -1));
-        if (r0 <= 0) goto L_0x0029;
-    L_0x001f:
-        r6.mCurrentDetectedScene = r7;
-        r0 = java.lang.System.currentTimeMillis();
-        r6.mLastChangeSceneTime = r0;
-        r7 = 1;
-        return r7;
-    L_0x0029:
-        return r1;
-    L_0x002a:
-        return r1;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.shouldChangeAiScene(int):boolean");
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+    private boolean shouldChangeAiScene(int i) {
+        if (isDoingAction() || !isAlive() || this.mCurrentDetectedScene == i || System.currentTimeMillis() - this.mLastChangeSceneTime <= 300) {
+            return false;
+        }
+        this.mCurrentDetectedScene = i;
+        this.mLastChangeSceneTime = System.currentTimeMillis();
+        return true;
     }
 
     private void resetAiSceneInHdrOrFlashOn() {
@@ -4277,35 +4218,15 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     /* JADX WARNING: Missing block: B:10:0x0023, code:
             return;
      */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     private void resetAsdSceneInHdrOrFlashChange() {
-        /*
-        r2 = this;
-        r0 = com.mi.config.b.hu();
-        if (r0 == 0) goto L_0x0023;
-    L_0x0006:
-        r0 = r2.isFrontCamera();
-        if (r0 == 0) goto L_0x0023;
-    L_0x000c:
-        r0 = r2.mCurrentAsdScene;
-        r1 = -1;
-        if (r0 != r1) goto L_0x0012;
-    L_0x0011:
-        goto L_0x0023;
-    L_0x0012:
-        r0 = r2.mCurrentAsdScene;
-        r1 = 9;
-        if (r0 != r1) goto L_0x0022;
-    L_0x0018:
-        r0 = r2.mHandler;
-        r1 = new com.android.camera.module.Camera2Module$29;
-        r1.<init>();
-        r0.post(r1);
-    L_0x0022:
-        return;
-    L_0x0023:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.module.Camera2Module.resetAsdSceneInHdrOrFlashChange():void");
+        if (b.hw() && isFrontCamera() && this.mCurrentAsdScene != -1 && this.mCurrentAsdScene == 9) {
+            this.mHandler.post(new Runnable() {
+                public void run() {
+                    Camera2Module.this.consumeAsdSceneResult(-1);
+                }
+            });
+        }
     }
 
     private void trackAISceneChanged(int i, int i2) {
@@ -4343,13 +4264,13 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
                     Camera2Module.this.mActivity.restoreWindowBrightness();
                 }
                 FullScreenProtocol fullScreenProtocol = (FullScreenProtocol) ModeCoordinatorImpl.getInstance().getAttachProtocol(196);
-                String access$1500 = Camera2Module.TAG;
+                String access$1300 = Camera2Module.TAG;
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("stopScreenLight: protocol = ");
                 stringBuilder.append(fullScreenProtocol);
                 stringBuilder.append(", mHandler = ");
                 stringBuilder.append(Camera2Module.this.mHandler);
-                Log.d(access$1500, stringBuilder.toString());
+                Log.d(access$1300, stringBuilder.toString());
                 if (fullScreenProtocol != null) {
                     fullScreenProtocol.hideScreenLight();
                 }
@@ -4374,7 +4295,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         if (beautyValues == null) {
             return false;
         }
-        if (!b.hp()) {
+        if (!b.hr()) {
             return BeautyConstant.LEVEL_CLOSE.equals(beautyValues.mBeautyLevel) ^ true;
         }
         if (!CameraSettings.isAdvancedBeautyOn()) {
@@ -4408,7 +4329,7 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
         pictureInfo.setFrontMirror(isFrontMirror());
         pictureInfo.setSensorType(isFrontCamera());
         pictureInfo.setBokehFrontCamera(isBokehFrontCamera());
-        if (this.mModuleIndex == 171) {
+        if (isPortraitMode()) {
             pictureInfo.setAiType(this.mCurrentAiScene);
         }
         pictureInfo.end();
@@ -4442,9 +4363,14 @@ public class Camera2Module extends BaseModule implements Listener, CameraAction,
     public void onUltraWideChanged(final boolean z) {
         this.mHandler.post(new Runnable() {
             public void run() {
-                FragmentTopConfig fragmentTopConfig = (FragmentTopConfig) ModeCoordinatorImpl.getInstance().getAttachProtocol(172);
-                if (fragmentTopConfig != null) {
-                    fragmentTopConfig.alertAiDetectTipHint(z ? 0 : 8, R.string.ultra_wide_recommend_tip_hint, FragmentTopAlert.HINT_DELAY_TIME);
+                BottomPopupTips bottomPopupTips = (BottomPopupTips) ModeCoordinatorImpl.getInstance().getAttachProtocol(175);
+                if (bottomPopupTips == null) {
+                    return;
+                }
+                if (z) {
+                    bottomPopupTips.showTips(14, R.string.ultra_wide_recommend_tip_hint, 5);
+                } else {
+                    bottomPopupTips.directlyHideTips();
                 }
             }
         });

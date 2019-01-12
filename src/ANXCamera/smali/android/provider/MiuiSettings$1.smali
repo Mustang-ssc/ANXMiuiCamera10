@@ -22,7 +22,7 @@
 .method static constructor <clinit>()V
     .registers 3
 
-    .line 2070
+    .line 2076
     invoke-static {}, Landroid/provider/MiuiSettings$System$SmallWindowType;->values()[Landroid/provider/MiuiSettings$System$SmallWindowType;
 
     move-result-object v0

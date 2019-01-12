@@ -2904,7 +2904,7 @@
     .line 874
     invoke-direct {p0}, Lcom/android/camera/BasePreferenceActivity;->resetTimeOutFlag()V
 
-    .line 875
+    .line 861
     invoke-super {p0}, Landroid/preference/PreferenceActivity;->onBackPressed()V
 
     .line 876
@@ -3380,7 +3380,7 @@
 .method protected onRestart()V
     .locals 1
 
-    .line 839
+    .line 829
     invoke-super {p0}, Landroid/preference/PreferenceActivity;->onRestart()V
 
     .line 840

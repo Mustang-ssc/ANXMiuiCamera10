@@ -79,8 +79,6 @@ public abstract class BaseBeautyMakeupFragment extends BaseBeautyFragment {
     }
 
     protected void initView(View view) {
-        int i;
-        int i2;
         this.mHeaderRecyclerView = (LinearLayout) view.findViewById(R.id.header_recyclerView);
         this.mMakeupItemList = (RecyclerView) view.findViewById(R.id.makeup_item_list);
         initHeaderView();
@@ -92,20 +90,12 @@ public abstract class BaseBeautyMakeupFragment extends BaseBeautyFragment {
         this.mItemList = initItems();
         this.mItemWidth = getResources().getDimensionPixelSize(R.dimen.beautycamera_makeup_item_width);
         this.mTotalWidth = getResources().getDisplayMetrics().widthPixels;
-        int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.beauty_model_recycler_padding_left);
-        if (isNeedScroll()) {
-            i = 0;
-            i2 = i;
-        } else {
-            dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.beauty_item_margin);
-            int dimensionPixelSize2 = getResources().getDimensionPixelSize(R.dimen.beauty_padding_left);
-            i = getResources().getDimensionPixelSize(R.dimen.beauty_padding_right);
+        setListPadding(this.mMakeupItemList);
+        int listItemMargin = getListItemMargin();
+        if (!isNeedScroll()) {
             this.mLayoutManager.setScrollEnabled(false);
-            i2 = dimensionPixelSize;
-            dimensionPixelSize = dimensionPixelSize2;
         }
-        this.mMakeupItemList.setPadding(dimensionPixelSize, 0, i, 0);
-        this.mMakeupAdapter = new MakeupSingleCheckAdapter(getActivity(), this.mItemList, i2, isCustomWidth(), customItemWidth());
+        this.mMakeupAdapter = new MakeupSingleCheckAdapter(getActivity(), this.mItemList, listItemMargin, isCustomWidth(), customItemWidth());
         this.mClickListener = initOnItemClickListener();
         this.mMakeupAdapter.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
@@ -126,6 +116,27 @@ public abstract class BaseBeautyMakeupFragment extends BaseBeautyFragment {
         this.mMakeupItemList.setItemAnimator(defaultItemAnimator);
         this.mMakeupAdapter.notifyDataSetChanged();
         setItemInCenter(this.mSelectedParam);
+    }
+
+    protected void setListPadding(RecyclerView recyclerView) {
+        if (recyclerView != null) {
+            int i;
+            int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.beauty_model_recycler_padding_left);
+            if (isNeedScroll()) {
+                i = 0;
+            } else {
+                dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.beauty_padding_left);
+                i = getResources().getDimensionPixelSize(R.dimen.beauty_padding_right);
+            }
+            recyclerView.setPadding(dimensionPixelSize, 0, i, 0);
+        }
+    }
+
+    protected int getListItemMargin() {
+        if (isNeedScroll()) {
+            return 0;
+        }
+        return getResources().getDimensionPixelSize(R.dimen.beauty_item_margin);
     }
 
     protected boolean isNeedScroll() {

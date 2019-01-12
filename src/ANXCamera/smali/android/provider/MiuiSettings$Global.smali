@@ -42,7 +42,7 @@
 .method public constructor <init>()V
     .registers 1
 
-    .line 3204
+    .line 3210
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -53,7 +53,7 @@
     .param p0, "cr"    # Landroid/content/ContentResolver;
     .param p1, "isOpen"    # Z
 
-    .line 3299
+    .line 3305
     const-string/jumbo v0, "open_second_space_status_icon"
 
     invoke-static {p0, v0, p1}, Landroid/provider/MiuiSettings$Global;->putBoolean(Landroid/content/ContentResolver;Ljava/lang/String;Z)Z
@@ -68,7 +68,7 @@
     .param p0, "cr"    # Landroid/content/ContentResolver;
     .param p1, "isOpen"    # Z
 
-    .line 3285
+    .line 3291
     const-string/jumbo v0, "open_privacy_contact_in_second_space"
 
     invoke-static {p0, v0, p1}, Landroid/provider/MiuiSettings$Global;->putBoolean(Landroid/content/ContentResolver;Ljava/lang/String;Z)Z
@@ -83,7 +83,7 @@
     .param p0, "cr"    # Landroid/content/ContentResolver;
     .param p1, "name"    # Ljava/lang/String;
 
-    .line 3313
+    .line 3319
     const/4 v0, 0x0
 
     invoke-static {p0, p1, v0}, Landroid/provider/Settings$Global;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
@@ -104,7 +104,7 @@
     .registers 3
     .param p0, "cr"    # Landroid/content/ContentResolver;
 
-    .line 3292
+    .line 3298
     const-string/jumbo v0, "open_second_space_status_icon"
 
     const/4 v1, 0x1
@@ -128,7 +128,7 @@
     .registers 2
     .param p0, "cr"    # Landroid/content/ContentResolver;
 
-    .line 3278
+    .line 3284
     const-string/jumbo v0, "open_privacy_contact_in_second_space"
 
     invoke-static {p0, v0}, Landroid/provider/MiuiSettings$Global;->getBoolean(Landroid/content/ContentResolver;Ljava/lang/String;)Z
@@ -144,7 +144,7 @@
     .param p1, "name"    # Ljava/lang/String;
     .param p2, "value"    # Z
 
-    .line 3306
+    .line 3312
     invoke-static {p0, p1, p2}, Landroid/provider/Settings$Global;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
 
     move-result v0

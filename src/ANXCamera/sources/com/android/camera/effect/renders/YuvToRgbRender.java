@@ -1,12 +1,14 @@
 package com.android.camera.effect.renders;
 
+import android.media.Image.Plane;
 import android.opengl.GLES20;
 import com.android.camera.effect.ShaderUtil;
 import com.android.camera.effect.draw_mode.DrawAttribute;
 import com.android.camera.effect.draw_mode.DrawYuvAttribute;
 import com.android.camera.log.Log;
 import com.android.gallery3d.ui.GLCanvas;
-import java.nio.ByteBuffer;
+import com.xiaomi.camera.base.ImageUtil;
+import java.nio.Buffer;
 import java.util.Locale;
 
 public class YuvToRgbRender extends ShaderRender {
@@ -77,9 +79,9 @@ public class YuvToRgbRender extends ShaderRender {
             } else {
                 long currentTimeMillis = System.currentTimeMillis();
                 DrawYuvAttribute drawYuvAttribute = (DrawYuvAttribute) drawAttribute;
-                genYUVTextures(drawYuvAttribute.mYBuffer, drawYuvAttribute.mUVBuffer, drawYuvAttribute.mWidth, drawYuvAttribute.mHeight);
-                drawTexture(this.mYuvTextureIds, 0.0f, 0.0f, (float) drawYuvAttribute.mWidth, (float) drawYuvAttribute.mHeight);
-                Log.d(TAG, String.format(Locale.ENGLISH, "draw: size=%dx%d time=%d", new Object[]{Integer.valueOf(drawYuvAttribute.mWidth), Integer.valueOf(drawYuvAttribute.mHeight), Long.valueOf(System.currentTimeMillis() - currentTimeMillis)}));
+                genYUVTextures(drawYuvAttribute);
+                drawTexture(this.mYuvTextureIds, 0.0f, 0.0f, (float) drawYuvAttribute.mPictureSize.getWidth(), (float) drawYuvAttribute.mPictureSize.getHeight());
+                Log.d(TAG, String.format(Locale.ENGLISH, "draw: size=%s time=%d", new Object[]{drawYuvAttribute.mPictureSize, Long.valueOf(System.currentTimeMillis() - currentTimeMillis)}));
             }
             return true;
         }
@@ -113,8 +115,25 @@ public class YuvToRgbRender extends ShaderRender {
         this.mGLCanvas.getState().popState();
     }
 
-    public void genYUVTextures(ByteBuffer byteBuffer, ByteBuffer byteBuffer2, int i, int i2) {
-        ShaderUtil.loadYuvToTextures(byteBuffer, byteBuffer2, i, i2, this.mYuvTextureIds);
+    public void genYUVTextures(DrawYuvAttribute drawYuvAttribute) {
+        Buffer buffer;
+        Buffer buffer2;
+        int width = drawYuvAttribute.mImage.getWidth();
+        int height = drawYuvAttribute.mImage.getHeight();
+        Plane[] planes = drawYuvAttribute.mImage.getPlanes();
+        Plane plane = planes[0];
+        Plane plane2 = planes[1];
+        if (plane.getRowStride() == width) {
+            buffer = plane.getBuffer();
+        } else {
+            buffer = ImageUtil.removePadding(plane, width, height);
+        }
+        if (plane2.getRowStride() == width) {
+            buffer2 = plane2.getBuffer();
+        } else {
+            buffer2 = ImageUtil.removePadding(plane2, width / 2, height / 2);
+        }
+        ShaderUtil.loadYuvToTextures(buffer, buffer2, width, height, this.mYuvTextureIds);
     }
 
     public String getFragShaderString() {

@@ -41,8 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseFragmentDelegate implements BaseDelegate {
-    public static final int BEAUTY_FRAGMENT_CONTAINER_ID = 2131558424;
-    public static final int EYE_LIGHT_POPU_TIP_FRAGMENT_CONTAINER_ID = 2131558626;
+    public static final int BEAUTY_FRAGMENT_CONTAINER_ID = 2131558426;
+    public static final int EYE_LIGHT_POPU_TIP_FRAGMENT_CONTAINER_ID = 2131558640;
     public static final int FRAGMENT_BEAUTY = 251;
     public static final int FRAGMENT_BLANK_BEAUTY = 4090;
     public static final int FRAGMENT_BOTTOM_ACTION = 241;
@@ -71,7 +71,7 @@ public class BaseFragmentDelegate implements BaseDelegate {
     public static final int FRAGMENT_TOP_CONFIG = 244;
     public static final int FRAGMENT_TOP_CONFIG_EXTRA = 245;
     public static final int FRAGMENT_VERTICAL = 4088;
-    public static final int MAKE_UP_POPU_FRAGMENT_CONTAINER_ID = 2131558625;
+    public static final int MAKE_UP_POPU_FRAGMENT_CONTAINER_ID = 2131558639;
     private static final String TAG = BaseFragmentDelegate.class.getSimpleName();
     private AnimationComposite animationComposite = new AnimationComposite();
     private SparseArray<List<Integer>> currentFragments;
@@ -119,7 +119,7 @@ public class BaseFragmentDelegate implements BaseDelegate {
         beginTransaction.replace(R.id.main_vertical, constructFragment9, constructFragment9.getFragmentTag());
         if (b.isSupportedOpticalZoom()) {
             constructFragment = constructFragment(true, 4084, 240, baseLifecycleListener2);
-        } else if (b.ha()) {
+        } else if (b.hd()) {
             constructFragment = constructFragment(true, 4085, 240, baseLifecycleListener2);
         } else {
             constructFragment = null;
@@ -364,106 +364,33 @@ public class BaseFragmentDelegate implements BaseDelegate {
     /* JADX WARNING: Missing block: B:48:?, code:
             return;
      */
-    private void updateCurrentFragments(@android.support.annotation.IdRes int r2, int r3, int r4) {
-        /*
-        r1 = this;
-        r0 = r1.currentFragments;
-        r2 = r0.get(r2);
-        r2 = (java.util.List) r2;
-        r0 = 0;
-        switch(r4) {
-            case 1: goto L_0x0090;
-            case 2: goto L_0x0076;
-            case 3: goto L_0x005c;
-            case 4: goto L_0x0054;
-            case 5: goto L_0x0049;
-            case 6: goto L_0x0028;
-            case 7: goto L_0x000e;
-            default: goto L_0x000c;
-        };
-    L_0x000c:
-        goto L_0x009b;
-    L_0x000e:
-        r4 = r2.size();
-        if (r0 >= r4) goto L_0x009b;
-    L_0x0014:
-        r4 = r2.get(r0);
-        r4 = (java.lang.Integer) r4;
-        r4 = r4.intValue();
-        if (r4 != r3) goto L_0x0025;
-    L_0x0020:
-        r2.remove(r0);
-        goto L_0x009b;
-    L_0x0025:
-        r0 = r0 + 1;
-        goto L_0x000e;
-    L_0x0028:
-        r4 = r2.size();
-        if (r0 >= r4) goto L_0x0041;
-    L_0x002e:
-        r4 = r2.get(r0);
-        r4 = (java.lang.Integer) r4;
-        r4 = r4.intValue();
-        if (r4 != r3) goto L_0x003e;
-    L_0x003a:
-        r2.remove(r0);
-        goto L_0x0041;
-    L_0x003e:
-        r0 = r0 + 1;
-        goto L_0x0028;
-    L_0x0041:
-        r3 = java.lang.Integer.valueOf(r3);
-        r2.add(r3);
-        goto L_0x009b;
-    L_0x0049:
-        r2.clear();
-        r3 = java.lang.Integer.valueOf(r3);
-        r2.add(r3);
-        goto L_0x009b;
-    L_0x0054:
-        r3 = java.lang.Integer.valueOf(r3);
-        r2.add(r3);
-        goto L_0x009b;
-    L_0x005c:
-        r4 = r2.size();
-        if (r0 >= r4) goto L_0x0075;
-    L_0x0062:
-        r4 = r2.get(r0);
-        r4 = (java.lang.Integer) r4;
-        r4 = r4.intValue();
-        if (r4 != r3) goto L_0x0072;
-    L_0x006e:
-        r2.remove(r0);
-        goto L_0x0075;
-    L_0x0072:
-        r0 = r0 + 1;
-        goto L_0x005c;
-    L_0x0075:
-        goto L_0x009b;
-    L_0x0076:
-        r4 = r2.size();
-        if (r0 >= r4) goto L_0x008f;
-    L_0x007c:
-        r4 = r2.get(r0);
-        r4 = (java.lang.Integer) r4;
-        r4 = r4.intValue();
-        if (r4 != r3) goto L_0x008c;
-    L_0x0088:
-        r2.remove(r0);
-        goto L_0x008f;
-    L_0x008c:
-        r0 = r0 + 1;
-        goto L_0x0076;
-    L_0x008f:
-        goto L_0x009b;
-    L_0x0090:
-        r2.clear();
-        r3 = java.lang.Integer.valueOf(r3);
-        r2.add(r3);
-    L_0x009b:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.fragment.BaseFragmentDelegate.updateCurrentFragments(int, int, int):void");
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+    private void updateCurrentFragments(@IdRes int i, int i2, int i3) {
+        List list = (List) this.currentFragments.get(i);
+        int i4 = 0;
+        switch (i3) {
+            case 1:
+                list.clear();
+                list.add(Integer.valueOf(i2));
+                return;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                list.add(Integer.valueOf(i2));
+                return;
+            case 5:
+                list.clear();
+                list.add(Integer.valueOf(i2));
+                return;
+            case 6:
+                break;
+            case 7:
+                break;
+            default:
+                return;
+        }
     }
 
     private BaseFragment constructFragment(boolean z, int i, int i2, BaseLifecycleListener baseLifecycleListener) {
@@ -611,7 +538,7 @@ public class BaseFragmentDelegate implements BaseDelegate {
                         arrayList.add(BaseFragmentOperation.create(R.id.main_content).show(getOriginalFragment(R.id.main_content)));
                     }
                     arrayList.add(BaseFragmentOperation.create(R.id.bottom_popup_tips).show(getOriginalFragment(R.id.bottom_popup_tips)));
-                    if (b.isSupportedOpticalZoom() || b.ha()) {
+                    if (b.isSupportedOpticalZoom() || b.hd()) {
                         arrayList.add(BaseFragmentOperation.create(R.id.bottom_popup_dual_camera_adjust).show(getOriginalFragment(R.id.bottom_popup_dual_camera_adjust)));
                         break;
                     }

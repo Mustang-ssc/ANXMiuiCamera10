@@ -18,6 +18,7 @@ public class DisplayFeatureManager {
     public static final int DEFALUT_GAMUT_MODE = 0;
     public static final int DEFALUT_SCREEN_COLOR = 2;
     private static final String DISPLAY_FEATURE_SERVICE = "DisplayFeatureControl";
+    public static final int DISPLAY_INFO_GRAY = 0;
     public static final int EXT_COLOR_PROC_STATE = 15;
     private static final String HIDL_SERVICENAME_DEFAULT = "vendor.xiaomi.hardware.displayfeature@1.0::IDisplayFeature";
     public static final String PROPERTY_ASSERTIVE_DISPLAY = "persist.sys.ltm_enable";
@@ -72,6 +73,17 @@ public class DisplayFeatureManager {
             }
             if (this.mProxy != null) {
                 this.mProxy.setFeature(0, mode, value, 255);
+            }
+        }
+    }
+
+    public void registerCallback(Object callback) {
+        synchronized (this.mLock) {
+            if (this.mProxy == null) {
+                initProxyLocked();
+            }
+            if (this.mProxy != null) {
+                this.mProxy.registerCallback(0, callback);
             }
         }
     }

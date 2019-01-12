@@ -66,13 +66,17 @@ public class BeautyParameters {
         HEAD_SLIM_RATIO,
         BODY_SLIM_RATIO,
         SHOULDER_SLIM_RATIO,
-        LEG_SLIM_RATIO
+        LEG_SLIM_RATIO,
+        LIVE_SHRINK_FACE_RATIO,
+        LIVE_ENLARGE_EYE_RATIO,
+        LIVE_WHITEN_STRENGTH
     }
 
     static {
         sSupportSeekBarAdjustBeautyType.add(Integer.valueOf(2));
         sSupportSeekBarAdjustBeautyType.add(Integer.valueOf(3));
         sSupportSeekBarAdjustBeautyType.add(Integer.valueOf(5));
+        sSupportSeekBarAdjustBeautyType.add(Integer.valueOf(7));
     }
 
     private BeautyParameters() {
@@ -117,7 +121,7 @@ public class BeautyParameters {
         return list;
     }
 
-    public static String getFaceBeautyRatioKey(Type type) {
+    public static String getBeautyRatioSettingKey(Type type) {
         switch (type) {
             case SMOOTH_STRENGTH:
                 return CameraSettings.KEY_BEAUTIFY_SKIN_SMOOTH_RATIO;
@@ -157,24 +161,33 @@ public class BeautyParameters {
                 return CameraSettings.KEY_BEAUTY_SHOULDER_SLIM_RATIO;
             case LEG_SLIM_RATIO:
                 return CameraSettings.KEY_BEAUTY_LEG_SLIM_RATIO;
+            case LIVE_SHRINK_FACE_RATIO:
+                return CameraSettings.KEY_LIVE_SHRINK_FACE_RATIO;
+            case LIVE_ENLARGE_EYE_RATIO:
+                return CameraSettings.KEY_LIVE_ENLARGE_EYE_RATIO;
+            case LIVE_WHITEN_STRENGTH:
+                return CameraSettings.KEY_LIVE_WHITEN_STRENGTH;
             default:
                 return "";
         }
     }
 
     public static Type convert(BeautyParameterType beautyParameterType) {
-        switch (beautyParameterType) {
-            case SMOOTH_STRENGTH:
-                return Type.SMOOTH_STRENGTH;
-            case WHITEN_STRENGTH:
-                return Type.WHITEN_STRENGTH;
-            case ENLARGE_EYE_RATIO:
-                return Type.ENLARGE_EYE_RATIO;
-            case SHRINK_FACE_RATIO:
-                return Type.SHRINK_FACE_RATIO;
-            default:
-                throw new IllegalArgumentException();
+        if (beautyParameterType != null) {
+            switch (beautyParameterType) {
+                case SMOOTH_STRENGTH:
+                    return Type.SMOOTH_STRENGTH;
+                case WHITEN_STRENGTH:
+                    return Type.WHITEN_STRENGTH;
+                case ENLARGE_EYE_RATIO:
+                    return Type.ENLARGE_EYE_RATIO;
+                case SHRINK_FACE_RATIO:
+                    return Type.SHRINK_FACE_RATIO;
+                default:
+                    throw new IllegalArgumentException();
+            }
         }
+        throw new IllegalArgumentException();
     }
 
     public static boolean isFaceBeautyOn() {
@@ -186,7 +199,7 @@ public class BeautyParameters {
     }
 
     public List<Type> getSupportBeautyTypes() {
-        if (!b.hA()) {
+        if (!b.hC()) {
             return BeautySettingManager.getLegacySupportedBeautyTypes();
         }
         if (CameraSettings.isFrontCamera()) {
@@ -246,7 +259,7 @@ public class BeautyParameters {
     }
 
     private Map<BeautyParameterType, Float> getProcessorBeautyParams(IntelligentBeautyProcessor intelligentBeautyProcessor, int i) {
-        if (!b.hp()) {
+        if (!b.hr()) {
             i--;
         }
         return intelligentBeautyProcessor.getIntelligentLevelParams(i);

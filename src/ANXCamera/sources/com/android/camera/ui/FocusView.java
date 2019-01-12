@@ -53,7 +53,7 @@ public class FocusView extends View implements FocusIndicator, Rotatable, V6Func
     public static final int CURSOR_SLIDE_BACK = 2;
     private static final int DISAPPEAR_TIME = 1500;
     private static final int END_DISAPPEAR_TIMEOUT = 800;
-    private static final float GAP_NUM = d.getFloat(d.sT, 0.0f).floatValue();
+    private static final float GAP_NUM = d.getFloat(d.sV, 0.0f).floatValue();
     public static final int MAX_SLIDE_DISTANCE = Util.dpToPixel(110.3f);
     private static final int MSG_ANIMATE_EV_CENTER = 7;
     private static final int MSG_FINISH_DISAPPEAR = 5;
@@ -241,8 +241,6 @@ public class FocusView extends View implements FocusIndicator, Rotatable, V6Func
         boolean isMeteringAreaOnly();
 
         boolean isNeedHapticFeedback();
-
-        boolean isNeedMute();
 
         boolean isShowAeAfLockIndicator();
 

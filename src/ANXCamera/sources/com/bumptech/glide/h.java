@@ -255,7 +255,7 @@ public class h<TranscodeType> implements g<h<TranscodeType>>, Cloneable {
     @NonNull
     /* renamed from: b */
     public h<TranscodeType> a(@Nullable @RawRes @DrawableRes Integer num) {
-        return f(num).b(f.j(a.n(this.context)));
+        return f(num).b(f.j(a.m(this.context)));
     }
 
     @Deprecated

@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +26,7 @@ import com.android.camera.fragment.beauty.FrontBeautyLevelFragment;
 import com.android.camera.fragment.beauty.LegacyBeautyLevelFragment;
 import com.android.camera.fragment.beauty.MenuItem;
 import com.android.camera.fragment.beauty.MiBeauty;
+import com.android.camera.log.Log;
 import com.android.camera.module.ModuleManager;
 import com.android.camera.protocol.ModeCoordinatorImpl;
 import com.android.camera.protocol.ModeProtocol.BaseDelegate;
@@ -76,9 +76,9 @@ public class FragmentBeauty extends BaseFragment implements OnClickListener, Han
             Log.d(str, stringBuilder.toString());
             Fragment fragment = (Fragment) this.mFragmentList.get(i);
             if (fragment == null) {
-                if (b.hp()) {
+                if (b.hr()) {
                     fragment = new LegacyBeautyLevelFragment();
-                } else if (b.hA()) {
+                } else if (b.hC()) {
                     fragment = new FrontBeautyLevelFragment();
                 }
                 Log.e(BeautyParameters.TAG, "beauty pager get fragment item is null!");
@@ -229,7 +229,7 @@ public class FragmentBeauty extends BaseFragment implements OnClickListener, Han
             }
         }
         DualController dualController = (DualController) ModeCoordinatorImpl.getInstance().getAttachProtocol(182);
-        if (dualController != null) {
+        if (dualController != null && !CameraSettings.isFrontCamera()) {
             dualController.showZoomButton();
         }
     }
@@ -310,7 +310,7 @@ public class FragmentBeauty extends BaseFragment implements OnClickListener, Han
     }
 
     private void showHideEyeLighting(boolean z) {
-        if (DataRepository.dataItemFeature().fl() && CameraSettings.isSupportBeautyMakeup()) {
+        if (DataRepository.dataItemFeature().fm() && CameraSettings.isSupportBeautyMakeup()) {
             if (this.mEyeLightFragment == null) {
                 this.mEyeLightFragment = new BeautyEyeLightFragment();
             }

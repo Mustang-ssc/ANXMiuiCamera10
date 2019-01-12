@@ -12,6 +12,8 @@
 
 .field private static final DISPLAY_FEATURE_SERVICE:Ljava/lang/String; = "DisplayFeatureControl"
 
+.field public static final DISPLAY_INFO_GRAY:I = 0x0
+
 .field public static final EXT_COLOR_PROC_STATE:I = 0xf
 
 .field private static final HIDL_SERVICENAME_DEFAULT:Ljava/lang/String; = "vendor.xiaomi.hardware.displayfeature@1.0::IDisplayFeature"
@@ -224,18 +226,18 @@
 .method private initProxyLocked()V
     .registers 6
 
-    .line 93
+    .line 104
     :try_start_0
     sget-boolean v0, Lmiui/os/DeviceFeature;->SUPPORT_DISPLAYFEATURE_HIDL:Z
 
     if-eqz v0, :cond_4c
 
-    .line 95
+    .line 106
     sget v0, Lmiui/hardware/display/DisplayFeatureManager;->CONFIG_SERVICENAME_RESOURCEID:I
 
     if-nez v0, :cond_b
 
-    .line 96
+    .line 107
     const-string v0, "vendor.xiaomi.hardware.displayfeature@1.0::IDisplayFeature"
 
     goto :goto_15
@@ -251,7 +253,7 @@
 
     move-result-object v0
 
-    .line 97
+    .line 108
     .local v0, "hidlServiceName":Ljava/lang/String;
     :goto_15
     sget-object v1, Lmiui/hardware/display/DisplayFeatureManager;->TAG:Ljava/lang/String;
@@ -280,38 +282,38 @@
 
     invoke-static {v1, v2}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 99
+    .line 110
     const-string v1, "default"
 
     invoke-static {v0, v1}, Landroid/os/HwBinder;->getService(Ljava/lang/String;Ljava/lang/String;)Landroid/os/IHwBinder;
 
     move-result-object v1
 
-    .line 100
+    .line 111
     .local v1, "hb":Landroid/os/IHwBinder;
     if-eqz v1, :cond_4b
 
-    .line 101
+    .line 112
     iget-object v2, p0, Lmiui/hardware/display/DisplayFeatureManager;->mHwBinderDeathHandler:Landroid/os/IHwBinder$DeathRecipient;
 
     const-wide/16 v3, 0x2711
 
     invoke-interface {v1, v2, v3, v4}, Landroid/os/IHwBinder;->linkToDeath(Landroid/os/IHwBinder$DeathRecipient;J)Z
 
-    .line 102
+    .line 113
     new-instance v2, Lmiui/hardware/display/DisplayFeatureServiceProxy;
 
     invoke-direct {v2, v1}, Lmiui/hardware/display/DisplayFeatureServiceProxy;-><init>(Ljava/lang/Object;)V
 
     iput-object v2, p0, Lmiui/hardware/display/DisplayFeatureManager;->mProxy:Lmiui/hardware/display/DisplayFeatureServiceProxy;
 
-    .line 105
+    .line 116
     .end local v0    # "hidlServiceName":Ljava/lang/String;
     .end local v1    # "hb":Landroid/os/IHwBinder;
     :cond_4b
     goto :goto_61
 
-    .line 106
+    .line 117
     :cond_4c
     const-string v0, "DisplayFeatureControl"
 
@@ -319,18 +321,18 @@
 
     move-result-object v0
 
-    .line 107
+    .line 118
     .local v0, "b":Landroid/os/IBinder;
     if-eqz v0, :cond_61
 
-    .line 108
+    .line 119
     iget-object v1, p0, Lmiui/hardware/display/DisplayFeatureManager;->mBinderDeathHandler:Landroid/os/IBinder$DeathRecipient;
 
     const/4 v2, 0x0
 
     invoke-interface {v0, v1, v2}, Landroid/os/IBinder;->linkToDeath(Landroid/os/IBinder$DeathRecipient;I)V
 
-    .line 109
+    .line 120
     new-instance v1, Lmiui/hardware/display/DisplayFeatureServiceProxy;
 
     invoke-direct {v1, v0}, Lmiui/hardware/display/DisplayFeatureServiceProxy;-><init>(Ljava/lang/Object;)V
@@ -339,17 +341,17 @@
     :try_end_61
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_61} :catch_62
 
-    .line 114
+    .line 125
     .end local v0    # "b":Landroid/os/IBinder;
     :cond_61
     :goto_61
     goto :goto_63
 
-    .line 112
+    .line 123
     :catch_62
     move-exception v0
 
-    .line 115
+    .line 126
     :goto_63
     return-void
 .end method
@@ -357,12 +359,12 @@
 .method private initServiceDeathRecipient()V
     .registers 2
 
-    .line 118
+    .line 129
     sget-boolean v0, Lmiui/os/DeviceFeature;->SUPPORT_DISPLAYFEATURE_HIDL:Z
 
     if-eqz v0, :cond_c
 
-    .line 119
+    .line 130
     new-instance v0, Lmiui/hardware/display/DisplayFeatureManager$1;
 
     invoke-direct {v0, p0}, Lmiui/hardware/display/DisplayFeatureManager$1;-><init>(Lmiui/hardware/display/DisplayFeatureManager;)V
@@ -371,7 +373,7 @@
 
     goto :goto_13
 
-    .line 129
+    .line 140
     :cond_c
     new-instance v0, Lmiui/hardware/display/DisplayFeatureManager$2;
 
@@ -379,7 +381,7 @@
 
     iput-object v0, p0, Lmiui/hardware/display/DisplayFeatureManager;->mBinderDeathHandler:Landroid/os/IBinder$DeathRecipient;
 
-    .line 139
+    .line 150
     :goto_13
     return-void
 .end method
@@ -389,7 +391,7 @@
 .method public getColorPrefer()I
     .registers 3
 
-    .line 144
+    .line 155
     const-string v0, "persist.sys.display_prefer"
 
     const/4 v1, 0x2
@@ -404,7 +406,7 @@
 .method public getScreenGamut()I
     .registers 3
 
-    .line 155
+    .line 166
     const-string v0, "persist.sys.gamut_mode"
 
     const/4 v1, 0x0
@@ -419,7 +421,7 @@
 .method public isAdEnable()Z
     .registers 3
 
-    .line 149
+    .line 160
     const-string v0, "persist.sys.ltm_enable"
 
     const/4 v1, 0x1
@@ -429,6 +431,55 @@
     move-result v0
 
     return v0
+.end method
+
+.method public registerCallback(Ljava/lang/Object;)V
+    .registers 5
+    .param p1, "callback"    # Ljava/lang/Object;
+
+    .line 92
+    iget-object v0, p0, Lmiui/hardware/display/DisplayFeatureManager;->mLock:Ljava/lang/Object;
+
+    monitor-enter v0
+
+    .line 93
+    :try_start_3
+    iget-object v1, p0, Lmiui/hardware/display/DisplayFeatureManager;->mProxy:Lmiui/hardware/display/DisplayFeatureServiceProxy;
+
+    if-nez v1, :cond_a
+
+    .line 94
+    invoke-direct {p0}, Lmiui/hardware/display/DisplayFeatureManager;->initProxyLocked()V
+
+    .line 96
+    :cond_a
+    iget-object v1, p0, Lmiui/hardware/display/DisplayFeatureManager;->mProxy:Lmiui/hardware/display/DisplayFeatureServiceProxy;
+
+    if-eqz v1, :cond_14
+
+    .line 97
+    iget-object v1, p0, Lmiui/hardware/display/DisplayFeatureManager;->mProxy:Lmiui/hardware/display/DisplayFeatureServiceProxy;
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v1, v2, p1}, Lmiui/hardware/display/DisplayFeatureServiceProxy;->registerCallback(ILjava/lang/Object;)V
+
+    .line 99
+    :cond_14
+    monitor-exit v0
+
+    .line 100
+    return-void
+
+    .line 99
+    :catchall_16
+    move-exception v1
+
+    monitor-exit v0
+    :try_end_18
+    .catchall {:try_start_3 .. :try_end_18} :catchall_16
+
+    throw v1
 .end method
 
 .method public setScreenEffect(II)V

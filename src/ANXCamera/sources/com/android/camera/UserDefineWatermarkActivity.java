@@ -17,14 +17,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.camera.sensitive.SensitiveFilter;
 import miui.R;
 
 public class UserDefineWatermarkActivity extends Activity implements TextWatcher {
     private static final int MSG_BG_FILTER_WORDS = 1;
     private static final int MSG_MT_UI = 2;
-    private static final int PROP_NAME_MAX = 12;
-    private static final String TAG = "UserDefineWatermarkActivity";
+    private static final int PROP_NAME_MAX = 14;
+    private static final String TAG = "UserDefineWatermarkAtivity";
     protected BackgroundHandler mBackgroundHandler;
     private EditText mEtUserDefineWords;
     private boolean mFlagBeyondLimit;
@@ -76,10 +77,10 @@ public class UserDefineWatermarkActivity extends Activity implements TextWatcher
         this.mEtUserDefineWords = (EditText) findViewById(R.id.et_user_define_words);
         this.mEtUserDefineWords.addTextChangedListener(this);
         this.mEtUserDefineWords.setTransformationMethod(new AllCapTransformationMethod(this, null));
-        Object customWatermark = CameraSettings.getCustomWatermark();
+        CharSequence customWatermark = CameraSettings.getCustomWatermark();
         if (!TextUtils.isEmpty(customWatermark)) {
             this.mEtUserDefineWords.setText(customWatermark);
-            this.mEtUserDefineWords.setSelection(customWatermark.length());
+            this.mEtUserDefineWords.setSelection(this.mEtUserDefineWords.getText().length());
         }
         this.mThreadBg = new HandlerThread(TAG, 10);
         this.mThreadBg.start();
@@ -165,7 +166,7 @@ public class UserDefineWatermarkActivity extends Activity implements TextWatcher
 
     private boolean checkContentlength() {
         this.mUserDefineWords = this.mEtUserDefineWords.getText().toString();
-        if (getTextLength(this.mUserDefineWords) <= 12.0d) {
+        if (getTextLength(this.mUserDefineWords) <= 14.0d) {
             return true;
         }
         this.mFlagBeyondLimit = true;
@@ -177,11 +178,11 @@ public class UserDefineWatermarkActivity extends Activity implements TextWatcher
 
     private String getCustomWords() {
         if (this.mEtUserDefineWords == null) {
-            return getResources().getString(R.string.dualcamera_watermark_default);
+            return getResources().getString(R.string.device_watermark_default_text);
         }
         Object trim = this.mEtUserDefineWords.getText().toString().trim();
         if (TextUtils.isEmpty(trim)) {
-            return getResources().getString(R.string.dualcamera_watermark_default);
+            return getResources().getString(R.string.device_watermark_default_text);
         }
         return trim.toUpperCase();
     }
@@ -209,7 +210,7 @@ public class UserDefineWatermarkActivity extends Activity implements TextWatcher
                     CameraSettings.setCustomWatermark(customWords);
                     Util.generateCustomWatermark2File();
                 }
-                ToastUtils.showToast((Context) this, (int) R.string.custom_watermark_words_save_success);
+                Toast.makeText(this, R.string.custom_watermark_words_save_success, 0).show();
                 finish();
                 return;
             }
@@ -231,12 +232,12 @@ public class UserDefineWatermarkActivity extends Activity implements TextWatcher
             } else if (i3 == i) {
                 stringBuilder.append(valueOf);
             } else if (i3 != i) {
-                d += i == 0 ? (double) stringBuilder.length() : ((double) stringBuilder.length()) / 1.25d;
+                d += i == 0 ? (double) stringBuilder.length() : ((double) stringBuilder.length()) / 1.29d;
                 stringBuilder.delete(0, stringBuilder.length());
                 stringBuilder.append(valueOf);
             }
             if (i2 == length - 1) {
-                d += i == 0 ? (double) stringBuilder.length() : ((double) stringBuilder.length()) / 1.25d;
+                d += i == 0 ? (double) stringBuilder.length() : ((double) stringBuilder.length()) / 1.29d;
                 stringBuilder.delete(0, stringBuilder.length());
                 stringBuilder.append(valueOf);
             }

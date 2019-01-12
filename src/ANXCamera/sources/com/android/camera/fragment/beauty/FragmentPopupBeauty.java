@@ -77,14 +77,14 @@ public class FragmentPopupBeauty extends BaseFragment implements OnClickListener
         if (isEnableClick()) {
             BaseDelegate baseDelegate;
             switch (view.getId()) {
-                case R.id.icon_sticker /*2131558525*/:
+                case R.id.icon_sticker /*2131558538*/:
                     baseDelegate = (BaseDelegate) ModeCoordinatorImpl.getInstance().getAttachProtocol(160);
                     if (baseDelegate != null) {
                         baseDelegate.delegateEvent(4);
                         break;
                     }
                     return;
-                case R.id.icon_beauty /*2131558526*/:
+                case R.id.icon_beauty /*2131558539*/:
                     baseDelegate = (BaseDelegate) ModeCoordinatorImpl.getInstance().getAttachProtocol(160);
                     if (baseDelegate != null) {
                         baseDelegate.delegateEvent(2);

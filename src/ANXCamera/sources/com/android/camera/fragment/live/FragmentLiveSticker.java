@@ -1,6 +1,7 @@
 package com.android.camera.fragment.live;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.statistics.E2EScenario;
@@ -19,8 +20,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import com.android.camera.CameraSettings;
 import com.android.camera.R;
+import com.android.camera.ToastUtils;
 import com.android.camera.Util;
 import com.android.camera.fragment.CommonRecyclerViewHolder;
+import com.android.camera.fragment.CtaNoticeFragment;
+import com.android.camera.fragment.CtaNoticeFragment.OnCtaNoticeClickListener;
 import com.android.camera.fragment.DefaultItemAnimator;
 import com.android.camera.log.Log;
 import com.android.camera.module.impl.component.FileUtils;
@@ -36,13 +40,15 @@ import com.android.camera.protocol.ModeCoordinatorImpl;
 import com.android.camera.protocol.ModeProtocol.StickerProtocol;
 import com.android.camera.sticker.LiveStickerInfo;
 import com.bumptech.glide.c;
+import com.bumptech.glide.request.f;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FragmentLiveSticker extends FragmentLiveBase {
+public class FragmentLiveSticker extends FragmentLiveBase implements OnCtaNoticeClickListener {
     private static final int FRAGMENT_INFO = 4092;
+    private static final int STICKER_ITEM_SIZE = 10;
     private static final String TAG = "FragmentLiveSticker";
     private static final LiveStickerInfo[] sLocalStickerList = new LiveStickerInfo[]{new LiveStickerInfo("", R.drawable.ff), new LiveStickerInfo("2D_angel", R.drawable.color_effect_image_berry), new LiveStickerInfo("2D_bubble", R.drawable.color_effect_image_warm)};
     private static List<LiveStickerInfo> sPersistStickerList = new ArrayList(Arrays.asList(sLocalStickerList));
@@ -84,55 +90,72 @@ public class FragmentLiveSticker extends FragmentLiveBase {
             stringBuilder.append(": ");
             stringBuilder.append(i);
             Log.v(str2, stringBuilder.toString());
-            String str3;
-            StringBuilder stringBuilder2;
-            if (i != 3) {
-                str3 = FragmentLiveSticker.TAG;
-                stringBuilder2 = new StringBuilder();
-                stringBuilder2.append("download ");
-                stringBuilder2.append(str);
-                stringBuilder2.append(" failed");
-                Log.e(str3, stringBuilder2.toString());
-                return;
-            }
+            LiveStickerInfo liveStickerInfo = null;
             int i2 = 0;
             while (i2 < FragmentLiveSticker.this.mStickerList.size()) {
-                LiveStickerInfo liveStickerInfo = (LiveStickerInfo) FragmentLiveSticker.this.mStickerList.get(i2);
+                liveStickerInfo = (LiveStickerInfo) FragmentLiveSticker.this.mStickerList.get(i2);
                 if (str.equals(liveStickerInfo.id)) {
-                    try {
-                        StringBuilder stringBuilder3 = new StringBuilder();
-                        stringBuilder3.append(FileUtils.STICKER_RESOURCE_DIR);
-                        stringBuilder3.append(liveStickerInfo.name);
-                        stringBuilder3.append(FileUtils.SUFFIX);
-                        FileUtils.UnZipFileFolder(stringBuilder3.toString(), FileUtils.STICKER_RESOURCE_DIR);
-                        StringBuilder stringBuilder4 = new StringBuilder();
-                        stringBuilder4.append(FileUtils.STICKER_RESOURCE_DIR);
-                        stringBuilder4.append(liveStickerInfo.name);
-                        stringBuilder4.append(FileUtils.SUFFIX);
-                        new File(stringBuilder4.toString()).delete();
-                        ((LiveStickerInfo) FragmentLiveSticker.this.mStickerList.get(i2)).downloadState = i;
-                        FragmentLiveSticker.this.getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                FragmentLiveSticker.this.mAdapter.notifyItemChanged(i2);
-                                if (FragmentLiveSticker.this.mSelectIndex == i2) {
-                                    FragmentLiveSticker.this.onItemSelected(i2, null);
-                                }
-                            }
-                        });
-                        break;
-                    } catch (Throwable e) {
-                        str3 = FragmentLiveSticker.TAG;
-                        stringBuilder2 = new StringBuilder();
-                        stringBuilder2.append("unzip ");
-                        stringBuilder2.append(liveStickerInfo.name);
-                        Log.e(str3, stringBuilder2.toString(), e);
+                    break;
+                }
+                i2++;
+            }
+            i2 = -1;
+            String str3;
+            if (liveStickerInfo == null) {
+                str3 = FragmentLiveSticker.TAG;
+                StringBuilder stringBuilder2 = new StringBuilder();
+                stringBuilder2.append("sticker ");
+                stringBuilder2.append(str);
+                stringBuilder2.append(" not found");
+                Log.w(str3, stringBuilder2.toString());
+                return;
+            }
+            liveStickerInfo.downloadState = i;
+            if (i != 3) {
+                str2 = FragmentLiveSticker.TAG;
+                StringBuilder stringBuilder3 = new StringBuilder();
+                stringBuilder3.append("download ");
+                stringBuilder3.append(str);
+                stringBuilder3.append(" failed, state = ");
+                stringBuilder3.append(i);
+                Log.e(str2, stringBuilder3.toString());
+                FragmentLiveSticker.this.showNetworkErrorHint();
+                FragmentLiveSticker.this.getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        FragmentLiveSticker.this.mAdapter.notifyItemChanged(i2);
                     }
-                } else {
-                    i2++;
+                });
+            } else {
+                try {
+                    StringBuilder stringBuilder4 = new StringBuilder();
+                    stringBuilder4.append(FileUtils.STICKER_RESOURCE_DIR);
+                    stringBuilder4.append(liveStickerInfo.name);
+                    stringBuilder4.append(FileUtils.SUFFIX);
+                    FileUtils.UnZipFileFolder(stringBuilder4.toString(), FileUtils.STICKER_RESOURCE_DIR);
+                    StringBuilder stringBuilder5 = new StringBuilder();
+                    stringBuilder5.append(FileUtils.STICKER_RESOURCE_DIR);
+                    stringBuilder5.append(liveStickerInfo.name);
+                    stringBuilder5.append(FileUtils.SUFFIX);
+                    new File(stringBuilder5.toString()).delete();
+                    FragmentLiveSticker.this.getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            FragmentLiveSticker.this.mAdapter.notifyItemChanged(i2);
+                            if (FragmentLiveSticker.this.mFutureSelectIndex == i2) {
+                                FragmentLiveSticker.this.onItemSelected(i2, null);
+                            }
+                        }
+                    });
+                } catch (Throwable e) {
+                    str3 = FragmentLiveSticker.TAG;
+                    stringBuilder = new StringBuilder();
+                    stringBuilder.append("unzip ");
+                    stringBuilder.append(liveStickerInfo.name);
+                    Log.e(str3, stringBuilder.toString(), e);
                 }
             }
         }
     };
+    int mFutureSelectIndex;
     private int mItemWidth;
     private LinearLayoutManager mLayoutManager;
     private View mRootView;
@@ -140,9 +163,11 @@ public class FragmentLiveSticker extends FragmentLiveBase {
     private List<LiveStickerInfo> mStickerList = sPersistStickerList;
     private RecyclerView mStickerListView;
     private int mTotalWidth;
+    private View mUpdatingView;
 
     private static class StickerItemAdapter extends Adapter<StickerItemHolder> {
         Context mContext;
+        f mGlideOptions = new f().J(R.drawable.ic_live_sticker_placeholder);
         LayoutInflater mLayoutInflater;
         OnItemClickListener mListener;
         int mSelectIndex;
@@ -157,11 +182,7 @@ public class FragmentLiveSticker extends FragmentLiveBase {
             public void onClick(View view) {
                 int adapterPosition = getAdapterPosition();
                 if (adapterPosition != StickerItemAdapter.this.mSelectIndex) {
-                    int i = StickerItemAdapter.this.mSelectIndex;
-                    StickerItemAdapter.this.mSelectIndex = adapterPosition;
                     StickerItemAdapter.this.mListener.onItemClick(null, view, adapterPosition, getItemId());
-                    StickerItemAdapter.this.notifyItemChanged(i);
-                    StickerItemAdapter.this.notifyItemChanged(adapterPosition);
                 }
             }
         }
@@ -184,10 +205,10 @@ public class FragmentLiveSticker extends FragmentLiveBase {
             View view = stickerItemHolder.getView(R.id.item_selected_indicator);
             LiveStickerInfo liveStickerInfo = (LiveStickerInfo) this.mStickerList.get(i);
             stickerItemHolder.itemView.setTag(liveStickerInfo);
-            if (liveStickerInfo.isLocal) {
+            if (liveStickerInfo.isLocal || liveStickerInfo.iconId > 0) {
                 imageView.setImageResource(liveStickerInfo.iconId);
             } else {
-                c.f(this.mContext).a(liveStickerInfo.icon).a(imageView);
+                c.f(this.mContext).a(liveStickerInfo.icon).b(this.mGlideOptions).a(imageView);
             }
             int downloadState = liveStickerInfo.getDownloadState();
             liveDownloadView.setStateImage(downloadState);
@@ -204,6 +225,10 @@ public class FragmentLiveSticker extends FragmentLiveBase {
         public int getItemCount() {
             return this.mStickerList.size();
         }
+
+        public void setSelectIndex(int i) {
+            this.mSelectIndex = i;
+        }
     }
 
     protected void initView(View view) {
@@ -211,6 +236,7 @@ public class FragmentLiveSticker extends FragmentLiveBase {
         this.mItemWidth = getResources().getDimensionPixelSize(R.dimen.live_sticker_item_size);
         this.mTotalWidth = getResources().getDisplayMetrics().widthPixels;
         final boolean isLayoutRTL = Util.isLayoutRTL(getContext());
+        this.mUpdatingView = this.mRootView.findViewById(R.id.live_sticker_updating);
         this.mStickerListView = (RecyclerView) this.mRootView.findViewById(R.id.live_sticker_list);
         this.mSelectIndex = 0;
         String currentLiveSticker = CameraSettings.getCurrentLiveSticker();
@@ -257,7 +283,9 @@ public class FragmentLiveSticker extends FragmentLiveBase {
         this.mStickerListView.setAdapter(this.mAdapter);
         setItemInCenter(this.mSelectIndex);
         LiveResourceDownloadManager.getInstance().addDownloadListener(this.mDownloadListener);
-        updateData();
+        if (sPersistStickerList.size() == sLocalStickerList.length && this.mSelectIndex == 0) {
+            reload();
+        }
     }
 
     public void onDestroy() {
@@ -294,20 +322,46 @@ public class FragmentLiveSticker extends FragmentLiveBase {
     }
 
     protected void onItemSelected(int i, View view) {
-        this.mSelectIndex = i;
+        this.mFutureSelectIndex = i;
         StickerProtocol stickerProtocol = (StickerProtocol) ModeCoordinatorImpl.getInstance().getAttachProtocol(178);
         if (stickerProtocol != null) {
-            LiveStickerInfo liveStickerInfo = (LiveStickerInfo) this.mStickerList.get(this.mSelectIndex);
-            CameraSettings.setCurrentLiveSticker(liveStickerInfo.name);
+            LiveStickerInfo liveStickerInfo = (LiveStickerInfo) this.mStickerList.get(i);
             int downloadState = liveStickerInfo.getDownloadState();
+            String str = TAG;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("select sticker ");
+            stringBuilder.append(i);
+            stringBuilder.append(": ");
+            stringBuilder.append(liveStickerInfo.name);
+            stringBuilder.append(", ");
+            stringBuilder.append(downloadState);
+            stringBuilder.append(", ");
+            stringBuilder.append(liveStickerInfo.isLocal);
+            stringBuilder.append(", ");
+            stringBuilder.append(liveStickerInfo.url);
+            Log.v(str, stringBuilder.toString());
             if (downloadState == 1 || downloadState == 3) {
+                downloadState = this.mSelectIndex;
+                this.mSelectIndex = i;
+                this.mAdapter.setSelectIndex(this.mSelectIndex);
+                this.mAdapter.notifyItemChanged(downloadState);
+                this.mAdapter.notifyItemChanged(this.mSelectIndex);
+                scrollIfNeed(this.mSelectIndex);
+                CameraSettings.setCurrentLiveSticker(liveStickerInfo.name);
                 stickerProtocol.onStickerChanged(liveStickerInfo.name);
-            } else {
+            } else if (!liveStickerInfo.isLocal && CtaNoticeFragment.checkCta(getActivity().getFragmentManager(), false, this)) {
                 liveStickerInfo.downloadState = 2;
+                this.mAdapter.notifyItemChanged(i);
                 LiveResourceDownloadManager.getInstance().download(liveStickerInfo, this.mDownloadHelper);
             }
-            scrollIfNeed(this.mSelectIndex);
         }
+    }
+
+    public void onPositiveClick(DialogInterface dialogInterface, int i) {
+        reload();
+    }
+
+    public void onNegativeClick(DialogInterface dialogInterface, int i) {
     }
 
     private void updateStickerList(List<LiveStickerInfo> list) {
@@ -318,6 +372,21 @@ public class FragmentLiveSticker extends FragmentLiveBase {
             sPersistStickerList = this.mStickerList;
         }
         this.mAdapter.notifyDataSetChanged();
+        setItemInCenter(this.mSelectIndex);
+        this.mUpdatingView.setVisibility(8);
+        this.mStickerListView.setVisibility(0);
+    }
+
+    private void showNetworkErrorHint() {
+        ToastUtils.showToast(getContext(), getResources().getString(R.string.live_sticker_network_error_hint), 80);
+    }
+
+    private void reload() {
+        this.mUpdatingView.setVisibility(0);
+        this.mStickerListView.setVisibility(4);
+        this.mSelectIndex = 0;
+        this.mAdapter.setSelectIndex(this.mSelectIndex);
+        updateData();
     }
 
     private void updateData() {
@@ -340,9 +409,18 @@ public class FragmentLiveSticker extends FragmentLiveBase {
             }
 
             public void onResponseError(ErrorCode errorCode, String str, Object obj) {
+                final List arrayList = new ArrayList();
+                if (errorCode == ErrorCode.NETWORK_NOT_CONNECTED) {
+                    int length = (10 - FragmentLiveSticker.sLocalStickerList.length) + 1;
+                    for (int i = 0; i < length; i++) {
+                        LiveStickerInfo liveStickerInfo = new LiveStickerInfo();
+                        liveStickerInfo.iconId = R.drawable.ic_live_sticker_placeholder;
+                        arrayList.add(liveStickerInfo);
+                    }
+                }
                 FragmentLiveSticker.this.getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        FragmentLiveSticker.this.updateStickerList(null);
+                        FragmentLiveSticker.this.updateStickerList(arrayList);
                     }
                 });
                 Log.e(FragmentLiveSticker.TAG, String.format("errorCode %d msg: %s", new Object[]{Integer.valueOf(errorCode.CODE), str}));

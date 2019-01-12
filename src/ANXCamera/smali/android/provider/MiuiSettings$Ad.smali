@@ -38,7 +38,7 @@
 .method public constructor <init>()V
     .registers 1
 
-    .line 6191
+    .line 6197
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -48,7 +48,7 @@
     .registers 2
     .param p0, "cr"    # Landroid/content/ContentResolver;
 
-    .line 6207
+    .line 6213
     const-string v0, "ad_aaid"
 
     invoke-static {p0, v0}, Landroid/provider/Settings$Global;->getString(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;
@@ -67,7 +67,7 @@
         }
     .end annotation
 
-    .line 6263
+    .line 6269
     const-string/jumbo v0, "personalized_ad_time"
 
     const-wide/16 v1, 0x0
@@ -76,7 +76,7 @@
 
     move-result-wide v0
 
-    .line 6264
+    .line 6270
     .local v0, "time":J
     const-string v2, "Ad"
 
@@ -96,7 +96,7 @@
 
     invoke-static {v2, v3}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 6265
+    .line 6271
     return-wide v0
 .end method
 
@@ -104,7 +104,7 @@
     .registers 3
     .param p0, "cr"    # Landroid/content/ContentResolver;
 
-    .line 6273
+    .line 6279
     const-string/jumbo v0, "personalized_ad_enabled"
 
     const/4 v1, 0x1
@@ -120,12 +120,12 @@
     .registers 5
     .param p0, "cr"    # Landroid/content/ContentResolver;
 
-    .line 6240
+    .line 6246
     invoke-static {p0}, Landroid/provider/MiuiSettings$Ad;->getPersonizedAdSettings(Landroid/content/ContentResolver;)I
 
     move-result v0
 
-    .line 6241
+    .line 6247
     .local v0, "adSettings":I
     const-string v1, "Ad"
 
@@ -145,7 +145,7 @@
 
     invoke-static {v1, v2}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 6242
+    .line 6248
     and-int/lit8 v1, v0, 0x2
 
     if-eqz v1, :cond_20
@@ -165,12 +165,12 @@
     .registers 5
     .param p0, "cr"    # Landroid/content/ContentResolver;
 
-    .line 6224
+    .line 6230
     invoke-static {p0}, Landroid/provider/MiuiSettings$Ad;->getPersonizedAdSettings(Landroid/content/ContentResolver;)I
 
     move-result v0
 
-    .line 6225
+    .line 6231
     .local v0, "adSettings":I
     const-string v1, "Ad"
 
@@ -190,7 +190,7 @@
 
     invoke-static {v1, v2}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 6226
+    .line 6232
     and-int/lit8 v1, v0, 0x1
 
     if-eqz v1, :cond_20
@@ -215,7 +215,7 @@
         }
     .end annotation
 
-    .line 6211
+    .line 6217
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
@@ -224,7 +224,7 @@
 
     move-result-object v0
 
-    .line 6212
+    .line 6218
     .local v0, "oldAaid":Ljava/lang/String;
     invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
@@ -232,10 +232,10 @@
 
     if-eqz v1, :cond_10
 
-    .line 6213
+    .line 6219
     const-string v0, ""
 
-    .line 6215
+    .line 6221
     :cond_10
     invoke-static {}, Ljava/util/UUID;->randomUUID()Ljava/util/UUID;
 
@@ -245,7 +245,7 @@
 
     move-result-object v1
 
-    .line 6216
+    .line 6222
     .local v1, "newAaid":Ljava/lang/String;
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
@@ -255,28 +255,28 @@
 
     invoke-static {v2, v3, v1}, Landroid/provider/Settings$Global;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 6217
+    .line 6223
     new-instance v2, Landroid/content/Intent;
 
     const-string/jumbo v3, "miui.intent.action.ad.AAID_RESET"
 
     invoke-direct {v2, v3}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 6218
+    .line 6224
     .local v2, "intent":Landroid/content/Intent;
     const-string/jumbo v3, "old_aaid"
 
     invoke-virtual {v2, v3, v0}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
-    .line 6219
+    .line 6225
     const-string/jumbo v3, "new_aaid"
 
     invoke-virtual {v2, v3, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
-    .line 6220
+    .line 6226
     invoke-virtual {p0, v2}, Landroid/content/Context;->sendBroadcast(Landroid/content/Intent;)V
 
-    .line 6221
+    .line 6227
     return-void
 .end method
 
@@ -290,12 +290,12 @@
         }
     .end annotation
 
-    .line 6247
+    .line 6253
     invoke-static {p0}, Landroid/provider/MiuiSettings$Ad;->getPersonizedAdSettings(Landroid/content/ContentResolver;)I
 
     move-result v0
 
-    .line 6248
+    .line 6254
     .local v0, "oldAdSettings":I
     if-eqz p1, :cond_9
 
@@ -303,11 +303,11 @@
 
     goto :goto_b
 
-    .line 6249
+    .line 6255
     :cond_9
     and-int/lit8 v1, v0, -0x3
 
-    .line 6250
+    .line 6256
     .local v1, "newAdSettings":I
     :goto_b
     const-string v2, "Ad"
@@ -340,10 +340,10 @@
 
     invoke-static {v2, v3}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 6252
+    .line 6258
     invoke-static {p0, v1}, Landroid/provider/MiuiSettings$Ad;->setPersonizedAdSettings(Landroid/content/ContentResolver;I)V
 
-    .line 6253
+    .line 6259
     return-void
 .end method
 
@@ -357,12 +357,12 @@
         }
     .end annotation
 
-    .line 6231
+    .line 6237
     invoke-static {p0}, Landroid/provider/MiuiSettings$Ad;->getPersonizedAdSettings(Landroid/content/ContentResolver;)I
 
     move-result v0
 
-    .line 6232
+    .line 6238
     .local v0, "oldAdSettings":I
     if-eqz p1, :cond_9
 
@@ -370,11 +370,11 @@
 
     goto :goto_b
 
-    .line 6233
+    .line 6239
     :cond_9
     and-int/lit8 v1, v0, -0x2
 
-    .line 6234
+    .line 6240
     .local v1, "newAdSettigns":I
     :goto_b
     const-string v2, "Ad"
@@ -407,10 +407,10 @@
 
     invoke-static {v2, v3}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 6236
+    .line 6242
     invoke-static {p0, v1}, Landroid/provider/MiuiSettings$Ad;->setPersonizedAdSettings(Landroid/content/ContentResolver;I)V
 
-    .line 6237
+    .line 6243
     return-void
 .end method
 
@@ -424,7 +424,7 @@
         }
     .end annotation
 
-    .line 6257
+    .line 6263
     const-string v0, "Ad"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -443,12 +443,12 @@
 
     invoke-static {v0, v1}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 6258
+    .line 6264
     const-string/jumbo v0, "personalized_ad_time"
 
     invoke-static {p0, v0, p1, p2}, Landroid/provider/Settings$Global;->putLong(Landroid/content/ContentResolver;Ljava/lang/String;J)Z
 
-    .line 6259
+    .line 6265
     return-void
 .end method
 
@@ -457,11 +457,11 @@
     .param p0, "cr"    # Landroid/content/ContentResolver;
     .param p1, "adSettings"    # I
 
-    .line 6269
+    .line 6275
     const-string/jumbo v0, "personalized_ad_enabled"
 
     invoke-static {p0, v0, p1}, Landroid/provider/Settings$Global;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
 
-    .line 6270
+    .line 6276
     return-void
 .end method

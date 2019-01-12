@@ -166,22 +166,22 @@ public class FragmentManually extends BaseFragment implements OnClickListener, M
             ManuallyValueChanged manuallyValueChanged = (ManuallyValueChanged) ModeCoordinatorImpl.getInstance().getAttachProtocol(174);
             if (manuallyValueChanged != null) {
                 switch (componentData.getDisplayTitleString()) {
-                    case R.string.pref_camera_whitebalance_title /*2131427428*/:
+                    case R.string.pref_camera_whitebalance_title /*2131427430*/:
                         if (str2.equals("manual")) {
                             getExtraFragment().showCustomWB((ComponentManuallyWB) componentData);
                         }
                         manuallyValueChanged.onWBValueChanged((ComponentManuallyWB) componentData, str2, z);
                         break;
-                    case R.string.pref_camera_iso_title /*2131427494*/:
+                    case R.string.pref_camera_iso_title /*2131427500*/:
                         manuallyValueChanged.onISOValueChanged((ComponentManuallyISO) componentData, str2);
                         break;
-                    case R.string.pref_manual_exposure_title /*2131427630*/:
+                    case R.string.pref_manual_exposure_title /*2131427637*/:
                         manuallyValueChanged.onETValueChanged((ComponentManuallyET) componentData, str2);
                         break;
-                    case R.string.pref_qc_focus_position_title /*2131427678*/:
+                    case R.string.pref_qc_focus_position_title /*2131427685*/:
                         manuallyValueChanged.onFocusValueChanged((ComponentManuallyFocus) componentData, str, str2);
                         break;
-                    case R.string.pref_camera_zoom_mode_title /*2131427728*/:
+                    case R.string.pref_camera_zoom_mode_title /*2131427735*/:
                         manuallyValueChanged.onDualLensSwitch((ComponentManuallyDualLens) componentData, this.mCurrentMode);
                         break;
                 }
@@ -204,7 +204,7 @@ public class FragmentManually extends BaseFragment implements OnClickListener, M
         }
         DataItemConfig dataItemConfig = DataRepository.dataItemConfig();
         this.mManuallyComponents.add(new ComponentManuallyWB(dataItemConfig));
-        if (b.gr()) {
+        if (b.gu()) {
             this.mManuallyComponents.add(new ComponentManuallyFocus(dataItemConfig));
             this.mManuallyComponents.add(new ComponentManuallyET(dataItemConfig));
         }

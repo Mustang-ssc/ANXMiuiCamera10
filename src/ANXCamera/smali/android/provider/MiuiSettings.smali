@@ -30,6 +30,8 @@
 # static fields
 .field public static final ACTION_ACCOUNT_LIST:Ljava/lang/String; = "android.settings.ACCOUNT_LIST"
 
+.field public static APP_LOCK_USE_FACE_UNLOCK_STATE:Ljava/lang/String; = null
+
 .field public static APP_LOCK_USE_FINGERPRINT_STATE:Ljava/lang/String; = null
 
 .field public static final CROSS_PROFILE_SETTINGS:Ljava/util/Set;
@@ -169,68 +171,73 @@
 .method static constructor <clinit>()V
     .registers 2
 
-    .line 146
+    .line 145
     const-string v0, "com_miui_applicatinlock_use_fingerprint_state"
 
     sput-object v0, Landroid/provider/MiuiSettings;->APP_LOCK_USE_FINGERPRINT_STATE:Ljava/lang/String;
 
-    .line 181
+    .line 151
+    const-string v0, "com_miui_applicatinlock_use_face_unlock_state"
+
+    sput-object v0, Landroid/provider/MiuiSettings;->APP_LOCK_USE_FACE_UNLOCK_STATE:Ljava/lang/String;
+
+    .line 187
     new-instance v0, Landroid/util/ArraySet;
 
     invoke-direct {v0}, Landroid/util/ArraySet;-><init>()V
 
     sput-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
-    .line 183
+    .line 189
     sget-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
     const-string/jumbo v1, "ringtone"
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 184
+    .line 190
     sget-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
     const-string/jumbo v1, "notification_sound"
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 185
+    .line 191
     sget-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
     const-string v1, "alarm_alert"
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 186
+    .line 192
     sget-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
     const-string/jumbo v1, "user_rotation"
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 187
+    .line 193
     sget-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
     const-string v1, "accelerometer_rotation"
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 188
+    .line 194
     sget-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
     const-string v1, "hide_rotation_lock_toggle_for_accessibility"
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 189
+    .line 195
     sget-object v0, Landroid/provider/MiuiSettings;->CROSS_PROFILE_SETTINGS:Ljava/util/Set;
 
     const-string v1, "frequent_phrases"
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 190
+    .line 196
     return-void
 .end method
 
@@ -249,7 +256,7 @@
     .param p1, "outConfig"    # Landroid/content/res/Configuration;
     .param p2, "userHandle"    # I
 
-    .line 5820
+    .line 5826
     const-string/jumbo v0, "ui_mode_scale"
 
     const/4 v1, 0x1
@@ -258,13 +265,13 @@
 
     move-result v0
 
-    .line 5821
+    .line 5827
     .local v0, "scaleMode":I
     const/16 v2, 0xf
 
     and-int/2addr v0, v2
 
-    .line 5823
+    .line 5829
     const/16 v3, 0xc
 
     if-eq v0, v3, :cond_20
@@ -290,18 +297,18 @@
 
     nop
 
-    .line 5830
+    .line 5836
     .local v1, "isLargeUiMode":Z
     :cond_20
     :goto_20
     if-eqz v1, :cond_35
 
-    .line 5831
+    .line 5837
     sget-boolean v2, Lmiui/os/Build;->IS_TABLET:Z
 
     if-eqz v2, :cond_2d
 
-    .line 5832
+    .line 5838
     invoke-static {v0}, Landroid/content/res/MiuiConfiguration;->getFontScale(I)F
 
     move-result v2
@@ -310,18 +317,18 @@
 
     goto :goto_35
 
-    .line 5834
+    .line 5840
     :cond_2d
     sget v2, Landroid/util/MiuiDisplayMetrics;->DENSITY_DEVICE:I
 
-    .line 5835
+    .line 5841
     invoke-static {v0, v2}, Landroid/util/MiuiFontSizeUtils;->getFontScaleV2(II)F
 
     move-result v2
 
     iput v2, p1, Landroid/content/res/Configuration;->fontScale:F
 
-    .line 5838
+    .line 5844
     :cond_35
     :goto_35
     return-void

@@ -24,6 +24,7 @@ import com.android.camera.constant.EyeLightConstant;
 import com.android.camera.data.DataRepository;
 import com.android.camera.data.data.config.ComponentConfigFlash;
 import com.android.camera.data.data.config.ComponentConfigHdr;
+import com.android.camera.effect.FilterInfo;
 import com.android.camera.fragment.BaseFragment;
 import com.android.camera.module.loader.camera2.Camera2DataContainer;
 import com.android.camera.protocol.ModeCoordinatorImpl;
@@ -190,10 +191,21 @@ public class FragmentTopAlert extends BaseFragment {
 
     private void updateTopHint() {
         if (EyeLightConstant.OFF.equals(CameraSettings.getEyeLightType())) {
-            alertTopHint(8, 0, this.mAlertTopMargin);
-        } else {
-            alertTopHint(0, R.string.eye_light, this.mAlertTopMargin);
+            int i;
+            if (CameraSettings.isMeunUltraPixelPhotographyOn() || CameraSettings.isUltraPixelPhotographyOn()) {
+                i = 1;
+            } else {
+                i = 0;
+            }
+            if (i != 0) {
+                alertTopHint(0, R.string.ultra_pixel_photography_open_tip, this.mAlertTopMargin);
+                return;
+            } else {
+                alertTopHint(8, 0, this.mAlertTopMargin);
+                return;
+            }
         }
+        alertTopHint(0, R.string.eye_light, this.mAlertTopMargin);
     }
 
     public void setAlertTopMargin(int i) {
@@ -235,7 +247,6 @@ public class FragmentTopAlert extends BaseFragment {
                 ViewCompat.animate(this.mAlertRecordingText).alpha(1.0f).start();
                 return;
             case 2:
-            case 5:
                 if (this.mBlingAnimation != null) {
                     this.mBlingAnimation.cancel();
                 }
@@ -313,7 +324,7 @@ public class FragmentTopAlert extends BaseFragment {
             }
             if (this.mAlertImageType != i3) {
                 this.mAlertImageType = i3;
-                if (CameraSettings.isFrontCamera() && b.ho()) {
+                if (CameraSettings.isFrontCamera() && b.hq()) {
                     z = false;
                 }
                 this.mAlertImageView.setImageResource(z ? R.drawable.ic_alert_flash_torch : R.drawable.ic_alert_flash);
@@ -326,10 +337,17 @@ public class FragmentTopAlert extends BaseFragment {
             return;
         }
         setAlertImageVisible(i, i2);
+        updateMuiscHint();
+    }
+
+    private void updateMuiscHint() {
+        if (this.mLiveMusicHintLayout.getVisibility() == 0) {
+            alertTopMusicHint(0, this.mLiveMusiHintText.getText().toString(), getResources().getDimensionPixelSize(R.dimen.music_hint_top_margin));
+        }
     }
 
     public void alertAiSceneSelector(int i, int i2) {
-        alertAiSceneSelector(null, null, i, i2, new OnCheckedChangeListener() {
+        alertAiSceneSelector(null, null, i, i2, i == 0 ? new OnCheckedChangeListener() {
             public void onCheckedChanged(ToggleSwitch toggleSwitch, boolean z) {
                 ConfigChanges configChanges = (ConfigChanges) ModeCoordinatorImpl.getInstance().getAttachProtocol(164);
                 if (z) {
@@ -340,11 +358,11 @@ public class FragmentTopAlert extends BaseFragment {
                     configChanges.onConfigChanged(249);
                 }
             }
-        });
+        } : null);
     }
 
     public void alertMoonSelector(String str, String str2, int i, int i2) {
-        alertAiSceneSelector(str, str2, i, i2, new OnCheckedChangeListener() {
+        alertAiSceneSelector(str, str2, i, i2, i == 0 ? new OnCheckedChangeListener() {
             public void onCheckedChanged(ToggleSwitch toggleSwitch, boolean z) {
                 ConfigChanges configChanges = (ConfigChanges) ModeCoordinatorImpl.getInstance().getAttachProtocol(164);
                 if (z) {
@@ -355,7 +373,7 @@ public class FragmentTopAlert extends BaseFragment {
                     configChanges.onConfigChanged(247);
                 }
             }
-        });
+        } : null);
     }
 
     private void alertAiSceneSelector(String str, String str2, int i, int i2, OnCheckedChangeListener onCheckedChangeListener) {
@@ -365,12 +383,14 @@ public class FragmentTopAlert extends BaseFragment {
         if (i == 0) {
             this.mSelectorTopMargin = i2;
             long currentTimeMillis = HINT_DELAY_TIME - (System.currentTimeMillis() - this.mAlertAiSceneSwitchHintTime);
-            ToggleSwitch toggleSwitch = this.mAiSceneSelectView;
-            Runnable runnable = this.showAction;
-            if (currentTimeMillis < 0) {
-                currentTimeMillis = 0;
+            if (CameraSettings.getShaderEffect() == FilterInfo.FILTER_ID_NONE) {
+                ToggleSwitch toggleSwitch = this.mAiSceneSelectView;
+                Runnable runnable = this.showAction;
+                if (currentTimeMillis < 0) {
+                    currentTimeMillis = 0;
+                }
+                toggleSwitch.postDelayed(runnable, currentTimeMillis);
             }
-            toggleSwitch.postDelayed(runnable, currentTimeMillis);
         } else {
             this.mAiSceneSelectView.removeCallbacks(this.showAction);
             if (this.mAiSceneSelectView.getVisibility() == 0) {
@@ -380,8 +400,8 @@ public class FragmentTopAlert extends BaseFragment {
                 transViewAnim(this.mAlertStatusValue, getStateTextTopMargin(i2, this.mStateValueTextFromLighting));
             }
         }
-        this.mAiSceneSelectView.setChecked(false);
         this.mAiSceneSelectView.setOnCheckedChangeListener(onCheckedChangeListener);
+        this.mAiSceneSelectView.setChecked(false);
     }
 
     public void alertSwitchHint(int i, @StringRes int i2, int i3) {

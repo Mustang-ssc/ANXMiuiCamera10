@@ -969,7 +969,7 @@
     .locals 0
 
     .line 56
-     invoke-super {p0}, Landroid/app/Activity;->onStart()V
+    invoke-super {p0}, Landroid/app/Activity;->onStart()V
 
     .line 57
     invoke-direct {p0}, Lcom/android/camera/UserDefineWatermarkActivity;->initTitle()V

@@ -16,6 +16,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.MiuiConfiguration;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build.VERSION;
@@ -64,6 +65,7 @@ import org.json.JSONObject;
 
 public class MiuiSettings {
     public static final String ACTION_ACCOUNT_LIST = "android.settings.ACCOUNT_LIST";
+    public static String APP_LOCK_USE_FACE_UNLOCK_STATE = "com_miui_applicatinlock_use_face_unlock_state";
     public static String APP_LOCK_USE_FINGERPRINT_STATE = "com_miui_applicatinlock_use_fingerprint_state";
     public static final Set<String> CROSS_PROFILE_SETTINGS = new ArraySet();
     private static final String DISCOVER_AUTO_UPDATE_ENABLED = "com.xiaomi.discover.auto_update_enabled";
@@ -531,53 +533,24 @@ public class MiuiSettings {
         /* JADX WARNING: Missing block: B:17:0x0033, code:
             return false;
      */
-        public static boolean isQuietModeEnableForCurrentUser(android.content.Context r7) {
-            /*
-            r0 = 0;
-            r1 = r7.getContentResolver();	 Catch:{ Exception -> 0x002b }
-            r2 = "content://antispamCommon/zenmode";
-            r2 = android.net.Uri.parse(r2);	 Catch:{ Exception -> 0x002b }
-            r3 = "1";
-            r2 = android.net.Uri.withAppendedPath(r2, r3);	 Catch:{ Exception -> 0x002b }
-            r3 = 0;
-            r4 = 0;
-            r5 = 0;
-            r6 = 0;
-            r1 = r1.query(r2, r3, r4, r5, r6);	 Catch:{ Exception -> 0x002b }
-            r0 = r1;
-            if (r0 == 0) goto L_0x0023;
-        L_0x001c:
-            r1 = 1;
-            if (r0 == 0) goto L_0x0022;
-        L_0x001f:
-            r0.close();
-        L_0x0022:
-            return r1;
-        L_0x0023:
-            if (r0 == 0) goto L_0x0032;
-        L_0x0025:
-            r0.close();
-            goto L_0x0032;
-        L_0x0029:
-            r1 = move-exception;
-            goto L_0x0034;
-        L_0x002b:
-            r1 = move-exception;
-            r1.printStackTrace();	 Catch:{ all -> 0x0029 }
-            if (r0 == 0) goto L_0x0032;
-        L_0x0031:
-            goto L_0x0025;
-        L_0x0032:
-            r1 = 0;
-            return r1;
-        L_0x0034:
-            if (r0 == 0) goto L_0x0039;
-        L_0x0036:
-            r0.close();
-        L_0x0039:
-            throw r1;
-            */
-            throw new UnsupportedOperationException("Method not decompiled: android.provider.MiuiSettings.AntiSpam.isQuietModeEnableForCurrentUser(android.content.Context):boolean");
+        /* Code decompiled incorrectly, please refer to instructions dump. */
+        public static boolean isQuietModeEnableForCurrentUser(Context context) {
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver().query(Uri.withAppendedPath(Uri.parse("content://antispamCommon/zenmode"), "1"), null, null, null, null);
+                if (cursor != null) {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } catch (Throwable th) {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
         }
 
         public static boolean isQuietWristband(Context context) {
@@ -862,8 +835,11 @@ public class MiuiSettings {
     public static final class Key {
         public static final String CLOSE_APP = "close_app";
         public static final String CLOSE_TALKBACK = "close_talkback";
+        public static final int DISABLE_THREE_GESTURE = 0;
         public static final String DOUBLE_CLICK_POWER_KEY = "double_click_power_key";
         public static final String DUMP_LOG = "dump_log";
+        public static final int ENABLE_THREE_GESTURE = 1;
+        public static final String ENABLE_THREE_GESTURE_KEY = "enable_three_gesture";
         public static final String GO_TO_SLEEP = "go_to_sleep";
         public static final String KEY_AI_BUTTON_SETTINGS = "key_ai_button_settings";
         public static final String KEY_BANK_CARD = "key_bank_card_in_ese";
@@ -1063,6 +1039,9 @@ public class MiuiSettings {
         public static final int FLAG_SUPPORT_ENHANCE_MODE = 2;
         public static final int FLAG_SUPPORT_MONOCHROME_MODE = 8;
         public static final int FLAG_SUPPORT_STANDARD_MODE = 4;
+        public static final String GAME_MODE = "screen_game_mode";
+        public static final int GAME_MODE_DISABLE_EYECARE = 1;
+        public static final int GAME_MODE_ENABLE_HDR = 2;
         public static final int MONOCHROME_MODE_DEFAULT = 2;
         public static final int MONOCHROME_MODE_GLOBAL = 1;
         public static final int MONOCHROME_MODE_LOCAL = 2;
@@ -1128,7 +1107,7 @@ public class MiuiSettings {
 
         private static int getDefaultSaturation() {
             int defaultSaturation = 10;
-            if (FeatureParser.getBoolean(d.rZ, false)) {
+            if (FeatureParser.getBoolean(d.sc, false)) {
                 defaultSaturation = 11;
             }
             return FeatureParser.getInteger("display_ce", defaultSaturation);
@@ -1818,9 +1797,9 @@ public class MiuiSettings {
         public static final String BREATHING_LIGHT_FREQ = "breathing_light_freq";
         public static final String CALENDAR_ALERT = "calendar_alert";
         public static final String CALL_BREATHING_LIGHT_COLOR = "call_breathing_light_color";
-        public static final int CALL_BREATHING_LIGHT_COLOR_DEFAULT = Resources.getSystem().getColor(285671426);
+        public static final int CALL_BREATHING_LIGHT_COLOR_DEFAULT = 255;
         public static final String CALL_BREATHING_LIGHT_FREQ = "call_breathing_light_freq";
-        public static final int CALL_BREATHING_LIGHT_FREQ_DEFAULT = Resources.getSystem().getInteger(285736971);
+        public static final int CALL_BREATHING_LIGHT_FREQ_DEFAULT = 2;
         public static final String CAMERA_KEY_PREFERRED_ACTION_APP_COMPONENT = "camera_key_preferred_action_app_component";
         public static final String CAMERA_KEY_PREFERRED_ACTION_SHORTCUT_ID = "camera_key_preferred_action_shortcut_id";
         public static final int CAMERA_KEY_PREFERRED_ACTION_SHORTCUT_ID_CALL = 3;

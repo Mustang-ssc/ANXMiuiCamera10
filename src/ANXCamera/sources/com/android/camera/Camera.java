@@ -14,6 +14,7 @@ import android.os.IPowerManager.Stub;
 import android.os.Looper;
 import android.os.Message;
 import android.os.ServiceManager;
+import android.os.UserHandle;
 import android.provider.MiuiSettings.ScreenEffect;
 import android.support.annotation.MainThread;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
@@ -29,6 +30,7 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.android.camera.LocalParallelService.LocalBinder;
 import com.android.camera.constant.GlobalConstant;
 import com.android.camera.data.DataRepository;
 import com.android.camera.data.data.global.DataItemGlobal;
@@ -39,15 +41,14 @@ import com.android.camera.fragment.dialog.FrontRotateNewbieDialogFragment;
 import com.android.camera.fragment.dialog.HibernationFragment;
 import com.android.camera.fragment.dialog.LensDirtyDetectDialogFragment;
 import com.android.camera.fragment.dialog.PortraitNewbieDialogFragment;
+import com.android.camera.fragment.dialog.UltraWideNewbieDialogFragment;
 import com.android.camera.fragment.lifeCircle.BaseLifecycleListener;
 import com.android.camera.fragment.top.FragmentTopConfig;
 import com.android.camera.lib.compatibility.util.CompatibilityUtils;
 import com.android.camera.log.Log;
 import com.android.camera.module.BaseModule;
-import com.android.camera.module.LiveModule;
 import com.android.camera.module.Module;
 import com.android.camera.module.ModuleManager;
-import com.android.camera.module.VideoBase;
 import com.android.camera.module.impl.ImplFactory;
 import com.android.camera.module.loader.FunctionCameraLegacySetup;
 import com.android.camera.module.loader.FunctionCameraPrepare;
@@ -61,6 +62,7 @@ import com.android.camera.module.loader.camera2.Camera2OpenManager;
 import com.android.camera.module.loader.camera2.Camera2OpenOnSubScribe;
 import com.android.camera.module.loader.camera2.Camera2Result;
 import com.android.camera.module.loader.camera2.CompletablePreFixCamera2Setup;
+import com.android.camera.parallel.AlgoConnector;
 import com.android.camera.permission.PermissionManager;
 import com.android.camera.protocol.ModeCoordinatorImpl;
 import com.android.camera.protocol.ModeProtocol.ActionProcessing;
@@ -96,7 +98,13 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     private Camera2OpenOnSubScribe mCamera2OpenOnSubScribe;
     private BiFunction mCameraOpenResult = new BiFunction<NullHolder<BaseModule>, Camera2Result, NullHolder<BaseModule>>() {
         public NullHolder<BaseModule> apply(@NonNull NullHolder<BaseModule> nullHolder, @NonNull Camera2Result camera2Result) throws Exception {
-            switch (camera2Result.getResult()) {
+            int result = camera2Result.getResult();
+            String access$400 = Camera.TAG;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("mCameraOpenResult apply : result = ");
+            stringBuilder.append(result);
+            Log.d(access$400, stringBuilder.toString());
+            switch (result) {
                 case 3:
                     if (nullHolder.isPresent()) {
                         ((BaseModule) nullHolder.get()).setDeparted();
@@ -129,6 +137,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     private LogThread mDebugThread;
     private boolean mDidRegister;
     private DisplayFeatureManager mDisplayFeatureManager;
+    private boolean mFirstOrientationArrived;
     private boolean mHasFocus;
     private ImageSaver mImageSaver;
     private ImplFactory mImplFactory;
@@ -224,6 +233,16 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
         public void onOrientationChanged(int i) {
             if (i != -1) {
                 Camera.this.mOrientation = Util.roundOrientation(i, Camera.this.mOrientation);
+                if (!Camera.this.mFirstOrientationArrived) {
+                    Camera.this.mFirstOrientationArrived = true;
+                    String access$400 = Camera.TAG;
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("onOrientationChanged: first orientation is arrived... , orientation = ");
+                    stringBuilder.append(i);
+                    stringBuilder.append(", mOrientation = ");
+                    stringBuilder.append(Camera.this.mOrientation);
+                    Log.d(access$400, stringBuilder.toString());
+                }
                 i = Util.getDisplayRotation(Camera.this);
                 if (i != Camera.this.mDisplayRotation) {
                     Camera.this.mDisplayRotation = i;
@@ -326,7 +345,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
             }
             Util.updateCountryIso(this);
             this.mPowerManager = Stub.asInterface(ServiceManager.getService("power"));
-            if (b.hu()) {
+            if (b.hw()) {
                 try {
                     this.mDisplayFeatureManager = DisplayFeatureManager.getInstance();
                 } catch (Throwable e) {
@@ -471,7 +490,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     public boolean isSelectingCapturedVideo() {
-        return isCurrentModuleAlive() && this.mCurrentModule.isSelectingCapturedVideo();
+        return isCurrentModuleAlive() && this.mCurrentModule.isSelectingCapturedResult();
     }
 
     private boolean shouldReleaseLater() {
@@ -514,7 +533,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
                     dataItemGlobal.parseIntent(getIntent(), Boolean.valueOf(this.mCameraIntentManager.checkCallerLegality()), startFromSecureKeyguard(), false, this.mDelayReleaseCamera ^ 1);
                     int intentType2 = dataItemGlobal.getIntentType();
                     if (intentType != 0) {
-                        int i2 = this.mBaseFragmentDelegate.getActiveFragment(R.id.bottom_action) == 4083 ? 1 : false;
+                        int i2 = (this.mCurrentModule == null || !this.mCurrentModule.isSelectingCapturedResult()) ? false : 1;
                         if (intentType != intentType2 || i2 == 0) {
                             if (i2 != 0) {
                                 this.mBaseFragmentDelegate.delegateEvent(6);
@@ -571,6 +590,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
         this.mActivityPaused = false;
         boolean z = true;
         switchEdgeFingerMode(true);
+        this.mFirstOrientationArrived = false;
         this.mOrientationListener.enable();
         super.onResume();
         Storage.initStorage(this);
@@ -678,13 +698,9 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
             if (isGotoGallery() || isSelectingCapturedVideo()) {
                 this.mDelayReleaseCamera = false;
                 releaseAll(true, true);
-            } else if (isVideoRecording() && !isPostProcessing()) {
+            } else if (!isPostProcessing()) {
                 this.mDelayReleaseCamera = false;
-                if (getCurrentModuleIndex() == 174) {
-                    ((LiveModule) this.mCurrentModule).onPauseButtonClick();
-                } else {
-                    ((VideoBase) this.mCurrentModule).stopVideoRecording(true, true);
-                }
+                this.mCurrentModule.onHostStopAndNotifyActionStop();
             }
         }
         unbindServices();
@@ -705,80 +721,18 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     /* JADX WARNING: Missing block: B:19:0x007b, code:
             com.android.camera.log.Log.e(TAG, r0.getMessage(), r0);
      */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
     private void boostParallelServiceAdj() {
-        /*
-        r9 = this;
-        r0 = com.android.camera.CameraSettings.isCameraParallelProcessEnable();
-        r1 = 1;
-        r2 = 0;
-        if (r0 == 0) goto L_0x0020;
-    L_0x0008:
-        r0 = r9.mCurrentModule;
-        if (r0 == 0) goto L_0x0020;
-    L_0x000c:
-        r0 = r9.mCurrentModule;
-        r0 = (com.android.camera.module.BaseModule) r0;
-        r0 = r0.isPortraitMode();
-        if (r0 == 0) goto L_0x0020;
-    L_0x0016:
-        r0 = r9.mCameraIntentManager;
-        r0 = r0.isImageCaptureIntent();
-        if (r0 != 0) goto L_0x0020;
-    L_0x001e:
-        r0 = r1;
-        goto L_0x0022;
-        r0 = r2;
-    L_0x0022:
-        if (r0 != 0) goto L_0x0025;
-    L_0x0024:
-        return;
-    L_0x0025:
-        r0 = com.android.camera.parallel.AlgoConnector.getInstance();
-        r0 = r0.getLocalBinder();
-        if (r0 == 0) goto L_0x0084;
-    L_0x002f:
-        r0 = r0.isIdle();
-        if (r0 != 0) goto L_0x0084;
-    L_0x0035:
-        r0 = "miui.process.ProcessManager";
-        r0 = java.lang.Class.forName(r0);	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r3 = "adjBoost";
-        r4 = 4;
-        r5 = new java.lang.Class[r4];	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r6 = java.lang.String.class;
-        r5[r2] = r6;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r6 = java.lang.Integer.TYPE;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r5[r1] = r6;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r6 = java.lang.Long.TYPE;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r7 = 2;
-        r5[r7] = r6;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r6 = java.lang.Integer.TYPE;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r8 = 3;
-        r5[r8] = r6;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r0 = r0.getDeclaredMethod(r3, r5);	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r3 = 0;
-        r4 = new java.lang.Object[r4];	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r5 = "com.android.camera";
-        r4[r2] = r5;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r2 = java.lang.Integer.valueOf(r2);	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r4[r1] = r2;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r1 = 60000; // 0xea60 float:8.4078E-41 double:2.9644E-319;
-        r1 = java.lang.Long.valueOf(r1);	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r4[r7] = r1;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r1 = android.os.UserHandle.myUserId();	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r1 = java.lang.Integer.valueOf(r1);	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r4[r8] = r1;	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        r0.invoke(r3, r4);	 Catch:{ ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a, ClassNotFoundException -> 0x007a }
-        goto L_0x0084;
-    L_0x007a:
-        r0 = move-exception;
-        r1 = TAG;
-        r2 = r0.getMessage();
-        com.android.camera.log.Log.e(r1, r2, r0);
-    L_0x0084:
-        return;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.camera.Camera.boostParallelServiceAdj():void");
+        int i = (!CameraSettings.isCameraParallelProcessEnable() || this.mCurrentModule == null || !((BaseModule) this.mCurrentModule).isPortraitMode() || this.mCameraIntentManager.isImageCaptureIntent()) ? 0 : 1;
+        if (i != 0) {
+            LocalBinder localBinder = AlgoConnector.getInstance().getLocalBinder();
+            if (!(localBinder == null || localBinder.isIdle())) {
+                try {
+                    Class.forName("miui.process.ProcessManager").getDeclaredMethod("adjBoost", new Class[]{String.class, Integer.TYPE, Long.TYPE, Integer.TYPE}).invoke(null, new Object[]{"com.android.camera", Integer.valueOf(0), Long.valueOf(60000), Integer.valueOf(UserHandle.myUserId())});
+                } catch (Throwable e) {
+                }
+            }
+        }
     }
 
     public void onDestroy() {
@@ -995,7 +949,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     public boolean onEdgeTouchEvent(MotionEvent motionEvent) {
-        if (b.gM()) {
+        if (b.gP()) {
             return V6GestureRecognizer.getInstance(this).onEdgeTouchEvent(motionEvent);
         }
         return true;
@@ -1053,7 +1007,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     private void onDisplayRotationChanged() {
-        if (b.hk()) {
+        if (b.hn()) {
             FrontRotateNewbieDialogFragment frontRotateNewbieDialogFragment = (FrontRotateNewbieDialogFragment) getSupportFragmentManager().findFragmentByTag(FrontRotateNewbieDialogFragment.TAG);
             if (frontRotateNewbieDialogFragment != null) {
                 frontRotateNewbieDialogFragment.animateOut(0);
@@ -1078,7 +1032,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     private void switchEdgeFingerMode(boolean z) {
-        if (b.gM()) {
+        if (b.gP()) {
             CameraSettings.setEdgeMode(this, z);
             if (z) {
                 this.mWatchDog = new WatchDogThread(this, null);
@@ -1115,7 +1069,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     public void changeRequestOrientation() {
-        if (b.hk()) {
+        if (b.hn()) {
             if (CameraSettings.isFrontCamera()) {
                 setRequestedOrientation(7);
             } else {
@@ -1165,6 +1119,19 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
                     }
                 }, 500);
                 return true;
+            case 4:
+                this.mHandler.postDelayed(new Runnable() {
+                    public void run() {
+                        if (!Camera.this.isActivityPaused()) {
+                            Fragment ultraWideNewbieDialogFragment = new UltraWideNewbieDialogFragment();
+                            ultraWideNewbieDialogFragment.setStyle(2, R.style.DialogFragmentFullScreen);
+                            Camera.this.getSupportFragmentManager().beginTransaction().add(ultraWideNewbieDialogFragment, UltraWideNewbieDialogFragment.TAG).commitAllowingStateLoss();
+                            Camera.this.newbieDialogFragmentTag = UltraWideNewbieDialogFragment.TAG;
+                            DataRepository.dataItemGlobal().editor().putBoolean("pref_camera_first_ultra_wide_use_hint_shown_key", false).apply();
+                        }
+                    }
+                }, 500);
+                return true;
             default:
                 return false;
         }
@@ -1181,6 +1148,9 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
                 break;
             case 3:
                 str = AiSceneNewbieDialogFragment.TAG;
+                break;
+            case 4:
+                str = UltraWideNewbieDialogFragment.TAG;
                 break;
             default:
                 str = null;
@@ -1215,12 +1185,12 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     public void notifyOnFirstFrameArrived(int i) {
-        if (this.mCurrentModule != null && !this.mCurrentModule.isDeparted()) {
+        if (this.mCurrentModule != null && !this.mCurrentModule.isDeparted() && !isSwitchingModule()) {
             getCameraScreenNail().clearAnimation();
             this.mBaseFragmentDelegate.getAnimationComposite().notifyAfterFirstFrameArrived(i);
             this.mCurrentModule.enableCameraControls(true);
             this.mCurrentModule.setFrameAvailable(true);
-            if ((getCurrentModuleIndex() == 165 || getCurrentModuleIndex() == 163) && b.hk() && CameraSettings.isFrontCamera() && this.mDisplayRotation == 0 && DataRepository.dataItemGlobal().getBoolean("pref_front_camera_first_use_hint_shown_key", true)) {
+            if ((getCurrentModuleIndex() == 165 || getCurrentModuleIndex() == 163) && b.hn() && CameraSettings.isFrontCamera() && this.mDisplayRotation == 0 && DataRepository.dataItemGlobal().getBoolean("pref_front_camera_first_use_hint_shown_key", true)) {
                 DataRepository.dataItemGlobal().editor().putBoolean("pref_front_camera_first_use_hint_shown_key", false).apply();
                 showNewBie(2);
             }
@@ -1307,7 +1277,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
         return this.mCameraBrightness.getCurrentBrightness();
     }
 
-    private void registerReceiver() {
+    private final void registerReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(CameraIntentManager.ACTION_VOICE_CONTROL);
         registerReceiver(this.mReceiver, intentFilter);
@@ -1326,13 +1296,10 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     private void unregisterSDReceiver() {
-        if (this.mSDReceiver != null) {
-            try {
-                unregisterReceiver(this.mSDReceiver);
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
-            this.mSDReceiver = null;
+        try {
+            unregisterReceiver(this.mSDReceiver);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
     }
 
@@ -1371,7 +1338,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     public void showLensDirtyDetectedHint() {
-        if (DataRepository.dataItemFeature().fE()) {
+        if (DataRepository.dataItemFeature().fG()) {
             this.mHandler.post(new Runnable() {
                 public void run() {
                     FragmentTopConfig fragmentTopConfig = (FragmentTopConfig) ModeCoordinatorImpl.getInstance().getAttachProtocol(172);
@@ -1398,7 +1365,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
     }
 
     public void hideLensDirtyDetectedHint() {
-        if (!DataRepository.dataItemFeature().fE()) {
+        if (!DataRepository.dataItemFeature().fG()) {
             Fragment findFragmentByTag = getSupportFragmentManager().findFragmentByTag(LensDirtyDetectDialogFragment.TAG);
             if (findFragmentByTag != null && (findFragmentByTag instanceof DialogFragment)) {
                 ((DialogFragment) findFragmentByTag).dismissAllowingStateLoss();
@@ -1422,7 +1389,7 @@ public class Camera extends ActivityBase implements OnRequestPermissionsResultCa
         boolean z = false;
         int i2 = i == Util.KEYCODE_SLIDE_ON ? 1 : 0;
         int currentMode = dataItemGlobal.getCurrentMode();
-        if ((currentMode == 171 && !b.hb()) || currentMode == 166 || currentMode == 167 || currentMode == 173) {
+        if ((currentMode == 171 && !b.he()) || currentMode == 166 || currentMode == 167 || currentMode == 173) {
             currentMode = 163;
         } else if (currentMode == 168 || currentMode == 169 || currentMode == 170 || currentMode == 172) {
             currentMode = 162;

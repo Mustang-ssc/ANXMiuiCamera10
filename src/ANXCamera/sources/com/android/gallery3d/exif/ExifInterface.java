@@ -12,14 +12,17 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.channels.FileChannel.MapMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -206,6 +209,17 @@ public class ExifInterface {
         public static final short SOFT = (short) 1;
     }
 
+    public interface ExifOrientationFlag {
+        public static final short BOTTOM_LEFT = (short) 3;
+        public static final short BOTTOM_RIGHT = (short) 4;
+        public static final short LEFT_BOTTOM = (short) 7;
+        public static final short LEFT_TOP = (short) 5;
+        public static final short RIGHT_BOTTOM = (short) 8;
+        public static final short RIGHT_TOP = (short) 6;
+        public static final short TOP_LEFT = (short) 1;
+        public static final short TOP_RIGHT = (short) 2;
+    }
+
     public interface ExposureMode {
         public static final short AUTO_BRACKET = (short) 2;
         public static final short AUTO_EXPOSURE = (short) 0;
@@ -326,17 +340,6 @@ public class ExifInterface {
         public static final short PATTERN = (short) 5;
         public static final short SPOT = (short) 3;
         public static final short UNKNOWN = (short) 0;
-    }
-
-    public interface Orientation {
-        public static final short BOTTOM_LEFT = (short) 3;
-        public static final short BOTTOM_RIGHT = (short) 4;
-        public static final short LEFT_BOTTOM = (short) 7;
-        public static final short LEFT_TOP = (short) 5;
-        public static final short RIGHT_BOTTOM = (short) 8;
-        public static final short RIGHT_TOP = (short) 6;
-        public static final short TOP_LEFT = (short) 1;
-        public static final short TOP_RIGHT = (short) 2;
     }
 
     public interface PhotometricInterpretation {
@@ -642,73 +645,46 @@ public class ExifInterface {
     /* JADX WARNING: Missing block: B:27:0x0063, code:
             r11 = null;
      */
-    public boolean rewriteExif(java.lang.String r11, java.util.Collection<com.android.gallery3d.exif.ExifTag> r12) throws java.io.FileNotFoundException, java.io.IOException {
-        /*
-        r10 = this;
-        r0 = 0;
-        r1 = new java.io.File;	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r1.<init>(r11);	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r11 = new java.io.BufferedInputStream;	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r2 = new java.io.FileInputStream;	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r2.<init>(r1);	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r11.<init>(r2);	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r2 = com.android.gallery3d.exif.ExifParser.parse(r11, r10);	 Catch:{ ExifInvalidFormatException -> 0x0057 }
-        r2 = r2.getOffsetToExifEndFromSOF();	 Catch:{ IOException -> 0x0055 }
-        r7 = (long) r2;	 Catch:{ IOException -> 0x0055 }
-        r11.close();	 Catch:{ IOException -> 0x0055 }
-        r11 = new java.io.RandomAccessFile;	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r2 = "rw";
-        r11.<init>(r1, r2);	 Catch:{ IOException -> 0x0062, all -> 0x0060 }
-        r1 = r11.length();	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-        r1 = (r1 > r7 ? 1 : (r1 == r7 ? 0 : -1));
-        if (r1 < 0) goto L_0x0048;
-    L_0x0030:
-        r3 = r11.getChannel();	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-        r4 = java.nio.channels.FileChannel.MapMode.READ_WRITE;	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-        r5 = 0;
-        r1 = r3.map(r4, r5, r7);	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-        r12 = r10.rewriteExif(r1, r12);	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-        closeSilently(r0);
-        r11.close();
-        return r12;
-    L_0x0048:
-        r12 = new java.io.IOException;	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-        r1 = "Filesize changed during operation";
-        r12.<init>(r1);	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-        throw r12;	 Catch:{ IOException -> 0x0050, all -> 0x0060 }
-    L_0x0050:
-        r12 = move-exception;
-        r9 = r0;
-        r0 = r11;
-        r11 = r9;
-        goto L_0x0064;
-    L_0x0055:
-        r12 = move-exception;
-        goto L_0x0064;
-    L_0x0057:
-        r12 = move-exception;
-        r1 = new java.io.IOException;	 Catch:{ IOException -> 0x0055 }
-        r2 = "Invalid exif format : ";
-        r1.<init>(r2, r12);	 Catch:{ IOException -> 0x0055 }
-        throw r1;	 Catch:{ IOException -> 0x0055 }
-    L_0x0060:
-        r11 = move-exception;
-        goto L_0x006b;
-    L_0x0062:
-        r12 = move-exception;
-        r11 = r0;
-    L_0x0064:
-        closeSilently(r0);	 Catch:{ all -> 0x0068 }
-        throw r12;	 Catch:{ all -> 0x0068 }
-    L_0x0068:
-        r12 = move-exception;
-        r0 = r11;
-        r11 = r12;
-    L_0x006b:
-        closeSilently(r0);
-        throw r11;
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.android.gallery3d.exif.ExifInterface.rewriteExif(java.lang.String, java.util.Collection):boolean");
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+    public boolean rewriteExif(String str, Collection<ExifTag> collection) throws FileNotFoundException, IOException {
+        InputStream bufferedInputStream;
+        IOException e;
+        Closeable closeable = null;
+        RandomAccessFile randomAccessFile;
+        try {
+            File file = new File(str);
+            bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
+            try {
+                long offsetToExifEndFromSOF = (long) ExifParser.parse(bufferedInputStream, this).getOffsetToExifEndFromSOF();
+                bufferedInputStream.close();
+                randomAccessFile = new RandomAccessFile(file, "rw");
+                if (randomAccessFile.length() >= offsetToExifEndFromSOF) {
+                    boolean rewriteExif = rewriteExif(randomAccessFile.getChannel().map(MapMode.READ_WRITE, 0, offsetToExifEndFromSOF), (Collection) collection);
+                    closeSilently(null);
+                    randomAccessFile.close();
+                    return rewriteExif;
+                }
+                throw new IOException("Filesize changed during operation");
+            } catch (Throwable e2) {
+                throw new IOException("Invalid exif format : ", e2);
+            } catch (IOException e3) {
+                e = e3;
+            }
+        } catch (IOException e4) {
+            e = e4;
+            closeable = randomAccessFile;
+            bufferedInputStream = null;
+        } catch (Throwable th) {
+        }
+        try {
+            closeSilently(closeable);
+            throw e;
+        } catch (Throwable e22) {
+            closeable = bufferedInputStream;
+            Throwable th2 = e22;
+            closeSilently(closeable);
+            throw th2;
+        }
     }
 
     public boolean rewriteExif(ByteBuffer byteBuffer, Collection<ExifTag> collection) throws IOException {
@@ -1193,15 +1169,16 @@ public class ExifInterface {
     }
 
     public boolean addParallelProcessComment(String str, int i, int i2, int i3) {
+        String str2 = TAG;
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("addParallel ");
+        stringBuilder.append("algo exif: addParallel ");
         stringBuilder.append(str);
-        Log.e("algo exif:", stringBuilder.toString());
-        return addExifTag(TAG_PARALLEL_PROCESS_COMMENT, str) && addExifTag(TAG_ORIENTATION, Integer.valueOf(i)) && addExifTag(TAG_IMAGE_WIDTH, Integer.valueOf(i2)) && addExifTag(TAG_IMAGE_LENGTH, Integer.valueOf(i3));
+        Log.i(str2, stringBuilder.toString());
+        return addExifTag(TAG_PARALLEL_PROCESS_COMMENT, str) && addExifTag(TAG_ORIENTATION, Short.valueOf(getExifOrientationValue(i))) && addExifTag(TAG_IMAGE_WIDTH, Integer.valueOf(i2)) && addExifTag(TAG_IMAGE_LENGTH, Integer.valueOf(i3));
     }
 
     public static byte[] removeParallelProcessComment(byte[] bArr) {
-        Log.e("algo exif:", "removeParallel ");
+        Log.i(TAG, "algo exif: removeParallel");
         long currentTimeMillis = System.currentTimeMillis();
         OutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
@@ -1276,7 +1253,7 @@ public class ExifInterface {
         return this.mData.getXiaomiComment();
     }
 
-    public static short getOrientationValueForRotation(int i) {
+    public static short getExifOrientationValue(int i) {
         i %= ScreenEffect.SCREEN_PAPER_MODE_TWILIGHT_START_DEAULT;
         if (i < 0) {
             i += ScreenEffect.SCREEN_PAPER_MODE_TWILIGHT_START_DEAULT;
@@ -1293,7 +1270,7 @@ public class ExifInterface {
         return (short) 8;
     }
 
-    public static int getRotationForOrientationValue(short s) {
+    public static int getRotation(short s) {
         if (s == (short) 1) {
             return 0;
         }
