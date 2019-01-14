@@ -44,5 +44,5 @@ adb logcat -s System.err
 
 
 Magisk
-"C:\Program Files\7-Zip\7z.exe" a -tzip .\out\ANXCameraLibs.zip .\src\ANXCameraMagisk\*
+& "C:\Program Files\7-Zip\7z.exe" a -tzip .\out\ANXCameraMagisk-perseus.zip .\src\ANXCameraMagisk\*
 adb push .\out\ANXCameraLibs.zip  /sdcard/zips
